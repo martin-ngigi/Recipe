@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5B90AAD12D81CD8B001A07C1 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */; };
+		5B90AAD22D81CD8B001A07C1 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */; };
+		5B90AAD32D81CD8B001A07C1 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */; };
+		5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */; };
+		5B90AAD52D81CD8B001A07C1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */; };
+		5B90AAD62D81CD8B001A07C1 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5B90AAA52D81C010001A07C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +36,30 @@
 		5B90AA942D81C00E001A07C1 /* Recipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B90AAA42D81C010001A07C1 /* RecipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B90AAAE2D81C010001A07C1 /* RecipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
+		5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5B5F31012D830EAB00DC181C /* Exceptions for "Recipe" folder in "Recipe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5B90AA932D81C00E001A07C1 /* Recipe */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B90AA962D81C00E001A07C1 /* Recipe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5B5F31012D830EAB00DC181C /* Exceptions for "Recipe" folder in "Recipe" target */,
+			);
 			path = Recipe;
 			sourceTree = "<group>";
 		};
@@ -75,6 +103,12 @@
 		5B90AA8B2D81C00E001A07C1 = {
 			isa = PBXGroup;
 			children = (
+				5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */,
+				5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */,
+				5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */,
+				5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */,
+				5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */,
+				5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */,
 				5B90AA962D81C00E001A07C1 /* Recipe */,
 				5B90AAA72D81C010001A07C1 /* RecipeTests */,
 				5B90AAB12D81C010001A07C1 /* RecipeUITests */,
@@ -212,6 +246,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B90AAD12D81CD8B001A07C1 /* Poppins-Thin.ttf in Resources */,
+				5B90AAD22D81CD8B001A07C1 /* Poppins-Bold.ttf in Resources */,
+				5B90AAD32D81CD8B001A07C1 /* Poppins-Medium.ttf in Resources */,
+				5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */,
+				5B90AAD52D81CD8B001A07C1 /* Poppins-Light.ttf in Resources */,
+				5B90AAD62D81CD8B001A07C1 /* Poppins-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +438,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Recipe/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Recipe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -426,6 +467,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Recipe/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Recipe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
