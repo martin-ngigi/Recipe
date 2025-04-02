@@ -11,8 +11,9 @@ import SwiftUI
 struct RecipeApp: App {
     var body: some Scene {
         WindowGroup {
-            DashboardView()
+            RootView()
                 .environmentObject(DashboardViewModel())
+                .environmentObject(ThemesViewModel())
         }
     }
 }
