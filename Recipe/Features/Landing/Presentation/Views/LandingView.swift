@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LandingView: View {
+    @EnvironmentObject var dashboardViewModel: DashboardViewModel
+
+
     var body: some View {
         VStack(spacing: 80){
             
@@ -28,6 +31,7 @@ struct LandingView: View {
             CustomButton(
                 buttonName: "Get Started",
                 onTap: {
+                    dashboardViewModel.isFirstTimeUsingApp = false
                 }
             )
             .padding(.bottom, 10)
