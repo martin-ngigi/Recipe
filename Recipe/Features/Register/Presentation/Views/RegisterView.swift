@@ -1,28 +1,30 @@
 //
-//  LoginView.swift
+//  RegisterView.swift
 //  Recipe
 //
-//  Created by Martin on 02/04/2025.
+//  Created by Martin on 04/04/2025.
 //
 
 import SwiftUI
 
-struct LoginView: View {
+struct RegisterView: View {
+    @State var name: String = ""
+    @State var nameError: String = ""
     @State var username: String = ""
     @State var usernameError: String = ""
     @State var passwordError: String = ""
     @State var password: String = ""
     @EnvironmentObject var themesViewModel: ThemesViewModel
     @Environment(\.dismiss) var dismiss
-
+    
     var body: some View {
         ScrollView(showsIndicators: false){
             VStack(spacing: 10){
                 VStack(spacing: 0){
-                    Text("First things first")
+                    Text("Glad that you are ready to join us!")
                         .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
                     
-                    Text("Let's log you in")
+                    Text("Let's sign you up")
                         .font(.custom("\(themesViewModel.selectedFontPrefix)-Bold", size: 25))
                 }
                 
@@ -32,6 +34,17 @@ struct LoginView: View {
                     .frame(width: 200, height: 200)
                 
                 VStack(spacing: 10){
+                    
+                    BorderedInputField(
+                        text: $name,
+                        placeholder: "John Doe",
+                        description: "First and Last Name",
+                        error: $nameError
+                    )
+                    .onChange(of: name) { newValue in
+                        nameError = name.isEmpty ? "Name is empty" : ""
+                    }
+                    
                     BorderedInputField(
                         text: $username,
                         placeholder: "myemail@gmail.com",
@@ -56,7 +69,7 @@ struct LoginView: View {
                     NavigationLink{
                         RegisterView().navigationBarBackButtonHidden()
                     } label: {
-                        Text("Already have account? \(Text("Create").foregroundColor(Color.blue))")
+                        Text("Already have account? \(Text("Login").foregroundColor(Color.blue))")
                             .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
@@ -71,7 +84,7 @@ struct LoginView: View {
                 )
                 .padding(.top, 20)
                 
-                Text("Or Login with")
+                Text("Or Sign in with")
                     .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
                 
                 HStack {
@@ -109,6 +122,7 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    RegisterView()
         .environmentObject(ThemesViewModel())
+
 }

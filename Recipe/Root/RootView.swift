@@ -10,12 +10,14 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var dashboardViewModel: DashboardViewModel
     var body: some View {
-        Group{
-            if dashboardViewModel.isFirstTimeUsingApp{
-                LandingView()
-            }
-            else {
-                DashboardView()
+        NavigationView {
+            Group{
+                if dashboardViewModel.isFirstTimeUsingApp{
+                    LandingView()
+                }
+                else {
+                    DashboardView()
+                }
             }
         }
     }
