@@ -31,12 +31,12 @@ struct RecipeItemView: View {
                 }
             }
             .padding(5)
-            .frame(width: 186, height: 69)
+            .frame(width: 80, height: 69)
             .background(Color.theme.blackAndWhite.opacity(0.4))
             .cornerRadius(8)
             .padding(.bottom, 20)
         }
-        .frame(width: 220, height: 200)
+        .frame(width: 170, height: 150)
         .background(
             Image("pizza")
                 .resizable()

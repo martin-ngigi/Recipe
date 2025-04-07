@@ -94,7 +94,7 @@ struct LoginView: View {
                     )
                 }
                 .frame(maxWidth: .infinity)
-                
+                .padding(.bottom, 50)
                 
             }
             .padding()

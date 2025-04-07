@@ -9,6 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     @State var searchField = ""
+    let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
 
     var body: some View {
         NavigationView{
@@ -71,21 +75,21 @@ struct HomeView: View {
                     
                     // Trending Recipes
                     VStack(spacing: 5){
-                        Text("Trending Recipes")
-                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        ScrollView(.horizontal, showsIndicators: false){
-                            HStack(spacing: 10){
-                                ForEach(0..<6){ index in
-                                    RecipeItemView()
-                                }
-                            }
+                        HStack{
+                            Text("Trending Recipes")
+                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            HStack(spacing: 10){
-                                ForEach(0..<6){ index in
-                                    RecipeItemView()
-                                }
+                            Spacer()
+                            
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(Color.theme.primaryColor)
+                                .frame(width: 20, height: 20)
+                        }
+                        
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(0..<4) { index in
+                                RecipeItemView()
                             }
                         }
                     }

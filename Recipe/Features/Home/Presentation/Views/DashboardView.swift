@@ -18,7 +18,7 @@ struct DashboardView: View {
                 HomeView()
                     .tag(0)
                 
-                Text("Favourites")
+                FavouritesListView()
                     .tag(1)
                 
                 LoginView()
