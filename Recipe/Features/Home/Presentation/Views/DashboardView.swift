@@ -21,7 +21,7 @@ struct DashboardView: View {
                 Text("Favourites")
                     .tag(1)
                 
-                ProfileView()
+                LoginView()
                     .tag(2)
                 
                 SettingsScreen()

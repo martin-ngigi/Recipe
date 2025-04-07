@@ -10,7 +10,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var dashboardViewModel: DashboardViewModel
     var body: some View {
-        NavigationView {
+        VStack {
             Group{
                 if dashboardViewModel.isFirstTimeUsingApp{
                     LandingView()

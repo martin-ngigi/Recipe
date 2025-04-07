@@ -61,16 +61,23 @@ struct BorderedInputField: View {
                     .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
             }
             
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.gray.opacity(0.2)) // Ensures background color is properly clipped
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray, lineWidth: 0.3) // Border
-                
-                TextField(placeholder, text: $text)
-                    .padding()
-            }
-            .frame(height: 44) // Adjust height as needed
+//            ZStack {
+//                RoundedRectangle(cornerRadius: 8)
+//                    .fill(Color.gray.opacity(0.2)) // Ensures background color is properly clipped
+//                RoundedRectangle(cornerRadius: 8)
+//                    .stroke(Color.gray, lineWidth: 0.3) // Border
+//                
+//                TextField(placeholder, text: $text)
+//                    .padding()
+//            }
+            TextField(placeholder, text: $text)
+                .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
+                .background(Color.gray.opacity(0.3))
+                .cornerRadius(7)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 7)
+                        .stroke(Color.gray, lineWidth: 0.3)
+                ) // Border
             
             if !error.isEmpty {
                 Text(error)
@@ -81,6 +88,17 @@ struct BorderedInputField: View {
     }
 }
 
+struct TappableTextFieldStyle: TextFieldStyle { // https://stackoverflow.com/questions/56795712/swiftui-textfield-touchable-area
+    @FocusState private var textFieldFocused: Bool
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding()
+            .focused($textFieldFocused)
+            .onTapGesture {
+                textFieldFocused = true
+            }
+    }
+}
 
 #Preview {
     BorderedInputField(text: .constant(""), error: .constant(""))

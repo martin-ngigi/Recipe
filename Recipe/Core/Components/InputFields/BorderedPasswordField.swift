@@ -24,6 +24,7 @@ struct BorderedPasswordField: View {
                     .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
             }
             
+            /*
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.2)) // Background color
@@ -45,6 +46,30 @@ struct BorderedPasswordField: View {
                 .padding()
             }
             .frame(height: 44)
+            */
+            
+            HStack {
+                if isSecure {
+                    SecureField(placeholder, text: $password)
+                    
+                } else {
+                    TextField(placeholder, text: $password)
+                }
+                
+                Button(action: { isSecure.toggle() }) {
+                    Image(systemName: isSecure ? "eye.slash" : "eye")
+                        .foregroundColor(.gray)
+                        .padding(.trailing)
+                }
+            }
+            .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
+            .background(Color.gray.opacity(0.3))
+            .cornerRadius(7)
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.gray, lineWidth: 0.3)
+            )// Border
+            
             
             if !error.isEmpty {
                 Text(error)
