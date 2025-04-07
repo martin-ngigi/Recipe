@@ -41,37 +41,8 @@ struct HomeView: View {
                         error: .constant("")
                     )
                     
-                    // Just for you
-                    VStack(spacing: 5){
-                        Text("Just For You")
-                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Image("landing")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 150)
-                            .clipped()
-                            .cornerRadius(10)
-                            .contentShape(Rectangle()) // <- Ensures full image is tappable and prevents tapping issue
-                            .overlay {
-                                ZStack {
-                                    Color.black.opacity(0.4) // Dark overlay for better text visibility
-                                        .cornerRadius(10)
-                                    
-                                    VStack {
-                                        Spacer() // Pushes the text to the bottom
-                                        Text("15 best pasta recipes from chef John")
-                                            .font(.custom(FontConstants.POPPINS_LIGHT, size: 18))
-                                            .foregroundColor(Color.theme.whiteColor)
-                                            .padding(.bottom, 8)
-                                            .padding()
-                                    }
-                                }
-                            }
-                            
-                    }
-                    .padding(.top, 10)
+                    
+                    JustForYouSliderView()
                     
                     // Trending Recipes
                     VStack(spacing: 5){
