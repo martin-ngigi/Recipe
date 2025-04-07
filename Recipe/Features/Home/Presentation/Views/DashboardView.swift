@@ -44,7 +44,8 @@ struct DashboardView: View {
                     .padding(5)
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.90, height: 75)
-                .background(Color.gray.opacity(0.5))
+                //.background(Color.gray.opacity(0.5))
+                .background(.ultraThinMaterial.opacity(0.9))
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)

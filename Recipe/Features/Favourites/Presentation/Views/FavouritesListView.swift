@@ -16,7 +16,12 @@ struct FavouritesListView: View {
             
             ScrollView(showsIndicators: false) {
                 ForEach(0..<10, id: \.self){ item in
-                    FavouriteItemView()
+                    NavigationLink{
+                        RecipeDetailsView()
+                    } label: {
+                        FavouriteItemView()
+                            .foregroundColor(Color.theme.blackAndWhite)
+                    }
                 }
             }
             .padding()

@@ -89,8 +89,15 @@ struct HomeView: View {
                         
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(0..<4) { index in
-                                RecipeItemView()
+                                NavigationLink{
+                                    RecipeDetailsView()
+                                } label: {
+                                    RecipeItemView()
+                                        .foregroundColor(Color.theme.blackAndWhite)
+                                }
                             }
+                            
+                           
                         }
                     }
                     .padding(.top, 10)
