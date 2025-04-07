@@ -25,7 +25,7 @@ struct LandingView: View {
                     .font(.custom("Poppins-Light", size: 14))
                     .multilineTextAlignment(.center)
             }
-            .foregroundColor(Color.theme.whiteAndBlack)
+            .foregroundColor(Color.theme.blackAndWhite)
             
             
             CustomButton(
@@ -46,10 +46,10 @@ struct LandingView: View {
                 LinearGradient(
                     gradient: Gradient(
                         colors: [
-                            Color.theme.blackAndWhite.opacity(0),
-                            Color.theme.blackAndWhite.opacity(0),
-                            Color.theme.blackAndWhite.opacity(0.9),
-                            Color.theme.blackAndWhite
+                            Color.theme.whiteAndBlack.opacity(0),
+                            Color.theme.whiteAndBlack.opacity(0),
+                            Color.theme.whiteAndBlack.opacity(0.9),
+                            Color.theme.whiteAndBlack
                         ]
                     ),
                     startPoint: .top,

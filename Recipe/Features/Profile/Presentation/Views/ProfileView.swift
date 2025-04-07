@@ -28,7 +28,7 @@ struct ProfileView: View {
                 .background(Color.secondary.opacity(0.2))
                 .cornerRadius(100)
                 .frame(maxWidth: .infinity, alignment: .center)
-            
+                .padding(.top)
             /*
             Image(systemName: "person.circle")
                 .resizable()

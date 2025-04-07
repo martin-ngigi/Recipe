@@ -24,7 +24,7 @@ struct DashboardView: View {
                 ProfileView()
                     .tag(2)
                 
-                Text("Settings")
+                SettingsScreen()
                     .tag(3)
             }
             
