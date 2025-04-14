@@ -1,0 +1,151 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "(12)" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ " : {
+
+    },
+    "%@ Mode" : {
+
+    },
+    "4.5" : {
+
+    },
+    "Already have account? %@" : {
+
+    },
+    "App Details" : {
+
+    },
+    "App Settings" : {
+
+    },
+    "App Version" : {
+
+    },
+    "Chef John" : {
+
+    },
+    "Cook Like a Chef" : {
+
+    },
+    "Create" : {
+
+    },
+    "Customize your settings" : {
+
+    },
+    "Discover Best \nRecipes" : {
+
+    },
+    "Dismiss" : {
+
+    },
+    "Email:" : {
+
+    },
+    "FAQs" : {
+
+    },
+    "Favourites" : {
+
+    },
+    "Feedback and ratings" : {
+
+    },
+    "First things first" : {
+
+    },
+    "Follow" : {
+
+    },
+    "Font" : {
+
+    },
+    "Glad that you are ready to join us!" : {
+
+    },
+    "Hello, world!" : {
+
+    },
+    "Ingredients" : {
+
+    },
+    "John Doe" : {
+
+    },
+    "john@gmail.com" : {
+
+    },
+    "Just For You" : {
+
+    },
+    "Let's log you in" : {
+
+    },
+    "Let's sign you up" : {
+
+    },
+    "Login" : {
+
+    },
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." : {
+
+    },
+    "Name:" : {
+
+    },
+    "Notifications turned %@" : {
+
+    },
+    "Or Login with" : {
+
+    },
+    "Or Sign in with" : {
+
+    },
+    "Personal Details" : {
+
+    },
+    "Pizza" : {
+
+    },
+    "Privacy policy" : {
+
+    },
+    "RecipeApp is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home" : {
+      "localizations" : {
+        "sw-KE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RecipeApp ni programu rahisi kutumia ya mapishi, iliyoundwa kwa ajili ya wanaoanza kupika na wanaotaka kujaribu mapishi mapya nyumbani."
+          }
+        }
+      }
+    },
+    "Search recipes..." : {
+
+    },
+    "Settings" : {
+
+    },
+    "This tortilla pizza is extremely easy to make. It is light enough to be a snack, serves well as an appetizer, or is so good that it can be devoured alone! You can use any sort of topping variation." : {
+
+    },
+    "Title here" : {
+
+    },
+    "Tortilla Pizza Recipe" : {
+
+    },
+    "Trending Recipes" : {
+
+    }
+  },
+  "version" : "1.0"
+}

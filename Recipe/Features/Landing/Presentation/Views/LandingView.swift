@@ -63,4 +63,12 @@ struct LandingView: View {
 
 #Preview {
     LandingView()
+        .environmentObject(DashboardViewModel())
 }
+
+#Preview{
+    LandingView()
+        .environmentObject(DashboardViewModel())
+        .environment(\.locale, Locale(identifier: "sw"))
+}
+
