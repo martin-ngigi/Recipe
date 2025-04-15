@@ -14,6 +14,8 @@ struct LoginView: View {
     @State var password: String = ""
     @EnvironmentObject var themesViewModel: ThemesViewModel
     @Environment(\.dismiss) var dismiss
+    @Environment(\.showError) private var showError
+
 
     var body: some View {
         ScrollView(showsIndicators: false){
@@ -66,7 +68,7 @@ struct LoginView: View {
                 CustomButton(
                     buttonName: "Login",
                     onTap: {
-                        
+                        showError(SampleError.operationFailed, "Operation has failed. Please try again later.")
                     }
                 )
                 .padding(.top, 20)
