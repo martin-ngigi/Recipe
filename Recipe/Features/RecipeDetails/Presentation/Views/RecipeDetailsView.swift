@@ -11,6 +11,7 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     @EnvironmentObject var themesViewModel: ThemesViewModel
+    @State var recipe: String
 
     let ingredients = [
         ("soft flour tortilla", "1", "🥙"),
@@ -128,7 +129,7 @@ struct RecipeDetailsView: View {
 }
 
 #Preview {
-    RecipeDetailsView()
+    RecipeDetailsView(recipe: "")
         .environmentObject(ThemesViewModel())
 
 }

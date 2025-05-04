@@ -9,9 +9,8 @@ import SwiftUI
 
 @main
 struct RecipeApp: App {
-    @Environment(\.showError) private var showError
-    @State private var errorWrapper : ErrorWrapper? = nil
 
+    /* MARK: HIDE DEFAULT BOTTOM NAV BAR
     init() {
         //Let's remove default bottom navigation by making it clear.
         let appearance = UITabBarAppearance()
@@ -21,20 +20,16 @@ struct RecipeApp: App {
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
+    */
     
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(TabRouter())
                 .environmentObject(DashboardViewModel())
                 .environmentObject(ThemesViewModel())
-                .environment(\.showError, ShowErrorAction(action: showError))
-                .sheet(item: $errorWrapper) { errorWrapper in
-                    Text(errorWrapper.guidance)
-                }
+                
         }
     }
-    
-    private func showError(error: Error, guidance: String) {
-        errorWrapper = ErrorWrapper(error: error, guidance: guidance)
-    }
+  
 }

@@ -13,9 +13,12 @@ struct HomeView: View {
             GridItem(.flexible()),
             GridItem(.flexible())
         ]
+    
+    @EnvironmentObject var tabRouter: TabRouter
+
 
     var body: some View {
-        NavigationView{
+        VStack{
             ScrollView(showsIndicators: false) {
                 VStack{
                  
@@ -60,8 +63,8 @@ struct HomeView: View {
                         
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(0..<4) { index in
-                                NavigationLink{
-                                    RecipeDetailsView()
+                                Button{
+                                    tabRouter.homeRouter.push(.recipedetails(recipe: ""))
                                 } label: {
                                     RecipeItemView()
                                         .foregroundColor(Color.theme.blackAndWhite)
@@ -87,10 +90,12 @@ struct HomeView: View {
                 }
             }
         }
-        .hideBottomNavigationBar(true)
+        //.hideBottomNavigationBar(true)
     }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(TabRouter())
+
 }

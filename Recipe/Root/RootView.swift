@@ -16,7 +16,8 @@ struct RootView: View {
                     LandingView()
                 }
                 else {
-                    DashboardView()
+//                    DashboardView()
+                    RootTabView()
                 }
             }
         }

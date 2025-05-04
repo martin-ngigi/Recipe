@@ -10,14 +10,16 @@ import SwiftUI
 struct FavouritesListView: View {
     @EnvironmentObject var themesViewModel: ThemesViewModel
     @State var searchField = ""
-    
+    @EnvironmentObject var tabRouter: TabRouter
+
     var body: some View {
-        NavigationView {
+        VStack {
             
             ScrollView(showsIndicators: false) {
                 ForEach(0..<10, id: \.self){ item in
-                    NavigationLink{
-                        RecipeDetailsView()
+                    Button{
+                        tabRouter.favouritesRouter.push(.recipedetails(recipe: ""))
+
                     } label: {
                         FavouriteItemView()
                             .foregroundColor(Color.theme.blackAndWhite)
@@ -34,4 +36,5 @@ struct FavouritesListView: View {
 #Preview {
     FavouritesListView()
         .environmentObject(ThemesViewModel())
+        .environmentObject(TabRouter())
 }
