@@ -21,7 +21,7 @@ class TabRouter: ObservableObject{
         switch tab {
         case .home:
             return homeRouter
-        case .favoutites:
+        case .favourites:
             return favouritesRouter
         case .profile:
             return profileRouter
@@ -35,18 +35,7 @@ class TabRouter: ObservableObject{
 @ViewBuilder
 func viewForRoute(_ route: Route, router: Router) -> some View{
     switch route {
-/*
- case landing
- 
- case home
- case favourites
- case profile
- case settings
- 
- case login
- case register
- case recipedetails(recipe: String)
- */
+        
     case .landing:
         LandingView()
         

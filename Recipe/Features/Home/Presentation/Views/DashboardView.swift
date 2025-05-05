@@ -11,9 +11,11 @@ struct DashboardView: View {
     @EnvironmentObject var dashboardViewModel : DashboardViewModel
     @State var isDashboardBottomNavigationVisible : Bool = true
     @State var isKeyboardVisible : Bool = false
-    
+    @EnvironmentObject var tabRouter: TabRouter
+
     var body: some View {
         ZStack(alignment: .bottom){
+            /*
             TabView(selection: $dashboardViewModel.selectedTab) {
                 HomeView()
                     .tag(0)
@@ -27,7 +29,31 @@ struct DashboardView: View {
                 SettingsScreen()
                     .tag(3)
             }
-            
+            */
+            TabView(selection: $tabRouter.selectedTab) {
+                TabNavigationView(router: tabRouter.homeRouter) {
+                    HomeView()
+                }
+                .tag(0)
+                
+                
+                
+                TabNavigationView(router: tabRouter.favouritesRouter) {
+                    FavouritesListView()
+                }
+                .tag(1)
+                
+                TabNavigationView(router: tabRouter.settingsRouter) {
+                    SettingsScreen()
+                }
+                .tag(2)
+                
+                TabNavigationView(router: tabRouter.profileRouter) {
+                    ProfileView()
+                }
+                .tag(3)
+            }
+
             if isDashboardBottomNavigationVisible && !isKeyboardVisible {
                 ZStack {
                     HStack(spacing: 0) { // Add spacing of 0 to remove default padding between items
@@ -53,6 +79,7 @@ struct DashboardView: View {
                 )
                 .padding(.horizontal)
                 .padding(.bottom, 15)
+               
             }
         }
         .ignoresSafeArea(.all, edges: .bottom)

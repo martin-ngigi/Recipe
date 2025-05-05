@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct RecipeApp: App {
 
-    /* MARK: HIDE DEFAULT BOTTOM NAV BAR
+    //MARK: HIDE DEFAULT BOTTOM NAV BAR
     init() {
         //Let's remove default bottom navigation by making it clear.
         let appearance = UITabBarAppearance()
@@ -20,7 +20,7 @@ struct RecipeApp: App {
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
-    */
+    
     
     var body: some Scene {
         WindowGroup {

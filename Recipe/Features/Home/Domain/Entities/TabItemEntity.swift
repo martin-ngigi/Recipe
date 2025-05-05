@@ -10,7 +10,7 @@ import SwiftUI
 
 enum TabItemEntity: Int, CaseIterable{
     case home = 0
-    case favoutites
+    case favourites
     case profile
     case settings
     
@@ -18,7 +18,7 @@ enum TabItemEntity: Int, CaseIterable{
         switch self {
         case .home:
             return "Home"
-        case .favoutites:
+        case .favourites:
             return "Favouites"
         case .profile:
             return "Profile"
@@ -31,7 +31,7 @@ enum TabItemEntity: Int, CaseIterable{
         switch self {
         case .home:
             return "home"
-        case .favoutites:
+        case .favourites:
             return "favourite"
         case .profile:
             return "account"
@@ -44,7 +44,7 @@ enum TabItemEntity: Int, CaseIterable{
         switch self {
         case .home:
             return Color.orange
-        case .favoutites:
+        case .favourites:
             return Color.green
         case .profile:
             return Color.blue
