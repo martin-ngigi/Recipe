@@ -133,4 +133,6 @@ extension DashboardView{
 #Preview {
     DashboardView()
         .environmentObject(DashboardViewModel())
+        .environmentObject(ThemesViewModel())
+        .environmentObject(TabRouter())
 }

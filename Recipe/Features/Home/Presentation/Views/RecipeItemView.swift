@@ -13,6 +13,8 @@ struct RecipeItemView: View {
             Spacer()
             
             VStack(alignment: .leading, spacing: 2){
+                Spacer()
+                
                 Text("Title here")
                     .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                     .foregroundColor(Color.theme.whiteColor)
@@ -30,11 +32,11 @@ struct RecipeItemView: View {
                     Spacer()
                 }
             }
-            .padding(5)
-            .frame(width: 80, height: 69)
-            .background(Color.theme.blackAndWhite.opacity(0.4))
-            .cornerRadius(8)
-            .padding(.bottom, 20)
+            .padding([.leading, .trailing, .bottom], 13)
+            .frame(height: 50)
+            .background(.ultraThinMaterial.opacity(0.9))
+            //.cornerRadius(8)
+            //.padding(.bottom, 20)
         }
         .frame(width: 170, height: 150)
         .background(
