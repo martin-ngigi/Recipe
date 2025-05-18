@@ -26,6 +26,14 @@ struct SettingsScreen: View {
             }
             .padding(.top)
             
+            Form{
+                Picker("App Theme", selection: $themesViewModel.selectedTheme){
+                    ForEach(AppTheme.allCases) { theme in
+                        Text(theme.rawValue.capitalized).tag(theme)
+                    }
+                }
+            }
+            
             
             List {
                 Section ("App Settings"){
