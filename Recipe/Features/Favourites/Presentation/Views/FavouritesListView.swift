@@ -26,10 +26,12 @@ struct FavouritesListView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal)
             .searchable(text: $searchField, prompt: "Search recipes...")
             .navigationTitle("Favourites")
+            .hideBottomNavigationBar(false)
         }
+        
     }
 }
 

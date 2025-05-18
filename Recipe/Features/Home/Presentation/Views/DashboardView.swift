@@ -15,43 +15,33 @@ struct DashboardView: View {
 
     var body: some View {
         ZStack(alignment: .bottom){
-            /*
-            TabView(selection: $dashboardViewModel.selectedTab) {
-                HomeView()
-                    .tag(0)
-                
-                FavouritesListView()
-                    .tag(1)
-                
-                LoginView()
-                    .tag(2)
-                
-                SettingsScreen()
-                    .tag(3)
-            }
-            */
+            
             TabView(selection: $tabRouter.selectedTab) {
                 TabNavigationView(router: tabRouter.homeRouter) {
                     HomeView()
                 }
-                .tag(0)
+                //.tag(0)
+                .tag(TabItemEntity.home)
                 
                 
                 
                 TabNavigationView(router: tabRouter.favouritesRouter) {
                     FavouritesListView()
                 }
-                .tag(1)
+                //.tag(1)
+                .tag(TabItemEntity.favourites)
                 
                 TabNavigationView(router: tabRouter.settingsRouter) {
                     SettingsScreen()
                 }
-                .tag(2)
+                //.tag(2)
+                .tag(TabItemEntity.settings)
                 
                 TabNavigationView(router: tabRouter.profileRouter) {
                     ProfileView()
                 }
-                .tag(3)
+                //.tag(3)
+                .tag(TabItemEntity.profile)
             }
 
             if isDashboardBottomNavigationVisible && !isKeyboardVisible {
@@ -59,9 +49,11 @@ struct DashboardView: View {
                     HStack(spacing: 0) { // Add spacing of 0 to remove default padding between items
                         ForEach(TabItemEntity.allCases, id: \.self) { item in
                             Button {
-                                dashboardViewModel.selectedTab = item.rawValue
+                                //dashboardViewModel.selectedTab = item.rawValue
+                                tabRouter.selectedTab = item
+                                print("DEBUG: tabRouter.selectedTab \(tabRouter.selectedTab), item \(item.rawValue)")
                             } label: {
-                                MyCustomTab(image: item.icon, title: item.title, isSelected: (dashboardViewModel.selectedTab == item.rawValue), bgColor: item.color)
+                                MyCustomTab(image: item.icon, title: item.title, isSelected: (tabRouter.selectedTab == item), bgColor: item.color)
                                     .frame(maxWidth: .infinity) // Make each MyCustomTab expand to fill space
                             }
                         }
@@ -103,7 +95,7 @@ struct DashboardView: View {
     
     func setUpDashboardVisibility(){
         NotificationCenter.default.addObserver(forName: .dashboardVisibilityChanged, object: nil, queue: .main) { notification in
-            if let isVisible = notification.userInfo?["isDashboardBottomNavigationVisible"] as? Bool {
+            if let isVisible = notification.userInfo?[Constants.isDashboardBottomNavigationVisible] as? Bool {
                 isDashboardBottomNavigationVisible = isVisible
                 print("DEBUG: setUpDashboardVisibility  isDashboardBottomNavigationVisible \(isDashboardBottomNavigationVisible)")
             }

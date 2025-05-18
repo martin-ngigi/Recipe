@@ -90,7 +90,7 @@ struct HomeView: View {
                 }
             }
         }
-        //.hideBottomNavigationBar(true)
+        .hideBottomNavigationBar(false)
     }
 }
 

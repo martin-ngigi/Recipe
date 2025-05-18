@@ -11,10 +11,11 @@ import SwiftUI
 extension View {
     func hideBottomNavigationBar(_ hidden: Bool) -> some View {
         self.onAppear {
+            print("DEBUG: hideBottomNavigationBar hidden \(hidden)")
             if let tabBar = findTabBarController()?.tabBar {
                 tabBar.isHidden = hidden
                 // We want to hide bottom navigation of the dashboard.
-                Utils.shared.postDashboardNotifications(isDashoardBottomNavigationVisible: !hidden)
+                Utils.shared.postDashboardNotifications(isDashboardBottomNavigationVisible: !hidden)
             }
         }
         .onDisappear {

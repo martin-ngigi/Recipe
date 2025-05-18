@@ -63,7 +63,7 @@ struct ProfileView: View {
                 
             }
         }
-        
+        .hideBottomNavigationBar(false)
     }
 }
 

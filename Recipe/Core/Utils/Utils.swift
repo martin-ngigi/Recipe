@@ -9,8 +9,8 @@ import Foundation
 struct Utils{
     static let shared = Utils()
     
-    func postDashboardNotifications(isDashoardBottomNavigationVisible: Bool){
-        NotificationCenter.default.post(name: .dashboardVisibilityChanged, object: nil, userInfo: ["isDashboardBottomNavVisible": isDashoardBottomNavigationVisible])
-        print("DEBUG: postDashboardNotifications isDashoardBottomNavigationVisible \(isDashoardBottomNavigationVisible)")
+    func postDashboardNotifications(isDashboardBottomNavigationVisible: Bool){
+        NotificationCenter.default.post(name: .dashboardVisibilityChanged, object: nil, userInfo: [Constants.isDashboardBottomNavigationVisible: isDashboardBottomNavigationVisible])
+        print("DEBUG: postDashboardNotifications isDashboardBottomNavigationVisible \(isDashboardBottomNavigationVisible)")
     }
 }

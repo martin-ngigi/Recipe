@@ -43,31 +43,6 @@ struct RootTabView: View {
             CustomTabBar(selectedTab: $tabRouter.selectedTab)
         }
         .ignoresSafeArea(.all, edges: .bottom)
-        .onAppear {
-            setUpDashboardVisibility()
-            setupKeyboardObservers()
-            
-        }
-    }
-    
-    
-    private func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-            isKeyboardVisible = true
-        }
-
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-            isKeyboardVisible = false
-        }
-    }
-    
-    func setUpDashboardVisibility(){
-        NotificationCenter.default.addObserver(forName: .dashboardVisibilityChanged, object: nil, queue: .main) { notification in
-            if let isVisible = notification.userInfo?["isDashboardBottomNavigationVisible"] as? Bool {
-                isDashboardBottomNavigationVisible = isVisible
-                print("DEBUG: setUpDashboardVisibility  isDashboardBottomNavigationVisible \(isDashboardBottomNavigationVisible)")
-            }
-        }
     }
 }
 
@@ -116,44 +91,6 @@ struct CustomTabBar: View {
         .padding(.bottom, 15)
     }
 }
-
-/*
-struct RootTabView: View {
-    
-    @EnvironmentObject var tabRouter: TabRouter
-    
-    var body: some View {
-        TabView(selection: $tabRouter.selectedTab) {
-            TabNavigationView(router: tabRouter.homeRouter) {
-                HomeView()
-            }
-            .tabItem { Label("Home", systemImage: "house") }
-            .tag(TabItemEntity.home)
-            
-            
-            
-            TabNavigationView(router: tabRouter.favouritesRouter) {
-                FavouritesListView()
-            }
-            .tabItem { Label("Favourites", systemImage: "heart.fill") }
-            .tag(TabItemEntity.favourites)
-            
-            TabNavigationView(router: tabRouter.settingsRouter) {
-                SettingsScreen()
-            }
-            .tabItem { Label("Settings", systemImage: "gear") }
-            .tag(TabItemEntity.settings)
-            
-            TabNavigationView(router: tabRouter.profileRouter) {
-                ProfileView()
-            }
-            .tabItem { Label("Profile", systemImage: "person.circle") }
-            .tag(TabItemEntity.profile)
-        }
-       
-    }
-}
-*/
 
 struct TabNavigationView<Content: View>: View {
     @ObservedObject var router: Router

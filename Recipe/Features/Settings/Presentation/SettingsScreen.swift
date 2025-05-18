@@ -134,6 +134,7 @@ struct SettingsScreen: View {
             }
         }
         .navigationTitle("Settings")
+        .hideBottomNavigationBar(false)
     }
 }
 
