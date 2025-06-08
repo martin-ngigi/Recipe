@@ -56,9 +56,15 @@ struct HomeView: View {
                             
                             Spacer()
                             
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(Color.theme.primaryColor)
-                                .frame(width: 20, height: 20)
+                            HStack{
+                                Text("See All")
+                                    //.font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                                    .foregroundColor(Color.theme.grayColor1)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color.theme.grayColor1)
+                            }
+                            
                         }
                         
                         LazyVGrid(columns: columns, spacing: 16) {
