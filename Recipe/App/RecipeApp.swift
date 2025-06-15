@@ -21,13 +21,29 @@ struct RecipeApp: App {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
+    @AppStorage(Keys.theme.rawValue) var theme: AppTheme = AppTheme.system
+    
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(TabRouter())
-                .preferredColorScheme(LocalState.colorScheme)
+                .preferredColorScheme(colorScheme)
                 
+        }
+    }
+    
+    var colorScheme: ColorScheme?{
+        switch theme{
+            case .system:
+            print("DEBUG: theme is \(theme)")
+                return nil
+            case .dark:
+            print("DEBUG: theme is \(theme)")
+                return .dark
+            case .light:
+            print("DEBUG: theme is \(theme)")
+                return .light
         }
     }
   

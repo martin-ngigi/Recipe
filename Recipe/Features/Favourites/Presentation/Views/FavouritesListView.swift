@@ -17,7 +17,7 @@ struct FavouritesListView: View {
             ScrollView(showsIndicators: false) {
                 ForEach(0..<10, id: \.self){ item in
                     Button{
-                        tabRouter.favouritesRouter.push(.recipedetails(recipe: ""))
+                        tabRouter.router.push(.recipedetails(recipe: ""))
 
                     } label: {
                         FavouriteItemView()

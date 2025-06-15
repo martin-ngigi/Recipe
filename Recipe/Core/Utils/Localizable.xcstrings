@@ -22,9 +22,6 @@
     "App Settings" : {
 
     },
-    "App Theme" : {
-
-    },
     "App Version" : {
 
     },
@@ -38,6 +35,9 @@
 
     },
     "Customize your settings" : {
+
+    },
+    "Dark" : {
 
     },
     "Discover Best \nRecipes" : {
@@ -91,6 +91,9 @@
     "Let's sign you up" : {
 
     },
+    "Light" : {
+
+    },
     "Login" : {
 
     },
@@ -135,6 +138,12 @@
 
     },
     "Settings" : {
+
+    },
+    "System" : {
+
+    },
+    "Theme" : {
 
     },
     "This tortilla pizza is extremely easy to make. It is light enough to be a snack, serves well as an appetizer, or is so good that it can be devoured alone! You can use any sort of topping variation." : {

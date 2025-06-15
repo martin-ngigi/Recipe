@@ -12,6 +12,7 @@ import SwiftUI
 class TabRouter: ObservableObject{
     @Published var selectedTab: TabItemEntity = .home
     
+    /*
     var homeRouter = Router()
     var favouritesRouter = Router()
     var settingsRouter = Router()
@@ -27,6 +28,22 @@ class TabRouter: ObservableObject{
             return profileRouter
         case .settings:
             return settingsRouter
+        }
+    }
+    */
+    
+    var router = Router()
+    
+    func router(for tab: TabItemEntity) -> Router{
+        switch tab {
+        case .home:
+            return router
+        case .favourites:
+            return router
+        case .profile:
+            return router
+        case .settings:
+            return router
         }
     }
 

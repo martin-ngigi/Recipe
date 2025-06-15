@@ -70,7 +70,7 @@ struct HomeView: View {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(0..<4) { index in
                                 Button{
-                                    tabRouter.homeRouter.push(.recipedetails(recipe: ""))
+                                    tabRouter.router.push(.recipedetails(recipe: ""))
                                 } label: {
                                     RecipeItemView()
                                         .foregroundColor(Color.theme.blackAndWhite)

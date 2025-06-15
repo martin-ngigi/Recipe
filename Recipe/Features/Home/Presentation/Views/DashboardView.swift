@@ -17,7 +17,7 @@ struct DashboardView: View {
         ZStack(alignment: .bottom){
             
             TabView(selection: $tabRouter.selectedTab) {
-                TabNavigationView(router: tabRouter.homeRouter) {
+                TabNavigationView(router: tabRouter.router) {
                     HomeView()
                 }
                 //.tag(0)
@@ -25,19 +25,19 @@ struct DashboardView: View {
                 
                 
                 
-                TabNavigationView(router: tabRouter.favouritesRouter) {
+                TabNavigationView(router: tabRouter.router) {
                     FavouritesListView()
                 }
                 //.tag(1)
                 .tag(TabItemEntity.favourites)
                 
-                TabNavigationView(router: tabRouter.settingsRouter) {
+                TabNavigationView(router: tabRouter.router) {
                     SettingsScreen()
                 }
                 //.tag(2)
                 .tag(TabItemEntity.settings)
                 
-                TabNavigationView(router: tabRouter.profileRouter) {
+                TabNavigationView(router: tabRouter.router) {
                     ProfileView()
                 }
                 //.tag(3)

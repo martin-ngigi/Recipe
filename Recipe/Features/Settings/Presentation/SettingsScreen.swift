@@ -10,7 +10,8 @@ import SwiftUI
 struct SettingsScreen: View {
     @State var isDarkMode = false
     @State var isNotificationsEnabled = false
-    @State var theme: AppTheme = LocalState.theme
+   // @State var theme: AppTheme = LocalState.shared.theme
+    @AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
 
     var body: some View {
         VStack{
@@ -30,30 +31,21 @@ struct SettingsScreen: View {
             List {
                 Section ("App Settings"){
                     
-                    /*
-                    HStack{
-                        Text("\(isDarkMode ? "Dark" : "Light") Mode")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                        
-                        Spacer()
-                        
-                        CustomSwitch(
-                            isOn: $isDarkMode,
-                            onTap: { isOn in
-                                isDarkMode = isOn
-                            }
-                        )
-                    }
-                    */
+//                    Picker("App Theme", selection: $theme){
+//                        ForEach(AppTheme.allCases) { theme in
+//                            Text(theme.rawValue.capitalized).tag(theme)
+//                        }
+//                    }
+//                    .onChange(of: theme) { newValue in
+//                        LocalState.shared.theme = newValue
+//                    }
                     
-                    Picker("App Theme", selection: $theme){
-                        ForEach(AppTheme.allCases) { theme in
-                            Text(theme.rawValue.capitalized).tag(theme)
-                        }
+                    Picker("Theme", selection: $theme) {
+                        Text("System").tag(AppTheme.system)
+                        Text("Light").tag(AppTheme.light)
+                        Text("Dark").tag(AppTheme.dark)
                     }
-                    .onChange(of: theme) { newValue in
-                        LocalState.theme = newValue
-                    }
+                    .pickerStyle(SegmentedPickerStyle())
                     
                     HStack{
                         Text("Notifications turned \(isNotificationsEnabled ? "On" : "Off")")

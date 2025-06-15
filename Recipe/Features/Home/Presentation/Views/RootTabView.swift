@@ -20,22 +20,22 @@ struct RootTabView: View {
             ZStack {
                 switch tabRouter.selectedTab {
                 case .home:
-                    TabNavigationView(router: tabRouter.homeRouter) {
+                    TabNavigationView(router: tabRouter.router) {
                         HomeView()
                     }
                 case .favourites:
-                    TabNavigationView(router: tabRouter.favouritesRouter) {
+                    TabNavigationView(router: tabRouter.router) {
                         FavouritesListView()
                     }
                     .tabItem { Label("Favourites", systemImage: "heart.fill") }
                     .tag(TabItemEntity.favourites)
                     
                 case .profile:
-                    TabNavigationView(router: tabRouter.profileRouter) {
+                    TabNavigationView(router: tabRouter.router) {
                         ProfileView()
                     }
                 case .settings:
-                    TabNavigationView(router: tabRouter.settingsRouter) {
+                    TabNavigationView(router: tabRouter.router) {
                         SettingsScreen()
                     }
                 }
