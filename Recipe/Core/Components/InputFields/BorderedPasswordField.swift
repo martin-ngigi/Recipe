@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftUI
 
 struct BorderedPasswordField: View {
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @Binding var password: String
     @State var placeholder: String = "MyP@ss10"
     @State var description: String = ""
@@ -21,7 +20,7 @@ struct BorderedPasswordField: View {
         VStack(alignment: .leading, spacing: 5) {
             if !description.isEmpty {
                 Text(description)
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
             }
             
             /*
@@ -73,7 +72,7 @@ struct BorderedPasswordField: View {
             
             if !error.isEmpty {
                 Text(error)
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     .foregroundColor(.red)
             }
         }

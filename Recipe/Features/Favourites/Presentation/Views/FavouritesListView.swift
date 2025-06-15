@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FavouritesListView: View {
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @State var searchField = ""
     @EnvironmentObject var tabRouter: TabRouter
 
@@ -37,6 +36,5 @@ struct FavouritesListView: View {
 
 #Preview {
     FavouritesListView()
-        .environmentObject(ThemesViewModel())
         .environmentObject(TabRouter())
 }

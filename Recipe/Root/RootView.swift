@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var dashboardViewModel: DashboardViewModel
+    
     var body: some View {
         VStack {
             Group{
-                if dashboardViewModel.isFirstTimeUsingApp{
+                if LocalState.isFirstLaunch{
                     LandingView()
                 }
                 else {
@@ -26,5 +26,4 @@ struct RootView: View {
 
 #Preview {
     RootView()
-        .environmentObject(DashboardViewModel())
 }

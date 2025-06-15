@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @EnvironmentObject var dashboardViewModel : DashboardViewModel
+    @StateObject var dashboardViewModel = DashboardViewModel()
     @State var isDashboardBottomNavigationVisible : Bool = true
     @State var isKeyboardVisible : Bool = false
     @EnvironmentObject var tabRouter: TabRouter
@@ -132,7 +132,5 @@ extension DashboardView{
 
 #Preview {
     DashboardView()
-        .environmentObject(DashboardViewModel())
-        .environmentObject(ThemesViewModel())
         .environmentObject(TabRouter())
 }

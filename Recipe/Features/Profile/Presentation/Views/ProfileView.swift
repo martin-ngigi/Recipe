@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     var name = "John Doe"
     
     var initials: String {
@@ -21,7 +20,7 @@ struct ProfileView: View {
     var body: some View {
         VStack{
             Text(initials)
-                .font(.custom("\(themesViewModel.selectedFontPrefix)-Medium", size: 70))
+                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 70))
                 .frame(width: 100, height: 100)
                 .foregroundColor(.primary)
                 .padding(20)
@@ -44,20 +43,20 @@ struct ProfileView: View {
                 Section("Personal Details") {
                     HStack{
                         Text("Name:")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         Spacer()
                         
                         Text("John Doe")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     }
                     
                     HStack{
                         Text("Email:")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         Spacer()
                         
                         Text("john@gmail.com")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     }
                 }
                 
@@ -69,5 +68,4 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
-        .environmentObject(ThemesViewModel())
 }

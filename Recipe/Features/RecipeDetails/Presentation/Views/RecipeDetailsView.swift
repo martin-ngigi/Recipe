@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @State var recipe: String
 
     let ingredients = [
@@ -40,7 +39,7 @@ struct RecipeDetailsView: View {
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Chef John")
-                                .font(.custom("\(themesViewModel.selectedFontPrefix)-Medium", size: 17))
+                                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                 .foregroundColor(.white)
                                 .fontWeight(.semibold)
                         }
@@ -67,7 +66,7 @@ struct RecipeDetailsView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
                         Text("Tortilla Pizza Recipe")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-SemiBold", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-SemiBold", size: 17))
                             .fontWeight(.semibold)
                             .foregroundColor(Color.theme.blackAndWhite)
                         
@@ -79,17 +78,17 @@ struct RecipeDetailsView: View {
                     
 
                     Text("This tortilla pizza is extremely easy to make. It is light enough to be a snack, serves well as an appetizer, or is so good that it can be devoured alone! You can use any sort of topping variation.")
-                        .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         .foregroundColor(.secondary)
 
                     HStack {
                         Text("Ingredients")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Bold", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
                             .foregroundColor(Color.theme.blackAndWhite)
 
 
                         Text("(12)")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                             .foregroundColor(Color.theme.primaryColor)
                     }
 
@@ -109,7 +108,7 @@ struct RecipeDetailsView: View {
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(12)
@@ -131,6 +130,5 @@ struct RecipeDetailsView: View {
 
 #Preview {
     RecipeDetailsView(recipe: "")
-        .environmentObject(ThemesViewModel())
 
 }

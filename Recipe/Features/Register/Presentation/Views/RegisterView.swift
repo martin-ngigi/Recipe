@@ -14,7 +14,6 @@ struct RegisterView: View {
     @State var usernameError: String = ""
     @State var passwordError: String = ""
     @State var password: String = ""
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -22,10 +21,10 @@ struct RegisterView: View {
             VStack(spacing: 10){
                 VStack(spacing: 0){
                     Text("Glad that you are ready to join us!")
-                        .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     
                     Text("Let's sign you up")
-                        .font(.custom("\(themesViewModel.selectedFontPrefix)-Bold", size: 25))
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
                 }
                 
                 Image("login_illustration")
@@ -70,7 +69,7 @@ struct RegisterView: View {
                         RegisterView().navigationBarBackButtonHidden()
                     } label: {
                         Text("Already have account? \(Text("Login").foregroundColor(Color.blue))")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
                     
@@ -85,7 +84,7 @@ struct RegisterView: View {
                 .padding(.top, 20)
                 
                 Text("Or Sign in with")
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                 
                 HStack {
                     SocialAuthItemView(
@@ -123,6 +122,5 @@ struct RegisterView: View {
 
 #Preview {
     RegisterView()
-        .environmentObject(ThemesViewModel())
 
 }

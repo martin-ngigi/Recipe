@@ -21,15 +21,12 @@ struct RecipeApp: App {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
-    @StateObject private var themesViewModel = ThemesViewModel()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(TabRouter())
-                .environmentObject(DashboardViewModel())
-                .environmentObject(themesViewModel)
-                .preferredColorScheme(themesViewModel.colorScheme)
+                .preferredColorScheme(LocalState.colorScheme)
                 
         }
     }

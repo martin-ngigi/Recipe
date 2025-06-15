@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LandingView: View {
-    @EnvironmentObject var dashboardViewModel: DashboardViewModel
-
+    @StateObject var settingsViewModel = SettingsViewModel()
 
     var body: some View {
         VStack(spacing: 80){
@@ -31,7 +30,7 @@ struct LandingView: View {
             CustomButton(
                 buttonName: "Get Started",
                 onTap: {
-                    dashboardViewModel.isFirstTimeUsingApp = false
+                    LocalState.isFirstLaunch = false
                 }
             )
             .padding(.bottom, 10)
@@ -63,12 +62,10 @@ struct LandingView: View {
 
 #Preview {
     LandingView()
-        .environmentObject(DashboardViewModel())
 }
 
 #Preview{
     LandingView()
-        .environmentObject(DashboardViewModel())
         .environment(\.locale, Locale(identifier: "sw"))
 }
 

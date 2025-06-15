@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @State var isDarkMode = false
     @State var isNotificationsEnabled = false
+    @State var theme: AppTheme = LocalState.theme
 
     var body: some View {
         VStack{
@@ -22,25 +22,18 @@ struct SettingsScreen: View {
                     .frame(width: 50, height: 50)
                 
                 Text("Customize your settings")
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
             }
             .padding(.top)
             
-            Form{
-                Picker("App Theme", selection: $themesViewModel.selectedTheme){
-                    ForEach(AppTheme.allCases) { theme in
-                        Text(theme.rawValue.capitalized).tag(theme)
-                    }
-                }
-            }
-            
-            
+           
             List {
                 Section ("App Settings"){
                     
+                    /*
                     HStack{
                         Text("\(isDarkMode ? "Dark" : "Light") Mode")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         
                         Spacer()
                         
@@ -51,10 +44,20 @@ struct SettingsScreen: View {
                             }
                         )
                     }
+                    */
+                    
+                    Picker("App Theme", selection: $theme){
+                        ForEach(AppTheme.allCases) { theme in
+                            Text(theme.rawValue.capitalized).tag(theme)
+                        }
+                    }
+                    .onChange(of: theme) { newValue in
+                        LocalState.theme = newValue
+                    }
                     
                     HStack{
                         Text("Notifications turned \(isNotificationsEnabled ? "On" : "Off")")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         
                         Spacer()
                         
@@ -68,15 +71,15 @@ struct SettingsScreen: View {
                     
                     HStack{
                         Text("Font")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
                         
                         Button{
                             
                         } label: {
                             HStack{
-                                Text("\(themesViewModel.selectedFontPrefix)")
-                                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                                Text("\(LocalState.selectedFontPrefix)")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                                     .foregroundColor(Color.theme.blackAndWhite)
                                 
                                 Image(systemName: "chevron.right")
@@ -97,12 +100,12 @@ struct SettingsScreen: View {
                         
                         Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0") ")
                     }
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                     
                     
                     HStack{
                         Text("Privacy policy")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
                         
                         Button{
@@ -114,7 +117,7 @@ struct SettingsScreen: View {
                     
                     HStack{
                         Text("FAQs")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
                         
                         Button{
@@ -126,7 +129,7 @@ struct SettingsScreen: View {
                     
                     HStack{
                         Text("Feedback and ratings")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 17))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
                         
                         Button{
@@ -148,5 +151,4 @@ struct SettingsScreen: View {
 
 #Preview {
     SettingsScreen()
-        .environmentObject(ThemesViewModel())
 }

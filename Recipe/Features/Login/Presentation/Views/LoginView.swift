@@ -12,7 +12,6 @@ struct LoginView: View {
     @State var usernameError: String = ""
     @State var passwordError: String = ""
     @State var password: String = ""
-    @EnvironmentObject var themesViewModel: ThemesViewModel
     @Environment(\.dismiss) var dismiss
     @Environment(\.showError) private var showError
 
@@ -22,10 +21,10 @@ struct LoginView: View {
             VStack(spacing: 10){
                 VStack(spacing: 0){
                     Text("First things first")
-                        .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     
                     Text("Let's log you in")
-                        .font(.custom("\(themesViewModel.selectedFontPrefix)-Bold", size: 25))
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
                 }
                 
                 Image("login_illustration")
@@ -59,7 +58,7 @@ struct LoginView: View {
                         RegisterView().navigationBarBackButtonHidden()
                     } label: {
                         Text("Already have account? \(Text("Create").foregroundColor(Color.blue))")
-                            .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
                     
@@ -74,7 +73,7 @@ struct LoginView: View {
                 .padding(.top, 20)
                 
                 Text("Or Login with")
-                    .font(.custom("\(themesViewModel.selectedFontPrefix)-Light", size: 14))
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                 
                 HStack {
                     SocialAuthItemView(
@@ -112,5 +111,4 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environmentObject(ThemesViewModel())
 }
