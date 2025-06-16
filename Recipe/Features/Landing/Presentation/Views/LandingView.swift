@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LandingView: View {
     @StateObject var settingsViewModel = SettingsViewModel()
+    @EnvironmentObject var router: Router
 
     var body: some View {
         VStack(spacing: 80){
@@ -31,6 +32,7 @@ struct LandingView: View {
                 buttonName: "Get Started",
                 onTap: {
                     LocalState.isFirstLaunch = false
+                    router.push(.dashboard)
                 }
             )
             .padding(.bottom, 10)

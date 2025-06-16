@@ -26,3 +26,41 @@ class Router: ObservableObject{
         path.removeLast(path.count)
     }
 }
+
+
+@ViewBuilder
+func viewForRoute(_ route: Route, router: Router) -> some View{
+    switch route {
+        
+    case .landing:
+        LandingView()
+            .navigationBarBackButtonHidden()
+        
+    case .dashboard:
+        DashboardView()
+        
+    case .login:
+        LoginView()
+            .navigationBarBackButtonHidden()
+        
+    case .register:
+        RegisterView()
+            .navigationBarBackButtonHidden()
+
+    case .home:
+        HomeView()
+
+    case .favourites:
+        FavouriteItemView()
+ 
+    case .profile:
+        ProfileView()
+
+    case .settings:
+        SettingsScreen()
+        
+    case .recipedetails(let recipe):
+        RecipeDetailsView(recipe: recipe)
+        
+    }
+}

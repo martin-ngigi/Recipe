@@ -14,7 +14,7 @@ struct HomeView: View {
             GridItem(.flexible())
         ]
     
-    @EnvironmentObject var tabRouter: TabRouter
+    @EnvironmentObject var router: Router
 
 
     var body: some View {
@@ -70,7 +70,7 @@ struct HomeView: View {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(0..<4) { index in
                                 Button{
-                                    tabRouter.router.push(.recipedetails(recipe: ""))
+                                    router.push(.recipedetails(recipe: ""))
                                 } label: {
                                     RecipeItemView()
                                         .foregroundColor(Color.theme.blackAndWhite)
@@ -102,6 +102,6 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
-        .environmentObject(TabRouter())
+        .environmentObject(Router())
 
 }

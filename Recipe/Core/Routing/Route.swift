@@ -13,6 +13,7 @@ enum Route: Hashable {
     case login
     case register
     
+    case dashboard
     case home
     case favourites
     case profile

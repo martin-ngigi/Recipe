@@ -52,7 +52,6 @@ struct SettingsScreen: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .onChange(of: themesViewModel.currentTheme) { newValue in
-                            print("DEBUG: themesViewModel.currentTheme \(newValue)")
                             themesViewModel.changeTheme(to: newValue)
                         }
                     }

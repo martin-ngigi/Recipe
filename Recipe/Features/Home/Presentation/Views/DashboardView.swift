@@ -17,31 +17,17 @@ struct DashboardView: View {
         ZStack(alignment: .bottom){
             
             TabView(selection: $tabRouter.selectedTab) {
-                TabNavigationView(router: tabRouter.router) {
-                    HomeView()
-                }
-                //.tag(0)
-                .tag(TabItemEntity.home)
+                HomeView()
+                    .tag(TabItemEntity.home)
                 
+                FavouritesListView()
+                    .tag(TabItemEntity.favourites)
                 
+                SettingsScreen()
+                    .tag(TabItemEntity.settings)
                 
-                TabNavigationView(router: tabRouter.router) {
-                    FavouritesListView()
-                }
-                //.tag(1)
-                .tag(TabItemEntity.favourites)
-                
-                TabNavigationView(router: tabRouter.router) {
-                    SettingsScreen()
-                }
-                //.tag(2)
-                .tag(TabItemEntity.settings)
-                
-                TabNavigationView(router: tabRouter.router) {
-                    ProfileView()
-                }
-                //.tag(3)
-                .tag(TabItemEntity.profile)
+                ProfileView()
+                    .tag(TabItemEntity.profile)
             }
 
             if isDashboardBottomNavigationVisible && !isKeyboardVisible {
@@ -49,9 +35,7 @@ struct DashboardView: View {
                     HStack(spacing: 0) { // Add spacing of 0 to remove default padding between items
                         ForEach(TabItemEntity.allCases, id: \.self) { item in
                             Button {
-                                //dashboardViewModel.selectedTab = item.rawValue
                                 tabRouter.selectedTab = item
-                                print("DEBUG: tabRouter.selectedTab \(tabRouter.selectedTab), item \(item.rawValue)")
                             } label: {
                                 MyCustomTab(image: item.icon, title: item.title, isSelected: (tabRouter.selectedTab == item), bgColor: item.color)
                                     .frame(maxWidth: .infinity) // Make each MyCustomTab expand to fill space

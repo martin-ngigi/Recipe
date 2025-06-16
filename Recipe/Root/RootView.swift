@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct RootView: View {
-    
+    @EnvironmentObject var router: Router
+
     var body: some View {
-        VStack {
+        NavigationStack(path: $router.path) {
             Group{
                 if LocalState.isFirstLaunch{
                     LandingView()
                 }
                 else {
                     DashboardView()
-//                    RootTabView()
                 }
+            }
+            .navigationDestination(for: Route.self) { route in
+                viewForRoute(route, router: router)
             }
         }
     }

@@ -27,26 +27,11 @@ struct RecipeApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(Router())
                 .environmentObject(TabRouter())
-                //.preferredColorScheme(colorScheme)
                 .onAppear{
                     themesViewModel.setAppTheme()
                 }
-                
-        }
-    }
-    
-    var colorScheme: ColorScheme?{
-        switch theme{
-            case .system:
-            print("DEBUG: theme is \(theme)")
-                return nil
-            case .dark:
-            print("DEBUG: theme is \(theme)")
-                return .dark
-            case .light:
-            print("DEBUG: theme is \(theme)")
-                return .light
         }
     }
   
