@@ -12,11 +12,14 @@ enum Keys: String{
     case isFirstTimeUsingApp
     case fontPrefix
     case theme
+    case isDarkModeOn
 }
 
 public class LocalState {
     @AppStorage(Keys.isFirstTimeUsingApp.rawValue) static var isFirstLaunch: Bool = true
     @AppStorage(Keys.fontPrefix.rawValue) static var selectedFontPrefix: String = "Poppins"
+    @AppStorage(Keys.isDarkModeOn.rawValue) static var isDarkModeOn: Bool = false
+    
     //@AppStorage(Keys.theme.rawValue) static var theme: AppTheme = AppTheme.system
     
     /*

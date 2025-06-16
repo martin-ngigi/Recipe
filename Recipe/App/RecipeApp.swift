@@ -22,13 +22,16 @@ struct RecipeApp: App {
     }
     
     @AppStorage(Keys.theme.rawValue) var theme: AppTheme = AppTheme.system
-    
+    @StateObject var themesViewModel = ThemesViewModel()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(TabRouter())
-                .preferredColorScheme(colorScheme)
+                //.preferredColorScheme(colorScheme)
+                .onAppear{
+                    themesViewModel.setAppTheme()
+                }
                 
         }
     }

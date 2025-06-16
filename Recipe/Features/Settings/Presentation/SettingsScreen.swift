@@ -10,9 +10,9 @@ import SwiftUI
 struct SettingsScreen: View {
     @State var isDarkMode = false
     @State var isNotificationsEnabled = false
-   // @State var theme: AppTheme = LocalState.shared.theme
-    @AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
-
+    //@AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
+    @StateObject var themesViewModel = ThemesViewModel()
+    
     var body: some View {
         VStack{
             VStack{
@@ -31,21 +31,31 @@ struct SettingsScreen: View {
             List {
                 Section ("App Settings"){
                     
-//                    Picker("App Theme", selection: $theme){
-//                        ForEach(AppTheme.allCases) { theme in
-//                            Text(theme.rawValue.capitalized).tag(theme)
-//                        }
-//                    }
-//                    .onChange(of: theme) { newValue in
-//                        LocalState.shared.theme = newValue
-//                    }
-                    
+                    /*
                     Picker("Theme", selection: $theme) {
                         Text("System").tag(AppTheme.system)
                         Text("Light").tag(AppTheme.light)
                         Text("Dark").tag(AppTheme.dark)
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                    */
+                    
+                    VStack(alignment: .leading, spacing: 0){
+                        Text("Theme")
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                        
+                        Picker("Theme", selection: $themesViewModel.currentTheme) {
+                            ForEach(ThemeEntity.allCases) { theme in
+                                Text(theme.themName)
+                                    .tag(theme)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: themesViewModel.currentTheme) { newValue in
+                            print("DEBUG: themesViewModel.currentTheme \(newValue)")
+                            themesViewModel.changeTheme(to: newValue)
+                        }
+                    }
                     
                     HStack{
                         Text("Notifications turned \(isNotificationsEnabled ? "On" : "Off")")
