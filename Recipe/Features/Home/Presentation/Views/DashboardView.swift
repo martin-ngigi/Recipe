@@ -15,7 +15,6 @@ struct DashboardView: View {
 
     var body: some View {
         ZStack(alignment: .bottom){
-            
             TabView(selection: $tabRouter.selectedTab) {
                 HomeView()
                     .tag(TabItemEntity.home)
@@ -46,7 +45,6 @@ struct DashboardView: View {
                     .padding(5)
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.90, height: 75)
-                //.background(Color.gray.opacity(0.5))
                 .background(.ultraThinMaterial.opacity(0.9))
                 .cornerRadius(10)
                 .overlay(
@@ -95,7 +93,6 @@ extension DashboardView{
                    .resizable()
                    .frame(width: 43, height: 43)
                    .padding(9)
-                   //.background(isSelected ? Color.theme.primaryColor : bgColor)
                    .background(bgColor)
                    .cornerRadius(8)
                    .overlay(

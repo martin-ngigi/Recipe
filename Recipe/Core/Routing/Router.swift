@@ -38,6 +38,7 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
         
     case .dashboard:
         DashboardView()
+           // .navigationBarBackButtonHidden() //MARK: Temporal fix
         
     case .login:
         LoginView()
