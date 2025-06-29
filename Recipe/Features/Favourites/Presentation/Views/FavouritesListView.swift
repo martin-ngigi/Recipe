@@ -17,7 +17,7 @@ struct FavouritesListView: View {
             ScrollView(showsIndicators: false) {
                 ForEach(0..<10, id: \.self){ item in
                     Button{
-                        router.push(.recipedetails(recipe: ""))
+                        //router.push(.recipedetails(recipe: ""))
                     } label: {
                         FavouriteItemView()
                             .foregroundColor(Color.theme.blackAndWhite)

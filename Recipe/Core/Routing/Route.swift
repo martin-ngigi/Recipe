@@ -20,5 +20,5 @@ enum Route: Hashable {
     case settings
     
 
-    case recipedetails(recipe: String)
+    case recipedetails(recipe: RecipeModel)
 }

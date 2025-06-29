@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    @State var recipe: String
+    @State var recipe: RecipeModel
 
     let ingredients = [
         ("soft flour tortilla", "1", "🥙"),
@@ -128,7 +128,7 @@ struct RecipeDetailsView: View {
     }
 }
 
-#Preview {
-    RecipeDetailsView(recipe: "")
-
-}
+//#Preview {
+//    RecipeDetailsView(recipe: "")
+//
+//}

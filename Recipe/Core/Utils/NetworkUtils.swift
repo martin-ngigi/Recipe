@@ -11,10 +11,10 @@ import SwiftUI
 class NetworkUtils {
     static let shared = NetworkUtils()
     
-    func makeAPIRequest<T: Encodable>(
+    func makeAPIRequest(
         url: URL,
         httpMethod: HttpMethod,
-        postData: T? = nil,
+        postData: Any? = nil, // can be a Model or JSON request
         isSecureRequest: Bool = true
     ) async -> (Data?, URLResponse?) {
         
@@ -36,11 +36,29 @@ class NetworkUtils {
                 }
                 request.addValue(deviceID, forHTTPHeaderField: "device_id")
                 
+                /*
                 if httpMethod == .POST || httpMethod == .PUT || httpMethod == .PATCH {
                     if let postData = postData {
                         let jsonData = try JSONEncoder().encode(postData)
                         request.httpBody = jsonData
                     } else {
+                        request.httpBody = Data()
+                    }
+                }
+                */
+                
+                if let postData = postData {
+                    if let dictData = postData as? [String: Any] { //MARK: JSON DATA. So serialize dictionary to JSON data
+                        let jsonData = try JSONSerialization.data(withJSONObject: dictData, options: [])
+                        request.httpBody = jsonData
+                    }
+                    else if let codableData = postData as? Encodable { //MARK: MODEL DATA. So encode Codable model
+                        // Try
+                        let jsonData = try JSONEncoder().encode(AnyEncodable(codableData))
+                        request.httpBody = jsonData
+                    }
+                    else {
+                        print("DEBUG: Unsupported postData type")
                         request.httpBody = Data()
                     }
                 }
@@ -53,9 +71,13 @@ class NetworkUtils {
                 
                 if let responseString = String(data: data, encoding: .utf8) {
                     print("DEBUG: ************************************************************************************************")
+                    print("DEBUG: URL: \(url)")
+                    print("DEBUG: ************************************************************************************************")
                     print("DEBUG: Raw Response: \(responseString)")
                     print("DEBUG: ************************************************************************************************")
                 } else {
+                    print("DEBUG: ************************************************************************************************")
+                    print("DEBUG: URL: \(url)")
                     print("DEBUG: ************************************************************************************************")
                     print("DEBUG: Raw Response: \(data)")
                     print("DEBUG: ************************************************************************************************")

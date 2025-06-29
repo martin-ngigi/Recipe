@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeItemView: View {
+    let recipe: RecipeModel
+    
     var body: some View {
         VStack{
             Spacer()
@@ -15,7 +17,7 @@ struct RecipeItemView: View {
             VStack(alignment: .leading, spacing: 2){
                 Spacer()
                 
-                Text("Title here")
+                Text(recipe.name)
                     .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                     .foregroundColor(Color.theme.whiteColor)
                 
@@ -25,7 +27,7 @@ struct RecipeItemView: View {
                         .frame(width: 14, height: 14)
                         .foregroundColor(Color.theme.whiteColor)
                     
-                    Text("4.5")
+                    Text("\(recipe.chef?.totalRatings ?? 0.0)")
                         .font(.custom(FontConstants.POPPINS_MEDIUM, size: 12))
                         .foregroundColor(Color.theme.whiteColor)
                     
@@ -45,9 +47,10 @@ struct RecipeItemView: View {
                 .edgesIgnoringSafeArea(.all)
         )
         .cornerRadius(20)
+        .foregroundColor(Color.theme.blackAndWhite)
     }
 }
 
-#Preview {
-    RecipeItemView()
-}
+//#Preview {
+//    RecipeItemView()
+//}
