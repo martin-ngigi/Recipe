@@ -42,9 +42,14 @@ struct RecipeItemView: View {
         }
         .frame(width: 170, height: 150)
         .background(
-            Image("pizza")
-                .resizable()
-                .edgesIgnoringSafeArea(.all)
+            
+            CustomImageView(
+                url: recipe.image,
+                maxWidth: .infinity,
+                height: 40
+            )
+            .edgesIgnoringSafeArea(.all)
+            
         )
         .cornerRadius(20)
         .foregroundColor(Color.theme.blackAndWhite)

@@ -24,7 +24,7 @@ struct RecipeModel: Codable, Hashable{
         case recipeId = "recipe_id"
         case name
         case description
-        case ingredients
+        case ingredients = "ingredients_list"
         case image
         case chefId = "chef_id"
         case instructions
