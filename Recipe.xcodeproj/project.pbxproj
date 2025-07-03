@@ -441,6 +441,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Recipe/Preview Content\"";
 				DEVELOPMENT_TEAM = JJ5G6DQS7M;
 				ENABLE_PREVIEWS = YES;
+				GCC_OPTIMIZATION_LEVEL = "No Optimization [-Onone]";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Recipe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

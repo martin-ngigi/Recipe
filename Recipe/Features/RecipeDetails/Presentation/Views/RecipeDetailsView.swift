@@ -11,34 +11,29 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     @State var recipe: RecipeModel
-
-    let ingredients = [
-        ("soft flour tortilla", "1", "🥙"),
-        ("teaspoon olive oil", "1", "🫒"),
-        ("pinch garlic powder", "1", "🧄"),
-        ("salt and black pepper", "10g", "🧂"),
-        ("tablespoons tomato sauce", "3", "🍅"),
-        // Add more ingredients as needed...
-    ]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 ZStack(alignment: .bottomLeading) {
-                    Image("pizza") // Replace with your image asset name
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 240)
-                        .clipped()
+                    
+                    CustomImageView(
+                        url: recipe.image,
+                        maxWidth: .infinity,
+                        height: 240
+                    )
                     
                     HStack(spacing: 12) {
-                        Image("chef") // Replace with your chef image asset
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 40, height: 40)
+                        
+                        CustomImageView(
+                            url: recipe.chef?.avatar ?? "",
+                            maxWidth: 40,
+                            height: 40
+                        )
+                        .clipShape(Circle())
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Chef John")
+                            Text(recipe.chef?.name ?? "")
                                 .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                 .foregroundColor(.white)
                                 .fontWeight(.semibold)
@@ -65,7 +60,7 @@ struct RecipeDetailsView: View {
 
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
-                        Text("Tortilla Pizza Recipe")
+                        Text(recipe.name)
                             .font(.custom("\(LocalState.selectedFontPrefix)-SemiBold", size: 17))
                             .fontWeight(.semibold)
                             .foregroundColor(Color.theme.blackAndWhite)
@@ -77,7 +72,7 @@ struct RecipeDetailsView: View {
                     }
                     
 
-                    Text("This tortilla pizza is extremely easy to make. It is light enough to be a snack, serves well as an appetizer, or is so good that it can be devoured alone! You can use any sort of topping variation.")
+                    Text(recipe.description)
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         .foregroundColor(.secondary)
 
@@ -87,32 +82,16 @@ struct RecipeDetailsView: View {
                             .foregroundColor(Color.theme.blackAndWhite)
 
 
-                        Text("(12)")
+                        Text("(\(recipe.ingredients.count))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                             .foregroundColor(Color.theme.primaryColor)
                     }
 
                     VStack(spacing: 12) {
-                        ForEach(ingredients, id: \.0) { name, quantity, icon in
-                            HStack {
-                                Text(icon)
-                                    .font(.largeTitle)
-                                
-                                Text(name)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.primary)
-                                
-                                Spacer()
-                                
-                                Text(quantity)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(12)
+                        ForEach(recipe.ingredients, id: \.self) { ingredient in
+                            IngredientRow(ingredient: ingredient)
                         }
+                         
                     }
                 }
                 .padding()
@@ -128,7 +107,7 @@ struct RecipeDetailsView: View {
     }
 }
 
-//#Preview {
-//    RecipeDetailsView(recipe: "")
-//
-//}
+#Preview {
+    RecipeDetailsView(recipe: RecipeModel.sampleRecipeModel)
+
+}
