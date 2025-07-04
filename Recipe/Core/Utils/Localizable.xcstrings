@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "...and %lld more items" : {
+
+    },
+    "...show less" : {
+
+    },
     "(%lld)" : {
 
     },
@@ -11,6 +17,9 @@
 
     },
     "%lf" : {
+
+    },
+    "%lld)." : {
 
     },
     "Already have account? %@" : {
@@ -68,6 +77,9 @@
 
     },
     "Ingredients" : {
+
+    },
+    "Instructions" : {
 
     },
     "John Doe" : {

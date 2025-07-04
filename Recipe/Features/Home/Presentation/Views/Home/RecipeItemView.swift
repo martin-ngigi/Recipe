@@ -17,7 +17,7 @@ struct RecipeItemView: View {
             VStack(alignment: .leading, spacing: 2){
                 Spacer()
                 
-                Text(recipe.chef?.name ?? "--")
+                Text(recipe.name)
                     .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                     .foregroundColor(Color.theme.whiteColor)
                 

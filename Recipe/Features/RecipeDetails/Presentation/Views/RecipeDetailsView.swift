@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct RecipeDetailsView: View {
     @State var recipe: RecipeModel
+    @State var isShowAllItems = false
     
     var body: some View {
         ScrollView {
@@ -90,10 +89,52 @@ struct RecipeDetailsView: View {
                     }
 
                     VStack(spacing: 12) {
-                        ForEach(recipe.ingredients, id: \.self) { ingredient in
-                            IngredientRow(ingredient: ingredient)
+                        if recipe.ingredients.count > 3{
+                            VStack(spacing: 2) {
+                                
+                                ForEach(recipe.ingredients.prefix(isShowAllItems ? recipe.ingredients.count :  3), id: \.self) { ingredient in
+                                    IngredientRow(ingredient: ingredient)
+                                }
+                                
+                                HStack {
+                                    Spacer()
+                                    Text(isShowAllItems ? "...show less" : "...and \(recipe.ingredients.count - 3) more items")
+                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                                        .foregroundColor(Color.theme.primaryColor)
+                                        .padding(.vertical)
+                                        .onTapGesture {
+                                            isShowAllItems.toggle()
+                                        }
+                                }
+                            }
                         }
-                         
+                        else {
+                            ForEach(recipe.ingredients, id: \.self) { ingredient in
+                                IngredientRow(ingredient: ingredient)
+                            }
+                        }
+                    }
+                    
+                    
+                    VStack {
+                        Text("Instructions")
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
+                            .foregroundColor(Color.theme.blackAndWhite)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        ForEach(Array(recipe.inststuctionsList.enumerated()), id: \.element) { index, instruction in
+                            HStack(alignment: .top) {
+                                Text("\(index + 1)).")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                    .foregroundColor(Color.theme.blackAndWhite)
+                                    .frame(width: 24, alignment: .leading)
+                                
+                                Text(instruction)
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                    .foregroundColor(Color.theme.blackAndWhite)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
                     }
                 }
                 .padding()
@@ -111,5 +152,4 @@ struct RecipeDetailsView: View {
 
 #Preview {
     RecipeDetailsView(recipe: RecipeModel.sampleRecipeModel)
-
 }
