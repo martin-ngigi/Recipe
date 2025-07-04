@@ -17,7 +17,9 @@ struct CustomImageView: View {
              switch phase {
              case .failure:
                  Image(systemName: "photo")
-                     .font(.largeTitle)
+                     //.font(.largeTitle)
+                     .resizable()
+                     .scaledToFill()
              case .success(let image):
                  image
                      .resizable()

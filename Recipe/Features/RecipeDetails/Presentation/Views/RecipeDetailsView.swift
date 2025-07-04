@@ -44,6 +44,8 @@ struct RecipeDetailsView: View {
                         Button(action: {}) {
                             HStack {
                                 Text("Follow")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                                
                                 Image(systemName: "plus")
                             }
                             .padding(.horizontal, 10)

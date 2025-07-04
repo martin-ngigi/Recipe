@@ -15,7 +15,7 @@ struct RecipeModel: Codable, Hashable{
     let image: String
     let chefId: String
     let instructions: String
-    let chef: ChefModel? = nil
+    var chef: ChefModel? = nil
     var inststuctionsList: [String]{
         return instructions.instructionsList
     }

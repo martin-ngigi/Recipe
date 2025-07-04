@@ -20,17 +20,19 @@ struct IngredientRow: View {
             )
             .clipShape(.rect(cornerRadius: 10))
             
-            Text(ingredient.name)
-                .fontWeight(.medium)
-                .foregroundColor(.primary)
+            VStack(alignment: .leading){
+                Text(ingredient.name)
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
+                    .foregroundColor(.primary)
+                                
+                Text(ingredient.quantity)
+                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                    .foregroundColor(.gray)
+            }
             
             Spacer()
             
-            Text(ingredient.quantity)
-                .font(.subheadline)
-                .foregroundColor(.gray)
         }
-        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
         .padding()
         .background(Color(.systemGray6))
         .cornerRadius(12)
