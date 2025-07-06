@@ -40,9 +40,10 @@ struct RecipeDetailsView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(recipe.chef?.name ?? "")
                                         .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
-                                        .foregroundColor(.white)
+                                        .lineSpacing(3.0)
+                                        .foregroundColor(Color.theme.whiteAndBlack)
                                         .fontWeight(.semibold)
-                                        .underline(true, color: Color.theme.primaryColor)
+                                        .underline(true, color: Color.theme.whiteAndBlack)
                                 }
                             }
                         }

@@ -11,6 +11,9 @@ struct TotalRateModel: Codable, Hashable {
     let rating: Double
     let totalRatings: Int
     let createdAt, updatedAt: String
+    var ratingFormatted: String{
+        return "\(rating)".to2Decimals()
+    }
 
     enum CodingKeys: String, CodingKey {
         case rateID = "rate_id"

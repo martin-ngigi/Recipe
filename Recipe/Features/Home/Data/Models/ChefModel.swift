@@ -15,7 +15,7 @@ struct ChefModel: Codable, Hashable{
     let avatar: String
     var recipesList: [RecipeModel]? = nil
     var allRates: [AllRatingModel]? = nil
-    //let rate: [TotalRateModel]? = nil
+    var rate: TotalRateModel? = nil
     
     enum CodingKeys: String, CodingKey {
         case openId = "open_id"
@@ -25,6 +25,6 @@ struct ChefModel: Codable, Hashable{
         case avatar
         case recipesList = "recipes_list"
         case allRates = "all_rates"
-       // case rate = "rate"
+        case rate = "rate"
     }
 }

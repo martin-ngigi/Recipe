@@ -22,17 +22,15 @@ struct RecipeItemView: View {
                     .foregroundColor(Color.theme.whiteColor)
                 
                 HStack{
-                    Image(systemName: "star")
+                    Image(systemName: "star.fill")
                         .resizable()
                         .frame(width: 14, height: 14)
-                        .foregroundColor(Color.theme.whiteColor)
+                        .foregroundColor(Color.theme.primaryColor)
                     
-                    //Text("\(recipe.chef?.totalRatings ?? 0.0)")
-                    Text("\(0.0)")
-                    
+                    Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
                         .font(.custom(FontConstants.POPPINS_MEDIUM, size: 12))
-                        .foregroundColor(Color.theme.whiteColor)
-                    
+                        .foregroundStyle(Color.theme.primaryColor)
+
                     Spacer()
                 }
             }

@@ -65,4 +65,8 @@ extension String {
             return [self]
         }
     }
+    
+    func to2Decimals() -> String {
+        return String(format: "%.2f", Double(self) ?? 0.0)
+    }
 }
