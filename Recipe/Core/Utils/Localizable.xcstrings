@@ -22,6 +22,9 @@
     "%lld)." : {
 
     },
+    "⭐️ %@" : {
+
+    },
     "Already have account? %@" : {
 
     },
@@ -32,6 +35,9 @@
 
     },
     "App Version" : {
+
+    },
+    "Chef Details" : {
 
     },
     "Cook Like a Chef" : {
@@ -124,6 +130,9 @@
     "Privacy policy" : {
 
     },
+    "Ratings & Reviews" : {
+
+    },
     "RecipeApp is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home" : {
       "localizations" : {
         "sw-KE" : {
@@ -133,6 +142,9 @@
           }
         }
       }
+    },
+    "Recipes" : {
+
     },
     "Retry" : {
 

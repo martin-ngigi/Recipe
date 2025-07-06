@@ -10,7 +10,8 @@ import SwiftUI
 struct RecipeDetailsView: View {
     @State var recipe: RecipeModel
     @State var isShowAllItems = false
-    
+    @EnvironmentObject var router: Router
+
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -23,20 +24,29 @@ struct RecipeDetailsView: View {
                     )
                     
                     HStack(spacing: 12) {
-                        
-                        CustomImageView(
-                            url: recipe.chef?.avatar ?? "",
-                            maxWidth: 40,
-                            height: 40
-                        )
-                        .clipShape(Circle())
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(recipe.chef?.name ?? "")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
-                                .foregroundColor(.white)
-                                .fontWeight(.semibold)
+                        Button{
+                            if let chef = recipe.chef {
+                                router.push(.chefdetails(chef: chef))
+                            }
+                        } label: {
+                            HStack(spacing: 12) {
+                                CustomImageView(
+                                    url: recipe.chef?.avatar ?? "",
+                                    maxWidth: 40,
+                                    height: 40
+                                )
+                                .clipShape(Circle())
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(recipe.chef?.name ?? "")
+                                        .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
+                                        .foregroundColor(.white)
+                                        .fontWeight(.semibold)
+                                        .underline(true, color: Color.theme.primaryColor)
+                                }
+                            }
                         }
+                        
                         
                         Spacer()
                         

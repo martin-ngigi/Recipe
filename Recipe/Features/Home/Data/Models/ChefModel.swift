@@ -8,23 +8,23 @@
 import Foundation
 
 struct ChefModel: Codable, Hashable{
-    let chefId: String
+    let openId: String
     let name: String
     let email: String
-    let phone: String
+    let phone: String?
     let avatar: String
-    let rating: Double
-    let totalRatings: Double
-    let recipesList: [RecipeModel]? = nil
+    var recipesList: [RecipeModel]? = nil
+    var allRates: [AllRatingModel]? = nil
+    //let rate: [TotalRateModel]? = nil
     
     enum CodingKeys: String, CodingKey {
-        case chefId = "chef_id"
+        case openId = "open_id"
         case name
         case email
         case phone
         case avatar
-        case rating
-        case totalRatings = "total_ratings"
         case recipesList = "recipes_list"
+        case allRates = "all_rates"
+       // case rate = "rate"
     }
 }

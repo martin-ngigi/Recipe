@@ -17,6 +17,7 @@ class Constants {
     static let ANDROID_TEST_URL: String = "http://192.168.1.102:8000"
     static let prefix: String = "/api"
     static let homeURL: String = "\(prefix)/home"
+    static let getChefByIdURL: String = "\(prefix)/chefs/get-by-id"
     
     
     static var BASE_URL: String {
@@ -29,11 +30,14 @@ class Constants {
     
     enum APIEdpoint {
         case home
+        case getChefById(chefId: String)
         
         var url: URL? {
             switch self {
             case .home:
                 return URL(string: "\(BASE_URL)\(homeURL)")
+            case .getChefById(let chefId):
+                return URL(string: "\(BASE_URL)\(getChefByIdURL)?open_id=\(chefId)")
             }
         }
     }

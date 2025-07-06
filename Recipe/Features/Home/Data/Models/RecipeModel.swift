@@ -9,11 +9,11 @@ import Foundation
 
 struct RecipeModel: Codable, Hashable{
     let recipeId: String
+    let openId: String
     let name: String
     let description: String
     let ingredients: [IngredientModel]
     let image: String
-    let chefId: String
     let instructions: String
     var chef: ChefModel? = nil
     var inststuctionsList: [String]{
@@ -21,13 +21,13 @@ struct RecipeModel: Codable, Hashable{
     }
     
     enum CodingKeys: String, CodingKey {
-        case recipeId = "recipe_id"
+        case openId = "open_id"
         case name
         case description
         case ingredients = "ingredients_list"
         case image
-        case chefId = "chef_id"
         case instructions
+        case recipeId = "recipe_id"
         case chef
     }
 }
@@ -36,6 +36,7 @@ extension RecipeModel{
     
     static var sampleRecipeModel: RecipeModel = RecipeModel(
         recipeId: "20d691d4-71b3-4ba4-91ac-df65947afb2a",
+        openId: "jhgfsweid",
         name: "Nyama Choma",
         description: "Nyama Choma is a delicious Kenyan goat meat delicacy you can enjoy any time of the day. It is nutritious, versatile, and oh-so finger-licking good!",
         ingredients: [
@@ -113,7 +114,13 @@ extension RecipeModel{
             ),
         ],
         image: "https://cdn.foodandmeal.com/wp-content/uploads/2023/10/3.1-1-3.jpg?strip=all&lossy=1&ssl=1\"",
-        chefId: "8ab3e4a3-e2c5-45d9-82af-1dc521ac6754",
-        instructions:  "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water."
+        instructions:  "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water.",
+        chef: ChefModel(
+            openId: "kjhgfe2w",
+            name: "Chef John",
+            email: "chef.john@gmail.com",
+            phone: "07123456789",
+            avatar: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2hlZmxlYXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+        )
     )
 }

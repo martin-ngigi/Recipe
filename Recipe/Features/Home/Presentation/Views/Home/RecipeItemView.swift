@@ -27,7 +27,9 @@ struct RecipeItemView: View {
                         .frame(width: 14, height: 14)
                         .foregroundColor(Color.theme.whiteColor)
                     
-                    Text("\(recipe.chef?.totalRatings ?? 0.0)")
+                    //Text("\(recipe.chef?.totalRatings ?? 0.0)")
+                    Text("\(0.0)")
+                    
                         .font(.custom(FontConstants.POPPINS_MEDIUM, size: 12))
                         .foregroundColor(Color.theme.whiteColor)
                     

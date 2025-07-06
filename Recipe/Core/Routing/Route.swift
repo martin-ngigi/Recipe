@@ -21,4 +21,5 @@ enum Route: Hashable {
     
 
     case recipedetails(recipe: RecipeModel)
+    case chefdetails(chef: ChefModel)
 }
