@@ -109,7 +109,7 @@ struct RecipeDetailsView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    Text(isShowAllItems ? "...show less" : "...and \(recipe.ingredients.count - 3) more items")
+                                    Text(isShowAllItems ? "...show less" : "...\(recipe.ingredients.count - 3) more items")
                                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                                         .foregroundColor(Color.theme.primaryColor)
                                         .padding(.vertical)
@@ -163,4 +163,5 @@ struct RecipeDetailsView: View {
 
 #Preview {
     RecipeDetailsView(recipe: RecipeModel.sampleRecipeModel)
+        .environmentObject(Router())
 }
