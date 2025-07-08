@@ -33,5 +33,5 @@ struct RecipeCardView: View {
 
 
 #Preview {
-    RecipeCardView(recipe: RecipeModel.sampleRecipeModel)
+    RecipeCardView(recipe: RecipeModel.dummyList[0])
 }

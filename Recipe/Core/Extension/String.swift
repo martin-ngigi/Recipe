@@ -69,4 +69,9 @@ extension String {
     func to2Decimals() -> String {
         return String(format: "%.2f", Double(self) ?? 0.0)
     }
+    
+    func decodeJSON<T: Decodable>(to type: T.Type) -> T? {
+        guard let data = self.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
 }

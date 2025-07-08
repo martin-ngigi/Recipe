@@ -40,8 +40,13 @@ struct HomeView: View {
                         error: .constant("")
                     )
                     
-                    
-                    JustForYouSliderView()
+                    JustForYouSliderView(
+                        recipes: homeViewModel.justForYouList,
+                        onTap: { recipe in
+                            router.push(.recipedetails(recipe: recipe))
+                        }
+                    )
+
                     
                     // Trending Recipes
                     TrendingRecipesHome(

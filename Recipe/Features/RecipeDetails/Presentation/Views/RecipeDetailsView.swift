@@ -162,6 +162,9 @@ struct RecipeDetailsView: View {
 }
 
 #Preview {
-    RecipeDetailsView(recipe: RecipeModel.sampleRecipeModel)
-        .environmentObject(Router())
+    if let recipe = RecipeModel.dummyList.first {
+        RecipeDetailsView(recipe: recipe)
+            .environmentObject(Router())
+    }
+  
 }

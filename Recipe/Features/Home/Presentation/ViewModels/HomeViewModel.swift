@@ -27,6 +27,7 @@ class HomeViewModel: ObservableObject {
         case .success(let response):
             fetchHomeDataState = .good
             justForYouList = response.data.justForYou
+            print("DEBUG: justForYouList count \(justForYouList.count)")
             trendingRecipesList = response.data.trendingRecipes
             popularChefsList = response.data.popularChefs
             onSuccess(response)

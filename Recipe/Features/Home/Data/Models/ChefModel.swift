@@ -28,3 +28,7 @@ struct ChefModel: Codable, Hashable{
         case rate = "rate"
     }
 }
+
+extension ChefModel {
+    static var dummyChefResoinse = ChefDummyData.dataModel
+}

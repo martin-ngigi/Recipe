@@ -40,6 +40,6 @@ struct IngredientRow: View {
 }
 
 #Preview {
-    IngredientRow(ingredient: RecipeModel.sampleRecipeModel.ingredients[0])
+    IngredientRow(ingredient: RecipeModel.dummyList[0].ingredients[0])
         .padding()
 }

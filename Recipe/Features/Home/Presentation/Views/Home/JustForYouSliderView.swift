@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct JustForYouSliderView: View {
-    let sliderItems = [
-        ("landing", "15 best pasta recipes from Chef John"),
-        ("landing", "Quick snacks for a busy day"),
-        ("landing", "Healthy breakfast ideas")
-    ]
-    
+    var recipes: [RecipeModel]
+    var onTap: (RecipeModel) -> Void
     @State private var currentIndex = 0
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
@@ -24,12 +20,16 @@ struct JustForYouSliderView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             TabView(selection: $currentIndex) {
-                ForEach(0..<sliderItems.count, id: \.self) { index in
+                ForEach(0..<recipes.count, id: \.self) { index in
                     ZStack {
-                        Image(sliderItems[index].0)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 150)
+                        Button {
+                            onTap(recipes[index])
+                        } label: {
+                            CustomImageView(
+                                url: recipes[index].image,
+                                maxWidth: .infinity,
+                                height: 150
+                            )
                             .clipped()
                             .cornerRadius(10)
                             .contentShape(Rectangle())
@@ -40,7 +40,7 @@ struct JustForYouSliderView: View {
                                     
                                     VStack {
                                         Spacer()
-                                        Text(sliderItems[index].1)
+                                        Text("\(recipes[index].name) by \(recipes[index].chef?.name ?? "")")
                                             .font(.custom(FontConstants.POPPINS_LIGHT, size: 18))
                                             .foregroundColor(Color.theme.whiteColor)
                                             .padding(.bottom, 8)
@@ -48,6 +48,8 @@ struct JustForYouSliderView: View {
                                     }
                                 }
                             }
+                        }
+                        
                     }
                     .tag(index)
                 }
@@ -57,7 +59,7 @@ struct JustForYouSliderView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .onReceive(timer) { _ in
                 withAnimation {
-                    currentIndex = (currentIndex + 1) % sliderItems.count
+                    currentIndex = (currentIndex + 1) % recipes.count
                 }
             }
         }
@@ -67,5 +69,11 @@ struct JustForYouSliderView: View {
 
 
 #Preview {
-    JustForYouSliderView()
+    JustForYouSliderView(
+        recipes: RecipeModel.dummyList,
+        onTap: { recipe in
+            
+        }
+    )
+    .padding()
 }

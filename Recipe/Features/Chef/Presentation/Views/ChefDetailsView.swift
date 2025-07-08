@@ -117,3 +117,10 @@ struct ChefDetailsView: View {
         .navigationTitle("Chef Details")
     }
 }
+#Preview {
+    if let chef = ChefModel.dummyChefResoinse?.data {
+        NavigationStack{
+            ChefDetailsView(chef: chef)
+        }
+    }
+}

@@ -48,6 +48,12 @@ struct TrendingRecipesHome: View {
     }
 }
 
-//#Preview {
-//    TrendingRecipes()
-//}
+#Preview {
+    TrendingRecipesHome(
+        columns: [ GridItem(.flexible()), GridItem(.flexible())],
+        recipes: RecipeModel.dummyList,
+        onTapRecipe: { recipe in
+            
+        }
+    )
+}

@@ -40,6 +40,16 @@
     "Cook Like a Chef" : {
 
     },
+    "count sliderItems %lld, recipes %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "count sliderItems %1$lld, recipes %2$lld"
+          }
+        }
+      }
+    },
     "Create" : {
 
     },
@@ -77,6 +87,12 @@
 
     },
     "Hello, world!" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "homeViewModel.justForYouList.count : %lld" : {
 
     },
     "Ingredients" : {
