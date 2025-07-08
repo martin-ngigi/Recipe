@@ -30,3 +30,7 @@ struct HomeData: Codable{
         case popularChefs = "popular_chefs"
     }
 }
+
+extension HomeResponseModel {
+    static var sampleData =  HomeReponseDummyData.dataModel
+}

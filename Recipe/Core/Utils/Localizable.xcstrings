@@ -16,6 +16,16 @@
     "%@ " : {
 
     },
+    "%@ by %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ by %2$@"
+          }
+        }
+      }
+    },
     "%lld)." : {
 
     },
@@ -39,16 +49,6 @@
     },
     "Cook Like a Chef" : {
 
-    },
-    "count sliderItems %lld, recipes %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "count sliderItems %1$lld, recipes %2$lld"
-          }
-        }
-      }
     },
     "Create" : {
 
@@ -90,9 +90,6 @@
 
     },
     "Hello, World!" : {
-
-    },
-    "homeViewModel.justForYouList.count : %lld" : {
 
     },
     "Ingredients" : {

@@ -31,10 +31,11 @@ enum ThemeEntity: String, CaseIterable, Identifiable {
         }
     }
     
-    init(isDarkModeOn: Bool) {
+    init(isDarkModeOn: Bool?) {
         switch isDarkModeOn {
         case true: self = .dark
         case false: self = .light
+        default: self = .device
         }
     }
     

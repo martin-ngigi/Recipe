@@ -21,7 +21,7 @@ extension View {
         .onDisappear {
             if let tabBar = findTabBarController()?.tabBar {
                 // We want to show bottom navigation of the dashboard.
-                tabBar.isHidden = false
+                //tabBar.isHidden = false // MARK: UNCOMMENT THIS LINE
             }
         }
         

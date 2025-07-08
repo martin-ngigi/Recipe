@@ -157,7 +157,7 @@ struct RecipeDetailsView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .background(Color(.systemGroupedBackground))
-        .hideBottomNavigationBar(true)
+        //.hideBottomNavigationBar(true)
     }
 }
 

@@ -57,6 +57,14 @@ struct HomeView: View {
                         }
                     )
                     .padding(.top, 10)
+                    
+                    PopularChefsComponent(
+                        chefs: homeViewModel.popularChefsList,
+                        onTapChef: { chef in
+                            router.push(.chefdetails(chef: chef))
+                        }
+                    )
+                    .padding(.top, 10)
                 }
                 .padding()
                 //.searchable(text: $searchField, prompt: "Search recipes...")
@@ -114,7 +122,7 @@ struct HomeView: View {
             )
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
-        .hideBottomNavigationBar(false)
+        //.hideBottomNavigationBar(false)
     }
 }
 

@@ -27,7 +27,7 @@ struct FavouritesListView: View {
             .padding(.horizontal)
             .searchable(text: $searchField, prompt: "Search recipes...")
             .navigationTitle("Favourites")
-            .hideBottomNavigationBar(false)
+            //.hideBottomNavigationBar(false)
         }
         
     }
