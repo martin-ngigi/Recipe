@@ -59,7 +59,9 @@ struct JustForYouSliderView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .onReceive(timer) { _ in
                 withAnimation {
-                    currentIndex = (currentIndex + 1) % recipes.count
+                    if recipes.count > 0{
+                        currentIndex = (currentIndex + 1) % recipes.count
+                    }
                 }
             }
         }
