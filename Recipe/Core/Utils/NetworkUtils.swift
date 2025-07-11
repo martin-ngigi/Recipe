@@ -121,7 +121,7 @@ enum HttpMethod: String {
         case .GET:
             return "GET"
         case .PUT:
-            return "GET"
+            return "PUT"
         case .DELETE:
             return "DELETE"
         case .PATCH:

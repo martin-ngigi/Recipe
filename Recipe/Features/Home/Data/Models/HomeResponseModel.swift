@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 struct HomeResponseModel: Codable{
     let message: String
@@ -19,15 +20,34 @@ struct HomeResponseModel: Codable{
     }
 }
 
-struct HomeData: Codable{
-    let justForYou: [RecipeModel]
-    let trendingRecipes: [RecipeModel]
-    let popularChefs: [ChefModel]
-    
-    enum CodingKeys: String, CodingKey {
-        case justForYou = "just_for_you"
-        case trendingRecipes = "trending_recipes"
-        case popularChefs = "popular_chefs"
+extension HomeResponseModel {
+    init(swiftData: HomeResponseSwiftData) {
+        self.message = swiftData.message
+        self.statusCode = swiftData.statusCode
+        self.data = HomeData(swiftData: swiftData.data)
+    }
+}
+
+@Model
+class HomeResponseSwiftData {
+    var message: String
+    var statusCode: Int
+    var data: HomeDataSwiftData
+
+    init(message: String, statusCode: Int, data: HomeDataSwiftData) {
+        self.message = message
+        self.statusCode = statusCode
+        self.data = data
+    }
+}
+
+extension HomeResponseSwiftData {
+    convenience init(model: HomeResponseModel) {
+        self.init(
+            message: model.message,
+            statusCode: model.statusCode,
+            data: HomeDataSwiftData(model: model.data)
+        )
     }
 }
 

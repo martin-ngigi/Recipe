@@ -8,25 +8,30 @@
 import SwiftUI
 
 struct FavouritesListView: View {
+    @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @State var searchField = ""
     @EnvironmentObject var router: Router
     
     var body: some View {
         VStack {
-            
+            Text("\(favouriteRecipesViewModel.favouriteRecipes.count) favourite recipes")
             ScrollView(showsIndicators: false) {
-                ForEach(0..<10, id: \.self){ item in
+                ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self){ recipe in
                     Button{
-                        //router.push(.recipedetails(recipe: ""))
+                        router.push(.recipedetails(recipe: recipe))
                     } label: {
-                        FavouriteItemView()
-                            .foregroundColor(Color.theme.blackAndWhite)
+                        Text(recipe.name)
+//                        FavouriteItemView()
+//                            .foregroundColor(Color.theme.blackAndWhite)
                     }
                 }
             }
             .padding(.horizontal)
             .searchable(text: $searchField, prompt: "Search recipes...")
             .navigationTitle("Favourites")
+            .task {
+                await favouriteRecipesViewModel.fetchFavouriteRecipes()
+            }
             //.hideBottomNavigationBar(false)
         }
         

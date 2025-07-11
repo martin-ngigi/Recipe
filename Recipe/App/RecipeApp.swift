@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct RecipeApp: App {
@@ -32,6 +33,8 @@ struct RecipeApp: App {
                 .onAppear{
                     themesViewModel.setAppTheme()
                 }
+                .modelContainer(for: [RecipeSwiftData.self])
+                .modelContainer(for: [IngredientSwiftData.self])
         }
     }
   

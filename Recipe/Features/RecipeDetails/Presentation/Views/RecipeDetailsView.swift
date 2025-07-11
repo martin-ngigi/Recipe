@@ -11,6 +11,7 @@ struct RecipeDetailsView: View {
     @State var recipe: RecipeModel
     @State var isShowAllItems = false
     @EnvironmentObject var router: Router
+    @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
 
     var body: some View {
         ScrollView {
@@ -79,8 +80,15 @@ struct RecipeDetailsView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "bookmark")
-                            .foregroundColor(Color.theme.blackAndWhite)
+                        Button{
+                            Task{
+                                await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
+                            }
+                        } label: {
+                            Image(systemName: "bookmark")
+                                .foregroundColor(Color.theme.blackAndWhite)
+                        }
+                    
                     }
                     
 
