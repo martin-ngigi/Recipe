@@ -36,19 +36,21 @@ struct RecipeModel: Codable, Hashable{
 extension RecipeModel {
     init(swiftData: RecipeSwiftData) {
         // Map ingredients array from IngredientSwiftData to IngredientModel
-        let ingredientsModel = swiftData.ingredients.map { IngredientModel(swiftData: $0) }
+        //let ingredientsModel = swiftData.ingredients.map { IngredientModel(swiftData: $0) }
         
         // Map optional chef
-        let chefModel = swiftData.chef != nil ? ChefModel(swiftData: swiftData.chef!) : nil
+        //let chefModel = swiftData.chef != nil ? ChefModel(swiftData: swiftData.chef!) : nil
         
         self.recipeId = swiftData.recipeId
         self.openId = swiftData.openId
         self.name = swiftData.name
         self.description = swiftData.description1
-        self.ingredients = ingredientsModel
+        //self.ingredients = ingredientsModel
+        self.ingredients = []
         self.image = swiftData.image
         self.instructions = swiftData.instructions
-        self.chef = chefModel
+        //self.chef = chefModel
+        self.chef = nil
     }
 }
 
@@ -60,8 +62,8 @@ class RecipeSwiftData {
     var name: String
     var description1: String
     
-    @Relationship(deleteRule: .cascade, inverse: \IngredientSwiftData.recipe)
-    var ingredients = [IngredientSwiftData]()
+    //@Relationship(deleteRule: .cascade, inverse: \IngredientSwiftData.recipe)
+    //var ingredients = [IngredientSwiftData]()
     
     var image: String
     var instructions: String
@@ -72,26 +74,26 @@ class RecipeSwiftData {
         openId: String,
         name: String,
         description: String,
-        ingredients: [IngredientSwiftData],
+        //ingredients: [IngredientSwiftData],
         image: String,
-        instructions: String,
-        chef: ChefSwiftData?
+        instructions: String
+        //chef: ChefSwiftData?
     ) {
         self.recipeId = recipeId
         self.openId = openId
         self.name = name
         self.description1 = description
-        self.ingredients = ingredients
+        //self.ingredients = ingredients
         self.image = image
         self.instructions = instructions
-        self.chef = chef
+        //self.chef = chef
     }
 }
 
 extension RecipeSwiftData {
     convenience init(model: RecipeModel) {
         // Map ingredients array from IngredientModel to IngredientSwiftData
-        let ingredientsSwiftData = model.ingredients.map { IngredientSwiftData(model: $0) }
+        //let ingredientsSwiftData = model.ingredients.map { IngredientSwiftData(model: $0) }
         
         // Map optional chef
         let chefSwiftData = model.chef != nil ? ChefSwiftData(model: model.chef!) : nil
@@ -101,10 +103,10 @@ extension RecipeSwiftData {
             openId: model.openId,
             name: model.name,
             description: model.description,
-            ingredients: ingredientsSwiftData,
+            //ingredients: ingredientsSwiftData,
             image: model.image,
-            instructions: model.instructions,
-            chef: chefSwiftData
+            instructions: model.instructions
+            //chef: chefSwiftData
         )
     }
 }
