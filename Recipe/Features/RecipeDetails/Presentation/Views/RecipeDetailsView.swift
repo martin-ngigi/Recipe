@@ -42,7 +42,6 @@ struct RecipeDetailsView: View {
                                     Text(recipe.chef?.name ?? "")
                                         .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                         .lineSpacing(3.0)
-                                        .foregroundColor(Color.theme.whiteAndBlack)
                                         .fontWeight(.semibold)
                                         .underline(true, color: Color.theme.whiteAndBlack)
                                 }

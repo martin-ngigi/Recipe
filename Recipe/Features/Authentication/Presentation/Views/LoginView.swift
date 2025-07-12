@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var username: String = ""
-    @State var usernameError: String = ""
-    @State var passwordError: String = ""
-    @State var password: String = ""
     @Environment(\.dismiss) var dismiss
     @Environment(\.showError) private var showError
     @EnvironmentObject var router: Router
@@ -35,23 +31,23 @@ struct LoginView: View {
                 
                 VStack(spacing: 10){
                     BorderedInputField(
-                        text: $username,
+                        text: $loginViewModel.email,
                         placeholder: "myemail@gmail.com",
                         description: "Username/Email",
-                        error: $usernameError
+                        error: .constant(loginViewModel.loginErrors["email"] ?? "")
                     )
-                    .onChange(of: username) { newValue in
-                        usernameError = username.isEmpty ? "Username is empty" : ""
+                    .onChange(of: loginViewModel.email) { newValue in
+                        loginViewModel.updateEmail(value: newValue)
                     }
                     
                     BorderedPasswordField(
-                        password: $password,
+                        password: $loginViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
-                        error: $usernameError
+                        error: .constant(loginViewModel.loginErrors["password"] ?? "")
                     )
-                    .onChange(of: password) { newValue in
-                        passwordError = password.isEmpty ? "Username is empty" : ""
+                    .onChange(of: loginViewModel.password) { newValue in
+                        loginViewModel.updatePassword(value: newValue)
                     }
                     
                     
@@ -67,8 +63,10 @@ struct LoginView: View {
                 
                 CustomButton(
                     buttonName: "Login",
+                    borderColor: Color.clear,
+                    isDisabled: !loginViewModel.isLoginEnabled,
                     onTap: {
-                        showError(SampleError.operationFailed, "Operation has failed. Please try again later.")
+                        Task {await loginViewModel.emailAndPasswordLogin()}
                     }
                 )
                 .padding(.top, 20)
