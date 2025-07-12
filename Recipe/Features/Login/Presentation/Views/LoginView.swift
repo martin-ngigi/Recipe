@@ -14,7 +14,8 @@ struct LoginView: View {
     @State var password: String = ""
     @Environment(\.dismiss) var dismiss
     @Environment(\.showError) private var showError
-
+    @EnvironmentObject var router: Router
+    @StateObject var loginViewModel = LoginViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false){
@@ -54,8 +55,8 @@ struct LoginView: View {
                     }
                     
                     
-                    NavigationLink{
-                        RegisterView().navigationBarBackButtonHidden()
+                    Button{
+                        router.push(.register)
                     } label: {
                         Text("Already have account? \(Text("Create").foregroundColor(Color.blue))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
@@ -79,18 +80,66 @@ struct LoginView: View {
                     SocialAuthItemView(
                         image: "apple_icon",
                         onTap: {
+                            loginViewModel.updateIsShowAlertDialog(value: true)
+                            loginViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Apple authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                     
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
+                            loginViewModel.updateIsShowAlertDialog(value: true)
+                            loginViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Google authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                     
                     SocialAuthItemView(
                         image: "facebook",
                         onTap: {
+                            loginViewModel.updateIsShowAlertDialog(value: true)
+                            loginViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Facebook authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                 }
@@ -99,16 +148,38 @@ struct LoginView: View {
                 
             }
             .padding()
-            .reusableToolbar(
-                title: "",
-                onTapBack: {
-                    dismiss()
+        }
+        .fullScreenProgressOverlay(isShowing: loginViewModel.loginState == .isLoading)
+        .overlay {
+            CustomAlertDialog(
+                isPresented: $loginViewModel.isShowAlertDialog,
+                title: loginViewModel.dialogEntity.title,
+                text: loginViewModel.dialogEntity.message,
+                confirmButtonText: loginViewModel.dialogEntity.confirmButtonText,
+                dismissButtonText: loginViewModel.dialogEntity.dismissButtonText,
+                imageName: loginViewModel.dialogEntity.icon,
+                onDismiss: {
+                    if let onDismiss = loginViewModel.dialogEntity.onDismiss {
+                        onDismiss()
+                    }
+                },
+                onConfirmation: {
+                    if let onConfirm = loginViewModel.dialogEntity.onConfirm {
+                        onConfirm()
+                    }
                 }
             )
         }
+        .reusableToolbar(
+            title: "",
+            onTapBack: {
+                dismiss()
+            }
+        )
     }
 }
 
 #Preview {
     LoginView()
+        .environmentObject(Router())
 }

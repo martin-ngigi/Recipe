@@ -73,6 +73,10 @@ struct CustomAlertDialog: View {
                 .cornerRadius(11)
                 .shadow(radius: 18)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
+                .overlay(
+                       RoundedRectangle(cornerRadius: 11)
+                        .stroke(.gray, lineWidth: 1)
+                   )
                 .padding()
             }
         }

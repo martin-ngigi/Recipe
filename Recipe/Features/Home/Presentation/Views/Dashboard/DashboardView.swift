@@ -25,7 +25,8 @@ struct DashboardView: View {
                 SettingsScreen()
                     .tag(TabItemEntity.settings)
                 
-                ProfileView()
+                //ProfileView()
+                LoginView()
                     .tag(TabItemEntity.profile)
             }
 

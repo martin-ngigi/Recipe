@@ -15,7 +15,9 @@ struct RegisterView: View {
     @State var passwordError: String = ""
     @State var password: String = ""
     @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var router: Router
+    @StateObject var registerViewModel = RegisterViewModel()
+
     var body: some View {
         ScrollView(showsIndicators: false){
             VStack(spacing: 10){
@@ -65,8 +67,8 @@ struct RegisterView: View {
                     }
                     
                     
-                    NavigationLink{
-                        RegisterView().navigationBarBackButtonHidden()
+                    Button{
+                        router.pop()
                     } label: {
                         Text("Already have account? \(Text("Login").foregroundColor(Color.blue))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
@@ -90,18 +92,66 @@ struct RegisterView: View {
                     SocialAuthItemView(
                         image: "apple_icon",
                         onTap: {
+                            registerViewModel.updateIsShowAlertDialog(value: true)
+                            registerViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Apple authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                     
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
+                            registerViewModel.updateIsShowAlertDialog(value: true)
+                            registerViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Google authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                     
                     SocialAuthItemView(
                         image: "facebook",
                         onTap: {
+                            registerViewModel.updateIsShowAlertDialog(value: true)
+                            registerViewModel.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming Soon!",
+                                    message: "Facebook authentication is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
                         }
                     )
                 }
@@ -110,10 +160,31 @@ struct RegisterView: View {
                 
             }
             .padding()
-            .reusableToolbar(
-                title: "",
-                onTapBack: {
-                    dismiss()
+        }
+        .reusableToolbar(
+            title: "",
+            onTapBack: {
+                dismiss()
+            }
+        )
+        .fullScreenProgressOverlay(isShowing: registerViewModel.registeState == .isLoading)
+        .overlay {
+            CustomAlertDialog(
+                isPresented: $registerViewModel.isShowAlertDialog,
+                title: registerViewModel.dialogEntity.title,
+                text: registerViewModel.dialogEntity.message,
+                confirmButtonText: registerViewModel.dialogEntity.confirmButtonText,
+                dismissButtonText: registerViewModel.dialogEntity.dismissButtonText,
+                imageName: registerViewModel.dialogEntity.icon,
+                onDismiss: {
+                    if let onDismiss = registerViewModel.dialogEntity.onDismiss {
+                        onDismiss()
+                    }
+                },
+                onConfirmation: {
+                    if let onConfirm = registerViewModel.dialogEntity.onConfirm {
+                        onConfirm()
+                    }
                 }
             )
         }
@@ -122,5 +193,6 @@ struct RegisterView: View {
 
 #Preview {
     RegisterView()
+        .environmentObject(Router())
 
 }
