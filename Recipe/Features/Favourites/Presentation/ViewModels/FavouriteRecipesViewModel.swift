@@ -16,17 +16,21 @@ class FavouriteRecipesViewModel: ObservableObject {
     )
     
     @Published var favouriteRecipes: [RecipeModel] = []
+    @Published var favouritesListViewTitle = "Favourites"
     
     func addRecipeToFavourite(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeAddRecipe(recipe: recipe)
+        let _ = await fetchFavouriteRecipes()
     }
     
     
     func fetchFavouriteRecipes() async {
         favouriteRecipes = favouriteRecipesUseCases.executeFetchRecipes()
+        favouritesListViewTitle = favouriteRecipes.isEmpty ? "Favourites" : "\(favouriteRecipes.count) Favourites"
     }
     
     func deleteFavouriteRecipe(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeRemoveRecipe(recipe: recipe)
+        let _ = await fetchFavouriteRecipes()
     }
 }

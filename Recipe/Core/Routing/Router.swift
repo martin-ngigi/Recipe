@@ -52,7 +52,7 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
         HomeView()
 
     case .favourites:
-        FavouriteItemView()
+        FavouritesListView()
  
     case .profile:
         ProfileView()

@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-struct FavouriteRecipesRepository: AddRecipeToLocalRepositoryProtocol, FetchLocalRecipesRepositoryProtocol, DeleteLocalRecipeRepositoryProtocol {
+struct FavouriteRecipesRepository: @preconcurrency AddRecipeToLocalRepositoryProtocol, FetchLocalRecipesRepositoryProtocol, DeleteLocalRecipeRepositoryProtocol {
     
     static let shared = FavouriteRecipesRepository()
 //    private let dataSource: FavouriteRecipesLocalDataSource
@@ -33,8 +33,7 @@ struct FavouriteRecipesRepository: AddRecipeToLocalRepositoryProtocol, FetchLoca
     }
     
     func removeRecipe(recipe: RecipeModel) {
-        let recipeSwiftData = RecipeSwiftData(model: recipe)
-        favouriteRecipesLocalDataSource.removeRecipe(recipe: recipeSwiftData)
+        favouriteRecipesLocalDataSource.removeRecipe(recipe: recipe)
     }
     
 }

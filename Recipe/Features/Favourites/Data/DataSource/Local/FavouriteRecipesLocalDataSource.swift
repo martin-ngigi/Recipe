@@ -38,10 +38,18 @@ final class FavouriteRecipesLocalDataSource{
         }
     }
 
-    func removeRecipe(recipe: RecipeSwiftData) {
-        modelContext.delete(recipe)
+    func removeRecipe(recipe: RecipeModel) {
+        let recipes =  fetchRecipes()
+        let recipeToDelete = recipes.first { $0.recipeId == recipe.recipeId }
+        
+        if let myRecipe = recipeToDelete {
+            modelContext.delete(myRecipe)
+            print("DEBUG: recipe \(myRecipe.name) found")
+        }
+        
         do {
             try modelContext.save()
+            print("DEBUG: recipe \(recipe.name) deleted successfully")
         } catch {
             fatalError("Failed to delete Book: \(error.localizedDescription)")
         }

@@ -11,24 +11,28 @@ struct FavouritesListView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @State var searchField = ""
     @EnvironmentObject var router: Router
+    @Environment(\.modelContext) private var context
     
     var body: some View {
-        VStack {
-            Text("\(favouriteRecipesViewModel.favouriteRecipes.count) favourite recipes")
-            ScrollView(showsIndicators: false) {
+        NavigationView {
+            List {
                 ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self){ recipe in
-                    Button{
-                        router.push(.recipedetails(recipe: recipe))
-                    } label: {
-                        Text(recipe.name)
-//                        FavouriteItemView()
-//                            .foregroundColor(Color.theme.blackAndWhite)
-                    }
+                    FavouriteItemView(
+                        recipe: recipe,
+                        onTapEntireItem: { recipe in
+                            router.push(.recipedetails(recipe: recipe))
+                        },
+                        onTapAddOrRemove: { recipe in
+                            Task {await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)}
+                        }
+                    )
                 }
+                .onDelete(perform: delete(indexSet:))
             }
-            .padding(.horizontal)
-            .searchable(text: $searchField, prompt: "Search recipes...")
-            .navigationTitle("Favourites")
+            .listStyle(.plain)
+            //.padding(.horizontal)
+            .searchable(text: $searchField, prompt: "Search favourite...")
+            .navigationTitle(favouriteRecipesViewModel.favouritesListViewTitle)
             .task {
                 await favouriteRecipesViewModel.fetchFavouriteRecipes()
             }
@@ -36,9 +40,17 @@ struct FavouritesListView: View {
         }
         
     }
+    
+    
+    private func delete(indexSet: IndexSet){
+        indexSet.forEach { index in
+            let favourite = favouriteRecipesViewModel.favouriteRecipes[index]
+            Task {await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: favourite)}
+        }
+    }
 }
 
 #Preview {
     FavouritesListView()
-        .environmentObject(Router())
+    .environmentObject(Router())
 }
