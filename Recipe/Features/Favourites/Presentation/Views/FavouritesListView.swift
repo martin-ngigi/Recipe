@@ -26,11 +26,62 @@ struct FavouritesListView: View {
                             initDelete(favourite: favourite)
                         }
                     )
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            // Delete action
+                            if let index = favouriteRecipesViewModel.favouriteRecipes.firstIndex(of: recipe) {
+                                delete(indexSet: IndexSet(integer: index))
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        
+                        Button {
+                            // Share action
+                            Task {
+                                favouriteRecipesViewModel.updateShareState(value: .isLoading)
+                                await  ShareRecipeUtil.shared.shareRecipeAsPDF(
+                                    recipe: recipe,
+                                    onSuccess: {
+                                        favouriteRecipesViewModel.updateShareState(value: .good)
+                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onError: { error in
+                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                        favouriteRecipesViewModel.updateDialogEntity(
+                                            value: DialogEntity(
+                                                title: "Sharing Recipe Failed",
+                                                message: error,
+                                                icon: "",
+                                                confirmButtonText: "",
+                                                dismissButtonText: "Okay",
+                                                onConfirm: {
+                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                },
+                                                onDismiss: {
+                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                }
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                        
+                        // Add other relevant options here
+                        Button {
+                            // Example: Mark as favorite/unfavorite
+                            //toggleFavorite(recipe)
+                        } label: {
+                            Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                        }
+                    }
                 }
                 .onDelete(perform: delete(indexSet:))
             }
             .listStyle(.plain)
-            //.padding(.horizontal)
             .searchable(text: $searchField, prompt: "Search favourite...")
             .navigationTitle(favouriteRecipesViewModel.favouritesListViewTitle)
             .task {
@@ -38,6 +89,7 @@ struct FavouritesListView: View {
             }
             //.hideBottomNavigationBar(false)
         }
+        .fullScreenProgressOverlay(isShowing: favouriteRecipesViewModel.shareState == .isLoading)
         .overlay {
             CustomAlertDialog(
                 isPresented: $favouriteRecipesViewModel.isShowAlertDialog,
@@ -91,6 +143,8 @@ struct FavouritesListView: View {
         favouriteRecipesViewModel.updateIsShowAlertDialog(value: true)
         
     }
+    
+
 }
 
 #Preview {

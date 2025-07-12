@@ -19,6 +19,7 @@ class FavouriteRecipesViewModel: ObservableObject {
     @Published var favouritesListViewTitle = "Favourites"
     @Published var dialogEntity = DialogEntity()
     @Published var isShowAlertDialog = false
+    @Published var shareState: FetchState = FetchState.good
 
     func addRecipeToFavourite(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeAddRecipe(recipe: recipe)
@@ -38,6 +39,10 @@ class FavouriteRecipesViewModel: ObservableObject {
     
     func updateDialogEntity(value: DialogEntity) {
         dialogEntity = value
+    }
+    
+    func updateShareState(value: FetchState) {
+        shareState = value
     }
     
     func updateIsShowAlertDialog(value: Bool) {

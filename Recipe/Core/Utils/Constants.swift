@@ -19,6 +19,7 @@ class Constants {
     static let homeURL: String = "\(prefix)/home"
     static let getChefByIdURL: String = "\(prefix)/chefs/get-by-id"
     
+    static let APP_NAME = "Recipe"
     
     static var BASE_URL: String {
         #if DEBUG
