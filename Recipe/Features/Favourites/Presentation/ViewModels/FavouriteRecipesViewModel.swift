@@ -17,7 +17,9 @@ class FavouriteRecipesViewModel: ObservableObject {
     
     @Published var favouriteRecipes: [RecipeModel] = []
     @Published var favouritesListViewTitle = "Favourites"
-    
+    @Published var dialogEntity = DialogEntity()
+    @Published var isShowAlertDialog = false
+
     func addRecipeToFavourite(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeAddRecipe(recipe: recipe)
         let _ = await fetchFavouriteRecipes()
@@ -33,4 +35,13 @@ class FavouriteRecipesViewModel: ObservableObject {
         favouriteRecipesUseCases.executeRemoveRecipe(recipe: recipe)
         let _ = await fetchFavouriteRecipes()
     }
+    
+    func updateDialogEntity(value: DialogEntity) {
+        dialogEntity = value
+    }
+    
+    func updateIsShowAlertDialog(value: Bool) {
+        isShowAlertDialog = value
+    }
+    
 }

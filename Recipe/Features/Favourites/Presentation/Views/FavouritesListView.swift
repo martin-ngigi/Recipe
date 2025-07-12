@@ -22,8 +22,8 @@ struct FavouritesListView: View {
                         onTapEntireItem: { recipe in
                             router.push(.recipedetails(recipe: recipe))
                         },
-                        onTapAddOrRemove: { recipe in
-                            Task {await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)}
+                        onTapAddOrRemove: { favourite in
+                            initDelete(favourite: favourite)
                         }
                     )
                 }
@@ -38,6 +38,26 @@ struct FavouritesListView: View {
             }
             //.hideBottomNavigationBar(false)
         }
+        .overlay {
+            CustomAlertDialog(
+                isPresented: $favouriteRecipesViewModel.isShowAlertDialog,
+                title: favouriteRecipesViewModel.dialogEntity.title,
+                text: favouriteRecipesViewModel.dialogEntity.message,
+                confirmButtonText: favouriteRecipesViewModel.dialogEntity.confirmButtonText,
+                dismissButtonText: favouriteRecipesViewModel.dialogEntity.dismissButtonText,
+                imageName: favouriteRecipesViewModel.dialogEntity.icon,
+                onDismiss: {
+                    if let onDismiss = favouriteRecipesViewModel.dialogEntity.onDismiss {
+                        onDismiss()
+                    }
+                },
+                onConfirmation: {
+                    if let onConfirm = favouriteRecipesViewModel.dialogEntity.onConfirm {
+                        onConfirm()
+                    }
+                }
+            )
+        }
         
     }
     
@@ -45,8 +65,31 @@ struct FavouritesListView: View {
     private func delete(indexSet: IndexSet){
         indexSet.forEach { index in
             let favourite = favouriteRecipesViewModel.favouriteRecipes[index]
-            Task {await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: favourite)}
+            initDelete(favourite: favourite)
         }
+    }
+    
+    func initDelete(favourite: RecipeModel) {
+        favouriteRecipesViewModel.updateDialogEntity(
+            value: DialogEntity(
+                title: "Unmark Favourite",
+                message: "Are you sure you want to unmark \(favourite.name) as a favourite? ",
+                icon: "",
+                confirmButtonText: "Delete",
+                dismissButtonText: "Cancel",
+                onConfirm: {
+                    Task {
+                        await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: favourite)
+                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                    }
+                },
+                onDismiss: {
+                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                }
+            )
+        )
+        favouriteRecipesViewModel.updateIsShowAlertDialog(value: true)
+        
     }
 }
 
