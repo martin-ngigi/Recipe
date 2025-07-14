@@ -11,9 +11,10 @@ import SwiftUI
 
 struct BorderedInputField: View {
     @Binding var text: String
-    @State var placeholder: String = "Enter text..."
-    @State var description: String = ""
-    @Binding var error: String
+    var placeholder: String = "Enter text..."
+    var description: String = ""
+    var error: String
+    var keyboardType: UIKeyboardType = .default
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -26,6 +27,7 @@ struct BorderedInputField: View {
                 .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
                 .background(Color.gray.opacity(0.3))
                 .cornerRadius(7)
+                .keyboardType(keyboardType)
                 .overlay(
                     RoundedRectangle(cornerRadius: 7)
                         .stroke(Color.gray, lineWidth: 0.3)
@@ -53,6 +55,6 @@ struct TappableTextFieldStyle: TextFieldStyle { // https://stackoverflow.com/que
 }
 
 #Preview {
-    BorderedInputField(text: .constant(""), error: .constant(""))
+    BorderedInputField(text: .constant(""), error: "")
         .padding(.horizontal)
 }

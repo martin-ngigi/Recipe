@@ -11,9 +11,9 @@ import SwiftUI
 
 struct BorderedPasswordField: View {
     @Binding var password: String
-    @State var placeholder: String = "MyP@ss10"
-    @State var description: String = ""
-    @Binding var error: String
+    var placeholder: String = "MyP@ss10"
+    var description: String = ""
+    var error: String
     @State private var isSecure: Bool = true  // Toggle for visibility
 
     var body: some View {
@@ -81,5 +81,5 @@ struct BorderedPasswordField: View {
 
 
 #Preview {
-    BorderedPasswordField(password: .constant(""), error: .constant(""))
+    BorderedPasswordField(password: .constant(""), error: "")
 }

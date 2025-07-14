@@ -46,23 +46,16 @@ class LoginViewModel : ObservableObject{
     
     func updateEmail(value: String) {
         email = value
-        if email.isEmpty{
-            updateSendLoginErrors(key: "email", value:  "Invalid Email")
-        }
-        else {
-            updateSendLoginErrors(key: "email", value:  "")
-        }
+        let error = ValidatorUtils.shared.validateEmail(email: email)
+        updateSendLoginErrors(key: "email", value:  error)
+
     }
 
     
     func updatePassword(value: String) {
         password = value
-        if email.isEmpty{
-            updateSendLoginErrors(key: "password", value:  "Invalid Password")
-        }
-        else {
-            updateSendLoginErrors(key: "password", value:  "")
-        }
+        let errors = ValidatorUtils.shared.validatePassword(password: password)
+        updateSendLoginErrors(key: "password", value:  errors.first ?? "")
     }
     
     func updateSendLoginErrors(key: String, value: String) {

@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 
+import Firebase
+import FirebaseCore
+
 @main
 struct RecipeApp: App {
 
@@ -24,6 +27,7 @@ struct RecipeApp: App {
     
     @AppStorage(Keys.theme.rawValue) var theme: AppTheme = AppTheme.system
     @StateObject var themesViewModel = ThemesViewModel()
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
@@ -38,4 +42,11 @@ struct RecipeApp: App {
         }
     }
   
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }

@@ -8,12 +8,6 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State var name: String = ""
-    @State var nameError: String = ""
-    @State var username: String = ""
-    @State var usernameError: String = ""
-    @State var passwordError: String = ""
-    @State var password: String = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
     @StateObject var registerViewModel = RegisterViewModel()
@@ -37,33 +31,34 @@ struct RegisterView: View {
                 VStack(spacing: 10){
                     
                     BorderedInputField(
-                        text: $name,
+                        text: $registerViewModel.name,
                         placeholder: "John Doe",
                         description: "First and Last Name",
-                        error: $nameError
+                        error: registerViewModel.registerErrors["name"] ?? ""
                     )
-                    .onChange(of: name) { newValue in
-                        nameError = name.isEmpty ? "Name is empty" : ""
+                    .onChange(of: registerViewModel.name) { newValue in
+                        registerViewModel.updateName(value: newValue)
                     }
                     
                     BorderedInputField(
-                        text: $username,
+                        text: $registerViewModel.email,
                         placeholder: "myemail@gmail.com",
-                        description: "Username/Email",
-                        error: $usernameError
+                        description: "Email",
+                        error: registerViewModel.registerErrors["email"] ?? "",
+                        keyboardType: .emailAddress
                     )
-                    .onChange(of: username) { newValue in
-                        usernameError = username.isEmpty ? "Username is empty" : ""
+                    .onChange(of: registerViewModel.email) { newValue in
+                        registerViewModel.updateEmail(value: newValue)
                     }
                     
                     BorderedPasswordField(
-                        password: $password,
+                        password: $registerViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
-                        error: $usernameError
+                        error: registerViewModel.registerErrors["password"] ?? ""
                     )
-                    .onChange(of: password) { newValue in
-                        passwordError = password.isEmpty ? "Username is empty" : ""
+                    .onChange(of: registerViewModel.password) { newValue in
+                        registerViewModel.updatePassword(value: newValue)
                     }
                     
                     
@@ -78,9 +73,51 @@ struct RegisterView: View {
                 }
                 
                 CustomButton(
-                    buttonName: "Login",
+                    buttonName: "Register",
+                    borderColor: Color.clear,
+                    isDisabled: !registerViewModel.isRegisterEnabled,
                     onTap: {
-                        
+                        Task {
+                            await registerViewModel.emailAndPasswordRegister(
+                                onSuccess: {
+                                    registerViewModel.updateIsShowAlertDialog(value: true)
+                                    registerViewModel.updateDialogEntity(
+                                        value: DialogEntity(
+                                            title: "Registration Successful!",
+                                            message: "Welcome to the community!",
+                                            icon: "",
+                                            confirmButtonText: "Proceed to Home",
+                                            dismissButtonText: "",
+                                            onConfirm: {
+                                                registerViewModel.updateIsShowAlertDialog(value: false)
+                                                router.push(.dashboard)
+                                            },
+                                            onDismiss: {
+                                                registerViewModel.updateIsShowAlertDialog(value: false)
+                                            }
+                                        )
+                                    )
+                                },
+                                onFailure: { error in
+                                    registerViewModel.updateIsShowAlertDialog(value: true)
+                                    registerViewModel.updateDialogEntity(
+                                        value: DialogEntity(
+                                            title: "Registration Failed.",
+                                            message: error,
+                                            icon: "",
+                                            confirmButtonText: "",
+                                            dismissButtonText: "Okay",
+                                            onConfirm: {
+                                                registerViewModel.updateIsShowAlertDialog(value: false)
+                                            },
+                                            onDismiss: {
+                                                registerViewModel.updateIsShowAlertDialog(value: false)
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
                     }
                 )
                 .padding(.top, 20)

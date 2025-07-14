@@ -37,7 +37,7 @@ struct HomeView: View {
                     BorderedInputField(
                         text: $searchField,
                         placeholder: "Search recipes...",
-                        error: .constant("")
+                        error: ""
                     )
                     
                     JustForYouSliderView(

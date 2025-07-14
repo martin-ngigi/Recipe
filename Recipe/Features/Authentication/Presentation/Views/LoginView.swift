@@ -34,7 +34,7 @@ struct LoginView: View {
                         text: $loginViewModel.email,
                         placeholder: "myemail@gmail.com",
                         description: "Username/Email",
-                        error: .constant(loginViewModel.loginErrors["email"] ?? "")
+                        error: loginViewModel.loginErrors["email"] ?? ""
                     )
                     .onChange(of: loginViewModel.email) { newValue in
                         loginViewModel.updateEmail(value: newValue)
@@ -44,7 +44,7 @@ struct LoginView: View {
                         password: $loginViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
-                        error: .constant(loginViewModel.loginErrors["password"] ?? "")
+                        error: loginViewModel.loginErrors["password"] ?? ""
                     )
                     .onChange(of: loginViewModel.password) { newValue in
                         loginViewModel.updatePassword(value: newValue)
