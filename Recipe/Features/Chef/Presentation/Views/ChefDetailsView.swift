@@ -10,7 +10,7 @@ import SwiftUI
 struct ChefDetailsView: View {
     @StateObject var chefViewModel =  ChefViewModel()
     @State var isShowAllRecipeItems = false
-    @State var chef: ChefModel
+    @State var chef: UserModel
 
     var body: some View {
         ScrollView {
@@ -103,7 +103,7 @@ struct ChefDetailsView: View {
             }
             .task{
                 await chefViewModel.fetchChefByID(
-                    chefId: chef.openId,
+                    chefId: chef.openID,
                     onSuccess: { chef in
                         self.chef = chef
                     },
@@ -118,7 +118,7 @@ struct ChefDetailsView: View {
     }
 }
 #Preview {
-    if let chef = ChefModel.dummyChefResoinse?.data {
+    if let chef = UserModel.dummyChefResoinse?.data {
         NavigationStack{
             ChefDetailsView(chef: chef)
         }

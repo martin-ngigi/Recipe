@@ -13,7 +13,7 @@ class HomeViewModel: ObservableObject {
     var homeUseCases = HomeUseCases(fetchHomeDataRepository: HomeRepository.shared)
     @Published var justForYouList: [RecipeModel] = []
     @Published var trendingRecipesList: [RecipeModel] = []
-    @Published var popularChefsList: [ChefModel] = []
+    @Published var popularChefsList: [UserModel] = []
     @Published var isShowInbuiltAlert = false
     @Published var inbuiltAlert: InbuiltAlert?
     

@@ -16,7 +16,7 @@ struct RecipeModel: Codable, Hashable{
     let ingredients: [IngredientModel]
     let image: String
     let instructions: String
-    var chef: ChefModel? = nil
+    var chef: UserModel? = nil
     var inststuctionsList: [String]{
         return instructions.instructionsList
     }
@@ -49,7 +49,7 @@ extension RecipeModel {
         self.ingredients = []
         self.image = swiftData.image
         self.instructions = swiftData.instructions
-        //self.chef = chefModel
+        //self.chef = userModel
         self.chef = nil
     }
 }
@@ -67,7 +67,7 @@ class RecipeSwiftData {
     
     var image: String
     var instructions: String
-    var chef: ChefSwiftData?  // Optional nested model
+    var chef: UserSwiftData?  // Optional nested model
 
     init(
         recipeId: String,
@@ -77,7 +77,7 @@ class RecipeSwiftData {
         //ingredients: [IngredientSwiftData],
         image: String,
         instructions: String
-        //chef: ChefSwiftData?
+        //chef: UserSwiftData?
     ) {
         self.recipeId = recipeId
         self.openId = openId
@@ -96,7 +96,7 @@ extension RecipeSwiftData {
         //let ingredientsSwiftData = model.ingredients.map { IngredientSwiftData(model: $0) }
         
         // Map optional chef
-        let chefSwiftData = model.chef != nil ? ChefSwiftData(model: model.chef!) : nil
+        let chefSwiftData = model.chef != nil ? UserSwiftData(model: model.chef!) : nil
         
         self.init(
             recipeId: model.recipeId,

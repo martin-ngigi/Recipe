@@ -14,7 +14,7 @@ class ChefViewModel: ObservableObject {
     
     func fetchChefByID(
         chefId: String,
-        onSuccess: (ChefModel) -> Void,
+        onSuccess: (UserModel) -> Void,
         onFailure: (String) -> Void
     ) async {
         fetchChefByIDState = .isLoading

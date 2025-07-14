@@ -10,7 +10,7 @@ import Foundation
 struct ChefResponseModel: Codable, Hashable{
     let message: String
     let statusCode: Int
-    let data: ChefModel
+    let data: UserModel
     
     enum CodingKeys: String, CodingKey {
         case message

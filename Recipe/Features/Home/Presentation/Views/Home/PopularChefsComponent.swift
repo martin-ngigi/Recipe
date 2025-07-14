@@ -19,8 +19,8 @@ struct PopularChefsComponent: View {
         
         return Array(repeating: GridItem(.fixed(columnWidth), spacing: 10, alignment: .center), count: count)
     }
-    var chefs: [ChefModel]
-    var onTapChef: (ChefModel) -> Void
+    var chefs: [UserModel]
+    var onTapChef: (UserModel) -> Void
     
     var body: some View {
         VStack(spacing: 5){
@@ -57,7 +57,7 @@ struct PopularChefsComponent: View {
 }
 
 struct PopularChefRow: View {
-    var chef: ChefModel
+    var chef: UserModel
     
     var body: some View {
         HStack {
