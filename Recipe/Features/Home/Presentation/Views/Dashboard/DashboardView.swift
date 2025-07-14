@@ -25,9 +25,15 @@ struct DashboardView: View {
                 SettingsScreen()
                     .tag(TabItemEntity.settings)
                 
-                //ProfileView()
-                LoginView()
-                    .tag(TabItemEntity.profile)
+                Group{
+                    if LocalState.isLogedIn {
+                        ProfileView()
+                    }
+                    else {
+                        LoginView()
+                    }
+                }
+                .tag(TabItemEntity.profile)
             }
 
             if isDashboardBottomNavigationVisible && !isKeyboardVisible {

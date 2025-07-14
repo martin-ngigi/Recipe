@@ -86,7 +86,7 @@ struct RegisterView: View {
                                             title: "Registration Successful!",
                                             message: "Welcome to the community!",
                                             icon: "",
-                                            confirmButtonText: "Proceed to Home",
+                                            confirmButtonText: "Proceed",
                                             dismissButtonText: "",
                                             onConfirm: {
                                                 registerViewModel.updateIsShowAlertDialog(value: false)
