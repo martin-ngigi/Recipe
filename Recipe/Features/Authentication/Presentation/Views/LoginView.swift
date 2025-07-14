@@ -67,6 +67,8 @@ struct LoginView: View {
                     isDisabled: !loginViewModel.isLoginEnabled,
                     onTap: {
                         Task {await loginViewModel.emailAndPasswordLogin()}
+                        //  LocalState.isLogedIn = true
+
                     }
                 )
                 .padding(.top, 20)

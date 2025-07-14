@@ -84,13 +84,13 @@ struct RegisterView: View {
                                     registerViewModel.updateDialogEntity(
                                         value: DialogEntity(
                                             title: "Registration Successful!",
-                                            message: "Welcome to the community!",
+                                            message: "Welcome to the community!\nPlease check your email for verification link and proceed to login.",
                                             icon: "",
                                             confirmButtonText: "Proceed",
                                             dismissButtonText: "",
                                             onConfirm: {
                                                 registerViewModel.updateIsShowAlertDialog(value: false)
-                                                router.push(.dashboard)
+                                                dismiss()
                                             },
                                             onDismiss: {
                                                 registerViewModel.updateIsShowAlertDialog(value: false)
