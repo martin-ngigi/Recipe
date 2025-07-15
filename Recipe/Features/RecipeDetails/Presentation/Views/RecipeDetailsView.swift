@@ -23,6 +23,21 @@ struct RecipeDetailsView: View {
                         maxWidth: .infinity,
                         height: 240
                     )
+                    .overlay(alignment: .topLeading) {
+                        Button{
+                            router.pop()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 36, height: 36)
+                                .background(Color.theme.primaryColor)
+                                .clipShape(Circle())
+                                .shadow(radius: 4)
+                        }
+                        .padding([.leading], 30)
+                        .padding(.top, 60)
+                    }
                     
                     HStack(spacing: 12) {
                         Button{
@@ -43,7 +58,6 @@ struct RecipeDetailsView: View {
                                         .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                         .lineSpacing(3.0)
                                         .fontWeight(.semibold)
-                                        .underline(true, color: Color.theme.whiteAndBlack)
                                 }
                             }
                         }
