@@ -34,7 +34,8 @@ struct LoginView: View {
                         text: $loginViewModel.email,
                         placeholder: "myemail@gmail.com",
                         description: "Username/Email",
-                        error: loginViewModel.loginErrors["email"] ?? ""
+                        error: loginViewModel.loginErrors["email"] ?? "",
+                        keyboardType: .emailAddress
                     )
                     .onChange(of: loginViewModel.email) { newValue in
                         loginViewModel.updateEmail(value: newValue)
@@ -54,7 +55,7 @@ struct LoginView: View {
                     Button{
                         router.push(.register)
                     } label: {
-                        Text("Already have account? \(Text("Create").foregroundColor(Color.blue))")
+                        Text("Dont have account? \(Text("Create").foregroundColor(Color.blue))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
@@ -66,9 +67,31 @@ struct LoginView: View {
                     borderColor: Color.clear,
                     isDisabled: !loginViewModel.isLoginEnabled,
                     onTap: {
-                        Task {await loginViewModel.emailAndPasswordLogin()}
-                        //  LocalState.isLogedIn = true
-
+                        Task {
+                            await loginViewModel.emailAndPasswordLogin(
+                                onSuccess: {
+                                    LocalState.isLogedIn = true
+                                },
+                                onFailure: { error in
+                                    loginViewModel.updateIsShowAlertDialog(value: true)
+                                    loginViewModel.updateDialogEntity(
+                                        value:  DialogEntity(
+                                            title: "Authentication Failed.",
+                                            message: error,
+                                            icon: "",
+                                            confirmButtonText: "Okay",
+                                            dismissButtonText: "",
+                                            onConfirm: {
+                                                loginViewModel.updateIsShowAlertDialog(value: false)
+                                            },
+                                            onDismiss: {
+                                                loginViewModel.updateIsShowAlertDialog(value: false)
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
                     }
                 )
                 .padding(.top, 20)

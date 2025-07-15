@@ -11,12 +11,13 @@ import SwiftData
 struct UserModel: Codable, Hashable {
     let userID, name, email, openID: String
     let avatar, role: String
+    let authType: String
     let gender: String?
     let dateOfBirth: String?
     let phone: String?
     let phoneComplete: String?
     let countryCode: String?
-    let token, accessToken, createdAt, updatedAt: String
+    let token, accessToken, createdAt, updatedAt: String?
     
     var recipesList: [RecipeModel]? = nil
     var allRates: [AllRatingModel]? = nil
@@ -26,6 +27,7 @@ struct UserModel: Codable, Hashable {
         case userID = "user_id"
         case name, email
         case openID = "open_id"
+        case authType = "auth_type"
         case avatar, role, gender
         case dateOfBirth = "date_of_birth"
         case phone
@@ -40,6 +42,48 @@ struct UserModel: Codable, Hashable {
         case allRates = "all_rates"
         case rate = "rate"
     }
+    
+    init(
+        userID: String,
+        name: String,
+        email: String,
+        openID: String,
+        authType: String,
+        avatar: String,
+        role: String,
+        gender: String? = nil,
+        dateOfBirth: String? = nil,
+        phone: String? = nil,
+        phoneComplete: String? = nil,
+        countryCode: String? = nil,
+        token: String? = nil,
+        accessToken: String? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
+        recipesList: [RecipeModel]? = nil,
+        allRates: [AllRatingModel]? = nil,
+        rate: TotalRateModel? = nil
+    ) {
+        self.userID = userID
+        self.name = name
+        self.email = email
+        self.openID = openID
+        self.authType = authType
+        self.avatar = avatar
+        self.role = role
+        self.gender = gender
+        self.dateOfBirth = dateOfBirth
+        self.phone = phone
+        self.phoneComplete = phoneComplete
+        self.countryCode = countryCode
+        self.token = token
+        self.accessToken = accessToken
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.recipesList = recipesList
+        self.allRates = allRates
+        self.rate = rate
+    }
 }
 
 extension UserModel {
@@ -52,6 +96,7 @@ extension UserModel {
         self.name = swiftData.name
         self.email = swiftData.email
         self.openID = swiftData.openID
+        self.authType = swiftData.authType
         self.avatar = swiftData.avatar
         self.role = swiftData.role
         self.gender = swiftData.gender
@@ -77,6 +122,7 @@ class UserSwiftData {
     var name: String
     var email: String
     var openID: String
+    var authType: String
     var avatar: String
     var role: String
     var gender: String? // Optional
@@ -84,10 +130,10 @@ class UserSwiftData {
     var phone: String?
     var phoneComplete: String?
     var countryCode: String? // Optional
-    var token: String
-    var accessToken: String
-    var createdAt: String
-    var updatedAt: String
+    var token: String?
+    var accessToken: String?
+    var createdAt: String?
+    var updatedAt: String?
     
     var recipesList: [RecipeSwiftData]?  // Optional list of recipes
     var allRates: [AllRatingSwiftData]?  // Optional list of ratings
@@ -98,6 +144,7 @@ class UserSwiftData {
         name: String,
         email: String,
         openID: String,
+        authType: String,
         avatar: String,
         role: String,
         gender: String? = nil,
@@ -105,19 +152,20 @@ class UserSwiftData {
         phone: String? = nil,
         phoneComplete: String? = nil,
         countryCode: String? = nil,
-        token: String,
-        accessToken: String,
-        createdAt: String,
-        updatedAt: String,
+        token: String? = nil,
+        accessToken: String? = nil,
+        createdAt: String? = nil,
+        updatedAt: String? = nil,
         
-        recipesList: [RecipeSwiftData]?,
-        allRates: [AllRatingSwiftData]?,
-        rate: TotalRateSwiftData?
+        recipesList: [RecipeSwiftData]? = [],
+        allRates: [AllRatingSwiftData]? = [],
+        rate: TotalRateSwiftData? = nil
     ) {
         self.userID = userID
         self.name = name
         self.email = email
         self.openID = openID
+        self.authType = authType
         self.avatar = avatar
         self.role = role
         self.gender = gender
@@ -148,6 +196,7 @@ extension UserSwiftData {
             name: model.name,
             email: model.email,
             openID: model.openID,
+            authType: model.authType,
             avatar: model.avatar,
             role: model.role,
             gender: model.gender,

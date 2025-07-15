@@ -9,7 +9,7 @@ import Foundation
 
 struct HomeRemoteDataSource{
     func fetchHomeData() async -> Result<HomeResponseModel, APIError> {
-        guard let url = Constants.APIEdpoint.home.url else {
+        guard let url = Constants.APIEndpoint.home.url else {
             return .failure(APIError.badURL)
         }
         

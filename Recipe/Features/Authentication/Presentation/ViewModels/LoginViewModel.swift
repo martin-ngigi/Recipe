@@ -14,6 +14,7 @@ import Firebase
 import CryptoKit
 import AuthenticationServices
 
+@MainActor
 class LoginViewModel : ObservableObject{
     @Published var dialogEntity = DialogEntity()
     @Published var isShowAlertDialog = false
@@ -30,6 +31,12 @@ class LoginViewModel : ObservableObject{
         resetPasswordFirebaseRepository: FirebaseAuthRepository.shared,
         logoutFirebaseRepository: FirebaseAuthRepository.shared,
         deleteFirebaseAccountRepository: FirebaseAuthRepository.shared
+    )
+    
+    let authUseCases = AuthUseCases(
+        authenticateUserRepository: AuthRepository.shared,
+        getLocalUserRepository: AuthRepository.shared,
+        saveUserToLocalRepository: AuthRepository.shared
     )
     
     func updateDialogEntity(value: DialogEntity) {
@@ -73,12 +80,11 @@ class LoginViewModel : ObservableObject{
         isLoginEnabled = isFormValid
     }
     
-    func emailAndPasswordLogin() async{
+    func emailAndPasswordLogin(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async{
        
-        if password.isEmpty {
-            updateSendLoginErrors(key: "password", value:  "Password Email")
-            return
-        }
         loginState = .isLoading
         
         var result: Result<AuthDataResult, FirebaseAuthError>
@@ -90,17 +96,78 @@ class LoginViewModel : ObservableObject{
                 
                 // Email not verified
                 if !authDataResult.user.isEmailVerified {
-                    loginState = .error("You need to verify your email. Check email verification link that was sent to \(authDataResult.user.email ?? "" ). If missing, check in Spam.")
+                    let errorMessage = "You need to verify your email. Check email verification link that was sent to \(authDataResult.user.email ?? "" ). If missing, check in Spam."
+                    loginState = .error(errorMessage)
+                    print("DEBUG: \(errorMessage)")
+                    onFailure(errorMessage)
                     return
                 }
                 
                 loginState = .good
             
-               // await authenticateUser(authDataResult: authDataResult, type: "Email")
+            await authenticateUser(
+                authDataResult: authDataResult,
+                type: "Email",
+                onSuccess: {
+                    onSuccess()
+                },
+                onFailure: { error in
+                    onFailure(error)
+                }
+            )
             case .failure(let error):
                 loginState = .error(error.description)
+                onFailure(error.description)
         }
         
     }
+    
+    func authenticateUser(
+        authDataResult: AuthDataResult,
+        type: String,
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        
+        let randomString = RandomStringGenerator.shared.randomString(length: 8)
+        
+        let name = authDataResult.user.displayName ?? "No_Name_\(randomString)"
+        let email = authDataResult.user.email ?? "no_email_\(randomString)@safiribytes.com"
+        let avatar = "/images/profile/default.png"
+        let openId = authDataResult.user.uid
+        let role = "Customer"
+        
+        let user: UserModel = UserModel(
+            userID: "",
+            name: name,
+            email: email,
+            openID: openId,
+            authType: type,
+            avatar: avatar,
+            role: role
+        )
+        
+        let result = await authUseCases.executeAuthenticateUser(user: user)
+        
+        switch result {
+        case .success(let response):
+            loginState = .good
+            
+            guard let userModel = response.user else {
+                loginState = .error("Something went wrong while authenticating you. Please try again later.")
+                return
+            }
+            
+            let _ = authUseCases.excuteSaveUserToLocal(user: userModel)
+            Constants.accessToken = userModel.accessToken ?? "No accessToken"
+            Constants.openId = userModel.openID
+            onSuccess()
+        case .failure(let error):
+            loginState = .error(error.description)
+            onFailure(error.description)
+        }
+        
+    }
+
 
 }

@@ -10,15 +10,19 @@ import Foundation
 class Constants {
     static let isDashboardBottomNavigationVisible = "isDashboardBottomNavigationVisible"
     static let timeoutInterval: Double = 45
-    static let accessToken: String = ""
+    static var accessToken: String = ""
+    static var openId: String = ""
     static let deviceId: String = ""
     static let PROD_URL = "https://safiribytes.com"
     static let IOS_TEST_URL: String = "http://127.0.0.1:8000"
     static let ANDROID_TEST_URL: String = "http://192.168.1.102:8000"
+    
     static let prefix: String = "/api"
+    
     static let homeURL: String = "\(prefix)/home"
     static let getChefByIdURL: String = "\(prefix)/chefs/get-by-id"
-    
+    static let authURL: String = "\(prefix)/auth/authentication"
+
     static let APP_NAME = "Recipe"
     
     static var BASE_URL: String {
@@ -29,9 +33,10 @@ class Constants {
         #endif
     }
     
-    enum APIEdpoint {
+    enum APIEndpoint {
         case home
         case getChefById(chefId: String)
+        case auth
         
         var url: URL? {
             switch self {
@@ -39,6 +44,8 @@ class Constants {
                 return URL(string: "\(BASE_URL)\(homeURL)")
             case .getChefById(let chefId):
                 return URL(string: "\(BASE_URL)\(getChefByIdURL)?open_id=\(chefId)")
+            case .auth:
+                return URL(string: "\(BASE_URL)\(authURL)")
             }
         }
     }

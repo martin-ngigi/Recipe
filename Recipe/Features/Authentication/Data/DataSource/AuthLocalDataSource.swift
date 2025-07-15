@@ -1,5 +1,5 @@
 //
-//  LocalUserDataSource.swift
+//  AuthLocalDataSource.swift
 //  Recipe
 //
 //  Created by Hummingbird on 14/07/2025.
@@ -8,13 +8,12 @@
 import Foundation
 import SwiftData
 
-
-final class LocalUserDataSource{
+final class AuthLocalDataSource{
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     
     @MainActor
-    static let shared = LocalUserDataSource()
+    static let shared = AuthLocalDataSource()
 
     @MainActor
     private init() {
