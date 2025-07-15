@@ -30,7 +30,15 @@ struct DashboardView: View {
                         ProfileView()
                     }
                     else {
-                        LoginView()
+                        LoginView(
+                            onLoginSuccess: {
+                                LocalState.isLogedIn = true
+                                tabRouter.selectedTab = .profile
+                            },
+                            onLoginFailure: { error in
+                                
+                            }
+                        )
                     }
                 }
                 .tag(TabItemEntity.profile)

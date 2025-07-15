@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    var onLoginSuccess: () -> Void
+    var onLoginFailure: (String) -> Void
     @Environment(\.dismiss) var dismiss
     @Environment(\.showError) private var showError
     @EnvironmentObject var router: Router
@@ -70,7 +72,7 @@ struct LoginView: View {
                         Task {
                             await loginViewModel.emailAndPasswordLogin(
                                 onSuccess: {
-                                    LocalState.isLogedIn = true
+                                    onLoginSuccess()
                                 },
                                 onFailure: { error in
                                     loginViewModel.updateIsShowAlertDialog(value: true)
@@ -83,6 +85,7 @@ struct LoginView: View {
                                             dismissButtonText: "",
                                             onConfirm: {
                                                 loginViewModel.updateIsShowAlertDialog(value: false)
+                                                onLoginFailure(error)
                                             },
                                             onDismiss: {
                                                 loginViewModel.updateIsShowAlertDialog(value: false)
@@ -203,6 +206,9 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(
+        onLoginSuccess: {},
+        onLoginFailure: {error in}
+    )
         .environmentObject(Router())
 }

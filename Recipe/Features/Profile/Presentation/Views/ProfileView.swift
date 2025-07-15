@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     var name = "John Doe"
+    @StateObject var loginViewModel = LoginViewModel()
+    @State var user: UserModel? = nil
     
     var initials: String {
-            let components = name.split(separator: " ")
+            let components = "\(user?.name ?? "")".split(separator: " ")
             let firstInitial = components.first?.prefix(1) ?? ""
             let secondInitial = (components.count > 1 ? components[1].prefix(1) : "")
             return "\(firstInitial)\(secondInitial)".uppercased()
@@ -28,14 +30,6 @@ struct ProfileView: View {
                 .cornerRadius(100)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top)
-            /*
-            Image(systemName: "person.circle")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 200, height: 200)
-                .ignoresSafeArea()
-                .frame(maxWidth: .infinity, alignment: .center)
-            */
             
             List {
                
@@ -46,7 +40,7 @@ struct ProfileView: View {
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         Spacer()
                         
-                        Text("John Doe")
+                        Text(user?.name ?? "")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     }
                     
@@ -55,12 +49,24 @@ struct ProfileView: View {
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         Spacer()
                         
-                        Text("john@gmail.com")
+                        Text(user?.email ?? "")
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                    }
+                    
+                    HStack{
+                        Text("Phone:")
+                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                        Spacer()
+                        
+                        Text(user?.phoneComplete ?? "")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     }
                 }
                 
             }
+        }
+        .onAppear{
+            user = loginViewModel.fetchUserFromLocalStorage()
         }
         //.hideBottomNavigationBar(false)
     }

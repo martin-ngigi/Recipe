@@ -158,7 +158,7 @@ class LoginViewModel : ObservableObject{
                 return
             }
             
-            let _ = authUseCases.excuteSaveUserToLocal(user: userModel)
+            saveUserToLocalStorage(user: userModel)
             Constants.accessToken = userModel.accessToken ?? "No accessToken"
             Constants.openId = userModel.openID
             onSuccess()
@@ -169,5 +169,11 @@ class LoginViewModel : ObservableObject{
         
     }
 
+    func saveUserToLocalStorage(user: UserModel) {
+        authUseCases.excuteSaveUserToLocal(user: user)
+    }
 
+    func fetchUserFromLocalStorage() -> UserModel?{
+        return authUseCases.executeGetLocalUser()
+    }
 }
