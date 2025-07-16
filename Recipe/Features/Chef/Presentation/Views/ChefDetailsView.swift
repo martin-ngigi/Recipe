@@ -47,7 +47,12 @@ struct ChefDetailsView: View {
                         if recipesList.count > 1{
                             VStack(spacing: 2) {
                                 ForEach(recipesList.prefix(isShowAllRecipeItems ? recipesList.count :  1), id: \.self) { recipe in
-                                    RecipeCard(recipe: recipe)
+                                    RecipeCard(
+                                        recipe: recipe,
+                                        onTap: { recipe in
+                                            
+                                        }
+                                    )
                                 }
                                 
                                 HStack {
@@ -65,7 +70,12 @@ struct ChefDetailsView: View {
                         else {
                             ForEach(recipesList, id: \.self) { recipe in
                                 VStack(spacing: 10) {
-                                    RecipeCard(recipe: recipe)
+                                    RecipeCard(
+                                        recipe: recipe,
+                                        onTap: { recipe in
+                                            
+                                        }
+                                    )
                                 }
                             }
                         }

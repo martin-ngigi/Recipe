@@ -11,6 +11,7 @@ struct TrendingRecipesHome: View {
     var columns: [GridItem]
     var recipes: [RecipeModel]
     var onTapRecipe: (RecipeModel) -> Void
+    var onTapSeeAll: () -> Void
     
     var body: some View {
         VStack(spacing: 5){
@@ -21,15 +22,19 @@ struct TrendingRecipesHome: View {
                 
                 Spacer()
                 
-                HStack{
-                    Text("See All")
-                        .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                        .underline(true, color: Color.theme.primaryColor)
-                    
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color.theme.grayColor1)
+                Button{
+                    onTapSeeAll()
+                } label: {
+                    HStack{
+                        Text("See All")
+                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                            .underline(true, color: Color.theme.primaryColor)
+                        
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color.theme.grayColor1)
+                    }
+                    .foregroundColor(Color.theme.primaryColor)
                 }
-                .foregroundColor(Color.theme.primaryColor)
                 
             }
             
@@ -53,6 +58,9 @@ struct TrendingRecipesHome: View {
         columns: [ GridItem(.flexible()), GridItem(.flexible())],
         recipes: RecipeModel.dummyList,
         onTapRecipe: { recipe in
+            
+        },
+        onTapSeeAll: {
             
         }
     )

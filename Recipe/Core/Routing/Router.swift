@@ -69,5 +69,8 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
 
     case .chefdetails(let chef):
         ChefDetailsView(chef: chef)
+        
+    case .trendingRecipes(let list):
+        TrendingRecipesView(list: list)
     }
 }
