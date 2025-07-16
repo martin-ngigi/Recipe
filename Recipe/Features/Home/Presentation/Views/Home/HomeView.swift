@@ -65,6 +65,9 @@ struct HomeView: View {
                         chefs: homeViewModel.popularChefsList,
                         onTapChef: { chef in
                             router.push(.chefdetails(chef: chef))
+                        },
+                        onTapSeeAll: {
+                            router.push(.popularChefs(list:  homeViewModel.popularChefsList))
                         }
                     )
                     .padding(.top, 10)

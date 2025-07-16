@@ -72,5 +72,8 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
         
     case .trendingRecipes(let list):
         TrendingRecipesView(list: list)
+        
+    case .popularChefs(let list):
+        AllChefsView(list: list)
     }
 }

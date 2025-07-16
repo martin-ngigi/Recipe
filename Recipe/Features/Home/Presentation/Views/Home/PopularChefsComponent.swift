@@ -21,7 +21,8 @@ struct PopularChefsComponent: View {
     }
     var chefs: [UserModel]
     var onTapChef: (UserModel) -> Void
-    
+    var onTapSeeAll: () -> Void
+
     var body: some View {
         VStack(spacing: 5){
             HStack{
@@ -31,25 +32,31 @@ struct PopularChefsComponent: View {
                 
                 Spacer()
                 
-                HStack{
-                    Text("See All (\(chefs.count))")
-                        .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                        .underline(true, color: Color.theme.primaryColor)
+                Button{
+                    onTapSeeAll()
+                } label: {
+                    HStack{
+                        Text("See All (\(chefs.count))")
+                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                            .underline(true, color: Color.theme.primaryColor)
+                        
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color.theme.grayColor1)
+                    }
+                    .foregroundColor(Color.theme.primaryColor)
                     
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color.theme.grayColor1)
                 }
-                .foregroundColor(Color.theme.primaryColor)
-                
             }
             
             LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
                 ForEach(chefs, id: \.self) { chef in
-                    Button{
-                        onTapChef(chef)
-                    } label: {
-                        PopularChefRow(chef: chef)
-                    }
+                    PopularChefRow(
+                        chef: chef,
+                        onTap: { chef in
+                            onTapChef(chef)
+                        }
+                    )
+                    
                 }
             }
         }
@@ -58,33 +65,38 @@ struct PopularChefsComponent: View {
 
 struct PopularChefRow: View {
     var chef: UserModel
+    var onTap: (UserModel) -> Void
     
     var body: some View {
-        HStack {
-            CustomImageView(
-                url: chef.avatar,
-                maxWidth: 60,
-                height: 60
-            )
-            .clipShape(.rect(cornerRadius: 10))
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(chef.name)
-                    .font(.headline)
-                                
-                //Text("⭐️ \(String(format: "%.1f", chef.rate?.rating ?? 0.0))")
-                Text("⭐️ \(chef.rate?.ratingFormatted ?? "0.0")")
-                    .font(.body)
-                    .foregroundColor(.orange)
+        Button{
+            onTap(chef)
+        } label: {
+            HStack {
+                CustomImageView(
+                    url: chef.avatar,
+                    maxWidth: 60,
+                    height: 60
+                )
+                .clipShape(.rect(cornerRadius: 10))
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(chef.name)
+                        .font(.headline)
+                                    
+                    Text("⭐️ \(chef.rate?.ratingFormatted ?? "0.0")")
+                        .font(.body)
+                        .foregroundColor(.orange)
+                }
+                .foregroundStyle(Color.theme.blackAndWhite)
+                
+                Spacer()
             }
-            .foregroundStyle(Color.theme.blackAndWhite)
-            
-            Spacer()
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         }
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+      
     }
 }
 
@@ -92,6 +104,9 @@ struct PopularChefRow: View {
     PopularChefsComponent(
         chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
         onTapChef: { chef in
+            
+        },
+        onTapSeeAll: {
             
         }
     )
