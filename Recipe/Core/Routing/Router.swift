@@ -58,7 +58,14 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
         FavouritesListView()
  
     case .profile:
-        ProfileView()
+        ProfileView(
+            onLogoutSuccess: {
+                
+            },
+            onLogoutFailed: {error in
+                
+            }
+        )
 
     case .settings:
         SettingsScreen()

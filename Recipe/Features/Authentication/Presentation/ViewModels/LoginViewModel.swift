@@ -36,7 +36,8 @@ class LoginViewModel : ObservableObject{
     let authUseCases = AuthUseCases(
         authenticateUserRepository: AuthRepository.shared,
         getLocalUserRepository: AuthRepository.shared,
-        saveUserToLocalRepository: AuthRepository.shared
+        saveUserToLocalRepository: AuthRepository.shared,
+        deleteLocalUserRepository: AuthRepository.shared
     )
     
     func updateDialogEntity(value: DialogEntity) {
@@ -175,5 +176,47 @@ class LoginViewModel : ObservableObject{
 
     func fetchUserFromLocalStorage() -> UserModel?{
         return authUseCases.executeGetLocalUser()
+    }
+    
+    func logOut(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) {
+       let results = firebaseAuthUseCase.executeLogout()
+        switch results {
+        case .success(let hasLoggedOut):
+            if hasLoggedOut{
+                onSuccess()
+                deleteLocalUserData()
+            }
+            else {
+                onFailure("Logout Failed")
+            }
+        case .failure(let error):
+            onFailure(error.description)
+        }
+    }
+    
+    func deleteAccount(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        let results = await firebaseAuthUseCase.executeDeletAccount()
+        switch results {
+        case .success(let hasDeletedAccount):
+            if hasDeletedAccount{
+                onSuccess()
+                deleteLocalUserData()
+            }
+            else {
+                onFailure("Account Deletion Failed")
+            }
+        case .failure(let error):
+            onFailure(error.description)
+        }
+    }
+    
+    func deleteLocalUserData() {
+        authUseCases.deleteLocalUser()
     }
 }

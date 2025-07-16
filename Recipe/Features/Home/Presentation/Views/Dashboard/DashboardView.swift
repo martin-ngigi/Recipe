@@ -27,7 +27,15 @@ struct DashboardView: View {
                 
                 Group{
                     if LocalState.isLogedIn {
-                        ProfileView()
+                        ProfileView(
+                            onLogoutSuccess: {
+                                LocalState.isLogedIn = false
+                                tabRouter.selectedTab = .profile
+                            },
+                            onLogoutFailed: {error in
+                                
+                            }
+                        )
                     }
                     else {
                         LoginView(

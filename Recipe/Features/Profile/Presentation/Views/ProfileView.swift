@@ -10,7 +10,11 @@ import SwiftUI
 struct ProfileView: View {
     var name = "John Doe"
     @StateObject var loginViewModel = LoginViewModel()
+    @StateObject var profileViewModel = ProfileViewModel()
+    @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @State var user: UserModel? = nil
+    var onLogoutSuccess: () -> Void
+    var onLogoutFailed: (String) -> Void
     
     var initials: String {
             let components = "\(user?.name ?? "")".split(separator: " ")
@@ -32,7 +36,6 @@ struct ProfileView: View {
                 .padding(.top)
             
             List {
-               
                 
                 Section("Personal Details") {
                     HStack{
@@ -63,15 +66,119 @@ struct ProfileView: View {
                     }
                 }
                 
+                Section("Account") {
+                    Button{
+                        profileViewModel.updateIsShowAlertDialog(value: true)
+                        profileViewModel.updateDialogEntity(
+                            value:  DialogEntity(
+                                title: "Logout",
+                                message: "Are you sure you want to logout?",
+                                icon: "",
+                                confirmButtonText: "Logout",
+                                dismissButtonText: "Cancel",
+                                onConfirm: {
+                                    profileViewModel.updateIsShowAlertDialog(value: false)
+                                    loginViewModel.logOut(
+                                        onSuccess: {
+                                            onLogoutSuccess()
+                                            favouriteRecipesViewModel.deleteAllFavourites()
+                                        },
+                                        onFailure: { error in
+                                            onLogoutFailed(error)
+                                        }
+                                    )
+                                },
+                                onDismiss: {
+                                    profileViewModel.updateIsShowAlertDialog(value: false)
+                                }
+                            )
+                        )
+                    } label: {
+                        HStack{
+                            Text("Logout:")
+                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            Spacer()
+                            
+                            Image(systemName: "power")
+                        }
+                        .foregroundColor(Color.gray)
+                    }
+                    
+                    Button{
+                        profileViewModel.updateIsShowAlertDialog(value: true)
+                        profileViewModel.updateDialogEntity(
+                            value:  DialogEntity(
+                                title: "Delete Account",
+                                message: "Please note that this action cannot be undone and deleted data can't be restored.",
+                                icon: "",
+                                confirmButtonText: "Delete",
+                                dismissButtonText: "Cancel",
+                                onConfirm: {
+                                    Task {
+                                        profileViewModel.updateIsShowAlertDialog(value: false)
+                                        await loginViewModel.deleteAccount(
+                                            onSuccess: {
+                                                onLogoutSuccess()
+                                            },
+                                            onFailure: { error in
+                                                onLogoutFailed(error)
+                                            }
+                                        )
+                                    }
+                                },
+                                onDismiss: {
+                                    profileViewModel.updateIsShowAlertDialog(value: false)
+                                }
+                            )
+                        )
+                    } label: {
+                        HStack{
+                            Text("Delete Account:")
+                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            Spacer()
+                            
+                            Image(systemName: "power.circle.fill")
+                        }
+                        .foregroundColor(Color.red)
+                    }
+                }
+                
             }
         }
         .onAppear{
             user = loginViewModel.fetchUserFromLocalStorage()
+        }
+        .overlay {
+            CustomAlertDialog(
+                isPresented: $profileViewModel.isShowAlertDialog,
+                title: profileViewModel.dialogEntity.title,
+                text: profileViewModel.dialogEntity.message,
+                confirmButtonText: profileViewModel.dialogEntity.confirmButtonText,
+                dismissButtonText: profileViewModel.dialogEntity.dismissButtonText,
+                imageName: profileViewModel.dialogEntity.icon,
+                onDismiss: {
+                    if let onDismiss = profileViewModel.dialogEntity.onDismiss {
+                        onDismiss()
+                    }
+                },
+                onConfirmation: {
+                    if let onConfirm = profileViewModel.dialogEntity.onConfirm {
+                        onConfirm()
+                    }
+                }
+            )
         }
         //.hideBottomNavigationBar(false)
     }
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(
+        onLogoutSuccess: {
+            
+        },
+        onLogoutFailed: { error in
+            
+        }
+    )
 }

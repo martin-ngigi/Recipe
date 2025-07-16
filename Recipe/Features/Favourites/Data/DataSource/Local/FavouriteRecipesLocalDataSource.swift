@@ -54,4 +54,20 @@ final class FavouriteRecipesLocalDataSource{
             fatalError("Failed to delete Book: \(error.localizedDescription)")
         }
     }
+    
+    func deleteAllRecipes() {
+        let allRecipes = fetchRecipes()
+        
+        for recipe in allRecipes {
+            modelContext.delete(recipe)
+        }
+        
+        do {
+            try modelContext.save()
+            print("DEBUG: All recipes deleted successfully.")
+        } catch {
+            fatalError("Failed to delete all recipes: \(error.localizedDescription)")
+        }
+    }
+
 }

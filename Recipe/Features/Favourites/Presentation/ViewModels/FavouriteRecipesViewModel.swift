@@ -12,7 +12,8 @@ class FavouriteRecipesViewModel: ObservableObject {
     let favouriteRecipesUseCases = FavouriteRecipesUseCases(
         addRecipeToLocalRepository: FavouriteRecipesRepository.shared,
         fetchLocalRecipesRepository: FavouriteRecipesRepository.shared,
-        deleteLocalRecipeRepository: FavouriteRecipesRepository.shared
+        deleteLocalRecipeRepository: FavouriteRecipesRepository.shared,
+        deleteAllLocalFavouritesRepository: FavouriteRecipesRepository.shared
     )
     
     @Published var favouriteRecipes: [RecipeModel] = []
@@ -47,6 +48,10 @@ class FavouriteRecipesViewModel: ObservableObject {
     
     func updateIsShowAlertDialog(value: Bool) {
         isShowAlertDialog = value
+    }
+    
+    func deleteAllFavourites() {
+        favouriteRecipesUseCases.executeDeleteAllRecipes()
     }
     
 }

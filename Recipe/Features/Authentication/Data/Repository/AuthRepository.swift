@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalRepositoryProtocol, GetLocalUserRepositoryProtocol{
+struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalRepositoryProtocol, GetLocalUserRepositoryProtocol, DeleteLocalUserRepositoryProtocol{
 
     static let shared = AuthRepository()
     let authRemoteDataSource = AuthRemoteDataSource()
@@ -33,6 +33,11 @@ struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalReposi
     func getLocalUser() -> UserModel? {
         guard let swiftUserData = authLocalDataSource.fetchUser() else { return nil }
         return UserModel(swiftData: swiftUserData)
+    }
+    
+    func deleteLocalUser() {
+        guard let swiftUserData = authLocalDataSource.fetchUser() else { return }
+        authLocalDataSource.deleteUser(user: swiftUserData)
     }
     
 }

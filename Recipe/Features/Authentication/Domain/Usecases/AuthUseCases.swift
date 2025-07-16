@@ -11,15 +11,13 @@ struct AuthUseCases{
     let authenticateUserRepository: AuthenticateUserRepositoryProtocol
     let getLocalUserRepository: GetLocalUserRepositoryProtocol
     let saveUserToLocalRepository: SaveUserToLocalRepositoryProtocol
+    let deleteLocalUserRepository: DeleteLocalUserRepositoryProtocol
     
-    init(
-        authenticateUserRepository: AuthenticateUserRepositoryProtocol,
-        getLocalUserRepository: GetLocalUserRepositoryProtocol,
-        saveUserToLocalRepository: SaveUserToLocalRepositoryProtocol
-    ) {
+    init(authenticateUserRepository: AuthenticateUserRepositoryProtocol, getLocalUserRepository: GetLocalUserRepositoryProtocol, saveUserToLocalRepository: SaveUserToLocalRepositoryProtocol, deleteLocalUserRepository: DeleteLocalUserRepositoryProtocol) {
         self.authenticateUserRepository = authenticateUserRepository
         self.getLocalUserRepository = getLocalUserRepository
         self.saveUserToLocalRepository = saveUserToLocalRepository
+        self.deleteLocalUserRepository = deleteLocalUserRepository
     }
     
     func executeAuthenticateUser(user: UserModel) async -> Result<UserResponseModel, APIError> {
@@ -32,5 +30,9 @@ struct AuthUseCases{
     
     func executeGetLocalUser() -> UserModel? {
         return getLocalUserRepository.getLocalUser()
+    }
+    
+    func deleteLocalUser() {
+        deleteLocalUserRepository.deleteLocalUser()
     }
 }
