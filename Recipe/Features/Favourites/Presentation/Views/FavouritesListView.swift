@@ -16,70 +16,82 @@ struct FavouritesListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self){ recipe in
-                    FavouriteItemView(
-                        recipe: recipe,
-                        onTapEntireItem: { recipe in
-                            router.push(.recipedetails(recipe: recipe))
-                        },
-                        onTapAddOrRemove: { favourite in
-                            initDelete(favourite: favourite)
-                        }
+                if favouriteRecipesViewModel.favouriteRecipes.isEmpty {
+                    EmptyScreenView(
+                        imageName: "tray",
+                        title: "No Favourites Found",
+                        description: """
+                        You haven't added any recipes to your favourites yet. Start exploring delicious recipes and tap the heart icon on any recipe you like to save it here for easy access later. Your favourite recipes will appear in this list so you can quickly find and enjoy them anytime.
+                        """
                     )
-                    .contextMenu {
-                        Button(role: .destructive) {
-                            // Delete action
-                            if let index = favouriteRecipesViewModel.favouriteRecipes.firstIndex(of: recipe) {
-                                delete(indexSet: IndexSet(integer: index))
+                }
+                else {
+                    ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self){ recipe in
+                        FavouriteItemView(
+                            recipe: recipe,
+                            onTapEntireItem: { recipe in
+                                router.push(.recipedetails(recipe: recipe))
+                            },
+                            onTapAddOrRemove: { favourite in
+                                initDelete(favourite: favourite)
                             }
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        
-                        Button {
-                            // Share action
-                            Task {
-                                favouriteRecipesViewModel.updateShareState(value: .isLoading)
-                                await  ShareRecipeUtil.shared.shareRecipeAsPDF(
-                                    recipe: recipe,
-                                    onSuccess: {
-                                        favouriteRecipesViewModel.updateShareState(value: .good)
-                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                    },
-                                    onError: { error in
-                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                        favouriteRecipesViewModel.updateDialogEntity(
-                                            value: DialogEntity(
-                                                title: "Sharing Recipe Failed",
-                                                message: error,
-                                                icon: "",
-                                                confirmButtonText: "",
-                                                dismissButtonText: "Okay",
-                                                onConfirm: {
-                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                                },
-                                                onDismiss: {
-                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                                }
+                        )
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                // Delete action
+                                if let index = favouriteRecipesViewModel.favouriteRecipes.firstIndex(of: recipe) {
+                                    delete(indexSet: IndexSet(integer: index))
+                                }
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            
+                            Button {
+                                // Share action
+                                Task {
+                                    favouriteRecipesViewModel.updateShareState(value: .isLoading)
+                                    await  ShareRecipeUtil.shared.shareRecipeAsPDF(
+                                        recipe: recipe,
+                                        onSuccess: {
+                                            favouriteRecipesViewModel.updateShareState(value: .good)
+                                            favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                        },
+                                        onError: { error in
+                                            favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                            favouriteRecipesViewModel.updateDialogEntity(
+                                                value: DialogEntity(
+                                                    title: "Sharing Recipe Failed",
+                                                    message: error,
+                                                    icon: "",
+                                                    confirmButtonText: "",
+                                                    dismissButtonText: "Okay",
+                                                    onConfirm: {
+                                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                    },
+                                                    onDismiss: {
+                                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                    }
+                                                )
                                             )
-                                        )
-                                    }
-                                )
+                                        }
+                                    )
+                                }
+                            } label: {
+                                Label("Share", systemImage: "square.and.arrow.up")
                             }
-                        } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                        
-                        // Add other relevant options here
-                        Button {
-                            // Example: Mark as favorite/unfavorite
-                            //toggleFavorite(recipe)
-                        } label: {
-                            Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                            
+                            // Add other relevant options here
+                            Button {
+                                // Example: Mark as favorite/unfavorite
+                                //toggleFavorite(recipe)
+                            } label: {
+                                Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                            }
                         }
                     }
+                    .onDelete(perform: delete(indexSet:))
                 }
-                .onDelete(perform: delete(indexSet:))
+               
             }
             .listStyle(.plain)
             .searchable(text: $searchField, prompt: "Search favourite...")
