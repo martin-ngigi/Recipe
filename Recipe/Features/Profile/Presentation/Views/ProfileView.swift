@@ -16,17 +16,11 @@ struct ProfileView: View {
     var onLogoutSuccess: () -> Void
     var onLogoutFailed: (String) -> Void
     
-    var initials: String {
-            let components = "\(user?.name ?? "")".split(separator: " ")
-            let firstInitial = components.first?.prefix(1) ?? ""
-            let secondInitial = (components.count > 1 ? components[1].prefix(1) : "")
-            return "\(firstInitial)\(secondInitial)".uppercased()
-        }
 
     var body: some View {
         VStack{
-            Text(initials)
-                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 70))
+            Text(user?.initials ?? "--")
+                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 40))
                 .frame(width: 100, height: 100)
                 .foregroundColor(.primary)
                 .padding(20)

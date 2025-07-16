@@ -22,6 +22,13 @@ struct UserModel: Codable, Hashable {
     var recipesList: [RecipeModel]? = nil
     var allRates: [AllRatingModel]? = nil
     var rate: TotalRateModel? = nil
+    
+    var initials: String {
+        let components = name.split(separator: " ")
+        let firstInitial = components.first?.prefix(1) ?? ""
+        let secondInitial = (components.count > 1 ? components[1].prefix(1) : "")
+        return "\(firstInitial)\(secondInitial)".uppercased()
+    }
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
