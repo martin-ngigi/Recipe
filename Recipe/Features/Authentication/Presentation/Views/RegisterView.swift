@@ -34,32 +34,32 @@ struct RegisterView: View {
                         text: $registerViewModel.name,
                         placeholder: "John Doe",
                         description: "First and Last Name",
-                        error: registerViewModel.registerErrors["name"] ?? ""
+                        error: registerViewModel.registerErrors["name"] ?? "",
+                        onTextChange: { text in
+                            registerViewModel.updateName(value: text)
+                        }
                     )
-                    .onChange(of: registerViewModel.name) { newValue in
-                        registerViewModel.updateName(value: newValue)
-                    }
                     
                     BorderedInputField(
                         text: $registerViewModel.email,
                         placeholder: "myemail@gmail.com",
                         description: "Email",
                         error: registerViewModel.registerErrors["email"] ?? "",
-                        keyboardType: .emailAddress
+                        keyboardType: .emailAddress,
+                        onTextChange: { text in
+                            registerViewModel.updateEmail(value: text)
+                        }
                     )
-                    .onChange(of: registerViewModel.email) { newValue in
-                        registerViewModel.updateEmail(value: newValue)
-                    }
                     
                     BorderedPasswordField(
                         password: $registerViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
-                        error: registerViewModel.registerErrors["password"] ?? ""
+                        error: registerViewModel.registerErrors["password"] ?? "",
+                        onTextChange: { text in
+                            registerViewModel.updatePassword(value: text)
+                        }
                     )
-                    .onChange(of: registerViewModel.password) { newValue in
-                        registerViewModel.updatePassword(value: newValue)
-                    }
                     
                     
                     Button{

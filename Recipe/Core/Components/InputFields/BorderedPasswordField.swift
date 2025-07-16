@@ -15,6 +15,7 @@ struct BorderedPasswordField: View {
     var description: String = ""
     var error: String
     @State private var isSecure: Bool = true  // Toggle for visibility
+    var onTextChange: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -23,36 +24,13 @@ struct BorderedPasswordField: View {
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
             }
             
-            /*
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.gray.opacity(0.2)) // Background color
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray, lineWidth: 0.3) // Border
-                
-                HStack {
-                    if isSecure {
-                        SecureField(placeholder, text: $password)
-                    } else {
-                        TextField(placeholder, text: $password)
-                    }
-                    
-                    Button(action: { isSecure.toggle() }) {
-                        Image(systemName: isSecure ? "eye.slash" : "eye")
-                            .foregroundColor(.gray)
-                    }
-                }
-                .padding()
-            }
-            .frame(height: 44)
-            */
-            
             HStack {
                 if isSecure {
                     SecureField(placeholder, text: $password)
                     
                 } else {
                     TextField(placeholder, text: $password)
+                    
                 }
                 
                 Button(action: { isSecure.toggle() }) {
@@ -67,7 +45,10 @@ struct BorderedPasswordField: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 7)
                     .stroke(Color.gray, lineWidth: 0.3)
-            )// Border
+            )
+            .onChange(of: password){ newValue in
+                onTextChange(newValue)
+            }
             
             
             if !error.isEmpty {
@@ -81,5 +62,11 @@ struct BorderedPasswordField: View {
 
 
 #Preview {
-    BorderedPasswordField(password: .constant(""), error: "")
+    BorderedPasswordField(
+        password: .constant(""),
+        error: "",
+        onTextChange: { text in
+            
+        }
+    )
 }

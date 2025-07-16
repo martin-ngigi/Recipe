@@ -37,7 +37,10 @@ struct HomeView: View {
                     BorderedInputField(
                         text: $searchField,
                         placeholder: "Search recipes...",
-                        error: ""
+                        error: "",
+                        onTextChange: { text in
+                            
+                        }
                     )
                     
                     JustForYouSliderView(
@@ -83,6 +86,24 @@ struct HomeView: View {
                     Button("Dismiss") {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
+                }
+            }
+            .refreshable {
+                Task {
+                    await homeViewModel.fetchHomeData(
+                         onSuccess: { homeResponseModel in
+                             
+                         },
+                         onFailure: { error in
+                             homeViewModel.updateIsShowInbuiltAlert(value: true)
+                             homeViewModel.updateInbuiltAlert(
+                                 value: InbuiltAlert(
+                                     title: "Something went wrong!",
+                                     message: error
+                                 )
+                             )
+                         }
+                     )
                 }
             }
             .task {

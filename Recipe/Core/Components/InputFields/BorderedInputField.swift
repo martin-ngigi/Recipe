@@ -15,6 +15,7 @@ struct BorderedInputField: View {
     var description: String = ""
     var error: String
     var keyboardType: UIKeyboardType = .default
+    var onTextChange: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -24,6 +25,9 @@ struct BorderedInputField: View {
             }
             
             TextField(placeholder, text: $text)
+                .onChange(of: text){ newValue in
+                    onTextChange(newValue)
+                }
                 .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
                 .background(Color.gray.opacity(0.3))
                 .cornerRadius(7)
@@ -55,6 +59,12 @@ struct TappableTextFieldStyle: TextFieldStyle { // https://stackoverflow.com/que
 }
 
 #Preview {
-    BorderedInputField(text: .constant(""), error: "")
-        .padding(.horizontal)
+    BorderedInputField(
+        text: .constant(""),
+        error: "",
+        onTextChange: { text in
+            
+        }
+    )
+    .padding(.horizontal)
 }

@@ -37,21 +37,21 @@ struct LoginView: View {
                         placeholder: "myemail@gmail.com",
                         description: "Username/Email",
                         error: loginViewModel.loginErrors["email"] ?? "",
-                        keyboardType: .emailAddress
+                        keyboardType: .emailAddress,
+                        onTextChange: { text in
+                            loginViewModel.updateEmail(value: text)
+                        }
                     )
-                    .onChange(of: loginViewModel.email) { newValue in
-                        loginViewModel.updateEmail(value: newValue)
-                    }
                     
                     BorderedPasswordField(
                         password: $loginViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
-                        error: loginViewModel.loginErrors["password"] ?? ""
+                        error: loginViewModel.loginErrors["password"] ?? "",
+                        onTextChange: { text in
+                            loginViewModel.updatePassword(value: text)
+                        }
                     )
-                    .onChange(of: loginViewModel.password) { newValue in
-                        loginViewModel.updatePassword(value: newValue)
-                    }
                     
                     
                     Button{

@@ -16,6 +16,7 @@ class HomeViewModel: ObservableObject {
     @Published var popularChefsList: [UserModel] = []
     @Published var isShowInbuiltAlert = false
     @Published var inbuiltAlert: InbuiltAlert?
+    @Published var searchText: String = ""
     
     func fetchHomeData(
         onSuccess: (HomeResponseModel) -> Void,
