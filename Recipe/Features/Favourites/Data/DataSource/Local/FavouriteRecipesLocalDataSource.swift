@@ -25,6 +25,7 @@ final class FavouriteRecipesLocalDataSource{
         modelContext.insert(recipe)
         do {
             try modelContext.save()
+            print("DEBUG: recipe \(recipe.name) \(recipe.isInFavorite) added successfully")
         } catch {
             fatalError("Failed to save Book: \(error.localizedDescription)")
         }

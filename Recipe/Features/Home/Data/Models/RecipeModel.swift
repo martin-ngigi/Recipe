@@ -17,6 +17,7 @@ struct RecipeModel: Codable, Hashable{
     let image: String
     let instructions: String
     var chef: UserModel? = nil
+    var isInFavorite: Bool?
     var inststuctionsList: [String]{
         return instructions.instructionsList
     }
@@ -51,6 +52,7 @@ extension RecipeModel {
         self.instructions = swiftData.instructions
         //self.chef = userModel
         self.chef = nil
+        self.isInFavorite = swiftData.isInFavorite
     }
 }
 
@@ -68,6 +70,7 @@ class RecipeSwiftData {
     var image: String
     var instructions: String
     var chef: UserSwiftData?  // Optional nested model
+    var isInFavorite: Bool?
 
     init(
         recipeId: String,
@@ -76,8 +79,9 @@ class RecipeSwiftData {
         description: String,
         //ingredients: [IngredientSwiftData],
         image: String,
-        instructions: String
-        //chef: UserSwiftData?
+        instructions: String,
+        //chef: UserSwiftData?,
+        isInFavorite: Bool? = nil
     ) {
         self.recipeId = recipeId
         self.openId = openId
@@ -87,6 +91,7 @@ class RecipeSwiftData {
         self.image = image
         self.instructions = instructions
         //self.chef = chef
+        self.isInFavorite = isInFavorite
     }
 }
 
@@ -105,8 +110,9 @@ extension RecipeSwiftData {
             description: model.description,
             //ingredients: ingredientsSwiftData,
             image: model.image,
-            instructions: model.instructions
-            //chef: chefSwiftData
+            instructions: model.instructions,
+            //chef: chefSwiftData,
+            isInFavorite: model.isInFavorite
         )
     }
 }

@@ -93,13 +93,25 @@ struct RecipeDetailsView: View {
                         
                         Spacer()
                         
+                        Text("\(recipe.isInFavorite)")
+                        
                         Button{
                             Task{
-                                await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
+                                if let isInFavorite = recipe.isInFavorite, isInFavorite {
+                                    await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)
+                                    recipe.isInFavorite = false
+                                    print("DEBUG: Removed from favourite")
+                                }
+                                else {
+                                    recipe.isInFavorite = true
+                                    await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
+                                    print("DEBUG: Added to favourite")
+                                }
                             }
                         } label: {
-                            Image(systemName: "bookmark")
-                                .foregroundColor(Color.theme.blackAndWhite)
+                            Image(systemName: recipe.isInFavorite ?? false ? "heart.fill" : "heart") //bookmark
+                                .foregroundColor(Color.theme.primaryColor)
+                                .padding(5)
                         }
                     
                     }
