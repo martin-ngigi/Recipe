@@ -12,6 +12,7 @@ struct RecipeDetailsView: View {
     @State var isShowAllItems = false
     @EnvironmentObject var router: Router
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
+    @State var isInFavourite = false
 
     var body: some View {
         ScrollView {
@@ -92,12 +93,10 @@ struct RecipeDetailsView: View {
                             .foregroundColor(Color.theme.blackAndWhite)
                         
                         Spacer()
-                        
-                        Text("\(recipe.isInFavorite)")
-                        
+                                                
                         Button{
                             Task{
-                                if let isInFavorite = recipe.isInFavorite, isInFavorite {
+                                if isInFavourite {
                                     await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)
                                     recipe.isInFavorite = false
                                     print("DEBUG: Removed from favourite")
@@ -107,9 +106,10 @@ struct RecipeDetailsView: View {
                                     await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
                                     print("DEBUG: Added to favourite")
                                 }
+                                isInFavourite = await  favouriteRecipesViewModel.checkIfIsInFavourites(recipe: recipe)
                             }
                         } label: {
-                            Image(systemName: recipe.isInFavorite ?? false ? "heart.fill" : "heart") //bookmark
+                            Image(systemName: isInFavourite ? "heart.fill" : "heart") //bookmark
                                 .foregroundColor(Color.theme.primaryColor)
                                 .padding(5)
                         }
@@ -187,6 +187,9 @@ struct RecipeDetailsView: View {
                 .offset(y: -24)
                 .padding(.bottom, -24)
             }
+        }
+        .task{
+            isInFavourite = await favouriteRecipesViewModel.checkIfIsInFavourites(recipe: recipe)
         }
         .edgesIgnoringSafeArea(.top)
         .background(Color(.systemGroupedBackground))

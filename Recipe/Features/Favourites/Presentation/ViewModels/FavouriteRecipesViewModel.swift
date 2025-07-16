@@ -54,4 +54,9 @@ class FavouriteRecipesViewModel: ObservableObject {
         favouriteRecipesUseCases.executeDeleteAllRecipes()
     }
     
+    func checkIfIsInFavourites(recipe: RecipeModel) async -> Bool {
+        await  fetchFavouriteRecipes()
+        return favouriteRecipes.filter { $0.recipeId == recipe.recipeId }.count > 0
+    }
+    
 }
