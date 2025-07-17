@@ -13,6 +13,7 @@
 		5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */; };
 		5B90AAD52D81CD8B001A07C1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */; };
 		5B90AAD62D81CD8B001A07C1 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */; };
+		86ABED892E28C24200B7EDC2 /* ReadMe.MD in Resources */ = {isa = PBXBuildFile; fileRef = 86ABED882E28C24200B7EDC2 /* ReadMe.MD */; };
 		86E0D69F2E229D52005E7E81 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D69E2E229D52005E7E81 /* FirebaseAI */; };
 		86E0D6A12E229D52005E7E81 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6A02E229D52005E7E81 /* FirebaseAnalytics */; };
 		86E0D6A32E229D52005E7E81 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6A22E229D52005E7E81 /* FirebaseAuth */; };
@@ -50,6 +51,7 @@
 		5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		86ABED882E28C24200B7EDC2 /* ReadMe.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.MD; sourceTree = "<group>"; };
 		86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,11 @@
 		5B90AAB12D81C010001A07C1 /* RecipeUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = RecipeUITests;
+			sourceTree = "<group>";
+		};
+		86ABED652E28C09E00B7EDC2 /* screenshots */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -119,6 +126,8 @@
 		5B90AA8B2D81C00E001A07C1 = {
 			isa = PBXGroup;
 			children = (
+				86ABED882E28C24200B7EDC2 /* ReadMe.MD */,
+				86ABED652E28C09E00B7EDC2 /* screenshots */,
 				86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */,
 				5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */,
 				5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */,
@@ -168,6 +177,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5B90AA962D81C00E001A07C1 /* Recipe */,
+				86ABED652E28C09E00B7EDC2 /* screenshots */,
 			);
 			name = Recipe;
 			packageProductDependencies = (
@@ -284,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B90AAD12D81CD8B001A07C1 /* Poppins-Thin.ttf in Resources */,
+				86ABED892E28C24200B7EDC2 /* ReadMe.MD in Resources */,
 				5B90AAD22D81CD8B001A07C1 /* Poppins-Bold.ttf in Resources */,
 				5B90AAD32D81CD8B001A07C1 /* Poppins-Medium.ttf in Resources */,
 				5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */,
