@@ -6,17 +6,62 @@ A beautifully designed mobile app to explore delicious recipes, discover top che
 
 ## Screenshots – Dark & Light Mode
 
-| Dark Mode                    | Light Mode                      |
-|-----------------------------|----------------------------------|
-| ![](screenshots/1_Landing.png)           | ![](screenshots/1_Landing_Light.png)           |
-| ![](screenshots/2_Home.png)             | ![](screenshots/2_Home_Light.png)             |
-| ![](screenshots/3_Recipe_Details.png)   | ![](screenshots/3_Recipe_Details_Light.png)   |
-| ![](screenshots/4_Chef_Details.png)     | ![](screenshots/4_Chef_Details_Light.png)     |
-| ![](screenshots/5_Favourites.png)       | ![](screenshots/5_Favourites_Light.png)       |
-| ![](screenshots/6_Login.png)            | ![](screenshots/6_Login_Light.png)            |
-| ![](screenshots/7_Register.png)         | ![](screenshots/7_Register_Light.png)         |
-| ![](screenshots/8_Profile.png)          | ![](screenshots/8_Profile_Light.png)          |
-| ![](screenshots/9_Settings.png)         | ![](screenshots/9_Settings_Light.png)         |
+<!--| Dark Mode                    | Light Mode                      |-->
+<!--|-----------------------------|----------------------------------|-->
+<!--| ![](screenshots/1_Landing.png)           | ![](screenshots/1_Landing_Light.png)           |-->
+<!--| ![](screenshots/2_Home.png)             | ![](screenshots/2_Home_Light.png)             |-->
+<!--| ![](screenshots/3_Recipe_Details.png)   | ![](screenshots/3_Recipe_Details_Light.png)   |-->
+<!--| ![](screenshots/4_Chef_Details.png)     | ![](screenshots/4_Chef_Details_Light.png)     |-->
+<!--| ![](screenshots/5_Favourites.png)       | ![](screenshots/5_Favourites_Light.png)       |-->
+<!--| ![](screenshots/6_Login.png)            | ![](screenshots/6_Login_Light.png)            |-->
+<!--| ![](screenshots/7_Register.png)         | ![](screenshots/7_Register_Light.png)         |-->
+<!--| ![](screenshots/8_Profile.png)          | ![](screenshots/8_Profile_Light.png)          |-->
+<!--| ![](screenshots/9_Settings.png)         | ![](screenshots/9_Settings_Light.png)         |-->
+
+#App Screens – Dark & Light Mode
+
+<table>
+  <tr>
+    <th>Dark Mode</th>
+    <th>Light Mode</th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/1_Landing.png" width="200"/></td>
+    <td><img src="screenshots/1_Landing_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/2_Home.png" width="200"/></td>
+    <td><img src="screenshots/2_Home_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/3_Recipe_Details.png" width="200"/></td>
+    <td><img src="screenshots/3_Recipe_Details_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/4_Chef_Details.png" width="200"/></td>
+    <td><img src="screenshots/4_Chef_Details_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/5_Favourites.png" width="200"/></td>
+    <td><img src="screenshots/5_Favourites_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/6_Login.png" width="200"/></td>
+    <td><img src="screenshots/6_Login_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/7_Register.png" width="200"/></td>
+    <td><img src="screenshots/7_Register_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/8_Profile.png" width="200"/></td>
+    <td><img src="screenshots/8_Profile_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/9_Settings.png" width="200"/></td>
+    <td><img src="screenshots/9_Settings_Light.png" width="200"/></td>
+  </tr>
+</table>
 
 ---
 
