@@ -75,10 +75,6 @@ struct HomeView: View {
                     )
                     .padding(.top, 10)
                 }
-                .padding()
-                //.searchable(text: $searchField, prompt: "Search recipes...")
-               
-                
             }
             .toolbar{
                 ToolbarItemGroup(placement: .keyboard) {

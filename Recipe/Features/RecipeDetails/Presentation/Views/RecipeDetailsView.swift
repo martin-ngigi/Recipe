@@ -12,6 +12,7 @@ struct RecipeDetailsView: View {
     @State var isShowAllItems = false
     @EnvironmentObject var router: Router
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
+    @StateObject var recipeDetailsViewModels = RecipeDetailsViewModels()
     @State var isInFavourite = false
 
     var body: some View {
@@ -66,7 +67,24 @@ struct RecipeDetailsView: View {
                         
                         Spacer()
                         
-                        Button(action: {}) {
+                        Button{
+                            recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+                            recipeDetailsViewModels.updateDialogEntity(
+                                value: DialogEntity(
+                                    title: "Coming soon.",
+                                    message: "Follow your favorite chefs to get notified about new recipes and exclusive offers is coming soon.",
+                                    icon: "",
+                                    confirmButtonText: "",
+                                    dismissButtonText: "Okay",
+                                    onConfirm: {
+                                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                                    },
+                                    onDismiss: {
+                                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                                    }
+                                )
+                            )
+                        } label:  {
                             HStack {
                                 Text("Follow")
                                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
@@ -193,6 +211,27 @@ struct RecipeDetailsView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .background(Color(.systemGroupedBackground))
+        .overlay {
+            CustomAlertDialog(
+                isPresented: $recipeDetailsViewModels.isShowAlertDialog,
+                title: recipeDetailsViewModels.dialogEntity.title,
+                text: recipeDetailsViewModels.dialogEntity.message,
+                confirmButtonText: recipeDetailsViewModels.dialogEntity.confirmButtonText,
+                dismissButtonText: recipeDetailsViewModels.dialogEntity.dismissButtonText,
+                imageName: recipeDetailsViewModels.dialogEntity.icon,
+                onDismiss: {
+                    if let onDismiss = recipeDetailsViewModels.dialogEntity.onDismiss {
+                        onDismiss()
+                    }
+                },
+                onConfirmation: {
+                    if let onConfirm = recipeDetailsViewModels.dialogEntity.onConfirm {
+                        onConfirm()
+                    }
+                }
+            )
+        }
+
         //.hideBottomNavigationBar(true)
     }
 }
