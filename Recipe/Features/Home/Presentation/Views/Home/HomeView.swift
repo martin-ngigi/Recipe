@@ -75,6 +75,7 @@ struct HomeView: View {
                     )
                     .padding(.top, 10)
                 }
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.95)
             }
             .toolbar{
                 ToolbarItemGroup(placement: .keyboard) {
@@ -145,7 +146,7 @@ struct HomeView: View {
             )
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
-        //.hideBottomNavigationBar(false)
+        .hideBottomNavigationBar(false)
     }
 }
 

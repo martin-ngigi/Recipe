@@ -14,15 +14,34 @@ extension View {
             print("DEBUG: hideBottomNavigationBar hidden \(hidden)")
             if let tabBar = findTabBarController()?.tabBar {
                 tabBar.isHidden = hidden
+                tabBar.isUserInteractionEnabled = !hidden
+                if hidden {
+                    tabBar.frame = .zero
+                    if hidden {
+                        tabBar.frame.origin.y = UIScreen.main.bounds.height + 100
+                    } else {
+                        tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBar.frame.height
+                    }
+                }
                 // We want to hide bottom navigation of the dashboard.
                 Utils.shared.postDashboardNotifications(isDashboardBottomNavigationVisible: !hidden)
             }
         }
         .onDisappear {
+            /*
             if let tabBar = findTabBarController()?.tabBar {
-                // We want to show bottom navigation of the dashboard.
-                //tabBar.isHidden = false // MARK: UNCOMMENT THIS LINE
+                tabBar.isHidden = false
+                tabBar.isUserInteractionEnabled = true
+                // Restore tab bar height safely
+                if let window = UIApplication.shared.windows.first{
+                    let safeAreaBottom = window.safeAreaInsets.bottom
+                    let tabBarHeight: CGFloat = 49 + safeAreaBottom
+                    tabBar.frame.size.height = tabBarHeight
+                    tabBar.isHidden = false
+                }
+                print("DEBUG: hideBottomNavBar onDisappear  hidden \(false)")
             }
+            */
         }
         
     }
