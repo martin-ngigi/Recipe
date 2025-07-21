@@ -22,6 +22,7 @@ class Constants {
     static let homeURL: String = "\(prefix)/home"
     static let getChefByIdURL: String = "\(prefix)/chefs/get-by-id"
     static let authURL: String = "\(prefix)/auth/authentication"
+    static let searchAllURL: String = "\(prefix)/home/search"
 
     static let APP_NAME = "Recipe"
     
@@ -37,6 +38,7 @@ class Constants {
         case home
         case getChefById(chefId: String)
         case auth
+        case searchAll(searchTerm: String)
         
         var url: URL? {
             switch self {
@@ -46,6 +48,8 @@ class Constants {
                 return URL(string: "\(BASE_URL)\(getChefByIdURL)?open_id=\(chefId)")
             case .auth:
                 return URL(string: "\(BASE_URL)\(authURL)")
+            case .searchAll(let searchTerm):
+                return URL(string: "\(BASE_URL)\(searchAllURL)?searchTerm=\(searchTerm)")
             }
         }
     }

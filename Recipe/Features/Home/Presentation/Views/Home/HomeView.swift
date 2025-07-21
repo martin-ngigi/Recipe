@@ -44,7 +44,17 @@ struct HomeView: View {
                         placeholder: "Search recipes...",
                         error: "",
                         onTextChange: { text in
-                            
+                            Task{
+                                await homeViewModel.searchAll(
+                                    searchText: searchField,
+                                    onSuccess: { searchResponseModel in
+                                        print("DEBUG: searchAll recipes \(searchResponseModel.recipes.count), chefs \(searchResponseModel.chefs.count)")
+                                    },
+                                    onFailure: { error in
+                                        
+                                    }
+                                )
+                            }
                         }
                     )
                     
