@@ -32,7 +32,7 @@ struct LandingView: View {
                 buttonName: "Get Started",
                 onTap: {
                     LocalState.isFirstLaunch = false
-                    router.push(.dashboard)
+                    router.replace(with: .dashboard)
                 }
             )
             .padding(.bottom, 10)

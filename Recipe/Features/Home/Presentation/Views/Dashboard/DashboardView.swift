@@ -82,7 +82,6 @@ struct DashboardView: View {
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear {
             setUpDashboardVisibility()
-            dashboardViewModel.selectedTab = 0
             setupKeyboardObservers()
             
         }
