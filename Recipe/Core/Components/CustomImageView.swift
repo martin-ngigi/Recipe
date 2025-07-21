@@ -20,6 +20,8 @@ struct CustomImageView: View {
                      //.font(.largeTitle)
                      .resizable()
                      .scaledToFill()
+                     .foregroundColor(Color.theme.blackAndWhite)
+
              case .success(let image):
                  image
                      .resizable()
