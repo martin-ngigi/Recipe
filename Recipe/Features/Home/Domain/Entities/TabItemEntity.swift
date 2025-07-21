@@ -30,13 +30,13 @@ enum TabItemEntity: Int, CaseIterable{
     var icon: String {
         switch self {
         case .home:
-            return "home"
+            return "house.fill" //home
         case .favourites:
-            return "favourite"
+            return "heart.fill" //favourite
         case .profile:
-            return "account"
+            return "person.fill" //account
         case .settings:
-            return "settings"
+            return "gearshape.fill" //settings
         }
     }
     

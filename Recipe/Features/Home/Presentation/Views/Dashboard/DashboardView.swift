@@ -68,14 +68,14 @@ struct DashboardView: View {
                     .padding(5)
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.90, height: 75)
-                .background(.ultraThinMaterial.opacity(0.9))
+                .background(.ultraThinMaterial)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.theme.blackAndWhite, lineWidth: 0.5)
                 )
-                .padding(.horizontal)
-                .padding(.bottom, 15)
+                .padding(.horizontal, 15)
+                .padding(.bottom, 30)
                
             }
         }
@@ -111,24 +111,19 @@ extension DashboardView{
     func MyCustomTab(image: String, title: String, isSelected: Bool, bgColor: Color) -> some View{
         VStack{
             
-            Image(image)
+            Image(systemName: image)
                    .resizable()
                    .frame(width: 43, height: 43)
                    .padding(9)
-                   .background(bgColor)
+                   .background(isSelected ? Color.theme.primaryColor : Color.gray)
+                   .foregroundColor(isSelected ? Color.theme.blackAndWhite : Color.theme.whiteAndBlack )
                    .cornerRadius(8)
-                   .overlay(
-                       RoundedRectangle(cornerRadius: 8) // Border around the image
-                        .stroke(Color.gray, lineWidth: 1) // Set the border color and width
-                   )
-                   .overlay(
-                          isSelected ?
-                              Circle()
-                                  .fill(Color.red)
-                                  .frame(width: 10, height: 10)
-                                  .offset(x: 22, y: -22)
-                          : nil
-                      )
+//                   .overlay(
+//                       Rectangle()
+//                           .frame(height: 2)
+//                           .foregroundColor(isSelected ? Color.theme.primaryColor : Color.clear),
+//                       alignment: .bottom
+//                   )
         }
     }
 }
