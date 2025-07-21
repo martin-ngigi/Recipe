@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomButton: View {
     var buttonName: String
     var width: Double = .infinity
-    var height: Double = 48
+    var height: Double = 35
     var leadingIcon: String=""
     var leadingimage: String=""
     var icon: String=""

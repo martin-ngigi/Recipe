@@ -30,6 +30,7 @@ struct JustForYouSliderView: View {
                                 maxWidth: .infinity,
                                 height: 150
                             )
+                            .foregroundColor(Color.theme.blackAndWhite)
                             .clipped()
                             .cornerRadius(10)
                             .contentShape(Rectangle())

@@ -12,6 +12,7 @@ struct HomeView: View {
     let columns = [ GridItem(.flexible()), GridItem(.flexible())]
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
+    @EnvironmentObject var tabRouter: TabRouter
 
     var body: some View {
         VStack{
@@ -26,11 +27,15 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(Color.theme.grayColor1)
+                        Button {
+                            tabRouter.selectedTab = .profile
+                        } label: {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(Color.theme.grayColor1)
+                        }
                     }
                     
                     // Search Bar
@@ -153,5 +158,6 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(Router())
+        .environmentObject(TabRouter())
 
 }
