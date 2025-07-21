@@ -24,6 +24,7 @@ struct ChefDetailsView: View {
                     )
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.secondary, lineWidth: 1))
+                    .foregroundColor(Color.theme.blackAndWhite)
 
                     VStack(alignment: .leading) {
                         Text(chef.name)

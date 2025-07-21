@@ -23,6 +23,7 @@ struct RecipeCard: View {
                 )
                 .clipped()
                 .cornerRadius(12)
+                .foregroundColor(Color.theme.blackAndWhite)
 
                 Text(recipe.name)
                     .font(.headline)

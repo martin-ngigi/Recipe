@@ -53,6 +53,7 @@ struct RecipeDetailsView: View {
                                     maxWidth: 40,
                                     height: 40
                                 )
+                                .foregroundColor(Color.theme.blackAndWhite)
                                 .clipShape(Circle())
                                 
                                 VStack(alignment: .leading, spacing: 4) {
