@@ -11,7 +11,8 @@ import Foundation
 class ChefViewModel: ObservableObject {
     @Published var fetchChefByIDState = FetchState.good
     var chefUsesCases = ChefUseCases(chefRepository: ChefRepository.shared)
-    
+    @Published var isShowRating = false
+
     func fetchChefByID(
         chefId: String,
         onSuccess: (UserModel) -> Void,

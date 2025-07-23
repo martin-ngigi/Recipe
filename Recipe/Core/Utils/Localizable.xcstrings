@@ -16,6 +16,9 @@
     "%@ " : {
 
     },
+    "%@ ⭐️" : {
+
+    },
     "%@ by %@" : {
       "localizations" : {
         "en" : {
@@ -113,6 +116,9 @@
     "Just For You" : {
 
     },
+    "Leave a Comment" : {
+
+    },
     "Let's log you in" : {
 
     },
@@ -147,6 +153,12 @@
 
     },
     "Privacy policy" : {
+
+    },
+    "Rate Me" : {
+
+    },
+    "Rate Your Experience" : {
 
     },
     "Ratings & Reviews" : {

@@ -71,13 +71,13 @@ struct CustomAlertDialog: View {
                 .padding()
                 .background(Color.theme.whiteAndBlack)
                 .cornerRadius(11)
-                .shadow(radius: 18)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
                 .overlay(
                        RoundedRectangle(cornerRadius: 11)
-                        .stroke(.gray, lineWidth: 1)
+                        .stroke(Color.theme.primaryColor, lineWidth: 1)
                    )
                 .padding()
+                .shadow(radius: 10)
             }
         }
     }
@@ -91,7 +91,7 @@ struct CustomAlertDialog: View {
         text: "Error occurred",
         confirmButtonText: "Retry",
         dismissButtonText: "Okay",
-        imageName: "error",
+        imageName: "",
         onDismiss: {
             
         },

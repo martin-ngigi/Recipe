@@ -32,6 +32,23 @@ struct ChefDetailsView: View {
                         Text(chef.email)
                             .font(.subheadline)
                             .foregroundColor(.gray)
+                        
+                        HStack{
+                            Text("\(chef.rate?.ratingFormatted ?? "0.0") ⭐️")
+                                .foregroundColor(Color.orange)
+                            
+                            Spacer()
+                            
+                            Button{
+                                chefViewModel.isShowRating = true
+                            } label: {
+                                Text("Rate Me")
+                                    .foregroundColor(.gray)
+                                    .underline()
+                            }
+                        }
+                        .font(.subheadline)
+                        .padding(.top, 10)
                     }
 
                     Spacer()
@@ -124,6 +141,20 @@ struct ChefDetailsView: View {
                 )
             }
             .padding()
+        }
+        .overlay{
+            Group{
+                if chefViewModel.isShowRating {
+                    RatingView(
+                        onDismiss: {
+                            chefViewModel.isShowRating = false
+                        },
+                        onSubmit: { rate, comment in
+                            
+                        }
+                    )
+                }
+            }
         }
         .navigationTitle("Chef Details")
     }
