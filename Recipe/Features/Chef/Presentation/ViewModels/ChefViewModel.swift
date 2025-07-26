@@ -12,6 +12,8 @@ class ChefViewModel: ObservableObject {
     @Published var fetchChefByIDState = FetchState.good
     var chefUsesCases = ChefUseCases(chefRepository: ChefRepository.shared)
     @Published var isShowRating = false
+    @Published var isShowAlertDialog = false
+    @Published var dialogEntity = DialogEntity()
 
     func fetchChefByID(
         chefId: String,
@@ -25,11 +27,17 @@ class ChefViewModel: ObservableObject {
         case .success(let response):
             fetchChefByIDState = .good
             onSuccess(response.data)
-            print("DEBUG: fetched chef: \(response.data.name), recipes count \(response.data.recipesList), rating \(response.data.allRates?.count ?? 100)" )
         case .failure(let error):
             fetchChefByIDState = .error(error.description)
-            print("DEBUG: fetched failed chef: \(error.description)" )
             onFailure(error.localizedDescription)
         }
+    }
+    
+    func updateIsShowAlertDialog(value: Bool) {
+        isShowAlertDialog = value
+    }
+    
+    func updateDialogEntity(value: DialogEntity) {
+        dialogEntity = value
     }
 }

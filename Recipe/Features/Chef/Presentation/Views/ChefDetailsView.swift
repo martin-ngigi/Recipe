@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ChefDetailsView: View {
     @StateObject var chefViewModel =  ChefViewModel()
+    @StateObject var rateViewModel =  RateViewModel()
+    @StateObject var loginViewModel =  LoginViewModel()
     @State var isShowAllRecipeItems = false
     @State var chef: UserModel
 
@@ -139,6 +141,7 @@ struct ChefDetailsView: View {
                         
                     }
                 )
+                
             }
             .padding()
         }
@@ -150,7 +153,66 @@ struct ChefDetailsView: View {
                             chefViewModel.isShowRating = false
                         },
                         onSubmit: { rate, comment in
-                            
+                            Task{
+                                
+                                let user = loginViewModel.fetchUserFromLocalStorage()
+                                await rateViewModel.createUpdateRate(
+                                    createRateRequestModel: CreateRateRequestModel(
+                                        raterID: user?.openID ?? "",
+                                        rateeID: chef.openID ,
+                                        rating: rate,
+                                        comment: comment
+                                    ),
+                                    onSuccess: { createRateResponseModel in
+                                        chefViewModel.isShowRating = false
+                                        //chef.allRates = createRateResponseModel.data.ratings
+                                        //chef.rate = createRateResponseModel.data.totalRate
+                                    },
+                                    onFailure: { error in
+                                       
+                                        chefViewModel.updateIsShowAlertDialog(value: true)
+                                        
+                                         chefViewModel.updateDialogEntity(
+                                            value:  DialogEntity(
+                                                title: "Error occurred",
+                                                message: error,
+                                                icon: "",
+                                                confirmButtonText: "Cancel",
+                                                dismissButtonText: "Okay",
+                                                onConfirm: {
+                                                    chefViewModel.updateIsShowAlertDialog(value: false)
+                                                },
+                                                onDismiss: {
+                                                    chefViewModel.updateIsShowAlertDialog(value: false)
+                                                }
+                                            )
+                                        )
+                                        
+                                        
+                                    }
+                                )
+                                
+                            }
+                        }
+                    )
+                }
+                else if chefViewModel.isShowAlertDialog{
+                    CustomAlertDialog(
+                        isPresented: $chefViewModel.isShowAlertDialog,
+                        title: chefViewModel.dialogEntity.title,
+                        text: chefViewModel.dialogEntity.message,
+                        confirmButtonText: chefViewModel.dialogEntity.confirmButtonText,
+                        dismissButtonText: chefViewModel.dialogEntity.dismissButtonText,
+                        imageName: chefViewModel.dialogEntity.icon,
+                        onDismiss: {
+                            if let onDismiss = chefViewModel.dialogEntity.onDismiss {
+                                onDismiss()
+                            }
+                        },
+                        onConfirmation: {
+                            if let onConfirm = chefViewModel.dialogEntity.onConfirm {
+                                onConfirm()
+                            }
                         }
                     )
                 }
