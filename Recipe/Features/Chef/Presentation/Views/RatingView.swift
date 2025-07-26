@@ -76,7 +76,7 @@ struct RatingView: View {
                     CustomButton(
                         buttonName: "Submit",
                         borderColor: Color.clear,
-                        isDisabled: rating == 0
+                        isDisabled: rating == 0 || comment.isEmpty
                     ) {
                         onSubmit(rating, comment)
                     }
