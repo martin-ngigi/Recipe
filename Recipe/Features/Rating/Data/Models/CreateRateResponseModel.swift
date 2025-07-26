@@ -22,7 +22,7 @@ struct CreateRateResponseModel: Codable {
 // MARK: - RateResponseModel
 struct RateResponseModel: Codable {
     let totalRate: TotalRateModel
-    let ratings: AllRatingModel
+    let ratings: [AllRatingModel]
 
     enum CodingKeys: String, CodingKey {
         case ratings

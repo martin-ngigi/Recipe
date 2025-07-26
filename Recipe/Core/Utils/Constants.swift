@@ -23,7 +23,7 @@ class Constants {
     static let getChefByIdURL: String = "\(prefix)/chefs/get-by-id"
     static let authURL: String = "\(prefix)/auth/authentication"
     static let searchAllURL: String = "\(prefix)/home/search"
-    static let createUpdateRateURL: String = "\(prefix)/api/rates/create-update"
+    static let createUpdateRateURL: String = "\(prefix)/rates/create-update"
 
     static let APP_NAME = "Recipe"
     

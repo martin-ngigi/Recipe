@@ -13,6 +13,9 @@ struct ChefDetailsView: View {
     @StateObject var loginViewModel =  LoginViewModel()
     @State var isShowAllRecipeItems = false
     @State var chef: UserModel
+    @State var user: UserModel?
+    @EnvironmentObject var tabRouter: TabRouter
+    @EnvironmentObject var router: Router
 
     var body: some View {
         ScrollView {
@@ -42,7 +45,29 @@ struct ChefDetailsView: View {
                             Spacer()
                             
                             Button{
-                                chefViewModel.isShowRating = true
+                                if let user = user {
+                                    chefViewModel.isShowRating = true
+                                }
+                                else {
+                                    chefViewModel.updateIsShowAlertDialog(value: true)
+                                     chefViewModel.updateDialogEntity(
+                                        value:  DialogEntity(
+                                            title: "Login Required",
+                                            message: "You need to login to rate a chef. Do you want to login now?",
+                                            icon: "",
+                                            confirmButtonText: "Preceed",
+                                            dismissButtonText: "Cancel",
+                                            onConfirm: {
+                                                chefViewModel.updateIsShowAlertDialog(value: false)
+                                                router.popToRoot()
+                                                tabRouter.selectedTab = .profile
+                                            },
+                                            onDismiss: {
+                                                chefViewModel.updateIsShowAlertDialog(value: false)
+                                            }
+                                        )
+                                    )
+                                }
                             } label: {
                                 Text("Rate Me")
                                     .foregroundColor(.gray)
@@ -145,6 +170,9 @@ struct ChefDetailsView: View {
             }
             .padding()
         }
+        .onAppear{
+            user = loginViewModel.fetchUserFromLocalStorage()
+        }
         .overlay{
             Group{
                 if chefViewModel.isShowRating {
@@ -155,7 +183,6 @@ struct ChefDetailsView: View {
                         onSubmit: { rate, comment in
                             Task{
                                 
-                                let user = loginViewModel.fetchUserFromLocalStorage()
                                 await rateViewModel.createUpdateRate(
                                     createRateRequestModel: CreateRateRequestModel(
                                         raterID: user?.openID ?? "",
@@ -165,14 +192,15 @@ struct ChefDetailsView: View {
                                     ),
                                     onSuccess: { createRateResponseModel in
                                         chefViewModel.isShowRating = false
-                                        //chef.allRates = createRateResponseModel.data.ratings
-                                        //chef.rate = createRateResponseModel.data.totalRate
+                                        chef.allRates = createRateResponseModel.data.ratings
+                                        chef.rate = createRateResponseModel.data.totalRate
                                     },
                                     onFailure: { error in
                                        
-                                        chefViewModel.updateIsShowAlertDialog(value: true)
+                                        chefViewModel.isShowRating = false
                                         
-                                         chefViewModel.updateDialogEntity(
+                                        chefViewModel.updateIsShowAlertDialog(value: true)
+                                        chefViewModel.updateDialogEntity(
                                             value:  DialogEntity(
                                                 title: "Error occurred",
                                                 message: error,
@@ -225,6 +253,8 @@ struct ChefDetailsView: View {
     if let chef = UserModel.dummyChefResoinse?.data {
         NavigationStack{
             ChefDetailsView(chef: chef)
+                .environmentObject(Router())
+                .environmentObject(TabRouter())
         }
     }
 }
