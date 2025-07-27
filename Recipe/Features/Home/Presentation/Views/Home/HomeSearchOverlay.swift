@@ -33,6 +33,7 @@ struct HomeSearchOverlay: View {
                                 text: $searchField,
                                 placeholder: "Search recipes...",
                                 error: "",
+                                hasClearButton: true,
                                 onTextChange: { text in
                                     onSearchTextChange(text)
                                 }

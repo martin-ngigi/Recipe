@@ -15,6 +15,7 @@ struct BorderedInputField: View {
     var description: String = ""
     var error: String
     var keyboardType: UIKeyboardType = .default
+    var hasClearButton: Bool = false
     var onTextChange: (String) -> Void
 
     var body: some View {
@@ -24,18 +25,34 @@ struct BorderedInputField: View {
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
             }
             
-            TextField(placeholder, text: $text)
-                .onChange(of: text){ newValue in
-                    onTextChange(newValue)
+            HStack{
+                TextField(placeholder, text: $text)
+                    .onChange(of: text){ newValue in
+                        onTextChange(newValue)
+                    }
+                    .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
+                   
+                if !text.isEmpty && hasClearButton {
+                    Button {
+                        text = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 30, height: 30)
+                            .padding(.trailing)
+                            .foregroundColor(.red)
+                    }
                 }
-                .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
-                .background(Color.gray.opacity(0.3))
-                .cornerRadius(7)
-                .keyboardType(keyboardType)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 7)
-                        .stroke(Color.gray, lineWidth: 0.3)
-                ) // Border
+             
+            }
+            .background(Color.gray.opacity(0.3))
+            .cornerRadius(7)
+            .keyboardType(keyboardType)
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(Color.gray, lineWidth: 0.3)
+            ) // Border
             
             if !error.isEmpty {
                 Text(error)
