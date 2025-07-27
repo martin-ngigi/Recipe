@@ -119,6 +119,5 @@ extension RecipeSwiftData {
 
 
 extension RecipeModel{
-    
-    static var dummyList: [RecipeModel] = RecipeDummyData.recipeList ?? []
+    static var dummyList: [RecipeModel] = RecipeResponseDummyData.recipeList
 }

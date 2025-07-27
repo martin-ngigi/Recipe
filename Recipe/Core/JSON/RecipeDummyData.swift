@@ -7,14 +7,154 @@
 
 import Foundation
 
-class RecipeDummyData{
+class RecipeResponseDummyData{
     static var DATA: String  = """
-        [
+    {
+        "message": "Recipe retrieved successfully.",
+        "data": [
             {
-                "recipe_id": "bf9c9d3d-014d-479e-b3bc-aad90f359ea6",
+                "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
                 "name": "Nyama Choma",
                 "description": "Nyama Choma is a delicious Kenyan goat meat delicacy you can enjoy any time of the day. It is nutritious, versatile, and oh-so finger-licking good!",
                 "image": "https://cdn.foodandmeal.com/wp-content/uploads/2023/10/3.1-1-3.jpg?strip=all&lossy=1&ssl=1",
+                "open_id": "chefjkhgefoewiwer",
+                "instructions": "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water.",
+                "created_at": "2025-07-08T06:50:12.000000Z",
+                "updated_at": "2025-07-08T06:50:12.000000Z",
+                "chef": {
+                    "user_id": "a10a3188-4ead-4551-89e9-063edef6e838",
+                    "name": "Chef Jon",
+                    "email": "chef.john@gmail.com",
+                    "open_id": "chefjkhgefoewiwer",
+                    "avatar": "https://img.freepik.com/free-photo/chef-cooking-kitchen-while-wearing-professional-attire_23-2151208266.jpg?semt=ais_hybrid&w=740",
+                    "role": "Chef",
+                    "gender": null,
+                    "auth_type": "Email",
+                    "date_of_birth": null,
+                    "phone": null,
+                    "phone_complete": null,
+                    "country_code": null,
+                    "token": "mjOFUkM4DvBgkNcESOvzUimLXLunVIyTUENwLjD1D0CPGC0yEr1ayHbiYEceCMn2L7Y2C5itWxxLp1o9hODJ85jQcNJ031FX211ul",
+                    "access_token": "Tmnym86I1YzDoicOaX9PfvRmyQ0cA4VjbyAAnqLm3xBU67ktgOBTGpXyANDXhFOojk49MM23N4OUpy4u6jemDconK66YPiMGEuJ3C",
+                    "created_at": "2025-07-05T13:52:30.000000Z",
+                    "updated_at": "2025-07-05T13:52:30.000000Z"
+                },
+                "ingredients_list": [
+                    {
+                        "ingredient_id": "03029afd-92cf-4b8d-bbcc-9909849be46f",
+                        "name": "Bouillon Powder or Soy Sauce",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 teaspoon bouillon powder or 1 tablespoon soy sauce",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "0ed9946d-6850-4528-af64-b0741dc1c284",
+                        "name": "Ginger",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1 tablespoon, grated",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "148a4528-bcb3-4490-b8f5-3847807262bc",
+                        "name": "Lemon Juice (freshly squeezed)",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1/4 cup",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "28488315-c50c-441c-b93b-255349f7ba88",
+                        "name": "Black Pepper",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "to taste",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "462774f5-1edf-462a-950d-b85554e63771",
+                        "name": "Paprika",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 tablespoon",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "5a32688b-b352-43a4-858e-b365b0b8d2da",
+                        "name": "Rosemary (fresh or dried)",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1 teaspoon, minced",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "aad555ef-5a63-4f9c-9da1-265f8aa5e2bc",
+                        "name": "Cayenne Pepper (optional)",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1/4 teaspoon",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "b88552ee-b1d5-4fa3-9744-b71a8ac91f9f",
+                        "name": "Goat Meat (Nyama Choma Classic)",
+                        "image": "https://halalmeatnj.com/cdn/shop/files/00690085390334.jpg?v=1740430667",
+                        "quantity": "1 Kg",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "ca98e86f-7d9b-4856-a2af-765ef4121084",
+                        "name": "Curry Powder",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 teaspoon",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "d26c16ab-067d-4b54-b078-ce699424b835",
+                        "name": "Vegetable Oil",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1/4 cup",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "f25c0c35-7bc3-4d9e-8ab8-aef1f3916a2c",
+                        "name": "Garlic",
+                        "image": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc",
+                        "quantity": "4 cloves, minced",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    },
+                    {
+                        "ingredient_id": "fa0b09e8-85f7-477c-a56e-91f4252b098b",
+                        "name": "Salt",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "to taste",
+                        "recipe_id": "61c1a634-20d6-414e-9cdb-68c6eaba03a7",
+                        "created_at": "2025-07-08T06:50:12.000000Z",
+                        "updated_at": "2025-07-08T06:50:12.000000Z"
+                    }
+                ]
+            },
+            {
+                "recipe_id": "bf9c9d3d-014d-479e-b3bc-aad90f359ea6",
+                "name": "Easy Shakshuka",
+                "description": "Nyama Choma is a delicious Kenyan goat meat delicacy you can enjoy any time of the day. It is nutritious, versatile, and oh-so finger-licking good!",
+                "image": "https://www.themediterraneandish.com/wp-content/uploads/2017/01/Shakshuka-Recipe-The-Mediterranean-Dish-100.jpg",
                 "open_id": "chefjkhgefoewiwer",
                 "instructions": "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water.",
                 "created_at": "2025-07-08T05:31:23.000000Z",
@@ -27,6 +167,7 @@ class RecipeDummyData{
                     "avatar": "https://img.freepik.com/free-photo/chef-cooking-kitchen-while-wearing-professional-attire_23-2151208266.jpg?semt=ais_hybrid&w=740",
                     "role": "Chef",
                     "gender": null,
+                    "auth_type": "Email",
                     "date_of_birth": null,
                     "phone": null,
                     "phone_complete": null,
@@ -148,10 +289,148 @@ class RecipeDummyData{
                 ]
             },
             {
-                "recipe_id": "db1ba7e2-ff2d-426f-9b50-e79ed622481e",
-                "name": "Nyama Choma",
+                "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                "name": "Quick Dinner Recipes",
                 "description": "Nyama Choma is a delicious Kenyan goat meat delicacy you can enjoy any time of the day. It is nutritious, versatile, and oh-so finger-licking good!",
-                "image": "https://cdn.foodandmeal.com/wp-content/uploads/2023/10/3.1-1-3.jpg?strip=all&lossy=1&ssl=1",
+                "image": "https://www.recipetineats.com/tachyon/2025/04/One-pot-whipped-ricotta-chicken-pasta-with-sun-dried-tomatoes_6a.jpg?resize=747%2C747",
+                "open_id": "chefjkhgefoewiwer",
+                "instructions": "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water.",
+                "created_at": "2025-07-10T17:28:36.000000Z",
+                "updated_at": "2025-07-10T17:28:36.000000Z",
+                "chef": {
+                    "user_id": "a10a3188-4ead-4551-89e9-063edef6e838",
+                    "name": "Chef Jon",
+                    "email": "chef.john@gmail.com",
+                    "open_id": "chefjkhgefoewiwer",
+                    "avatar": "https://img.freepik.com/free-photo/chef-cooking-kitchen-while-wearing-professional-attire_23-2151208266.jpg?semt=ais_hybrid&w=740",
+                    "role": "Chef",
+                    "gender": null,
+                    "auth_type": "Email",
+                    "date_of_birth": null,
+                    "phone": null,
+                    "phone_complete": null,
+                    "country_code": null,
+                    "token": "mjOFUkM4DvBgkNcESOvzUimLXLunVIyTUENwLjD1D0CPGC0yEr1ayHbiYEceCMn2L7Y2C5itWxxLp1o9hODJ85jQcNJ031FX211ul",
+                    "access_token": "Tmnym86I1YzDoicOaX9PfvRmyQ0cA4VjbyAAnqLm3xBU67ktgOBTGpXyANDXhFOojk49MM23N4OUpy4u6jemDconK66YPiMGEuJ3C",
+                    "created_at": "2025-07-05T13:52:30.000000Z",
+                    "updated_at": "2025-07-05T13:52:30.000000Z"
+                },
+                "ingredients_list": [
+                    {
+                        "ingredient_id": "147f5d20-9e36-4f1d-94ca-e7aa7d3b28ea",
+                        "name": "Garlic",
+                        "image": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc",
+                        "quantity": "4 cloves, minced",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "4f82016c-ab0b-43d9-b5f5-f229f240c6d8",
+                        "name": "Bouillon Powder or Soy Sauce",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 teaspoon bouillon powder or 1 tablespoon soy sauce",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "6443ed7a-fc1e-4b4a-aab9-963ac7680e21",
+                        "name": "Salt",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "to taste",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "80be873a-1aa2-4318-9ea3-4355538a7fb5",
+                        "name": "Curry Powder",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 teaspoon",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "9752e1e1-087a-4fa1-94a4-49c5ddbea745",
+                        "name": "Lemon Juice (freshly squeezed)",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1/4 cup",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "ac3464d6-94cd-4d97-bdd1-c5a3535c185e",
+                        "name": "Rosemary (fresh or dried)",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1 teaspoon, minced",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "b5478339-1d73-42cf-96a8-b35ea8e5ebdc",
+                        "name": "Black Pepper",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "to taste",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "b6e3938e-29a8-46ff-a9c9-28a7d5ad7f14",
+                        "name": "Ginger",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1 tablespoon, grated",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "c0f51e6f-3d84-4a57-964a-f2a2a2295dc5",
+                        "name": "Cayenne Pepper (optional)",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1/4 teaspoon",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "dd627e1a-0e9d-46c0-868f-99cfb5af7d8e",
+                        "name": "Goat Meat (Nyama Choma Classic)",
+                        "image": "https://halalmeatnj.com/cdn/shop/files/00690085390334.jpg?v=1740430667",
+                        "quantity": "1 Kg",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "fa149893-bb7a-4634-81cc-31588fd2354f",
+                        "name": "Vegetable Oil",
+                        "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+                        "quantity": "1/4 cup",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    },
+                    {
+                        "ingredient_id": "fd65b333-87b9-4e66-940b-5ddaec5bcb26",
+                        "name": "Paprika",
+                        "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c",
+                        "quantity": "1 tablespoon",
+                        "recipe_id": "cf08d7b8-8b26-4e2b-b247-3a4a1b799d74",
+                        "created_at": "2025-07-10T17:28:36.000000Z",
+                        "updated_at": "2025-07-10T17:28:36.000000Z"
+                    }
+                ]
+            },
+            {
+                "recipe_id": "db1ba7e2-ff2d-426f-9b50-e79ed622481e",
+                "name": "Chhole (Chickpea Curry)",
+                "description": "Nyama Choma is a delicious Kenyan goat meat delicacy you can enjoy any time of the day. It is nutritious, versatile, and oh-so finger-licking good!",
+                "image": "https://www.eatingwell.com/thmb/Kx41aHMgb9iAY41IM5eSrQi-3O8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chickpea-curry-chhole-1x1-41ea4d53c7df4fddabd83caa5b57718e.jpg",
                 "open_id": "chefjkhgefoewiwer",
                 "instructions": "1. Wash and drain the goat meat, then cut them into smaller bite sizes. 2.Pour your oil and spices into a mixing bowl and mix them. 3. Blend the onions and garlic coarsely in a food processor, or finely chop them if you prefer. 4. Put the chunks of meat into the mixing bowl, add the spices, the blended garlic, and onion, and properly mix everything. 5. Marinate it in the fridge for 2 hours or longer. I prefer to let it marinate overnight for even more flavor. 6. Bring it out of the refrigerator and let it come to room temperature. 7. Turn the grill to medium-low heat and arrange the meat on the grill. 8. Add 2 tablespoon of salt to 2 cups of water. Grill the meat for 50 minutes, turning every 10 minutes and basting with the salt water.",
                 "created_at": "2025-07-05T16:13:38.000000Z",
@@ -164,6 +443,7 @@ class RecipeDummyData{
                     "avatar": "https://img.freepik.com/free-photo/chef-cooking-kitchen-while-wearing-professional-attire_23-2151208266.jpg?semt=ais_hybrid&w=740",
                     "role": "Chef",
                     "gender": null,
+                    "auth_type": "Email",
                     "date_of_birth": null,
                     "phone": null,
                     "phone_complete": null,
@@ -284,9 +564,11 @@ class RecipeDummyData{
                     }
                 ]
             }
-        ]
+        ],
+        "status_code": 200
+    }
     """
     
-    static var recipeList = DATA.decodeJSON(to: [RecipeModel].self)
+    static var recipeList = DATA.decodeJSON(to: RecipeResponseModel.self)?.data ?? []
     
 }

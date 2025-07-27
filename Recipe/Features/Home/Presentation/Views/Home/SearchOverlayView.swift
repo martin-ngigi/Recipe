@@ -94,12 +94,12 @@ struct SearchRecipeRow: View {
     }
 }
 
-//
-//#Preview{
-//    SearchRecipeRow(
-//        recipe: RecipeModel.dummyList[0],
-//        onTap: { recipe in
-//            
-//        }
-//    )
-//}
+
+#Preview{
+    SearchRecipeRow(
+        recipe: RecipeModel.dummyList[0],
+        onTap: { recipe in
+            
+        }
+    )
+}
