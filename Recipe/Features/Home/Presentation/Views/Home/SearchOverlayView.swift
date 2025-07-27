@@ -10,6 +10,8 @@ import SwiftUI
 struct SearchOverlayView: View {
     var recipes: [RecipeModel]
     var chefs: [UserModel]
+    var onTapRecipe: (RecipeModel) -> Void
+    var onTapChef: (UserModel) -> Void
     
     @State private var recipePage = 0
     @State private var chefPage = 0
@@ -29,7 +31,12 @@ struct SearchOverlayView: View {
                     }
                     else {
                         ForEach(paginatedItems(for: recipes, page: recipePage), id: \.self) { recipe in
-                            SearchRecipeRow(recipe: recipe, onTap: { _ in })
+                            SearchRecipeRow(
+                                recipe: recipe,
+                                onTap: { recipe in
+                                    onTapRecipe(recipe)
+                                }
+                            )
                         }
                     }
                     
@@ -51,7 +58,12 @@ struct SearchOverlayView: View {
                     }
                     else {
                         ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
-                            PopularChefRow(chef: chef, onTap: { _ in })
+                            PopularChefRow(
+                                chef: chef,
+                                onTap: { chef in
+                                    onTapChef(chef)
+                                }
+                            )
                         }
 
                     }
@@ -116,7 +128,13 @@ struct SearchOverlayView: View {
 #Preview {
     SearchOverlayView(
         recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? []
+        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        onTapRecipe: { recipe in
+            
+        },
+        onTapChef: { chef in
+            
+        }
     )
 }
 
@@ -124,7 +142,13 @@ struct SearchOverlayView: View {
 #Preview {
     SearchOverlayView(
         recipes:  HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? []
+        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        onTapRecipe: { recipe in
+            
+        },
+        onTapChef: { chef in
+            
+        }
     )
 }
 

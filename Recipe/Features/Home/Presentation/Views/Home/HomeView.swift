@@ -173,7 +173,13 @@ struct HomeView: View {
                     }
                 },
                 recipes: homeViewModel.searchRecipes,
-                chefs: homeViewModel.searchChefs
+                chefs: homeViewModel.searchChefs,
+                onTapRecipe: { recipe in
+                    router.push(.recipedetails(recipe: recipe))
+                },
+                onTapChef: { chef in
+                    router.push(.chefdetails(chef: chef))
+                }
             )
             .ignoresSafeArea()
             .frame(maxWidth: .infinity)

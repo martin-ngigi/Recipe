@@ -14,6 +14,8 @@ struct HomeSearchOverlay: View {
     var onSearchTextChange: (String) -> Void
     var recipes: [RecipeModel]
     var chefs: [UserModel]
+    var onTapRecipe: (RecipeModel) -> Void
+    var onTapChef: (UserModel) -> Void
     
     var body: some View {
         ZStack {
@@ -47,7 +49,13 @@ struct HomeSearchOverlay: View {
                             
                             SearchOverlayView(
                                 recipes: recipes ,
-                                chefs: chefs
+                                chefs: chefs,
+                                onTapRecipe: { recipe in
+                                    onTapRecipe(recipe)
+                                },
+                                onTapChef: { chef in
+                                    onTapChef(chef)
+                                }
                             )
                             
                         }
@@ -78,6 +86,12 @@ struct HomeSearchOverlay: View {
             
         },
         recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? []
+        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        onTapRecipe: { recipe in
+            
+        },
+        onTapChef: { chef in
+            
+        }
     )
 }
