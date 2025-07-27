@@ -38,28 +38,15 @@ struct HomeView: View {
                         }
                     }
                     
-                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
-                    
                     // Search Bar
                     BorderedInputField(
                         text: $searchField,
                         placeholder: "Search recipes...",
                         error: "",
                         onTextChange: { text in
-                            Task{
-                                await homeViewModel.searchAll(
-                                    searchText: searchField,
-                                    onSuccess: { searchResponseModel in
-                                        print("DEBUG: searchAll recipes \(searchResponseModel.recipes.count), chefs \(searchResponseModel.chefs.count)")
-                                    },
-                                    onFailure: { error in
-                                        
-                                    }
-                                )
-                            }
+                           
                         }
                     )
-                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
@@ -67,7 +54,6 @@ struct HomeView: View {
                             router.push(.recipedetails(recipe: recipe))
                         }
                     )
-                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     // Trending Recipes
                     TrendingRecipesHome(
@@ -81,7 +67,6 @@ struct HomeView: View {
                         }
                     )
                     .padding(.top, 10)
-                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
@@ -93,9 +78,8 @@ struct HomeView: View {
                         }
                     )
                     .padding(.top, 10)
-                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
+                    
                 }
-                //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
             }
             .padding(.horizontal)
             .toolbar{
@@ -168,18 +152,33 @@ struct HomeView: View {
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
         .hideBottomNavigationBar(false)
-        /*
+        
         .overlay {
             HomeSearchOverlay(
-                isShowSearchResults: .constant(true),
-                isLoading: false,
-                recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-                chefs: HomeResponseModel.sampleData?.data.popularChefs ?? []
+                searchField: $searchField,
+                isShowSearchResults: .constant(!searchField.isEmpty),
+                isLoading: homeViewModel.searchState == .isLoading,
+                onSearchTextChange: { text in
+                    Task{
+                        await homeViewModel.searchAll(
+                            searchText: searchField,
+                            onSuccess: { searchResponseModel in
+                                homeViewModel.searchRecipes = searchResponseModel.recipes
+                                homeViewModel.searchChefs = searchResponseModel.chefs
+                            },
+                            onFailure: { error in
+                                
+                            }
+                        )
+                    }
+                },
+                recipes: homeViewModel.searchRecipes,
+                chefs: homeViewModel.searchChefs
             )
             .ignoresSafeArea()
             .frame(maxWidth: .infinity)
         }
-        */
+        
     }
 }
 

@@ -22,6 +22,8 @@ class HomeViewModel: ObservableObject {
     @Published var isShowSearchResults = false
     @Published var inbuiltAlert: InbuiltAlert?
     @Published var searchText: String = ""
+    @Published var searchRecipes: [RecipeModel] = []
+    @Published var searchChefs: [UserModel] = []
     
     func fetchHomeData(
         onSuccess: (HomeResponseModel) -> Void,

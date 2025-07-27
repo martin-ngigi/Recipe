@@ -29,6 +29,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld)." : {
 
     },
@@ -54,6 +57,9 @@
 
     },
     "Chef Details" : {
+
+    },
+    "Chefs" : {
 
     },
     "Contact Chef" : {
@@ -134,6 +140,9 @@
     "Name:" : {
 
     },
+    "Next" : {
+
+    },
     "Notifications turned %@" : {
 
     },
@@ -150,6 +159,9 @@
 
     },
     "Popular Chefs" : {
+
+    },
+    "Prev" : {
 
     },
     "Privacy policy" : {

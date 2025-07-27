@@ -8,17 +8,7 @@
 import SwiftUI
 
 struct PopularChefsComponent: View {
-//    var columns: [GridItem] =  [ GridItem(.flexible()), GridItem(.flexible())]
-    var columns: [GridItem] {
-        let fullWidth = UIScreen.main.bounds.width
-        let columnWidth: CGFloat = UIScreen.main.bounds.width // desired width for each column
-        let fullWidthLessPadding = fullWidth - (10 * 2) // subtracting padding on both sides
-        let countDouble: Double = fullWidthLessPadding / columnWidth
-        let countFloor = floor(countDouble)
-        let count = max(Int(countFloor), 1) // ensuring there's at least one column
-        
-        return Array(repeating: GridItem(.fixed(columnWidth), spacing: 10, alignment: .center), count: count)
-    }
+
     var chefs: [UserModel]
     var onTapChef: (UserModel) -> Void
     var onTapSeeAll: () -> Void
@@ -48,7 +38,7 @@ struct PopularChefsComponent: View {
                 }
             }
             
-            LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
+            VStack{
                 ForEach(chefs, id: \.self) { chef in
                     PopularChefRow(
                         chef: chef,
@@ -56,7 +46,6 @@ struct PopularChefsComponent: View {
                             onTapChef(chef)
                         }
                     )
-                    
                 }
             }
         }
