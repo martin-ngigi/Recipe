@@ -19,6 +19,7 @@ class HomeViewModel: ObservableObject {
     @Published var trendingRecipesList: [RecipeModel] = []
     @Published var popularChefsList: [UserModel] = []
     @Published var isShowInbuiltAlert = false
+    @Published var isShowSearchResults = false
     @Published var inbuiltAlert: InbuiltAlert?
     @Published var searchText: String = ""
     

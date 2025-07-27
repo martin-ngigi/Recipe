@@ -38,6 +38,8 @@ struct HomeView: View {
                         }
                     }
                     
+                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
+                    
                     // Search Bar
                     BorderedInputField(
                         text: $searchField,
@@ -57,6 +59,7 @@ struct HomeView: View {
                             }
                         }
                     )
+                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
@@ -64,7 +67,7 @@ struct HomeView: View {
                             router.push(.recipedetails(recipe: recipe))
                         }
                     )
-
+                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     // Trending Recipes
                     TrendingRecipesHome(
@@ -78,6 +81,7 @@ struct HomeView: View {
                         }
                     )
                     .padding(.top, 10)
+                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                     
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
@@ -89,9 +93,11 @@ struct HomeView: View {
                         }
                     )
                     .padding(.top, 10)
+                    //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
                 }
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.95)
+                //.frame(maxWidth: UIScreen.main.bounds.width * 0.95)
             }
+            .padding(.horizontal)
             .toolbar{
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -162,6 +168,18 @@ struct HomeView: View {
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
         .hideBottomNavigationBar(false)
+        /*
+        .overlay {
+            HomeSearchOverlay(
+                isShowSearchResults: .constant(true),
+                isLoading: false,
+                recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
+                chefs: HomeResponseModel.sampleData?.data.popularChefs ?? []
+            )
+            .ignoresSafeArea()
+            .frame(maxWidth: .infinity)
+        }
+        */
     }
 }
 
