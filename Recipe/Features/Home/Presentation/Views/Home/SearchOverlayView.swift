@@ -22,8 +22,15 @@ struct SearchOverlayView: View {
             // MARK: - Recipes Section
             Section("Recipes") {
                 VStack(alignment: .leading) {
-                    ForEach(paginatedItems(for: recipes, page: recipePage), id: \.self) { recipe in
-                        SearchRecipeRow(recipe: recipe, onTap: { _ in })
+                    if recipes.isEmpty {
+                        Text("No recipes found. Try searching for something else.")
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    else {
+                        ForEach(paginatedItems(for: recipes, page: recipePage), id: \.self) { recipe in
+                            SearchRecipeRow(recipe: recipe, onTap: { _ in })
+                        }
                     }
                     
                     paginationControls(
@@ -37,10 +44,18 @@ struct SearchOverlayView: View {
             // MARK: - Chefs Section
             Section("Chefs") {
                 VStack(alignment: .leading) {
-                    ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
-                        PopularChefRow(chef: chef, onTap: { _ in })
+                    if chefs.isEmpty {
+                        Text("No chefs found. Try searching for something else.")
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    
+                    else {
+                        ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
+                            PopularChefRow(chef: chef, onTap: { _ in })
+                        }
+
+                    }
+                                        
                     paginationControls(
                         currentPage: $chefPage,
                         totalItems: chefs.count,
