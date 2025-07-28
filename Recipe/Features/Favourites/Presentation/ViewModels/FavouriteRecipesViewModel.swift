@@ -21,6 +21,7 @@ class FavouriteRecipesViewModel: ObservableObject {
     @Published var dialogEntity = DialogEntity()
     @Published var isShowAlertDialog = false
     @Published var shareState: FetchState = FetchState.good
+    @Published var toast: Toast?
 
     func addRecipeToFavourite(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeAddRecipe(recipe: recipe)
@@ -59,4 +60,7 @@ class FavouriteRecipesViewModel: ObservableObject {
         return favouriteRecipes.filter { $0.recipeId == recipe.recipeId }.count > 0
     }
     
+    func updateToast(value: Toast?) {
+        toast = value
+    }
 }

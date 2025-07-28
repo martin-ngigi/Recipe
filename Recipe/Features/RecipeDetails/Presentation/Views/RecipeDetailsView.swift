@@ -118,11 +118,23 @@ struct RecipeDetailsView: View {
                                 if isInFavourite {
                                     await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)
                                     recipe.isInFavorite = false
+                                    recipeDetailsViewModels.updateToast(
+                                        value: Toast(
+                                            style: .warning,
+                                            message: "\(recipe.name) removed from favourites."
+                                        )
+                                    )
                                     print("DEBUG: Removed from favourite")
                                 }
                                 else {
                                     recipe.isInFavorite = true
                                     await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
+                                    recipeDetailsViewModels.updateToast(
+                                        value: Toast(
+                                            style: .success,
+                                            message: "\(recipe.name) added to favourites."
+                                        )
+                                    )
                                     print("DEBUG: Added to favourite")
                                 }
                                 isInFavourite = await  favouriteRecipesViewModel.checkIfIsInFavourites(recipe: recipe)
@@ -232,7 +244,7 @@ struct RecipeDetailsView: View {
                 }
             )
         }
-
+        .toastView(toast: $recipeDetailsViewModels.toast)
         //.hideBottomNavigationBar(true)
     }
 }

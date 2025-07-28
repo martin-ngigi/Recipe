@@ -122,6 +122,7 @@ struct FavouritesListView: View {
                 }
             )
         }
+        .toastView(toast: $favouriteRecipesViewModel.toast)
         
     }
     
@@ -145,6 +146,14 @@ struct FavouritesListView: View {
                     Task {
                         await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: favourite)
                         favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                        
+                        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 sec
+                        favouriteRecipesViewModel.updateToast(
+                            value: Toast(
+                                style: .warning,
+                                message: "\(favourite.name) removed from favourites."
+                            )
+                        )
                     }
                 },
                 onDismiss: {
