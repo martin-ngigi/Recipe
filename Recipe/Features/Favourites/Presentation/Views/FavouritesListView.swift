@@ -81,12 +81,12 @@ struct FavouritesListView: View {
                             }
                             
                             // Add other relevant options here
+                            /*
                             Button {
-                                // Example: Mark as favorite/unfavorite
-                                //toggleFavorite(recipe)
                             } label: {
                                 Label("Contact Chef", systemImage: "phone.arrow.up.right")
                             }
+                            */
                         }
                     }
                     .onDelete(perform: delete(indexSet:))
