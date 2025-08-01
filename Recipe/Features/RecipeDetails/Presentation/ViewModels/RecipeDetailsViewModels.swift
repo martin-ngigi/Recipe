@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class RecipeDetailsViewModels: ObservableObject {
     
     @Published var dialogEntity = DialogEntity()

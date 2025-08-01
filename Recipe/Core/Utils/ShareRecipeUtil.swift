@@ -76,7 +76,6 @@ struct ShareRecipeUtil {
         format.documentInfo = metadata as [String: Any]
         
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
-        
         let tempDir = FileManager.default.temporaryDirectory
         let pdfURL = tempDir.appendingPathComponent("\(recipe.name.replacingOccurrences(of: " ", with: "_")).pdf")
         
@@ -90,6 +89,7 @@ struct ShareRecipeUtil {
                 let titleFont = UIFont.systemFont(ofSize: 26, weight: .bold)
                 let sectionFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
                 let contentFont = UIFont.systemFont(ofSize: 16)
+                let smallFont = UIFont.systemFont(ofSize: 14)
                 
                 func drawText(_ text: String, font: UIFont, x: CGFloat, y: inout CGFloat, width: CGFloat, spacing: CGFloat = 12) {
                     let attr = NSAttributedString(string: text, attributes: [.font: font])
@@ -105,16 +105,27 @@ struct ShareRecipeUtil {
                     }
                 }
                 
-                // MARK: - Title
+                // MARK: - App Icon and Name
+                if let icon = UIImage(named: "AppIcon") {
+                    let iconSize: CGFloat = 40
+                    let rect = CGRect(x: margin, y: yOffset, width: iconSize, height: iconSize)
+                    icon.draw(in: rect)
+                }
+                drawText("RecipeApp", font: sectionFont, x: margin + 50, y: &yOffset, width: pageRect.width - 2 * margin - 50, spacing: 16)
+                
+                // MARK: - Recipe Title
                 drawText(recipe.name, font: titleFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 20)
                 
-                // MARK: - Image
+                // MARK: - Image (Rounded Corners)
                 if let image = image {
                     let maxWidth = pageRect.width - 2 * margin
                     let aspectRatio = image.size.width / image.size.height
                     let imageHeight = maxWidth / aspectRatio
                     startNewPageIfNeeded(imageHeight + 20)
+                    
                     let imageRect = CGRect(x: margin, y: yOffset, width: maxWidth, height: imageHeight)
+                    let path = UIBezierPath(roundedRect: imageRect, cornerRadius: 16)
+                    path.addClip()
                     image.draw(in: imageRect)
                     yOffset += imageHeight + 20
                 }
@@ -122,7 +133,23 @@ struct ShareRecipeUtil {
                 // MARK: - Description
                 drawText(recipe.description, font: contentFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 30)
                 
-                // MARK: - Ingredients Header
+                // MARK: - Chef Details
+                if let chef = recipe.chef {
+                    print("DEBUG: Drawing chef details \(chef)")
+                    drawText("👨‍🍳 Chef: \(chef.name)", font: sectionFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 4)
+                    
+                    drawText("📧 Email: \( chef.email)", font: smallFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 2)
+                    
+                    if let phone = chef.phone {
+                        drawText("📞 Phone: \(phone)", font: smallFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 2)
+                    }
+                    if let rate = chef.rate {
+                        drawText("⭐ Rating: \( rate.ratingFormatted)/5 ratings)", font: smallFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 16)
+                    }
+                    yOffset += 10
+                }
+                
+                // MARK: - Ingredients
                 drawText("🧄 Ingredients", font: sectionFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 10)
                 context.cgContext.setStrokeColor(UIColor.lightGray.cgColor)
                 context.cgContext.setLineWidth(1)
@@ -131,23 +158,19 @@ struct ShareRecipeUtil {
                 context.cgContext.strokePath()
                 yOffset += 20
                 
-                // MARK: - Ingredients List
                 for ingredient in recipe.ingredients {
                     startNewPageIfNeeded(30)
                     drawText("• \(ingredient.name): \(ingredient.quantity)", font: contentFont, x: margin + 10, y: &yOffset, width: pageRect.width - 2 * margin - 10)
                 }
                 yOffset += 20
                 
-                // MARK: - Instructions Header
+                // MARK: - Instructions
                 drawText("📋 Instructions", font: sectionFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 10)
-                context.cgContext.setStrokeColor(UIColor.lightGray.cgColor)
-                context.cgContext.setLineWidth(1)
                 context.cgContext.move(to: CGPoint(x: margin, y: yOffset))
                 context.cgContext.addLine(to: CGPoint(x: pageRect.width - margin, y: yOffset))
                 context.cgContext.strokePath()
                 yOffset += 20
                 
-                // MARK: - Instruction Steps
                 for (i, step) in recipe.inststuctionsList.enumerated() {
                     startNewPageIfNeeded(60)
                     drawText("\(i + 1). \(step)", font: contentFont, x: margin + 10, y: &yOffset, width: pageRect.width - 2 * margin - 10)
@@ -159,7 +182,7 @@ struct ShareRecipeUtil {
             return nil
         }
     }
-    
+
     // MARK: - Present Share Sheet
     
     func sharePDF(url: URL) {
