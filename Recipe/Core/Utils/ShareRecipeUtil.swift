@@ -63,62 +63,96 @@ struct ShareRecipeUtil {
     // MARK: - Create PDF
     
     func createRecipePDF(recipe: RecipeModel, image: UIImage?) -> URL? {
-        let pdfPageWidth: CGFloat = 595.2  // A4 width
-        let pdfPageHeight: CGFloat = 841.8 // A4 height
-        let pageRect = CGRect(x: 0, y: 0, width: pdfPageWidth, height: pdfPageHeight)
+        let pageWidth: CGFloat = 595.2
+        let pageHeight: CGFloat = 841.8
+        let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
         
-        let pdfMetaData = [
+        let metadata = [
             kCGPDFContextCreator: "RecipeApp",
-            kCGPDFContextAuthor: "YourName"
+            kCGPDFContextAuthor: recipe.chef?.name ?? "Awesome Chef!"
         ]
+        
         let format = UIGraphicsPDFRendererFormat()
-        format.documentInfo = pdfMetaData as [String: Any]
+        format.documentInfo = metadata as [String: Any]
         
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
         
         let tempDir = FileManager.default.temporaryDirectory
-        let pdfURL = tempDir.appendingPathComponent("\(recipe.name).pdf")
+        let pdfURL = tempDir.appendingPathComponent("\(recipe.name.replacingOccurrences(of: " ", with: "_")).pdf")
         
         do {
             try renderer.writePDF(to: pdfURL, withActions: { context in
                 context.beginPage()
+                var yOffset: CGFloat = 30
+                let margin: CGFloat = 24
                 
-                // Draw Title
-                let titleFont = UIFont.systemFont(ofSize: 24, weight: .bold)
-                let titleAttributes: [NSAttributedString.Key: Any] = [.font: titleFont]
-                let titleString = NSAttributedString(string: recipe.name, attributes: titleAttributes)
-                let titleStringSize = titleString.size()
-                let titleRect = CGRect(x: 20, y: 20, width: pageRect.width - 40, height: titleStringSize.height)
-                titleString.draw(in: titleRect)
+                // MARK: - Fonts
+                let titleFont = UIFont.systemFont(ofSize: 26, weight: .bold)
+                let sectionFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
+                let contentFont = UIFont.systemFont(ofSize: 16)
                 
-                // Draw Image
-                if let uiImage = image {
-                    let maxImageWidth = pageRect.width - 40
-                    let aspectRatio = uiImage.size.width / uiImage.size.height
-                    let imageWidth = maxImageWidth
-                    let imageHeight = imageWidth / aspectRatio
-                    
-                    let imageRect = CGRect(x: 20, y: titleRect.maxY + 20, width: imageWidth, height: imageHeight)
-                    uiImage.draw(in: imageRect)
-                    
-                    // Draw Description below image
-                    let descriptionFont = UIFont.systemFont(ofSize: 16)
-                    let descriptionAttributes: [NSAttributedString.Key: Any] = [.font: descriptionFont]
-                    let descriptionString = NSAttributedString(string: recipe.description, attributes: descriptionAttributes)
-                    
-                    let descriptionRect = CGRect(x: 20, y: imageRect.maxY + 20, width: pageRect.width - 40, height: pageRect.height - imageRect.maxY - 40)
-                    descriptionString.draw(in: descriptionRect)
-                } else {
-                    // No image: draw description below title
-                    let descriptionFont = UIFont.systemFont(ofSize: 16)
-                    let descriptionAttributes: [NSAttributedString.Key: Any] = [.font: descriptionFont]
-                    let descriptionString = NSAttributedString(string: recipe.description, attributes: descriptionAttributes)
-                    
-                    let descriptionRect = CGRect(x: 20, y: titleRect.maxY + 20, width: pageRect.width - 40, height: pageRect.height - titleRect.maxY - 40)
-                    descriptionString.draw(in: descriptionRect)
+                func drawText(_ text: String, font: UIFont, x: CGFloat, y: inout CGFloat, width: CGFloat, spacing: CGFloat = 12) {
+                    let attr = NSAttributedString(string: text, attributes: [.font: font])
+                    let bounding = attr.boundingRect(with: CGSize(width: width, height: .infinity), options: .usesLineFragmentOrigin, context: nil)
+                    attr.draw(in: CGRect(x: x, y: y, width: width, height: bounding.height))
+                    y += bounding.height + spacing
+                }
+                
+                func startNewPageIfNeeded(_ neededSpace: CGFloat) {
+                    if yOffset + neededSpace > pageHeight - 60 {
+                        context.beginPage()
+                        yOffset = 30
+                    }
+                }
+                
+                // MARK: - Title
+                drawText(recipe.name, font: titleFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 20)
+                
+                // MARK: - Image
+                if let image = image {
+                    let maxWidth = pageRect.width - 2 * margin
+                    let aspectRatio = image.size.width / image.size.height
+                    let imageHeight = maxWidth / aspectRatio
+                    startNewPageIfNeeded(imageHeight + 20)
+                    let imageRect = CGRect(x: margin, y: yOffset, width: maxWidth, height: imageHeight)
+                    image.draw(in: imageRect)
+                    yOffset += imageHeight + 20
+                }
+                
+                // MARK: - Description
+                drawText(recipe.description, font: contentFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 30)
+                
+                // MARK: - Ingredients Header
+                drawText("🧄 Ingredients", font: sectionFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 10)
+                context.cgContext.setStrokeColor(UIColor.lightGray.cgColor)
+                context.cgContext.setLineWidth(1)
+                context.cgContext.move(to: CGPoint(x: margin, y: yOffset))
+                context.cgContext.addLine(to: CGPoint(x: pageRect.width - margin, y: yOffset))
+                context.cgContext.strokePath()
+                yOffset += 20
+                
+                // MARK: - Ingredients List
+                for ingredient in recipe.ingredients {
+                    startNewPageIfNeeded(30)
+                    drawText("• \(ingredient.name): \(ingredient.quantity)", font: contentFont, x: margin + 10, y: &yOffset, width: pageRect.width - 2 * margin - 10)
+                }
+                yOffset += 20
+                
+                // MARK: - Instructions Header
+                drawText("📋 Instructions", font: sectionFont, x: margin, y: &yOffset, width: pageRect.width - 2 * margin, spacing: 10)
+                context.cgContext.setStrokeColor(UIColor.lightGray.cgColor)
+                context.cgContext.setLineWidth(1)
+                context.cgContext.move(to: CGPoint(x: margin, y: yOffset))
+                context.cgContext.addLine(to: CGPoint(x: pageRect.width - margin, y: yOffset))
+                context.cgContext.strokePath()
+                yOffset += 20
+                
+                // MARK: - Instruction Steps
+                for (i, step) in recipe.inststuctionsList.enumerated() {
+                    startNewPageIfNeeded(60)
+                    drawText("\(i + 1). \(step)", font: contentFont, x: margin + 10, y: &yOffset, width: pageRect.width - 2 * margin - 10)
                 }
             })
-            
             return pdfURL
         } catch {
             print("Could not create PDF: \(error)")
