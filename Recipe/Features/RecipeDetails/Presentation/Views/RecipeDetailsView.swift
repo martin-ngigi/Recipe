@@ -14,7 +14,8 @@ struct RecipeDetailsView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @StateObject var recipeDetailsViewModels = RecipeDetailsViewModels()
     @State var isInFavourite = false
-
+    @State var isShowOpenShareSheet = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -42,7 +43,23 @@ struct RecipeDetailsView: View {
                     }
                     .overlay(alignment: .topTrailing) {
                         Menu{
-                            Button {
+                            
+                            Menu {
+                                Button("WhatsApp"){
+                                    openWhatsApp()
+                                }
+                                
+                                Button("SMS"){
+                                    openSMS()
+                                }
+                                
+                                Button("Phone"){
+                                    openPhoneDailer()
+                                }
+                                
+                                Button("Email"){
+                                    recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                                }
                                 
                             } label: {
                                 Label("Contact Chef", systemImage: "phone.arrow.up.right")
@@ -130,7 +147,7 @@ struct RecipeDetailsView: View {
                     .padding(.bottom)
                     .background(.ultraThinMaterial)
                 }
-
+                
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
                         Text(recipe.name)
@@ -139,7 +156,7 @@ struct RecipeDetailsView: View {
                             .foregroundColor(Color.theme.blackAndWhite)
                         
                         Spacer()
-                                                
+                        
                         Button{
                             Task{
                                 if isInFavourite {
@@ -171,25 +188,25 @@ struct RecipeDetailsView: View {
                                 .foregroundColor(Color.theme.primaryColor)
                                 .padding(5)
                         }
-                    
+                        
                     }
                     
-
+                    
                     Text(recipe.description)
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         .foregroundColor(.secondary)
-
+                    
                     HStack {
                         Text("Ingredients")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
                             .foregroundColor(Color.theme.blackAndWhite)
-
-
+                        
+                        
                         Text("(\(recipe.ingredients.count))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                             .foregroundColor(Color.theme.primaryColor)
                     }
-
+                    
                     VStack(spacing: 12) {
                         if recipe.ingredients.count > 3{
                             VStack(spacing: 2) {
@@ -223,7 +240,7 @@ struct RecipeDetailsView: View {
                             .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
                             .foregroundColor(Color.theme.blackAndWhite)
                             .frame(maxWidth: .infinity, alignment: .leading)
-
+                        
                         ForEach(Array(recipe.inststuctionsList.enumerated()), id: \.element) { index, instruction in
                             HStack(alignment: .top) {
                                 Text("\(index + 1)).")
@@ -251,6 +268,13 @@ struct RecipeDetailsView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .background(Color(.systemGroupedBackground))
+        .sheet(isPresented: $recipeDetailsViewModels.isShowOpenShareSheet) {
+            ShareSheetView(
+                activityItems: [
+                    "I love your recipes, how about we grab a coffee sometime together and talk about cooking?"
+                ]
+            )
+        }
         .overlay {
             CustomAlertDialog(
                 isPresented: $recipeDetailsViewModels.isShowAlertDialog,
@@ -301,6 +325,145 @@ struct RecipeDetailsView: View {
             }
         )
     }
+    
+    func openWhatsApp(){
+        if let phone  = recipe.chef?.phoneComplete {
+            ContactUtil.shared.openWhatsApp(
+                phoneNumber: phone,
+                message: "I love your recipes, how about we grab a coffee sometime together and talk about cooking?",
+                onSuccess: {},
+                onFailure: { error in
+                    recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+                    recipeDetailsViewModels.updateDialogEntity(
+                        value: DialogEntity(
+                            title: "WhatsApp Error",
+                            message: error,
+                            icon: "",
+                            confirmButtonText: "",
+                            dismissButtonText: "Okay",
+                            onConfirm: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            },
+                            onDismiss: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            }
+                        )
+                    )
+                }
+            )
+        }
+        else {
+            recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+            recipeDetailsViewModels.updateDialogEntity(
+                value: DialogEntity(
+                    title: "No WhatsApp Number",
+                    message: "The chef hasn't provided his/her WhatsApp number yet.",
+                    icon: "",
+                    confirmButtonText: "",
+                    dismissButtonText: "Okay",
+                    onConfirm: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    },
+                    onDismiss: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    }
+                )
+            )
+        }
+    }
+    
+    func openSMS(){
+        if let phone  = recipe.chef?.phoneComplete {
+            ContactUtil.shared.openSMS(
+                phoneNumber: phone,
+                message: "I love your recipes, how about we grab a coffee sometime together and talk about cooking?",
+                onSuccess: {},
+                onFailure: { error in
+                    recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+                    recipeDetailsViewModels.updateDialogEntity(
+                        value: DialogEntity(
+                            title: "SMS Error",
+                            message: error,
+                            icon: "",
+                            confirmButtonText: "",
+                            dismissButtonText: "Okay",
+                            onConfirm: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            },
+                            onDismiss: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            }
+                        )
+                    )
+                }
+            )
+        }
+        else {
+            recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+            recipeDetailsViewModels.updateDialogEntity(
+                value: DialogEntity(
+                    title: "No Phone Number",
+                    message: "The chef hasn't provided his/her contact number yet.",
+                    icon: "",
+                    confirmButtonText: "",
+                    dismissButtonText: "Okay",
+                    onConfirm: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    },
+                    onDismiss: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    }
+                )
+            )
+        }
+    }
+    
+    func openPhoneDailer(){
+        if let phone  = recipe.chef?.phoneComplete {
+            ContactUtil.shared.openSMS(
+                phoneNumber: phone,
+                message: "I love your recipes, how about we grab a coffee sometime together and talk about cooking?",
+                onSuccess: {},
+                onFailure: { error in
+                    recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+                    recipeDetailsViewModels.updateDialogEntity(
+                        value: DialogEntity(
+                            title: "Phone Dialer Error",
+                            message: error,
+                            icon: "",
+                            confirmButtonText: "",
+                            dismissButtonText: "Okay",
+                            onConfirm: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            },
+                            onDismiss: {
+                                recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                            }
+                        )
+                    )
+                }
+            )
+        }
+        else {
+            recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+            recipeDetailsViewModels.updateDialogEntity(
+                value: DialogEntity(
+                    title: "No Phone Number",
+                    message: "The chef hasn't provided his/her contact number yet.",
+                    icon: "",
+                    confirmButtonText: "",
+                    dismissButtonText: "Okay",
+                    onConfirm: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    },
+                    onDismiss: {
+                        recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                    }
+                )
+            )
+        }
+    }
+
 }
 
 #Preview {

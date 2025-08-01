@@ -89,6 +89,9 @@
     "Dont have account? %@" : {
 
     },
+    "Email" : {
+
+    },
     "Email:" : {
 
     },
@@ -161,6 +164,9 @@
     "Personal Details" : {
 
     },
+    "Phone" : {
+
+    },
     "Phone:" : {
 
     },
@@ -213,6 +219,9 @@
     "Share" : {
 
     },
+    "SMS" : {
+
+    },
     "Theme" : {
 
     },
@@ -220,6 +229,9 @@
 
     },
     "Trending Recipes" : {
+
+    },
+    "WhatsApp" : {
 
     }
   },
