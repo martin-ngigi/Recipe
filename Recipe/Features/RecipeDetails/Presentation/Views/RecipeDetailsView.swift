@@ -37,7 +37,34 @@ struct RecipeDetailsView: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 4)
                         }
-                        .padding([.leading], 30)
+                        .padding([.leading], 20)
+                        .padding(.top, 60)
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        Menu{
+                            Button {
+                                
+                            } label: {
+                                Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                            }
+                            
+                            // Share action
+                            Button {
+                                Task { await  shareRecipeAsPDF() }
+                            } label: {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            }
+                            
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 36, height: 36)
+                                .background(Color.theme.primaryColor)
+                                .clipShape(Circle())
+                                .shadow(radius: 4)
+                        }
+                        .padding([.trailing], 20)
                         .padding(.top, 60)
                     }
                     
@@ -246,6 +273,33 @@ struct RecipeDetailsView: View {
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
         //.hideBottomNavigationBar(true)
+    }
+    
+    func shareRecipeAsPDF() async {
+        recipeDetailsViewModels.updateShareState(value: .isLoading)
+        await  ShareRecipeUtil.shared.shareRecipeAsPDF(
+            recipe: recipe,
+            onSuccess: {
+                recipeDetailsViewModels.updateShareState(value: .good)
+            },
+            onError: { error in
+                recipeDetailsViewModels.updateDialogEntity(
+                    value: DialogEntity(
+                        title: "Sharing Recipe Failed",
+                        message: error,
+                        icon: "",
+                        confirmButtonText: "",
+                        dismissButtonText: "Okay",
+                        onConfirm: {
+                            recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                        },
+                        onDismiss: {
+                            recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                        }
+                    )
+                )
+            }
+        )
     }
 }
 
