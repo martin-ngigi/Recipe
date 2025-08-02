@@ -16,7 +16,7 @@ struct SearchOverlayView: View {
     @State private var recipePage = 0
     @State private var chefPage = 0
     
-    private let itemsPerPage = 3
+    private let itemsPerPage = 2
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -28,6 +28,7 @@ struct SearchOverlayView: View {
                         Text("No recipes found. Try searching for something else.")
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundStyle(.secondary)
                     }
                     else {
                         ForEach(paginatedItems(for: recipes, page: recipePage), id: \.self) { recipe in
@@ -55,6 +56,7 @@ struct SearchOverlayView: View {
                         Text("No chefs found. Try searching for something else.")
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundStyle(.secondary)
                     }
                     else {
                         ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
