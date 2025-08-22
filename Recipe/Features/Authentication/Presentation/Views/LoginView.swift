@@ -131,9 +131,13 @@ struct LoginView: View {
                             Task{
                                 await loginViewModel.googleAuthentication(
                                     onSuccess: { authDataResult in
-                                        loginViewModel.updateToast(
-                                            value: Toast(style: .success, message: "Google authentication successfull!")
-                                        )
+                                        Task{
+                                            loginViewModel.updateToast(
+                                                value: Toast(style: .success, message: "Google authentication successfull!")
+                                            )
+                                            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1.0 sec
+                                            onLoginSuccess()
+                                        }
                                     },
                                     onFailure: { error in
                                         loginViewModel.updateIsShowAlertDialog(value: true)

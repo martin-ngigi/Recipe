@@ -31,12 +31,12 @@ class AuthRemoteDataSource{
             }
             
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                if let httpResponse = response as? HTTPURLResponse, 400..<499 ~= httpResponse.statusCode {
+                if let httpResponse = response as? HTTPURLResponse, 400...500 ~= httpResponse.statusCode {
                     guard  let apiErrorMessage = json["message"] as? String else {
                         let errorMessage: String = json["message"] as? String ?? "Something went wrong!"
                         return .failure(APIError.custom(errorMessage))
                     }
-                    return .failure(APIError.unexpected)
+                    return .failure(APIError.custom(apiErrorMessage))
                 }
             }
             

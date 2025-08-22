@@ -11,6 +11,7 @@ struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
     @StateObject var registerViewModel = RegisterViewModel()
+    @StateObject var loginViewModel = LoginViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false){
@@ -151,22 +152,38 @@ struct RegisterView: View {
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
-                            registerViewModel.updateIsShowAlertDialog(value: true)
-                            registerViewModel.updateDialogEntity(
-                                value: DialogEntity(
-                                    title: "Coming Soon!",
-                                    message: "Google authentication is coming soon.",
-                                    icon: "",
-                                    confirmButtonText: "",
-                                    dismissButtonText: "Okay",
-                                    onConfirm: {
-                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                            Task{
+                                await loginViewModel.googleAuthentication(
+                                    onSuccess: { authDataResult in
+                                        Task{
+                                            loginViewModel.updateToast(
+                                                value: Toast(style: .success, message: "Google authentication successfull!")
+                                            )
+                                            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1.0 sec
+                                            dismiss()
+                                        }
                                     },
-                                    onDismiss: {
-                                        registerViewModel.updateIsShowAlertDialog(value: false)
+                                    onFailure: { error in
+                                        loginViewModel.updateIsShowAlertDialog(value: true)
+                                        loginViewModel.updateDialogEntity(
+                                            value: DialogEntity(
+                                                title: "Authentication Failed",
+                                                titleColor: Color.red,
+                                                message: error,
+                                                icon: "",
+                                                confirmButtonText: "",
+                                                dismissButtonText: "Okay",
+                                                onConfirm: {
+                                                    loginViewModel.updateIsShowAlertDialog(value: false)
+                                                },
+                                                onDismiss: {
+                                                    loginViewModel.updateIsShowAlertDialog(value: false)
+                                                }
+                                            )
+                                        )
                                     }
                                 )
-                            )
+                            }
                         }
                     )
                     

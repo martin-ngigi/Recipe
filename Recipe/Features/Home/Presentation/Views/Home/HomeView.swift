@@ -13,10 +13,25 @@ struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var tabRouter: TabRouter
+    @State var isLoading: Bool = false
 
     var body: some View {
         VStack{
             ScrollView(showsIndicators: false) {
+                /*
+                VStack{
+                    Text("Sample one")
+                    Text("Sample one  @StateObject var homeViewModel = HomeViewModel()")
+                    Text("Sample one  @StateObject ")
+                }
+                .redacted(reason: isLoading ? .placeholder : [])
+                .task{
+                    isLoading = true
+                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 sec
+                    isLoading = false
+                }
+                */
+                
                 VStack{
                  
                     HStack{

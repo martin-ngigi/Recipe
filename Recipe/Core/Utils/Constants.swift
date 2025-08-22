@@ -29,9 +29,9 @@ class Constants {
     
     static var BASE_URL: String {
         #if DEBUG
-            return IOS_TEST_URL
+            return PROD_URL
         #else
-            return IOS_TEST_URL
+            return PROD_URL
         #endif
     }
     
