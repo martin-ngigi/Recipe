@@ -222,7 +222,8 @@ struct RegisterView: View {
                 dismiss()
             }
         )
-        .fullScreenProgressOverlay(isShowing: registerViewModel.registeState == .isLoading)
+        .fullScreenProgressOverlay(isShowing: registerViewModel.registeState == .isLoading || loginViewModel.loginState == .isLoading)
+        .toastView(toast: $loginViewModel.toast)
         .overlay {
             CustomAlertDialog(
                 isPresented: $registerViewModel.isShowAlertDialog,
