@@ -10,6 +10,7 @@ import SwiftUI
 struct TrendingRecipesHome: View {
     var columns: [GridItem]
     var recipes: [RecipeModel]
+    var isLoading: Bool = false
     var onTapRecipe: (RecipeModel) -> Void
     var onTapSeeAll: () -> Void
     
@@ -38,17 +39,29 @@ struct TrendingRecipesHome: View {
                 
             }
             
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(recipes, id: \.self) { recipe in
-                    Button{
-                        onTapRecipe(recipe)
-                    } label: {
-                        RecipeItemView(recipe: recipe)
+            if recipes.isEmpty  && isLoading == false {
+                EmptyScreenView(
+                    imageName: "tray",
+                    imageSize: 80,
+                    title: "Trending",
+                    titleSize: 18,
+                    description: """
+                    No trending recipes found. 
+                    """,
+                    descriptionSize: 12
+                )
+            }
+            else {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(recipes, id: \.self) { recipe in
+                        Button{
+                            onTapRecipe(recipe)
+                        } label: {
+                            RecipeItemView(recipe: recipe)
+                        }
                     }
                 }
-                
-               
-            }
+            }           
         }
     }
 }

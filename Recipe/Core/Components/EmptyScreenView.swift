@@ -10,26 +10,28 @@ import SwiftUI
 
 struct EmptyScreenView: View {
     let imageName: String
+    var imageSize: CGFloat = 120
     let title: String
+    var titleSize: CGFloat = 24
     let description: String
+    var descriptionSize: CGFloat = 12
     
     var body: some View {
         VStack(spacing: 16) {
-            Image(systemName: imageName)          // or use Image(imageName) for asset images
+            Image(systemName: imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 120, height: 120)
+                .frame(width: imageSize, height: imageSize)
                 .foregroundColor(.gray)
                 .padding(.bottom, 8)
 
             Text(title)
-                .font(.title)
+                .font(.system(size: titleSize, weight: .bold, design: .default))
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
 
             Text(description)
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(.system(size: descriptionSize, weight: .light, design: .default))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 30)
         }

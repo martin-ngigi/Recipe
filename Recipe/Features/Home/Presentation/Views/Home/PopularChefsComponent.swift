@@ -10,6 +10,7 @@ import SwiftUI
 struct PopularChefsComponent: View {
 
     var chefs: [UserModel]
+    var isLoading: Bool = false
     var onTapChef: (UserModel) -> Void
     var onTapSeeAll: () -> Void
 
@@ -39,16 +40,32 @@ struct PopularChefsComponent: View {
             }
             
             VStack{
-                ForEach(chefs, id: \.self) { chef in
-                    PopularChefRow(
-                        chef: chef,
-                        onTap: { chef in
-                            onTapChef(chef)
-                        }
+                if chefs.isEmpty  && isLoading == false {
+                    EmptyScreenView(
+                        imageName: "tray",
+                        imageSize: 80,
+                        title: "Chefs",
+                        titleSize: 18,
+                        description: """
+                        No Popular Chefs recipes found. 
+                        """,
+                        descriptionSize: 12
                     )
                 }
+                else {
+                    ForEach(chefs, id: \.self) { chef in
+                        PopularChefRow(
+                            chef: chef,
+                            onTap: { chef in
+                                onTapChef(chef)
+                            }
+                        )
+                    }
+                }
+                
             }
         }
+        .padding(.bottom, 50)
     }
 }
 

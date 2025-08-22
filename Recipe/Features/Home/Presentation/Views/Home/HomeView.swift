@@ -13,24 +13,10 @@ struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var tabRouter: TabRouter
-    @State var isLoading: Bool = false
 
     var body: some View {
         VStack{
             ScrollView(showsIndicators: false) {
-                /*
-                VStack{
-                    Text("Sample one")
-                    Text("Sample one  @StateObject var homeViewModel = HomeViewModel()")
-                    Text("Sample one  @StateObject ")
-                }
-                .redacted(reason: isLoading ? .placeholder : [])
-                .task{
-                    isLoading = true
-                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 sec
-                    isLoading = false
-                }
-                */
                 
                 VStack{
                  
@@ -65,6 +51,7 @@ struct HomeView: View {
                     
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
+                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
                         onTap: { recipe in
                             router.push(.recipedetails(recipe: recipe))
                         }
@@ -74,6 +61,7 @@ struct HomeView: View {
                     TrendingRecipesHome(
                         columns: columns,
                         recipes: homeViewModel.trendingRecipesList,
+                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
                         onTapRecipe: { recipeModel in
                              router.push(.recipedetails(recipe: recipeModel))
                         },
@@ -85,6 +73,7 @@ struct HomeView: View {
                     
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
+                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
                         onTapChef: { chef in
                             router.push(.chefdetails(chef: chef))
                         },
