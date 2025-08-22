@@ -14,15 +14,29 @@ struct AllChefsView: View {
     var body: some View {
         VStack {
             List {
-                ForEach(list, id: \.self) { chef in
-                    VStack(spacing: 10) {
-                        PopularChefRow(
-                            chef: chef,
-                            onTap: { chef in
-                                router.push(.chefdetails(chef: chef))
-                            }
-                        )
-                        
+                if list.isEmpty{
+                    EmptyScreenView(
+                        imageName: "tray",
+                        imageSize: 120,
+                        title: "Chefs",
+                        titleSize: 24,
+                        description: """
+                        No Popular Chefs recipes found. 
+                        """,
+                        descriptionSize: 12
+                    )
+                }
+                else {
+                    ForEach(list, id: \.self) { chef in
+                        VStack(spacing: 10) {
+                            PopularChefRow(
+                                chef: chef,
+                                onTap: { chef in
+                                    router.push(.chefdetails(chef: chef))
+                                }
+                            )
+                            
+                        }
                     }
                 }
             }
