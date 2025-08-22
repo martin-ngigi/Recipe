@@ -45,9 +45,9 @@ class AuthRemoteDataSource{
         }
         catch let decodingError as DecodingError {
             print("DEBUG: fetchHomeData decoding error \(decodingError)")
-            return .failure(APIError.custom("We are unable to fetch home data, kindly try again."))
+            return .failure(APIError.custom("We are unable to authenticate you, kindly try again."))
         } catch {
-            return .failure(APIError.custom("We are unable to fetch home data, kindly try again."))
+            return .failure(APIError.custom("We are unable to authenticate you, kindly try again."))
         }
     }
     

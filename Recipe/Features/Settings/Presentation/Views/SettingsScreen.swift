@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    @State var isDarkMode = false
-    @State var isNotificationsEnabled = false
     //@AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
     @StateObject var themesViewModel = ThemesViewModel()
+    @StateObject var settingsViewModel = SettingsViewModel()
     
     var body: some View {
         VStack{
@@ -57,15 +56,21 @@ struct SettingsScreen: View {
                     }
                     
                     HStack{
-                        Text("Notifications turned \(isNotificationsEnabled ? "On" : "Off")")
+                        Text("Notifications turned \(settingsViewModel.isNotificationsEnabled ? "On" : "Off")")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         
                         Spacer()
                         
                         CustomSwitch(
-                            isOn: $isNotificationsEnabled,
+                            isOn: $settingsViewModel.isNotificationsEnabled,
                             onTap: { isOn in
-                                isNotificationsEnabled = isOn
+                                settingsViewModel.updateIsNotificationsEnabled(value: isOn)
+                                settingsViewModel.updateToast(
+                                    value: Toast(
+                                        style: .success,
+                                        message: "Notifications \(isOn ? "On" : "Off")"
+                                    )
+                                )
                             }
                         )
                     }
@@ -76,7 +81,12 @@ struct SettingsScreen: View {
                         Spacer()
                         
                         Button{
-                            
+                            settingsViewModel.updateToast(
+                                value: Toast(
+                                    style: .success,
+                                    message: "Fonts coming soon!"
+                                )
+                            )
                         } label: {
                             HStack{
                                 Text("\(LocalState.selectedFontPrefix)")
@@ -122,7 +132,12 @@ struct SettingsScreen: View {
                         Spacer()
                         
                         Button{
-                            
+                            settingsViewModel.updateToast(
+                                value: Toast(
+                                    style: .success,
+                                    message: "FAQs coming soon!"
+                                )
+                            )
                         } label: {
                             Image(systemName: "chevron.right")
                         }
@@ -134,7 +149,12 @@ struct SettingsScreen: View {
                         Spacer()
                         
                         Button{
-                            
+                            settingsViewModel.updateToast(
+                                value: Toast(
+                                    style: .success,
+                                    message: "Feedback and ratings coming soon!"
+                                )
+                            )
                         } label: {
                             Image(systemName: "star")
                         }
@@ -146,6 +166,7 @@ struct SettingsScreen: View {
             }
         }
         .navigationTitle("Settings")
+        .toastView(toast: $settingsViewModel.toast)
         //.hideBottomNavigationBar(false)
     }
 }

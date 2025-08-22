@@ -13,7 +13,7 @@ class Constants {
     static var accessToken: String = ""
     static var openId: String = ""
     static let deviceId: String = ""
-    static let PROD_URL = "https://recipe.safiribytes.com/"
+    static let PROD_URL = "https://recipe.safiribytes.com"
     static let IOS_TEST_URL: String = "http://127.0.0.1:8000"
     static let ANDROID_TEST_URL: String = "http://192.168.1.102:8000"
     
@@ -29,9 +29,9 @@ class Constants {
     
     static var BASE_URL: String {
         #if DEBUG
-            return PROD_URL
+            return IOS_TEST_URL
         #else
-            return PROD_URL
+            return IOS_TEST_URL
         #endif
     }
     
