@@ -160,6 +160,7 @@ struct RegisterView: View {
                                                 value: Toast(style: .success, message: "Google authentication successfull!")
                                             )
                                             try? await Task.sleep(nanoseconds: 1_000_000_000) // 1.0 sec
+                                            LocalState.isLogedIn = true
                                             dismiss()
                                         }
                                     },

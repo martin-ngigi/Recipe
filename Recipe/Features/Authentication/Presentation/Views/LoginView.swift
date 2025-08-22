@@ -19,7 +19,7 @@ struct LoginView: View {
         ScrollView(showsIndicators: false){
             VStack(spacing: 10){
                 VStack(spacing: 0){
-                    Text("First things first")
+                    Text("First things first \(LocalState.isLogedIn)")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     
                     Text("Let's log you in")
@@ -190,6 +190,12 @@ struct LoginView: View {
                 
             }
             .padding()
+        }
+        .onAppear{
+            print("DEBUG: LocalState.isLogedIn \(LocalState.isLogedIn)")
+            if LocalState.isLogedIn{
+                onLoginSuccess()
+            }
         }
         .fullScreenProgressOverlay(isShowing: loginViewModel.loginState == .isLoading)
         .reusableToolbar(
