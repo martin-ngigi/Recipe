@@ -23,6 +23,7 @@ class LoginViewModel : ObservableObject{
     @Published var password: String = ""
     @Published var isLoginEnabled: Bool = false
     @Published var loginErrors = [String: String]()
+    @Published var toast: Toast?
 
     let firebaseAuthUseCase: FirebaseAuthUseCase = FirebaseAuthUseCase(
         createFirebaseUserRepository: FirebaseAuthRepository.shared,
@@ -59,6 +60,9 @@ class LoginViewModel : ObservableObject{
 
     }
 
+    func updateToast(value: Toast?) {
+        toast = value
+    }
     
     func updatePassword(value: String) {
         password = value
@@ -121,6 +125,35 @@ class LoginViewModel : ObservableObject{
                 onFailure(error.description)
         }
         
+    }
+    
+    func googleAuthentication(
+        onSuccess: (AuthDataResult) -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        loginState = .isLoading
+        
+        var result: Result<AuthDataResult, FirebaseAuthError>
+        result = await firebaseAuthUseCase.executeGoogleAuth()
+        switch result {
+            case .success(let authDataResult):
+                print("DEBUG: Goolge Login success. User OpenId: \(authDataResult.user.uid)")
+                loginState = .good
+            
+            await authenticateUser(
+                authDataResult: authDataResult,
+                type: "Google",
+                onSuccess: {
+                    onSuccess(authDataResult)
+                },
+                onFailure: { error in
+                    onFailure(error)
+                }
+            )
+            case .failure(let error):
+                loginState = .error(error.description)
+                onFailure(error.description)
+        }
     }
     
     func authenticateUser(

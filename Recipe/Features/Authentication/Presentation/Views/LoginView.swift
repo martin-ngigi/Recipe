@@ -128,22 +128,34 @@ struct LoginView: View {
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
-                            loginViewModel.updateIsShowAlertDialog(value: true)
-                            loginViewModel.updateDialogEntity(
-                                value: DialogEntity(
-                                    title: "Coming Soon!",
-                                    message: "Google authentication is coming soon.",
-                                    icon: "",
-                                    confirmButtonText: "",
-                                    dismissButtonText: "Okay",
-                                    onConfirm: {
-                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                            Task{
+                                await loginViewModel.googleAuthentication(
+                                    onSuccess: { authDataResult in
+                                        loginViewModel.updateToast(
+                                            value: Toast(style: .success, message: "Google authentication successfull!")
+                                        )
                                     },
-                                    onDismiss: {
-                                        loginViewModel.updateIsShowAlertDialog(value: false)
+                                    onFailure: { error in
+                                        loginViewModel.updateIsShowAlertDialog(value: true)
+                                        loginViewModel.updateDialogEntity(
+                                            value: DialogEntity(
+                                                title: "Authentication Failed",
+                                                titleColor: Color.red,
+                                                message: error,
+                                                icon: "",
+                                                confirmButtonText: "",
+                                                dismissButtonText: "Okay",
+                                                onConfirm: {
+                                                    loginViewModel.updateIsShowAlertDialog(value: false)
+                                                },
+                                                onDismiss: {
+                                                    loginViewModel.updateIsShowAlertDialog(value: false)
+                                                }
+                                            )
+                                        )
                                     }
                                 )
-                            )
+                            }
                         }
                     )
                     
@@ -176,6 +188,13 @@ struct LoginView: View {
             .padding()
         }
         .fullScreenProgressOverlay(isShowing: loginViewModel.loginState == .isLoading)
+        .reusableToolbar(
+            title: "",
+            onTapBack: {
+                dismiss()
+            }
+        )
+        .toastView(toast: $loginViewModel.toast)
         .overlay {
             CustomAlertDialog(
                 isPresented: $loginViewModel.isShowAlertDialog,
@@ -196,12 +215,7 @@ struct LoginView: View {
                 }
             )
         }
-        .reusableToolbar(
-            title: "",
-            onTapBack: {
-                dismiss()
-            }
-        )
+
     }
 }
 

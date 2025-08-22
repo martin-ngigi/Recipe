@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct DialogEntity {
     var title: String
+    var titleColor: Color
     let message: String
+    let messageColor: Color
     let icon: String
     let confirmButtonText: String
     let dismissButtonText: String
@@ -18,7 +21,9 @@ struct DialogEntity {
     
     init(
         title: String = "",
+        titleColor: Color = Color.theme.primaryColor,
         message: String = "",
+        messageColor: Color = Color.secondary,
         icon: String = "",
         confirmButtonText: String = "",
         dismissButtonText: String = "",
@@ -27,6 +32,8 @@ struct DialogEntity {
     ) {
         self.title = title
         self.message = message
+        self.messageColor = messageColor
+        self.titleColor = titleColor
         self.icon = icon
         self.confirmButtonText = confirmButtonText
         self.dismissButtonText = dismissButtonText
