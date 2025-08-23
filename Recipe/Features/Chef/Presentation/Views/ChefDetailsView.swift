@@ -31,14 +31,20 @@ struct ChefDetailsView: View {
                         }
                     }
                     
-                    CustomImageView(
-                        url: avatar,
-                        maxWidth: 80,
-                        height: 80
-                    )
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.secondary, lineWidth: 1))
-                    .foregroundColor(Color.theme.blackAndWhite)
+                    Button{
+                        withAnimation(.spring()) {
+                            chefViewModel.updateIsShowChefImageOverlay(value: true)
+                        }
+                    } label: {
+                        CustomImageView(
+                            url: avatar,
+                            maxWidth: 80,
+                            height: 80
+                        )
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.secondary, lineWidth: 1))
+                        .foregroundColor(Color.theme.blackAndWhite)
+                    }
 
                     VStack(alignment: .leading) {
                         Text(chef.name)
@@ -250,6 +256,16 @@ struct ChefDetailsView: View {
                             if let onConfirm = chefViewModel.dialogEntity.onConfirm {
                                 onConfirm()
                             }
+                        }
+                    )
+                }
+                else if chefViewModel.isShowChefImageOverlay{
+                    ImageOverlay(
+                        image: "https://recipe.safiribytes.com/images/profile/chef_avatar.png",
+                        imageWidth: .infinity,
+                        imageHeight: 300,
+                        onDismiss: {
+                            chefViewModel.updateIsShowChefImageOverlay(value: false)
                         }
                     )
                 }

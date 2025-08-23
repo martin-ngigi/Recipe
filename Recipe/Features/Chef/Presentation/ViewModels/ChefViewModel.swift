@@ -12,6 +12,7 @@ class ChefViewModel: ObservableObject {
     @Published var fetchChefByIDState = FetchState.good
     var chefUsesCases = ChefUseCases(chefRepository: ChefRepository.shared)
     @Published var isShowRating = false
+    @Published var isShowChefImageOverlay = false
     @Published var isShowAlertDialog = false
     @Published var dialogEntity = DialogEntity()
 
@@ -39,5 +40,9 @@ class ChefViewModel: ObservableObject {
     
     func updateDialogEntity(value: DialogEntity) {
         dialogEntity = value
+    }
+    
+    func updateIsShowChefImageOverlay(value: Bool) {
+        isShowChefImageOverlay = value
     }
 }
