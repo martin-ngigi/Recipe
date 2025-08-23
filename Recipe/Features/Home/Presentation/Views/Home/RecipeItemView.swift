@@ -46,7 +46,7 @@ struct RecipeItemView: View {
             CustomImageView(
                 url: recipe.image,
                 maxWidth: .infinity,
-                height: 40
+                height: .infinity
             )
             .edgesIgnoringSafeArea(.all)
             
