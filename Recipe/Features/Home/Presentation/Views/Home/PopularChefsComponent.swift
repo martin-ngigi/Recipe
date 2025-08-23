@@ -78,8 +78,18 @@ struct PopularChefRow: View {
             onTap(chef)
         } label: {
             HStack {
+                
+                var avatar: String{
+                    if chef.avatar.starts(with: "http"){
+                        return chef.avatar
+                    }
+                    else {
+                        return "\(Constants.BASE_URL)\(chef.avatar)"
+                    }
+                }
+                
                 CustomImageView(
-                    url: chef.avatar,
+                    url: avatar,
                     maxWidth: 60,
                     height: 60
                 )

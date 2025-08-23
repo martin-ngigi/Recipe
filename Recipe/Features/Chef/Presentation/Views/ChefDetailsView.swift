@@ -22,8 +22,17 @@ struct ChefDetailsView: View {
             VStack(alignment: .leading, spacing: 20) {
                 
                 HStack(spacing: 16) {
+                    var avatar: String{
+                        if chef.avatar.starts(with: "http"){
+                            return chef.avatar
+                        }
+                        else {
+                            return "\(Constants.BASE_URL)\(chef.avatar)"
+                        }
+                    }
+                    
                     CustomImageView(
-                        url: chef.avatar,
+                        url: avatar,
                         maxWidth: 80,
                         height: 80
                     )
