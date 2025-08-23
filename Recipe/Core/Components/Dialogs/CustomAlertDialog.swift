@@ -22,7 +22,7 @@ struct CustomAlertDialog: View {
             
             if isPresented {
                 // Background overlay
-                Color.black.opacity(0.4)
+                Color.black.opacity(0.8)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         // isPresented = false // Dismiss when tapping outside

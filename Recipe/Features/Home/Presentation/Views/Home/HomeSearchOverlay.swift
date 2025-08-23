@@ -20,7 +20,7 @@ struct HomeSearchOverlay: View {
     var body: some View {
         ZStack {
             if isShowSearchResults {
-                Color.black.opacity(0.5)
+                Color.black.opacity(0.8)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         isShowSearchResults.toggle() // dismiss the overlay if user taps outside.

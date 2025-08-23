@@ -260,8 +260,17 @@ struct ChefDetailsView: View {
                     )
                 }
                 else if chefViewModel.isShowChefImageOverlay{
+                    var avatar: String{
+                        if chef.avatar.starts(with: "http"){
+                            return chef.avatar
+                        }
+                        else {
+                            return "\(Constants.BASE_URL)\(chef.avatar)"
+                        }
+                    }
+                    
                     ImageOverlay(
-                        image: chef.avatar,
+                        image: avatar,
                         imageWidth: .infinity,
                         imageHeight: 300,
                         onDismiss: {
