@@ -261,7 +261,7 @@ struct ChefDetailsView: View {
                 }
                 else if chefViewModel.isShowChefImageOverlay{
                     ImageOverlay(
-                        image: "https://recipe.safiribytes.com/images/profile/chef_avatar.png",
+                        image: chef.avatar,
                         imageWidth: .infinity,
                         imageHeight: 300,
                         onDismiss: {

@@ -221,7 +221,15 @@ struct RecipeDetailsView: View {
                             VStack(spacing: 2) {
                                 
                                 ForEach(recipe.ingredients.prefix(isShowAllItems ? recipe.ingredients.count :  3), id: \.self) { ingredient in
-                                    IngredientRow(ingredient: ingredient)
+                                    IngredientRow(
+                                        ingredient: ingredient,
+                                        onTapIngredient: { ingredient in
+                                            withAnimation(.spring()) {
+                                                recipeDetailsViewModels.updateIsIngredientImage(value: ingredient.image)
+                                                recipeDetailsViewModels.updateIsShowIngredientImageOverlay(value: true)
+                                            }
+                                        }
+                                    )
                                 }
                                 
                                 HStack {
@@ -238,7 +246,15 @@ struct RecipeDetailsView: View {
                         }
                         else {
                             ForEach(recipe.ingredients, id: \.self) { ingredient in
-                                IngredientRow(ingredient: ingredient)
+                                IngredientRow(
+                                    ingredient: ingredient,
+                                    onTapIngredient: { ingredient in
+                                        withAnimation(.spring()) {
+                                            recipeDetailsViewModels.updateIsIngredientImage(value: ingredient.image)
+                                            recipeDetailsViewModels.updateIsShowIngredientImageOverlay(value: true)
+                                        }
+                                    }
+                                )
                             }
                         }
                     }
@@ -285,24 +301,38 @@ struct RecipeDetailsView: View {
             )
         }
         .overlay {
-            CustomAlertDialog(
-                isPresented: $recipeDetailsViewModels.isShowAlertDialog,
-                title: recipeDetailsViewModels.dialogEntity.title,
-                text: recipeDetailsViewModels.dialogEntity.message,
-                confirmButtonText: recipeDetailsViewModels.dialogEntity.confirmButtonText,
-                dismissButtonText: recipeDetailsViewModels.dialogEntity.dismissButtonText,
-                imageName: recipeDetailsViewModels.dialogEntity.icon,
-                onDismiss: {
-                    if let onDismiss = recipeDetailsViewModels.dialogEntity.onDismiss {
-                        onDismiss()
-                    }
-                },
-                onConfirmation: {
-                    if let onConfirm = recipeDetailsViewModels.dialogEntity.onConfirm {
-                        onConfirm()
-                    }
+            Group{
+                if recipeDetailsViewModels.isShowAlertDialog {
+                    CustomAlertDialog(
+                        isPresented: $recipeDetailsViewModels.isShowAlertDialog,
+                        title: recipeDetailsViewModels.dialogEntity.title,
+                        text: recipeDetailsViewModels.dialogEntity.message,
+                        confirmButtonText: recipeDetailsViewModels.dialogEntity.confirmButtonText,
+                        dismissButtonText: recipeDetailsViewModels.dialogEntity.dismissButtonText,
+                        imageName: recipeDetailsViewModels.dialogEntity.icon,
+                        onDismiss: {
+                            if let onDismiss = recipeDetailsViewModels.dialogEntity.onDismiss {
+                                onDismiss()
+                            }
+                        },
+                        onConfirmation: {
+                            if let onConfirm = recipeDetailsViewModels.dialogEntity.onConfirm {
+                                onConfirm()
+                            }
+                        }
+                    )
                 }
-            )
+                else if recipeDetailsViewModels.isShowIngredientImageOverlay{
+                    ImageOverlay(
+                        image: recipeDetailsViewModels.ingredientImage ?? "",
+                        imageWidth: .infinity,
+                        imageHeight: 300,
+                        onDismiss: {
+                            recipeDetailsViewModels.updateIsShowIngredientImageOverlay(value: false)
+                        }
+                    )
+                }
+            }
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
         //.hideBottomNavigationBar(true)
