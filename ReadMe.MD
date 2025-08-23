@@ -120,3 +120,7 @@ screens/
 ├── Auth/
 ├── Profile/
 └── Settings/
+
+
+# Primary Color
+- Green color: #25AE87

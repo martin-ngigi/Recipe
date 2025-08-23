@@ -38,6 +38,7 @@ final class AuthLocalDataSource{
     func deleteUser(user: UserSwiftData) {
         let user =  fetchUser()
         if let userToDelete = user, user?.openID == userToDelete.openID {
+            print("DEBUG: user \(userToDelete.email) deleted successfully")
             modelContext.delete(userToDelete)
         }
         save()

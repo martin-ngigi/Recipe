@@ -167,9 +167,18 @@ class LoginViewModel : ObservableObject{
         
         let name = authDataResult.user.displayName ?? "No_Name_\(randomString)"
         let email = authDataResult.user.email ?? "no_email_\(randomString)@safiribytes.com"
-        let avatar = "/images/profile/default.png"
         let openId = authDataResult.user.uid
         let role = "Customer"
+        var avatar: String {
+            switch role{
+                case "Customer":
+                    return "/images/profile/default.png"
+                case "Chef":
+                    return "/images/profile/chef_avatar.png"
+                default:
+                    return  "/images/profile/default.png"
+            }
+        }
         
         let user: UserModel = UserModel(
             userID: "",
