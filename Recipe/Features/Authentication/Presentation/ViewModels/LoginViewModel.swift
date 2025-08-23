@@ -228,8 +228,8 @@ class LoginViewModel : ObservableObject{
         switch results {
         case .success(let hasLoggedOut):
             if hasLoggedOut{
-                onSuccess()
                 deleteLocalUserData()
+                onSuccess()
             }
             else {
                 onFailure("Logout Failed")
