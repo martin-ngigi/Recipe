@@ -35,11 +35,12 @@ class HomeViewModel: ObservableObject {
         case .success(let response):
             fetchHomeDataState = .good
             justForYouList = response.data.justForYou
-            print("DEBUG: popularChefsList count \(response.data.popularChefs.count)")
+            print("DEBUG: fetchHomeData \(response.data)")
             trendingRecipesList = response.data.trendingRecipes
             popularChefsList = response.data.popularChefs
             onSuccess(response)
         case .failure(let error):
+            print("DEBUG: fetchHomeData error \(error.description)")
             fetchHomeDataState = .error(error.description)
             onFailure(error.description)
         }

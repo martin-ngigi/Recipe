@@ -31,7 +31,8 @@ class ThemesViewModel: ObservableObject{
         else {
             // Fallback to system default
             let systemStyle = UIScreen.main.traitCollection.userInterfaceStyle
-            isDarkModeOn = systemStyle == .dark ? true : false
+            //isDarkModeOn = systemStyle == .dark ? true : false
+            isDarkModeOn = true
             print("DEBUG: systemStyle \(systemStyle), isDarkModeOn \(isDarkModeOn)")
         }
         

@@ -31,7 +31,7 @@ struct HomeRemoteDataSource{
                         let errorMessage: String = json["message"] as? String ?? "Something went wrong!"
                         return .failure(APIError.custom(errorMessage))
                     }
-                    return .failure(APIError.unexpected)
+                    return .failure(APIError.smthWentWrong)
                 }
             }
             

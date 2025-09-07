@@ -27,6 +27,7 @@ struct RecipeCard: View {
 
                 Text(recipe.name)
                     .font(.headline)
+                    .foregroundColor(Color.theme.blackAndWhite)
                     .lineLimit(1)
                 
                 Text(recipe.description)
