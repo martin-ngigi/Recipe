@@ -167,6 +167,9 @@
     "Phone:" : {
 
     },
+    "Please enter your email address to receive password reset instructions." : {
+
+    },
     "Popular Chefs" : {
 
     },
@@ -196,6 +199,12 @@
       }
     },
     "Recipes" : {
+
+    },
+    "Reset Password" : {
+
+    },
+    "Reset Password?" : {
 
     },
     "Retry" : {

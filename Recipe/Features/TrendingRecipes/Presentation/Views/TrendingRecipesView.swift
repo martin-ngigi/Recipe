@@ -38,11 +38,9 @@ struct TrendingRecipesView: View {
                         }
                     }
                 }
-                
             }
             .listStyle(.plain)
             .navigationTitle("Trending Recipes")
-            //.hideBottomNavigationBar(false)
         }
     }
 }

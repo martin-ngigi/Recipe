@@ -43,24 +43,38 @@ struct LoginView: View {
                         }
                     )
                     
-                    BorderedPasswordField(
-                        password: $loginViewModel.password,
-                        placeholder: "MyP@ss10",
-                        description: "Password",
-                        error: loginViewModel.loginErrors["password"] ?? "",
-                        onTextChange: { text in
-                            loginViewModel.updatePassword(value: text)
+                    VStack(alignment: .trailing, spacing: 0){
+                        BorderedPasswordField(
+                            password: $loginViewModel.password,
+                            placeholder: "MyP@ss10",
+                            description: "Password",
+                            error: loginViewModel.loginErrors["password"] ?? "",
+                            onTextChange: { text in
+                                loginViewModel.updatePassword(value: text)
+                            }
+                        )
+                        
+                        Button{
+                            loginViewModel.updateIsShowSheet(value: true)
+                            loginViewModel.updateLoginSheets(value: .RESET_PASSWORD)
+                        } label: {
+                            Text("Reset Password?")
+                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                .underline()
+                                .foregroundColor(Color.theme.primaryColor)
                         }
-                    )
+                    }
+                    
                     
                     
                     Button{
                         router.push(.register)
                     } label: {
-                        Text("Dont have account? \(Text("Create").foregroundColor(Color.blue))")
+                        Text("Dont have account? \(Text("Create").foregroundColor(Color.theme.primaryColor))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
+                    .foregroundColor(Color.theme.blackAndWhite)
                     
                 }
                 
@@ -190,6 +204,43 @@ struct LoginView: View {
                 
             }
             .padding()
+        }
+        .sheet(isPresented: $loginViewModel.isShowSheet){
+            switch loginViewModel.sheetToShow {
+            case .RESET_PASSWORD:
+                ResetPasswordSheet(
+                    email: loginViewModel.resetEmail,
+                    resetEmailErrors: loginViewModel.resetEmailErrors,
+                    toast: $loginViewModel.toast,
+                    isEmailValid: loginViewModel.isResetEmailButtonEnabled,
+                    isLoading: loginViewModel.resetPasswordState == .isLoading,
+                    onEmailChange: { newEmail in
+                        loginViewModel.updateResetEmail(value: newEmail)
+                    },
+                    onDismiss: {
+                        loginViewModel.updateIsShowSheet(value: false)
+                    },
+                    onSubmit: {
+                        Task{
+                            await loginViewModel.resetPassword(
+                                email: loginViewModel.resetEmail,
+                                onSuccess: {
+                                    loginViewModel.updateToast(
+                                        value: Toast(style: .success, message: "Reset password link sent to your email")
+                                    )
+                                    loginViewModel.updateIsShowSheet(value: false)
+                                },
+                                onFailure: { error in
+                                    loginViewModel.updateToast(
+                                        value: Toast(style: .error, message: error)
+                                    )
+                                }
+                            )
+                        }
+                    }
+                )
+                
+            }
         }
         .onAppear{
             print("DEBUG: LocalState.isLogedIn \(LocalState.isLogedIn)")

@@ -20,6 +20,7 @@ struct CustomButton: View {
     var borderColor: Color = Color.theme.primaryColor
     var buttonNameColor: Color = Color.theme.blackAndWhite
     var isDisabled: Bool = false
+    var isLoading: Bool = false
     var onTap: () -> Void
     
     var body: some View {
@@ -33,9 +34,15 @@ struct CustomButton: View {
                     Image(leadingimage)
                 }
                 
-                Text(buttonName)
-                    .font(.custom("ProductSans-Regular", size: 15))
-                    .foregroundColor(buttonNameColor)
+                if isLoading {
+                    ProgressView()
+                }
+                else {
+                    Text(buttonName)
+                        .font(.custom("ProductSans-Regular", size: 15))
+                        .foregroundColor(buttonNameColor)
+                }
+               
                 
                 if(!icon.isEmpty){
                     Image(systemName: icon)

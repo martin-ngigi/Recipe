@@ -1,0 +1,39 @@
+# name: Distribute iOS App to Firebase
+
+# on:
+#   push:
+#     branches:
+#       - development   # Only run when pushing to development branch
+
+# jobs:
+#   build-and-distribute:
+#     runs-on: macos-latest
+
+#     steps:
+#       # Checkout code
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       # Setup Ruby (for fastlane)
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: 3.1
+#           bundler-cache: true
+
+#       # Install dependencies (CocoaPods + Gems)
+#       - name: Install dependencies
+#         run: |
+#           gem install bundler
+#           bundle install
+#           cd ios && pod install --repo-update && cd ..
+
+#       # Build and distribute with Fastlane
+#       - name: Build and Distribute
+#         run: bundle exec fastlane ios firebase
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+#           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+#           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+#           APPLE_ID: ${{ secrets.APPLE_ID }}
+#           APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}

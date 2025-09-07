@@ -1,0 +1,51 @@
+name: Distribute iOS App to Firebase (CLI)
+
+on:
+  push:
+    branches:
+      - development   # only run on development branch
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+          cd ..
+
+      # Build .ipa using xcodebuild
+      - name: Build iOS App
+        run: |
+          xcodebuild -workspace ios/Recipe.xcworkspace \
+            -scheme Recipe \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath $PWD/build/Recipe.xcarchive archive
+
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/Recipe.xcarchive \
+            -exportPath $PWD/build/ \
+            -exportOptionsPlist ios/ExportOptions.plist
+
+      # Install Firebase CLI
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      # Upload to Firebase App Distribution
+      - name: Upload .ipa to Firebase
+        run: |
+          firebase appdistribution:distribute build/YourApp.ipa \
+            --app $FIREBASE_APP_ID \
+            --release-notes "New build from GitHub Actions 🚀" \
+            --testers "martinwainaina001@gmail.com"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}

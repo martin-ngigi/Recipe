@@ -14,16 +14,26 @@ import Firebase
 import CryptoKit
 import AuthenticationServices
 
+enum LoginSheets{
+    case RESET_PASSWORD
+}
+
 @MainActor
 class LoginViewModel : ObservableObject{
     @Published var dialogEntity = DialogEntity()
     @Published var isShowAlertDialog = false
     @Published var loginState: FetchState = FetchState.good
+    @Published var resetPasswordState: FetchState = FetchState.good
     @Published var email: String = ""
+    @Published var resetEmail: String = ""
     @Published var password: String = ""
     @Published var isLoginEnabled: Bool = false
+    @Published var isResetEmailButtonEnabled: Bool = false
     @Published var loginErrors = [String: String]()
+    @Published var resetEmailErrors = [String: String]()
     @Published var toast: Toast?
+    @Published var sheetToShow: LoginSheets = .RESET_PASSWORD
+    @Published var isShowSheet: Bool = false
 
     let firebaseAuthUseCase: FirebaseAuthUseCase = FirebaseAuthUseCase(
         createFirebaseUserRepository: FirebaseAuthRepository.shared,
@@ -45,6 +55,14 @@ class LoginViewModel : ObservableObject{
         dialogEntity = value
     }
     
+    func updateLoginSheets(value: LoginSheets) {
+        sheetToShow = value
+    }
+    
+    func updateIsShowSheet(value: Bool) {
+        isShowSheet = value
+    }
+    
     func updateLoginState(value: FetchState) {
         loginState = value
     }
@@ -58,6 +76,12 @@ class LoginViewModel : ObservableObject{
         let error = ValidatorUtils.shared.validateEmail(email: email)
         updateSendLoginErrors(key: "email", value:  error)
 
+    }
+    
+    func updateResetEmail(value: String) {
+        resetEmail = value
+        let error = ValidatorUtils.shared.validateEmail(email: resetEmail)
+        updateResetEmailErrors(key: "resetEmail", value:  error)
     }
 
     func updateToast(value: Toast?) {
@@ -75,6 +99,11 @@ class LoginViewModel : ObservableObject{
         validateIfLoginIsEnabled()
     }
     
+    func updateResetEmailErrors(key: String, value: String) {
+        resetEmailErrors[key] = value
+        validateIfResetButtonIsEnabled()
+    }
+    
     func validateIfLoginIsEnabled(){
         var isFormValid = true
         
@@ -83,6 +112,16 @@ class LoginViewModel : ObservableObject{
         }
         
         isLoginEnabled = isFormValid
+    }
+    
+    func validateIfResetButtonIsEnabled(){
+        var isFormValid = true
+        
+        if !resetEmailErrors.values.allSatisfy({ $0.isEmpty }) || resetEmail.isEmpty {
+            isFormValid = false
+        }
+        
+        isResetEmailButtonEnabled = isFormValid
     }
     
     func emailAndPasswordLogin(
@@ -260,5 +299,23 @@ class LoginViewModel : ObservableObject{
     
     func deleteLocalUserData() {
         authUseCases.deleteLocalUser()
+    }
+    
+    func resetPassword(
+        email: String,
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        resetPasswordState = .isLoading
+        let results = await firebaseAuthUseCase.executeResetPassword(email: email)
+        
+        switch results {
+        case .success(let response):
+            resetPasswordState = .good
+            onSuccess()
+        case .failure(let error):
+            resetPasswordState = .error(error.description)
+            onFailure(error.description)
+        }
     }
 }
