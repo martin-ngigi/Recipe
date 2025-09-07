@@ -45,6 +45,10 @@ A beautifully designed mobile app to explore delicious recipes, discover top che
     <td><img src="screenshots/5_Favourites.png" width="200"/></td>
     <td><img src="screenshots/5_Favourites_Light.png" width="200"/></td>
   </tr>
+    <tr>
+    <td><img src="screenshots/5_Favourites_Empty.png" width="200"/></td>
+    <td><img src="screenshots/5_Favourites_Empty_Light.png" width="200"/></td>
+  </tr>
   <tr>
     <td><img src="screenshots/6_Login.png" width="200"/></td>
     <td><img src="screenshots/6_Login_Light.png" width="200"/></td>
@@ -60,6 +64,22 @@ A beautifully designed mobile app to explore delicious recipes, discover top che
   <tr>
     <td><img src="screenshots/9_Settings.png" width="200"/></td>
     <td><img src="screenshots/9_Settings_Light.png" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/10_Rate_Chef.png" width="200"/></td>
+    <td><img src="screenshots/10_Rate_Chef_Light.png" width="200"/></td>
+  </tr>
+    <tr>
+    <td><img src="screenshots/11_Chef_Profile.png" width="200"/></td>
+    <td><img src="screenshots/11_Chef_Profile_Light.png" width="200"/></td>
+  </tr>
+    <tr>
+    <td><img src="screenshots/12_Favourite_Menu.png" width="200"/></td>
+    <td><img src="screenshots/12_Favourite_Menu_Light.png" width="200"/></td>
+  </tr>
+    <tr>
+    <td><img src="screenshots/13_Search.png" width="200"/></td>
+    <td><img src="screenshots/13_Search_Light.png" width="200"/></td>
   </tr>
 </table>
 
@@ -111,6 +131,7 @@ A beautifully designed mobile app to explore delicious recipes, discover top che
 ---
 
 ## 📂 Folder Structure (Sample)
+```
 screens/
 │
 ├── Home/
@@ -120,6 +141,7 @@ screens/
 ├── Auth/
 ├── Profile/
 └── Settings/
+```
 
 
 # Primary Color
