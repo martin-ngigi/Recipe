@@ -41,7 +41,7 @@ struct RecipeDetailsView: View {
                         .padding([.leading], 20)
                         .padding(.top, 60)
                     }
-                    .overlay(alignment: .topTrailing) {
+                    .overlay(alignment: .leading) {
                         Menu{
                             
                             Menu {

@@ -27,13 +27,15 @@ struct RecipeApp: App {
     
     @AppStorage(Keys.theme.rawValue) var theme: AppTheme = AppTheme.system
     @StateObject var themesViewModel = ThemesViewModel()
+    @StateObject var router = Router()
+    @StateObject var tabRouter = TabRouter()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(Router())
-                .environmentObject(TabRouter())
+                .environmentObject(router)
+                .environmentObject(tabRouter)
                 .onAppear{
                     themesViewModel.setAppTheme()
                 }
