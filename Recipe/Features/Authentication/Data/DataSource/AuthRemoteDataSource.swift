@@ -20,7 +20,7 @@ class AuthRemoteDataSource{
         
         let (responseData, response) = await NetworkUtils.shared.makeAPIRequest(
             url: url,
-            httpMethod: .POST,
+            httpMethod: .post,
             postData: user
         )
         

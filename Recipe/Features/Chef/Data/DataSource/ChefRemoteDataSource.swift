@@ -16,7 +16,7 @@ struct ChefRemoteDataSource{
         
         let (responseData, response) = await NetworkUtils.shared.makeAPIRequest(
             url: url,
-            httpMethod: .GET
+            httpMethod: .get
         )
         
         do {

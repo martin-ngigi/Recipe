@@ -16,7 +16,7 @@ struct HomeRemoteDataSource{
         
         let (responseData, response) = await NetworkUtils.shared.makeAPIRequest(
             url: url,
-            httpMethod: .GET
+            httpMethod: .get
         )
         
         do {
@@ -55,7 +55,7 @@ struct HomeRemoteDataSource{
         
         let (responseData, response) = await NetworkUtils.shared.makeAPIRequest(
             url: url,
-            httpMethod: .GET
+            httpMethod: .get
         )
         
         do {

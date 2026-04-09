@@ -19,7 +19,7 @@ struct LoginView: View {
         ScrollView(showsIndicators: false){
             VStack(spacing: 10){
                 VStack(spacing: 0){
-                    Text("First things first \(LocalState.isLogedIn)")
+                    Text("First things first")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                     
                     Text("Let's log you in")

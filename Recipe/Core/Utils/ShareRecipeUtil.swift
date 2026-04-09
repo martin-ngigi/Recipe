@@ -12,9 +12,7 @@ import SwiftUI
 
 struct ShareRecipeUtil {
     static let shared = ShareRecipeUtil()
-    
-    // MARK: - Share Recipe as PDF
-     
+         
     func shareRecipeAsPDF(
         recipe: RecipeModel,
         onSuccess: () -> Void,
@@ -59,8 +57,6 @@ struct ShareRecipeUtil {
             return nil
         }
     }
-    
-    // MARK: - Create PDF
     
     func createRecipePDF(recipe: RecipeModel, image: UIImage?) -> URL? {
         let pageWidth: CGFloat = 595.2
