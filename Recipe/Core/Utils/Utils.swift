@@ -34,4 +34,11 @@ struct Utils{
 
         return String(data: data, encoding: .utf8) ?? "\(data)"
     }
+    
+    func decryptBase64(base64: String) -> String {
+        if let data = Data(base64Encoded: base64) {
+            return String(data: data, encoding: .utf8) ?? ""
+        }
+        return ""
+    }
 }

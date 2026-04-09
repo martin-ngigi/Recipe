@@ -8,14 +8,15 @@
 import Foundation
 
 class Constants {
+    
     static let isDashboardBottomNavigationVisible = "isDashboardBottomNavigationVisible"
     static let timeoutInterval: Double = 45
     static var accessToken: String = ""
     static var openId: String = ""
     static let deviceId: String = ""
-    static let PROD_URL = "https://recipe.safiribytes.com"
-    static let IOS_TEST_URL: String = "http://127.0.0.1:8000"
-    static let ANDROID_TEST_URL: String = "http://192.168.1.102:8000"
+    static let PROD_URL = Utils.shared.decryptBase64(base64: "aHR0cHM6Ly9yZWNpcGUuc2FmaXJpYnl0ZXMuY29t")
+    static let IOS_TEST_URL: String = Utils.shared.decryptBase64(base64: "aHR0cDovLzEyNy4wLjAuMTo4MDAw")
+    static let ANDROID_TEST_URL: String = Utils.shared.decryptBase64(base64:"aHR0cDovLzE5Mi4xNjguMS4xMDI6ODAwMA==")
     
     static let prefix: String = "/api"
     
@@ -28,11 +29,12 @@ class Constants {
     static let APP_NAME = "Recipe"
     
     static var BASE_URL: String {
-        #if DEBUG
+        if EnvironmentLevel.isDebug {
+            return IOS_TEST_URL
+        }
+        else {
             return PROD_URL
-        #else
-            return PROD_URL
-        #endif
+        }
     }
     
     enum APIEndpoint {

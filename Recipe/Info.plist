@@ -15,6 +15,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>Configuration</key>
+	<string>${CONFIGURATION}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>whatsapp</string>
