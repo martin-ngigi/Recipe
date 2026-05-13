@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 protocol AddRecipeToLocalRepositoryProtocol {
     func addRecipe(recipe: RecipeModel)
 }

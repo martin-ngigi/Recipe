@@ -14,15 +14,15 @@ struct AllChefsView: View {
     var body: some View {
         VStack {
             List {
-                if list.isEmpty{
+                if list.isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
                         imageSize: 120,
                         title: "Chefs",
                         titleSize: 24,
                         description: """
-                        No Popular Chefs recipes found. 
-                        """,
+                            No Popular Chefs recipes found.
+                            """,
                         descriptionSize: 12
                     )
                 }
@@ -35,14 +35,14 @@ struct AllChefsView: View {
                                     router.push(.chefdetails(chef: chef))
                                 }
                             )
-                            
+
                         }
                     }
                 }
             }
             .listStyle(.plain)
             .navigationTitle("All Chefs")
-            //.hideBottomNavigationBar(false)
+            // .hideBottomNavigationBar(false)
         }
     }
 }
@@ -57,6 +57,5 @@ struct AllChefsView: View {
     else {
         Text("No Chefs")
     }
-
 
 }

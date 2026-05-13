@@ -12,135 +12,143 @@ struct ProfileView: View {
     @StateObject var loginViewModel = LoginViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
-    @State var user: UserModel? = nil
     var onLogoutSuccess: () -> Void
     var onLogoutFailed: (String) -> Void
-    
 
     var body: some View {
-        VStack{
-            Text(user?.initials ?? "--")
-                .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 40))
-                .frame(width: 100, height: 100)
-                .foregroundColor(.primary)
-                .padding(20)
-                .background(Color.secondary.opacity(0.2))
-                .cornerRadius(100)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.top)
-            
-            List {
-                
-                Section("Personal Details") {
-                    HStack{
-                        Text("Name:")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                        Spacer()
-                        
-                        Text(user?.name ?? "")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                    }
-                    
-                    HStack{
-                        Text("Email:")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                        Spacer()
-                        
-                        Text(user?.email ?? "")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                    }
-                    
-                    HStack{
-                        Text("Phone:")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                        Spacer()
-                        
-                        Text(user?.phoneComplete ?? "")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                    }
-                }
-                
-                Section("Account") {
-                    Button{
-                        profileViewModel.updateIsShowAlertDialog(value: true)
-                        profileViewModel.updateDialogEntity(
-                            value:  DialogEntity(
-                                title: "Logout",
-                                message: "Are you sure you want to logout?",
-                                icon: "",
-                                confirmButtonText: "Logout",
-                                dismissButtonText: "Cancel",
-                                onConfirm: {
-                                    profileViewModel.updateIsShowAlertDialog(value: false)
-                                    loginViewModel.logOut(
-                                        onSuccess: {
-                                            onLogoutSuccess()
-                                            favouriteRecipesViewModel.deleteAllFavourites()
+        VStack {
+            if let user = profileViewModel.user {
+                VStack {
+
+                    Text(user.initials)
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 40))
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.primary)
+                        .padding(20)
+                        .background(Color.secondary.opacity(0.2))
+                        .cornerRadius(100)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top)
+
+                    List {
+
+                        Section("Personal Details") {
+                            HStack {
+                                Text("Name:")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                Spacer()
+
+                                Text(user.name)
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            }
+
+                            HStack {
+                                Text("Email:")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                Spacer()
+
+                                Text(user.email)
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            }
+
+                            HStack {
+                                Text("Phone:")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                Spacer()
+
+                                Text(user.phoneComplete ?? "")
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            }
+                        }
+
+                        Section("Account") {
+                            Button {
+                                profileViewModel.updateIsShowAlertDialog(value: true)
+                                profileViewModel.updateDialogEntity(
+                                    value: DialogEntity(
+                                        title: "Logout",
+                                        message: "Are you sure you want to logout?",
+                                        icon: "",
+                                        confirmButtonText: "Logout",
+                                        dismissButtonText: "Cancel",
+                                        onConfirm: {
+                                            profileViewModel.updateIsShowAlertDialog(value: false)
+                                            loginViewModel.logOut(
+                                                onSuccess: {
+                                                    onLogoutSuccess()
+                                                    favouriteRecipesViewModel.deleteAllFavourites()
+                                                },
+                                                onFailure: { error in
+                                                    onLogoutFailed(error)
+                                                }
+                                            )
                                         },
-                                        onFailure: { error in
-                                            onLogoutFailed(error)
+                                        onDismiss: {
+                                            profileViewModel.updateIsShowAlertDialog(value: false)
                                         }
                                     )
-                                },
-                                onDismiss: {
-                                    profileViewModel.updateIsShowAlertDialog(value: false)
+                                )
+                            } label: {
+                                HStack {
+                                    Text("Logout:")
+                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                    Spacer()
+
+                                    Image(systemName: "power")
                                 }
-                            )
-                        )
-                    } label: {
-                        HStack{
-                            Text("Logout:")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                            Spacer()
-                            
-                            Image(systemName: "power")
-                        }
-                        .foregroundColor(Color.gray)
-                    }
-                    
-                    Button{
-                        profileViewModel.updateIsShowAlertDialog(value: true)
-                        profileViewModel.updateDialogEntity(
-                            value:  DialogEntity(
-                                title: "Delete Account",
-                                message: "Please note that this action cannot be undone and deleted data can't be restored.",
-                                icon: "",
-                                confirmButtonText: "Delete",
-                                dismissButtonText: "Cancel",
-                                onConfirm: {
-                                    Task {
-                                        profileViewModel.updateIsShowAlertDialog(value: false)
-                                        await loginViewModel.deleteAccount(
-                                            onSuccess: {
-                                                onLogoutSuccess()
-                                            },
-                                            onFailure: { error in
-                                                onLogoutFailed(error)
+                                .foregroundColor(Color.gray)
+                            }
+
+                            Button {
+                                profileViewModel.updateIsShowAlertDialog(value: true)
+                                profileViewModel.updateDialogEntity(
+                                    value: DialogEntity(
+                                        title: "Delete Account",
+                                        message:
+                                            "Please note that this action cannot be"
+                                            + "undone and deleted data can't be restored.",
+                                        icon: "",
+                                        confirmButtonText: "Delete",
+                                        dismissButtonText: "Cancel",
+                                        onConfirm: {
+                                            Task {
+                                                profileViewModel.updateIsShowAlertDialog(value: false)
+                                                await loginViewModel.deleteAccount(
+                                                    onSuccess: {
+                                                        onLogoutSuccess()
+                                                    },
+                                                    onFailure: { error in
+                                                        onLogoutFailed(error)
+                                                    }
+                                                )
                                             }
-                                        )
-                                    }
-                                },
-                                onDismiss: {
-                                    profileViewModel.updateIsShowAlertDialog(value: false)
+                                        },
+                                        onDismiss: {
+                                            profileViewModel.updateIsShowAlertDialog(value: false)
+                                        }
+                                    )
+                                )
+                            } label: {
+                                HStack {
+                                    Text("Delete Account:")
+                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                    Spacer()
+
+                                    Image(systemName: "power.circle.fill")
                                 }
-                            )
-                        )
-                    } label: {
-                        HStack{
-                            Text("Delete Account:")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                            Spacer()
-                            
-                            Image(systemName: "power.circle.fill")
+                                .foregroundColor(Color.red)
+                            }
                         }
-                        .foregroundColor(Color.red)
+
                     }
                 }
-                
+            }
+            else {
+                Text("Failed to fetch user...")
             }
         }
-        .onAppear{
-            user = loginViewModel.fetchUserFromLocalStorage()
+        .onAppear {
+            profileViewModel.updateUser(value: loginViewModel.fetchUserFromLocalStorage())
         }
         .overlay {
             CustomAlertDialog(
@@ -162,17 +170,17 @@ struct ProfileView: View {
                 }
             )
         }
-        //.hideBottomNavigationBar(false)
+        // .hideBottomNavigationBar(false)
     }
 }
 
 #Preview {
     ProfileView(
         onLogoutSuccess: {
-            
+
         },
-        onLogoutFailed: { error in
-            
+        onLogoutFailed: { _ in
+
         }
     )
 }

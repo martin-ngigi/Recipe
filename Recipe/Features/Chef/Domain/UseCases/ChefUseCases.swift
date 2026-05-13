@@ -6,14 +6,11 @@
 //
 
 import Foundation
-struct ChefUseCases{
+
+struct ChefUseCases {
     let chefRepository: ChefRepositoryProtocol
-    
-    init(chefRepository: ChefRepositoryProtocol) {
-        self.chefRepository = chefRepository
-    }
-    
-    func executeFetchChefById(chefId: String) async -> Result<ChefResponseModel, APIError>{
+
+    func executeFetchChefById(chefId: String) async -> Result<ChefResponseModel, APIError> {
         return await chefRepository.fetchChefById(chefId: chefId)
     }
 }

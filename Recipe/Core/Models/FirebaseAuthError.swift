@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FirebaseAuthError: Error, CustomStringConvertible{
+enum FirebaseAuthError: Error, CustomStringConvertible {
     case invalidEmail
     case weakPassword
     case emailAlreadyInUse
@@ -24,8 +24,8 @@ enum FirebaseAuthError: Error, CustomStringConvertible{
     case authorizationError
     case custom(String)
     case unknownError
-    
-    var description: String{
+
+    var description: String {
         switch self {
         case .invalidEmail:
             return "Invalid Email"
@@ -38,15 +38,15 @@ enum FirebaseAuthError: Error, CustomStringConvertible{
         case .emailVerificationFailed:
             return "Email Verification Failed"
         case .invalidEmailFormat:
-             return "The email address you entered is invalid. Please enter a valid email address."
+            return "The email address you entered is invalid. Please enter a valid email address."
         case .userNotFound:
-          return "The user account you are trying to access could not be found."
+            return "The user account you are trying to access could not be found."
         case .userDisabled:
-          return "The user account you are trying to access has been disabled."
+            return "The user account you are trying to access has been disabled."
         case .invalidCredential:
-          return "The credential used to sign in is invalid."
+            return "The credential used to sign in is invalid."
         case .wrongPassword:
-          return "The password you entered is incorrect. Please try again."
+            return "The password you entered is incorrect. Please try again."
         case .invalidNonce:
             return "Invalid Nonce"
         case .missingIdentityToken:

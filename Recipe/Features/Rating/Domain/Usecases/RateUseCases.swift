@@ -7,14 +7,12 @@
 
 import Foundation
 
-struct RateUseCases{
+struct RateUseCases {
     let createUpdateRateRepository: CreateUpdateRateRepositoryProtocol
-    
-    init(createUpdateRateRepository: CreateUpdateRateRepositoryProtocol) {
-        self.createUpdateRateRepository = createUpdateRateRepository
-    }
-    
-    func createUpdateRate(createRateRequestModel: CreateRateRequestModel) async -> Result<CreateRateResponseModel, APIError>{
+
+    func createUpdateRate(
+        createRateRequestModel: CreateRateRequestModel
+    ) async -> Result<CreateRateResponseModel, APIError> {
         return await createUpdateRateRepository.createUpdateRate(createRateRequestModel: createRateRequestModel)
     }
 }

@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct InbuiltAlert{
+struct InbuiltAlert {
     var title: String
-    var message: String? = nil
-    
+    var message: String?
+
     init(
         title: String,
         message: String? = nil

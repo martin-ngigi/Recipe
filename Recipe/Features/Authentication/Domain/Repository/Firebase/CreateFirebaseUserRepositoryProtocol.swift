@@ -5,10 +5,14 @@
 //  Created by Hummingbird on 12/07/2025.
 //
 
-import Foundation
 import FirebaseAuth
+import Foundation
 
 protocol CreateFirebaseUserRepositoryProtocol {
-    func createFirebaseUser(name: String, email: String, password: String) async -> Result<AuthDataResult, FirebaseAuthError>
+    func createFirebaseUser(
+        name: String,
+        email: String,
+        password: String
+    ) async -> Result<AuthDataResult, FirebaseAuthError>
 
 }

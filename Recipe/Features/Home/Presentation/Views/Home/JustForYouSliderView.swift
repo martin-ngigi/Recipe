@@ -10,8 +10,9 @@ import SwiftUI
 struct JustForYouSliderView: View {
     var recipes: [RecipeModel]
     var isLoading: Bool = false
+    var currentIndex: Int = 0
     var onTap: (RecipeModel) -> Void
-    @State private var currentIndex = 0
+    var onUpdateCurrentIndex: (Int) -> Void
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -19,21 +20,21 @@ struct JustForYouSliderView: View {
             Text("Just For You")
                 .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
-            if recipes.isEmpty && isLoading == false{
+
+            if recipes.isEmpty && isLoading == false {
                 EmptyScreenView(
                     imageName: "tray",
                     imageSize: 80,
                     title: "Recommendations",
                     titleSize: 18,
                     description: """
-                    No recommendations found. 
-                    """,
+                        No recommendations found.
+                        """,
                     descriptionSize: 12
                 )
             }
             else {
-                TabView(selection: $currentIndex) {
+                TabView(selection: .constant(currentIndex)) {
                     ForEach(0..<recipes.count, id: \.self) { index in
                         ZStack {
                             Button {
@@ -52,7 +53,7 @@ struct JustForYouSliderView: View {
                                     ZStack {
                                         Color.black.opacity(0.4)
                                             .cornerRadius(10)
-                                        
+
                                         VStack {
                                             Spacer()
                                             Text("\(recipes[index].name) by \(recipes[index].chef?.name ?? "")")
@@ -64,7 +65,7 @@ struct JustForYouSliderView: View {
                                     }
                                 }
                             }
-                            
+
                         }
                         .tag(index)
                     }
@@ -74,25 +75,26 @@ struct JustForYouSliderView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .onReceive(timer) { _ in
                     withAnimation {
-                        if recipes.count > 0{
-                            currentIndex = (currentIndex + 1) % recipes.count
+                        if !recipes.isEmpty {
+                            onUpdateCurrentIndex((currentIndex + 1) % recipes.count)
                         }
                     }
                 }
             }
-            
-            
+
         }
         .padding(.top, 10)
     }
 }
 
-
 #Preview {
     JustForYouSliderView(
         recipes: RecipeModel.dummyList,
-        onTap: { recipe in
-            
+        onTap: { _ in
+
+        },
+        onUpdateCurrentIndex: { _ in
+
         }
     )
     .padding()

@@ -9,10 +9,9 @@ import SwiftUI
 
 struct FavouritesListView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
-    @State var searchField = ""
     @EnvironmentObject var router: Router
     @Environment(\.modelContext) private var context
-    
+
     var body: some View {
         NavigationView {
             List {
@@ -20,13 +19,14 @@ struct FavouritesListView: View {
                     EmptyScreenView(
                         imageName: "tray",
                         title: "No Favourites Found",
-                        description: """
-                        You haven't added any recipes to your favourites yet. Start exploring delicious recipes and tap the heart icon on any recipe you like to save it here for easy access later. Your favourite recipes will appear in this list so you can quickly find and enjoy them anytime.
-                        """
+                        description: "You haven't added any recipes to your favourites yet. Start exploring "
+                            + "delicious recipes and tap the heart icon on any recipe you like to save it here "
+                            + "for easy access later. Your favourite recipes will appear in this list so you can "
+                            + "quickly find and enjoy them anytime."
                     )
                 }
                 else {
-                    ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self){ recipe in
+                    ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self) { recipe in
                         FavouriteItemView(
                             recipe: recipe,
                             onTapEntireItem: { recipe in
@@ -45,12 +45,12 @@ struct FavouritesListView: View {
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
-                            
+
                             Button {
                                 // Share action
                                 Task {
                                     favouriteRecipesViewModel.updateShareState(value: .isLoading)
-                                    await  ShareRecipeUtil.shared.shareRecipeAsPDF(
+                                    await ShareRecipeUtil.shared.shareRecipeAsPDF(
                                         recipe: recipe,
                                         onSuccess: {
                                             favouriteRecipesViewModel.updateShareState(value: .good)
@@ -79,7 +79,7 @@ struct FavouritesListView: View {
                             } label: {
                                 Label("Share", systemImage: "square.and.arrow.up")
                             }
-                            
+
                             // Add other relevant options here
                             /*
                             Button {
@@ -91,15 +91,15 @@ struct FavouritesListView: View {
                     }
                     .onDelete(perform: delete(indexSet:))
                 }
-               
+
             }
             .listStyle(.plain)
-            .searchable(text: $searchField, prompt: "Search favourite...")
+            .searchable(text: $favouriteRecipesViewModel.searchField, prompt: "Search favourite...")
             .navigationTitle(favouriteRecipesViewModel.favouritesListViewTitle)
             .task {
                 await favouriteRecipesViewModel.fetchFavouriteRecipes()
             }
-            //.hideBottomNavigationBar(false)
+            // .hideBottomNavigationBar(false)
         }
         .fullScreenProgressOverlay(isShowing: favouriteRecipesViewModel.shareState == .isLoading)
         .overlay {
@@ -123,17 +123,16 @@ struct FavouritesListView: View {
             )
         }
         .toastView(toast: $favouriteRecipesViewModel.toast)
-        
+
     }
-    
-    
-    private func delete(indexSet: IndexSet){
+
+    private func delete(indexSet: IndexSet) {
         indexSet.forEach { index in
             let favourite = favouriteRecipesViewModel.favouriteRecipes[index]
             initDelete(favourite: favourite)
         }
     }
-    
+
     func initDelete(favourite: RecipeModel) {
         favouriteRecipesViewModel.updateDialogEntity(
             value: DialogEntity(
@@ -146,8 +145,8 @@ struct FavouritesListView: View {
                     Task {
                         await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: favourite)
                         favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                        
-                        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 sec
+                        await favouriteRecipesViewModel.sleep(nanoseconds: 500_000_000)
+
                         favouriteRecipesViewModel.updateToast(
                             value: Toast(
                                 style: .warning,
@@ -162,13 +161,12 @@ struct FavouritesListView: View {
             )
         )
         favouriteRecipesViewModel.updateIsShowAlertDialog(value: true)
-        
+
     }
-    
 
 }
 
 #Preview {
     FavouritesListView()
-    .environmentObject(Router())
+        .environmentObject(Router())
 }

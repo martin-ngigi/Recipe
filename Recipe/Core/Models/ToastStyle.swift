@@ -13,9 +13,7 @@ enum ToastStyle {
     case warning
     case success
     case infor
-}
 
-extension ToastStyle {
     var themeColor: Color {
         switch self {
         case .error:
@@ -28,13 +26,13 @@ extension ToastStyle {
             return Color.blue
         }
     }
-    
+
     var iconFileName: String {
-       switch self {
-       case .infor: return "info.circle.fill"
-       case .warning: return "exclamationmark.triangle.fill"
-       case .success: return "checkmark.circle.fill"
-       case .error: return "xmark.circle.fill"
-       }
-     }
+        switch self {
+        case .infor: return "info.circle.fill"
+        case .warning: return "exclamationmark.triangle.fill"
+        case .success: return "checkmark.circle.fill"
+        case .error: return "xmark.circle.fill"
+        }
+    }
 }

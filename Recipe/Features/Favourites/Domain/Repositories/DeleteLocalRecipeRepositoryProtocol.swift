@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 protocol DeleteLocalRecipeRepositoryProtocol {
     func removeRecipe(recipe: RecipeModel)
 }

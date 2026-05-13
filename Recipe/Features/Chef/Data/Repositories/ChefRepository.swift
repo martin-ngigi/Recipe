@@ -6,13 +6,14 @@
 //
 
 import Foundation
-struct ChefRepository: ChefRepositoryProtocol{
-    
+
+struct ChefRepository: ChefRepositoryProtocol {
+
     static let shared = ChefRepository()
     let chefRemoteDataSource = ChefRemoteDataSource()
-    
+
     func fetchChefById(chefId: String) async -> Result<ChefResponseModel, APIError> {
         return await chefRemoteDataSource.fetchChefById(chefId: chefId)
     }
-    
+
 }

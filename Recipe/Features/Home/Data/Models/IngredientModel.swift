@@ -8,33 +8,6 @@
 import Foundation
 import SwiftData
 
-// MARK: - IngredientModel
-struct IngredientModel: Codable, Hashable {
-    let ingredientID, name: String
-    let image: String
-    let quantity, recipeID, createdAt, updatedAt: String
-
-    enum CodingKeys: String, CodingKey {
-        case ingredientID = "ingredient_id"
-        case name, image, quantity
-        case recipeID = "recipe_id"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-    }
-}
-
-extension IngredientModel {
-    init(swiftData: IngredientSwiftData) {
-        self.ingredientID = swiftData.ingredientID
-        self.name = swiftData.name
-        self.image = swiftData.image
-        self.quantity = swiftData.quantity
-        self.recipeID = swiftData.recipeID
-        self.createdAt = swiftData.createdAt
-        self.updatedAt = swiftData.updatedAt
-    }
-}
-
 @Model
 final class IngredientSwiftData {
     var ingredientID: String
@@ -44,9 +17,9 @@ final class IngredientSwiftData {
     var createdAt: String
     var updatedAt: String
     var quantity: String
-    
+
     var recipe: RecipeSwiftData?
-    
+
     init(
         ingredientID: String,
         name: String,
@@ -66,9 +39,7 @@ final class IngredientSwiftData {
         self.quantity = quantity
         self.recipe = recipe
     }
-}
 
-extension IngredientSwiftData {
     convenience init(model: IngredientModel) {
         self.init(
             ingredientID: model.ingredientID,
@@ -80,5 +51,32 @@ extension IngredientSwiftData {
             quantity: model.quantity,
             recipe: nil
         )
+    }
+
+    deinit {}
+}
+
+struct IngredientModel: Codable, Hashable {
+
+    enum CodingKeys: String, CodingKey {
+        case ingredientID = "ingredient_id"
+        case name, image, quantity
+        case recipeID = "recipe_id"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+    }
+
+    let ingredientID, name: String
+    let image: String
+    let quantity, recipeID, createdAt, updatedAt: String
+
+    init(swiftData: IngredientSwiftData) {
+        self.ingredientID = swiftData.ingredientID
+        self.name = swiftData.name
+        self.image = swiftData.image
+        self.quantity = swiftData.quantity
+        self.recipeID = swiftData.recipeID
+        self.createdAt = swiftData.createdAt
+        self.updatedAt = swiftData.updatedAt
     }
 }

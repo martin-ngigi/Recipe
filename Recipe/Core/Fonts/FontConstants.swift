@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FontConstants{
+enum FontConstants {
     static let POPPINS_BOLD: String = "Poppins-Bold"
     static let POPPINS_LIGHT: String = "Poppins-Light"
     static let POPPINS_MEDIUM: String = "Poppins-Medium"

@@ -6,10 +6,10 @@
 //
 
 import Foundation
-
 import SwiftUI
 
 enum ThemeEntity: String, CaseIterable, Identifiable {
+
     case device, light, dark
 
     var userInterfaceStyle: UIUserInterfaceStyle {
@@ -19,7 +19,7 @@ enum ThemeEntity: String, CaseIterable, Identifiable {
         case .dark: return .dark
         }
     }
-    
+
     var themName: String {
         switch self {
         case .device:
@@ -30,7 +30,9 @@ enum ThemeEntity: String, CaseIterable, Identifiable {
             "Dark"
         }
     }
-    
+
+    var id: String { rawValue }
+
     init(isDarkModeOn: Bool?) {
         switch isDarkModeOn {
         case true: self = .dark
@@ -38,6 +40,5 @@ enum ThemeEntity: String, CaseIterable, Identifiable {
         default: self = .device
         }
     }
-    
-    var id: String{ rawValue}
+
 }

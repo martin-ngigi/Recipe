@@ -8,26 +8,6 @@
 import Foundation
 import SwiftData
 
-struct HomeResponseModel: Codable{
-    let message: String
-    let statusCode: Int
-    let data: HomeData
-    
-    enum CodingKeys: String, CodingKey {
-        case message
-        case statusCode = "status_code"
-        case data
-    }
-}
-
-extension HomeResponseModel {
-    init(swiftData: HomeResponseSwiftData) {
-        self.message = swiftData.message
-        self.statusCode = swiftData.statusCode
-        self.data = HomeData(swiftData: swiftData.data)
-    }
-}
-
 @Model
 class HomeResponseSwiftData {
     var message: String
@@ -39,9 +19,7 @@ class HomeResponseSwiftData {
         self.statusCode = statusCode
         self.data = data
     }
-}
 
-extension HomeResponseSwiftData {
     convenience init(model: HomeResponseModel) {
         self.init(
             message: model.message,
@@ -49,8 +27,28 @@ extension HomeResponseSwiftData {
             data: HomeDataSwiftData(model: model.data)
         )
     }
+
+    deinit {}
 }
 
-extension HomeResponseModel {
-    static var sampleData =  HomeReponseDummyData.dataModel
+struct HomeResponseModel: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case message
+        case statusCode = "status_code"
+        case data
+    }
+
+    static var sampleData = HomeReponseDummyData.dataModel
+
+    let message: String
+    let statusCode: Int
+    let data: HomeData
+
+    init(swiftData: HomeResponseSwiftData) {
+        self.message = swiftData.message
+        self.statusCode = swiftData.statusCode
+        self.data = HomeData(swiftData: swiftData.data)
+    }
+
 }

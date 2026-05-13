@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIError: Error, CustomStringConvertible{
+enum APIError: Error, CustomStringConvertible {
     case badURL
     case urlSession(Error)
     case badResponse(Int)
@@ -16,7 +16,7 @@ enum APIError: Error, CustomStringConvertible{
     case smthWentWrong
     case unkown
     case unexpected
-    
+
     var description: String {
         switch self {
         case .badURL:

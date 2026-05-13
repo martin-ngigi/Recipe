@@ -37,7 +37,7 @@ struct CustomSwitch: View {
 #Preview {
     CustomSwitch(
         isOn: .constant(true),
-        onTap: { isOn in
+        onTap: { _ in
         }
     )
 }

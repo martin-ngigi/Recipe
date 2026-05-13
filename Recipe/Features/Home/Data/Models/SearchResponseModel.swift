@@ -7,16 +7,17 @@
 
 import Foundation
 
-struct SearchResponseModel: Codable{
-    let message: String
-    let statusCode: Int
-    let recipes: [RecipeModel]
-    let chefs: [UserModel]
-    
+struct SearchResponseModel: Codable {
+
     enum CodingKeys: String, CodingKey {
         case message
         case statusCode = "status_code"
         case recipes
         case chefs
     }
+
+    let message: String
+    let statusCode: Int
+    let recipes: [RecipeModel]
+    let chefs: [UserModel]
 }

@@ -14,7 +14,7 @@ struct ImageOverlay: View {
     var imageHeight: Double = 240
     var description: String?
     var onDismiss: () -> Void
-    
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.8)
@@ -22,7 +22,7 @@ struct ImageOverlay: View {
                 .onTapGesture {
                     onDismiss()
                 }
-            
+
             VStack(spacing: 20) {
                 if let title = title {
                     Text(title)
@@ -30,13 +30,13 @@ struct ImageOverlay: View {
                         .fontWeight(.semibold)
                         .padding(.top, 20)
                 }
-                
+
                 CustomImageView(
                     url: image,
                     maxWidth: imageWidth,
                     height: imageHeight
                 )
-                
+
                 if let description = description {
                     Text(description)
                         .foregroundColor(.secondary)
@@ -44,18 +44,18 @@ struct ImageOverlay: View {
                 }
             }
             .background(Color.theme.whiteAndBlack)
-            //.cornerRadius(11)
+            // .cornerRadius(11)
             .clipShape(RoundedRectangle(cornerRadius: 11))
             .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
             .clipped()
             .overlay(
-                   RoundedRectangle(cornerRadius: 11)
+                RoundedRectangle(cornerRadius: 11)
                     .stroke(Color.theme.primaryColor, lineWidth: 1)
-               )
+            )
             .padding()
             .shadow(radius: 10)
         }
-       
+
     }
 }
 
@@ -63,7 +63,7 @@ struct ImageOverlay: View {
     ImageOverlay(
         image: "https://recipe.safiribytes.com/images/profile/chef_avatar.png",
         onDismiss: {
-            
+
         }
     )
 }

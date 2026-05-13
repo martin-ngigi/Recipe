@@ -6,23 +6,22 @@
 //
 
 import Foundation
-
 import SwiftUI
 
 /*
 class Router: ObservableObject{
     @Published var path = NavigationPath()
-    
+
     func push(_ route: Route){
         path.append(route)
     }
-    
+
     func pop(){
         if !path.isEmpty{
             path.removeLast()
         }
     }
-    
+
     func popToRoot(){
         path.removeLast(path.count)
     }
@@ -32,7 +31,7 @@ class Router: ObservableObject{
 class Router: ObservableObject {
     // Published property to be used with SwiftUI's NavigationStack
     @Published var path = NavigationPath()
-    
+
     // Internal mirror stack to allow easier route manipulation and tracking
     private var routeStack: [Route] = []
 
@@ -121,62 +120,91 @@ class Router: ObservableObject {
         path = NavigationPath()
         routeStack.removeAll()
     }
+
+    deinit {}
 }
 
-
 @ViewBuilder
-func viewForRoute(_ route: Route, router: Router) -> some View{
+func viewForRoute(_ route: Route, router: Router) -> some View {
     switch route {
-        
+
     case .landing:
         LandingView()
             .navigationBarBackButtonHidden()
-        
+
     case .dashboard:
         DashboardView()
-            .navigationBarBackButtonHidden() //MARK: Temporal fix
-        
-    case .login:
-        LoginView(
-            onLoginSuccess: {},
-            onLoginFailure: {_ in}
-        )
-            .navigationBarBackButtonHidden()
-        
-    case .register:
-        RegisterView()
-            .navigationBarBackButtonHidden()
+            .navigationBarBackButtonHidden()  // MARK: Temporal fix
 
-    case .home:
-        HomeView()
+    case .login,
+        .register:
+        authRoutes(route)
 
-    case .favourites:
-        FavouritesListView()
- 
-    case .profile:
-        ProfileView(
-            onLogoutSuccess: {
-                
-            },
-            onLogoutFailed: {error in
-                
-            }
-        )
+    case .home,
+        .favourites,
+        .profile,
+        .settings:
+        dashboardRoutes(route)
 
-    case .settings:
-        SettingsScreen()
-        
     case .recipedetails(let recipe):
         RecipeDetailsView(recipe: recipe)
             .navigationBarBackButtonHidden()
 
     case .chefdetails(let chef):
         ChefDetailsView(chef: chef)
-        
+
     case .trendingRecipes(let list):
         TrendingRecipesView(list: list)
-        
+
     case .popularChefs(let list):
         AllChefsView(list: list)
+    }
+}
+
+@ViewBuilder
+func authRoutes(_ route: Route) -> some View {
+    switch route {
+
+    case .login:
+        LoginView(
+            onLoginSuccess: {},
+            onLoginFailure: { _ in }
+        )
+        .navigationBarBackButtonHidden()
+
+    case .register:
+        RegisterView()
+            .navigationBarBackButtonHidden()
+
+    default:
+        EmptyView()
+    }
+}
+
+@ViewBuilder
+func dashboardRoutes(_ route: Route) -> some View {
+    switch route {
+
+    case .home:
+        HomeView()
+
+    case .favourites:
+        FavouritesListView()
+
+    case .profile:
+        ProfileView(
+            onLogoutSuccess: {
+
+            },
+            onLogoutFailed: { _ in
+
+            }
+        )
+
+    case .settings:
+        SettingsScreen()
+
+    default:
+        EmptyView()
     }
 }

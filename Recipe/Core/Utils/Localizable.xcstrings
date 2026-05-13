@@ -95,6 +95,9 @@
     "Email:" : {
 
     },
+    "Failed to fetch user..." : {
+
+    },
     "FAQs" : {
 
     },
@@ -192,6 +195,7 @@
 
     },
     "RecipeApp is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home" : {
+      "extractionState" : "stale",
       "localizations" : {
         "sw-KE" : {
           "stringUnit" : {
@@ -232,9 +236,6 @@
 
     },
     "Theme" : {
-
-    },
-    "Throw Error" : {
 
     },
     "Trending Recipes" : {

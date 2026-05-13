@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FetchState: Comparable{
+enum FetchState: Comparable {
     case good
     case isLoading
     case noResults

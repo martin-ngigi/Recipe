@@ -15,7 +15,7 @@ struct EmptyScreenView: View {
     var titleSize: CGFloat = 24
     let description: String
     var descriptionSize: CGFloat = 12
-    
+
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: imageName)
@@ -37,7 +37,7 @@ struct EmptyScreenView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemBackground)) 
+        .background(Color(UIColor.systemBackground))
     }
 }
 

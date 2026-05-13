@@ -11,16 +11,16 @@ import os
 
 class NetworkUtils {
     static let shared = NetworkUtils()
-    
+
     func makeAPIRequest(
         url: URL,
         httpMethod: HttpMethod,
         postData: Any? = nil,
         isSecureRequest: Bool = true
     ) async -> (Data?, URLResponse?) {
-        
+
         var attemptsRetried = 0
-        
+
         while true {
             do {
                 var request = URLRequest(url: url)
@@ -28,46 +28,47 @@ class NetworkUtils {
                 request.cachePolicy = .reloadIgnoringLocalCacheData
                 request.timeoutInterval = Constants.timeoutInterval
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                      
+
                 constructHeaders(request: &request, isSecureRequest: isSecureRequest)
                 try constructBody(request: &request, postData: postData)
-                
+
                 let (data, response) = try await URLSession.shared.data(for: request)
-                
+
                 logRequestAndResponse(url: url, request: request, data: data)
 
                 return (data, response)
-                
-            } catch {
+
+            }
+            catch {
                 let errorMessage = error.localizedDescription.lowercased()
-                
+
                 if errorMessage.contains("network connection was lost") {
                     // Handle network lost if needed
                     // NetworkMonitor.shared.isConnected = false
                 }
-                
+
                 if errorMessage.contains("the request timed out"), attemptsRetried < 2 {
                     attemptsRetried += 1
                     os.Logger().debug("DEBUG: Retrying request due to timeout, attempt \(attemptsRetried)")
-                    continue // retry the request
+                    continue  // retry the request
                 }
-                
+
                 os.Logger().debug("DEBUG: API ERROR occurred. Error is \(error.localizedDescription)")
                 return (nil, nil)
             }
         }
     }
-    
+
     private func constructHeaders(request: inout URLRequest, isSecureRequest: Bool) {
         let accessToken = Constants.accessToken
         let deviceID = Constants.deviceId
-        
+
         if isSecureRequest {
             request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         }
         request.addValue(deviceID, forHTTPHeaderField: "device_id")
     }
-    
+
     private func constructBody(request: inout URLRequest, postData: Any?) throws {
         guard let postData = postData else { return }
 
@@ -83,7 +84,7 @@ class NetworkUtils {
             request.httpBody = Data()
         }
     }
-    
+
     private func logRequestAndResponse(url: URL, request: URLRequest, data: Data) {
         let separator = String(repeating: "-", count: 110)
         let prettyHeaders =
@@ -101,4 +102,6 @@ class NetworkUtils {
         os.Logger().debug("DEBUG: RESPONSE: \n\(responsePrettyBody)")
         os.Logger().debug("DEBUG: \(separator)")
     }
+
+    deinit {}
 }

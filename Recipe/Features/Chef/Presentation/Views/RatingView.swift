@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct RatingView: View {
-    @State private var rating: Int = 0
-    @State private var comment: String = ""
-    
+    @Binding var rating: Int
+    @Binding var comment: String
     var onDismiss: () -> Void
     var onSubmit: (Int, String) -> Void
-    
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.8)
@@ -21,7 +20,7 @@ struct RatingView: View {
                 .onTapGesture {
                     // isPresented = false // Dismiss when tapping outside
                 }
-            
+
             VStack(spacing: 20) {
                 Text("Rate Your Experience")
                     .font(.title2)
@@ -52,7 +51,7 @@ struct RatingView: View {
 
                     TextEditor(text: $comment)
                         .frame(height: 100)
-                        //.background(Color.gray.opacity(0.3))
+                        // .background(Color.gray.opacity(0.3))
                         .background(.red)
                         .cornerRadius(7)
                         .overlay(
@@ -64,7 +63,7 @@ struct RatingView: View {
 
                 // Buttons
                 HStack(spacing: 20) {
-                    
+
                     CustomButton(
                         buttonName: "Cancel",
                         backgroundColor: Color.clear,
@@ -72,7 +71,7 @@ struct RatingView: View {
                     ) {
                         onDismiss()
                     }
-                    
+
                     CustomButton(
                         buttonName: "Submit",
                         borderColor: Color.clear,
@@ -88,16 +87,23 @@ struct RatingView: View {
             .cornerRadius(11)
             .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
             .overlay(
-                   RoundedRectangle(cornerRadius: 11)
+                RoundedRectangle(cornerRadius: 11)
                     .stroke(Color.theme.primaryColor, lineWidth: 1)
-               )
+            )
             .padding()
             .shadow(radius: 10)
         }
-        
+
     }
 }
 
 #Preview {
-    RatingView(onDismiss: {}, onSubmit: { _, _ in})
+    RatingView(
+        rating: .constant(0),
+        comment: .constant(""),
+        onDismiss: {
+        },
+        onSubmit: { _, _ in
+        }
+    )
 }

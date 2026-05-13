@@ -13,7 +13,7 @@ enum HttpMethod: String {
     case put
     case delete
     case patch
-    
+
     var getMethod: String {
         switch self {
         case .post:
@@ -28,5 +28,5 @@ enum HttpMethod: String {
             return "PATCH"
         }
     }
-    
+
 }

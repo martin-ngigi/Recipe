@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import os
 
 struct LoginView: View {
     var onLoginSuccess: () -> Void
@@ -16,22 +17,22 @@ struct LoginView: View {
     @StateObject var loginViewModel = LoginViewModel()
 
     var body: some View {
-        ScrollView(showsIndicators: false){
-            VStack(spacing: 10){
-                VStack(spacing: 0){
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 10) {
+                VStack(spacing: 0) {
                     Text("First things first")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                    
+
                     Text("Let's log you in")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
                 }
-                
+
                 Image("login_illustration")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
-                
-                VStack(spacing: 10){
+
+                VStack(spacing: 10) {
                     BorderedInputField(
                         text: $loginViewModel.email,
                         placeholder: "myemail@gmail.com",
@@ -42,19 +43,22 @@ struct LoginView: View {
                             loginViewModel.updateEmail(value: text)
                         }
                     )
-                    
-                    VStack(alignment: .trailing, spacing: 0){
+
+                    VStack(alignment: .trailing, spacing: 0) {
                         BorderedPasswordField(
                             password: $loginViewModel.password,
                             placeholder: "MyP@ss10",
                             description: "Password",
                             error: loginViewModel.loginErrors["password"] ?? "",
+                            onToggleAction: {
+                                loginViewModel.isSecure.toggle()
+                            },
                             onTextChange: { text in
                                 loginViewModel.updatePassword(value: text)
                             }
                         )
-                        
-                        Button{
+
+                        Button {
                             loginViewModel.updateIsShowSheet(value: true)
                             loginViewModel.updateLoginSheets(value: .RESET_PASSWORD)
                         } label: {
@@ -64,10 +68,8 @@ struct LoginView: View {
                                 .foregroundColor(Color.theme.primaryColor)
                         }
                     }
-                    
-                    
-                    
-                    Button{
+
+                    Button {
                         router.push(.register)
                     } label: {
                         Text("Dont have account? \(Text("Create").foregroundColor(Color.theme.primaryColor))")
@@ -75,9 +77,9 @@ struct LoginView: View {
                             .underline()
                     }
                     .foregroundColor(Color.theme.blackAndWhite)
-                    
+
                 }
-                
+
                 CustomButton(
                     buttonName: "Login",
                     borderColor: Color.clear,
@@ -91,7 +93,7 @@ struct LoginView: View {
                                 onFailure: { error in
                                     loginViewModel.updateIsShowAlertDialog(value: true)
                                     loginViewModel.updateDialogEntity(
-                                        value:  DialogEntity(
+                                        value: DialogEntity(
                                             title: "Authentication Failed.",
                                             message: error,
                                             icon: "",
@@ -112,10 +114,10 @@ struct LoginView: View {
                     }
                 )
                 .padding(.top, 20)
-                
+
                 Text("Or Login with")
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                
+
                 HStack {
                     SocialAuthItemView(
                         image: "apple_icon",
@@ -138,18 +140,21 @@ struct LoginView: View {
                             )
                         }
                     )
-                    
+
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
-                            Task{
+                            Task {
                                 await loginViewModel.googleAuthentication(
-                                    onSuccess: { authDataResult in
-                                        Task{
+                                    onSuccess: { _ in
+                                        Task {
                                             loginViewModel.updateToast(
-                                                value: Toast(style: .success, message: "Google authentication successfull!")
+                                                value: Toast(
+                                                    style: .success,
+                                                    message: "Google authentication successfull!"
+                                                )
                                             )
-                                            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1.0 sec
+                                            await loginViewModel.sleep(nanoseconds: 1_000_000_000)
                                             onLoginSuccess()
                                         }
                                     },
@@ -176,7 +181,7 @@ struct LoginView: View {
                             }
                         }
                     )
-                    
+
                     SocialAuthItemView(
                         image: "facebook",
                         onTap: {
@@ -201,15 +206,15 @@ struct LoginView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 50)
-                
+
             }
             .padding()
         }
-        .sheet(isPresented: $loginViewModel.isShowSheet){
+        .sheet(isPresented: $loginViewModel.isShowSheet) {
             switch loginViewModel.sheetToShow {
             case .RESET_PASSWORD:
                 ResetPasswordSheet(
-                    email: loginViewModel.resetEmail,
+                    email: $loginViewModel.resetEmail,
                     resetEmailErrors: loginViewModel.resetEmailErrors,
                     toast: $loginViewModel.toast,
                     isEmailValid: loginViewModel.isResetEmailButtonEnabled,
@@ -221,7 +226,7 @@ struct LoginView: View {
                         loginViewModel.updateIsShowSheet(value: false)
                     },
                     onSubmit: {
-                        Task{
+                        Task {
                             await loginViewModel.resetPassword(
                                 email: loginViewModel.resetEmail,
                                 onSuccess: {
@@ -239,12 +244,12 @@ struct LoginView: View {
                         }
                     }
                 )
-                
+
             }
         }
-        .onAppear{
-            print("DEBUG: LocalState.isLogedIn \(LocalState.isLogedIn)")
-            if LocalState.isLogedIn{
+        .onAppear {
+            os.Logger().debug("DEBUG: LocalState.isLogedIn \(LocalState.isLogedIn)")
+            if LocalState.isLogedIn {
                 onLoginSuccess()
             }
         }
@@ -283,7 +288,7 @@ struct LoginView: View {
 #Preview {
     LoginView(
         onLoginSuccess: {},
-        onLoginFailure: {error in}
+        onLoginFailure: { _ in }
     )
-        .environmentObject(Router())
+    .environmentObject(Router())
 }

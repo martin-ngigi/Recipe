@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol FetchHomeDataRepositoryProtocol{
+protocol FetchHomeDataRepositoryProtocol {
     func fetchHomeData() async -> Result<HomeResponseModel, APIError>
 }

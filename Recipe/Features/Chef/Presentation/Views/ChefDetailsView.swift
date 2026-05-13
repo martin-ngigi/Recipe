@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct ChefDetailsView: View {
-    @StateObject var chefViewModel =  ChefViewModel()
-    @StateObject var rateViewModel =  RateViewModel()
-    @StateObject var loginViewModel =  LoginViewModel()
-    @State var isShowAllRecipeItems = false
-    @State var chef: UserModel
-    @State var user: UserModel?
+    @StateObject var chefViewModel = ChefViewModel()
+    @StateObject var rateViewModel = RateViewModel()
+    @StateObject var loginViewModel = LoginViewModel()
+    var chef: UserModel
+    var user: UserModel?
     @EnvironmentObject var tabRouter: TabRouter
     @EnvironmentObject var router: Router
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                
+
                 HStack(spacing: 16) {
-                    var avatar: String{
-                        if chef.avatar.starts(with: "http"){
-                            return chef.avatar
+                    var avatar: String {
+                        if "\(chefViewModel.chef?.avatar ?? "")".starts(with: "http") {
+                            return chefViewModel.chef?.avatar ?? ""
                         }
                         else {
                             return "\(Constants.BASE_URL)\(chef.avatar)"
                         }
                     }
-                    
-                    Button{
+
+                    Button {
                         withAnimation(.spring()) {
                             chefViewModel.updateIsShowChefImageOverlay(value: true)
                         }
@@ -47,26 +46,26 @@ struct ChefDetailsView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        Text(chef.name)
+                        Text(chefViewModel.chef?.name ?? "")
                             .font(.title2.bold())
-                        Text(chef.email)
+                        Text(chefViewModel.chef?.email ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        
-                        HStack{
-                            Text("\(chef.rate?.ratingFormatted ?? "0.0") ⭐️")
+
+                        HStack {
+                            Text("\(chefViewModel.chef?.rate?.ratingFormatted ?? "0.0") ⭐️")
                                 .foregroundColor(Color.orange)
-                            
+
                             Spacer()
-                            
-                            Button{
-                                if let user = user {
+
+                            Button {
+                                if let user = chefViewModel.user {
                                     chefViewModel.isShowRating = true
                                 }
                                 else {
                                     chefViewModel.updateIsShowAlertDialog(value: true)
-                                     chefViewModel.updateDialogEntity(
-                                        value:  DialogEntity(
+                                    chefViewModel.updateDialogEntity(
+                                        value: DialogEntity(
                                             title: "Login Required",
                                             message: "You need to login to rate a chef. Do you want to login now?",
                                             icon: "",
@@ -102,28 +101,34 @@ struct ChefDetailsView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Recipes")
                         .font(.title3.bold())
-                    
-                    if let recipesList = chef.recipesList{
-                        if recipesList.count > 1{
+
+                    if let recipesList = chefViewModel.chef?.recipesList {
+                        if recipesList.count > 1 {
                             VStack(spacing: 2) {
-                                ForEach(recipesList.prefix(isShowAllRecipeItems ? recipesList.count :  1), id: \.self) { recipe in
+                                ForEach(
+                                    recipesList.prefix(chefViewModel.isShowAllRecipeItems ? recipesList.count : 1),
+                                    id: \.self
+                                ) { recipe in
                                     RecipeCard(
                                         recipe: recipe,
-                                        onTap: { recipe in
-                                            
+                                        onTap: { _ in
+
                                         }
                                     )
                                 }
-                                
+
                                 HStack {
                                     Spacer()
-                                    Text(isShowAllRecipeItems ? "...show less" : "...\(recipesList.count - 1) more items")
-                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                                        .foregroundColor(Color.theme.primaryColor)
-                                        .padding(.vertical)
-                                        .onTapGesture {
-                                            isShowAllRecipeItems.toggle()
-                                        }
+                                    Text(
+                                        chefViewModel.isShowAllRecipeItems
+                                            ? "...show less" : "...\(recipesList.count - 1) more items"
+                                    )
+                                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                                    .foregroundColor(Color.theme.primaryColor)
+                                    .padding(.vertical)
+                                    .onTapGesture {
+                                        chefViewModel.isShowAllRecipeItems.toggle()
+                                    }
                                 }
                             }
                         }
@@ -132,14 +137,14 @@ struct ChefDetailsView: View {
                                 VStack(spacing: 10) {
                                     RecipeCard(
                                         recipe: recipe,
-                                        onTap: { recipe in
-                                            
+                                        onTap: { _ in
+
                                         }
                                     )
                                 }
                             }
                         }
-                        
+
                     }
                 }
 
@@ -150,7 +155,7 @@ struct ChefDetailsView: View {
                     Text("Ratings & Reviews")
                         .font(.title3.bold())
 
-                    ForEach(chef.allRates ?? [], id: \.rateID) { rating in
+                    ForEach(chefViewModel.chef?.allRates ?? [], id: \.rateID) { rating in
                         VStack(alignment: .leading, spacing: 8) {
                             HStack {
                                 Text(rating.rater.name)
@@ -168,55 +173,58 @@ struct ChefDetailsView: View {
                         .cornerRadius(12)
                         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
                     }
-                    
+
                 }
             }
-            .task{
+            .task {
                 await chefViewModel.fetchChefByID(
                     chefId: chef.openID,
                     onSuccess: { chef in
-                        self.chef = chef
+                        chefViewModel.updateChef(chef: chef)
                     },
-                    onFailure: { error in
-                        
+                    onFailure: { _ in
+                        chefViewModel.updateChef(chef: nil)
                     }
                 )
-                
+
             }
             .padding()
         }
-        .onAppear{
-            user = loginViewModel.fetchUserFromLocalStorage()
+        .onAppear {
+            let user = loginViewModel.fetchUserFromLocalStorage()
+            chefViewModel.updateUser(user: user)
         }
-        .overlay{
-            Group{
+        .overlay {
+            Group {
                 if chefViewModel.isShowRating {
                     RatingView(
+                        rating: $chefViewModel.rating,
+                        comment: $chefViewModel.comment,
                         onDismiss: {
                             chefViewModel.isShowRating = false
                         },
                         onSubmit: { rate, comment in
-                            Task{
-                                
+                            Task {
+
                                 await rateViewModel.createUpdateRate(
                                     createRateRequestModel: CreateRateRequestModel(
                                         raterID: user?.openID ?? "",
-                                        rateeID: chef.openID ,
+                                        rateeID: chef.openID,
                                         rating: rate,
                                         comment: comment
                                     ),
                                     onSuccess: { createRateResponseModel in
                                         chefViewModel.isShowRating = false
-                                        chef.allRates = createRateResponseModel.data.ratings
-                                        chef.rate = createRateResponseModel.data.totalRate
+                                        chefViewModel.chef?.allRates = createRateResponseModel.data.ratings
+                                        chefViewModel.chef?.rate = createRateResponseModel.data.totalRate
                                     },
                                     onFailure: { error in
-                                       
+
                                         chefViewModel.isShowRating = false
-                                        
+
                                         chefViewModel.updateIsShowAlertDialog(value: true)
                                         chefViewModel.updateDialogEntity(
-                                            value:  DialogEntity(
+                                            value: DialogEntity(
                                                 title: "Error occurred",
                                                 message: error,
                                                 icon: "",
@@ -230,16 +238,15 @@ struct ChefDetailsView: View {
                                                 }
                                             )
                                         )
-                                        
-                                        
+
                                     }
                                 )
-                                
+
                             }
                         }
                     )
                 }
-                else if chefViewModel.isShowAlertDialog{
+                else if chefViewModel.isShowAlertDialog {
                     CustomAlertDialog(
                         isPresented: $chefViewModel.isShowAlertDialog,
                         title: chefViewModel.dialogEntity.title,
@@ -259,16 +266,16 @@ struct ChefDetailsView: View {
                         }
                     )
                 }
-                else if chefViewModel.isShowChefImageOverlay{
-                    var avatar: String{
-                        if chef.avatar.starts(with: "http"){
+                else if chefViewModel.isShowChefImageOverlay {
+                    var avatar: String {
+                        if chef.avatar.starts(with: "http") {
                             return chef.avatar
                         }
                         else {
-                            return "\(Constants.BASE_URL)\(chef.avatar)"
+                            return "\(Constants.BASE_URL)\(chefViewModel.chef?.avatar ?? "")"
                         }
                     }
-                    
+
                     ImageOverlay(
                         image: avatar,
                         imageWidth: .infinity,
@@ -285,7 +292,7 @@ struct ChefDetailsView: View {
 }
 #Preview {
     if let chef = UserModel.dummyChefResoinse?.data {
-        NavigationStack{
+        NavigationStack {
             ChefDetailsView(chef: chef)
                 .environmentObject(Router())
                 .environmentObject(TabRouter())

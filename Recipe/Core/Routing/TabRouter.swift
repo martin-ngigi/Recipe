@@ -6,9 +6,10 @@
 //
 
 import Foundation
-
 import SwiftUI
 
-class TabRouter: ObservableObject{
+class TabRouter: ObservableObject {
     @Published var selectedTab: TabItemEntity = .home
+
+    deinit {}
 }

@@ -14,15 +14,15 @@ struct TrendingRecipesView: View {
     var body: some View {
         VStack {
             List {
-                if list.isEmpty{
+                if list.isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
                         imageSize: 120,
                         title: "Trending",
                         titleSize: 24,
                         description: """
-                        No Trending recipes found. 
-                        """,
+                            No Trending recipes found.
+                            """,
                         descriptionSize: 12
                     )
                 }

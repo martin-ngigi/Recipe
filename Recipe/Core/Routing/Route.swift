@@ -9,16 +9,15 @@ import Foundation
 
 enum Route: Hashable {
     case landing
-    
+
     case login
     case register
-    
+
     case dashboard
     case home
     case favourites
     case profile
     case settings
-    
 
     case recipedetails(recipe: RecipeModel)
     case chefdetails(chef: UserModel)

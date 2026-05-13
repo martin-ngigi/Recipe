@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct IngredientRow: View {
-    
+
     let ingredient: IngredientModel
     var onTapIngredient: (IngredientModel) -> Void
-    
+
     var body: some View {
-        Button{
+        Button {
             onTapIngredient(ingredient)
         } label: {
             HStack {
@@ -23,19 +23,19 @@ struct IngredientRow: View {
                     height: 60
                 )
                 .clipShape(.rect(cornerRadius: 10))
-                
-                VStack(alignment: .leading){
+
+                VStack(alignment: .leading) {
                     Text(ingredient.name)
                         .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                         .foregroundColor(.primary)
-                                    
+
                     Text(ingredient.quantity)
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                         .foregroundColor(.gray)
                 }
-                
+
                 Spacer()
-                
+
             }
             .padding()
             .background(Color(.systemGray6))
@@ -47,8 +47,8 @@ struct IngredientRow: View {
 #Preview {
     IngredientRow(
         ingredient: RecipeModel.dummyList[0].ingredients[0],
-        onTapIngredient: { ingredient in
-            
+        onTapIngredient: { _ in
+
         }
     )
     .padding()

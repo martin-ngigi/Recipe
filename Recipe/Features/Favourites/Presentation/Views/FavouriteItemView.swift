@@ -11,9 +11,9 @@ struct FavouriteItemView: View {
     var recipe: RecipeModel
     var onTapEntireItem: (RecipeModel) -> Void
     var onTapAddOrRemove: (RecipeModel) -> Void
-    
+
     var body: some View {
-        Button{
+        Button {
             onTapEntireItem(recipe)
         } label: {
             VStack(alignment: .leading, spacing: 8) {
@@ -25,15 +25,15 @@ struct FavouriteItemView: View {
                 .clipped()
                 .cornerRadius(12)
 
-                HStack{
+                HStack {
                     Text(recipe.name)
                         .font(.headline)
                         .lineLimit(1)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.6, alignment: .leading)
-                    
+
                     Spacer()
-                    
-                    Button{
+
+                    Button {
                         onTapAddOrRemove(recipe)
                     } label: {
                         Image(systemName: recipe.isInFavorite ?? false ? "heart.fill" : "heart")
@@ -42,7 +42,7 @@ struct FavouriteItemView: View {
                     }
                 }
                 .foregroundColor(Color.theme.blackAndWhite)
-                
+
                 Text(recipe.description)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -60,11 +60,11 @@ struct FavouriteItemView: View {
 #Preview {
     FavouriteItemView(
         recipe: RecipeModel.dummyList[0],
-        onTapEntireItem: { recipe in
-            
+        onTapEntireItem: { _ in
+
         },
-        onTapAddOrRemove: { recipe in
-            
+        onTapAddOrRemove: { _ in
+
         }
     )
     .padding()

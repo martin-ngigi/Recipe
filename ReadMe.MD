@@ -1,5 +1,26 @@
 # Recipe App
 
+## Install
+```
+brew install swift-format
+brew install swiftlint
+```
+
+## Format and lint
+- Format
+```
+swift-format format --recursive --in-place .
+```
+- Lint fix
+```
+swiftlint --fix
+```
+- Lint
+```
+swiftlint --strict
+```
+
+
 A beautifully designed mobile app to explore delicious recipes, discover top chefs, and manage your favorite dishes. This app supports both Dark and Light modes for an elegant user experience.
 
 ---
@@ -146,3 +167,14 @@ screens/
 
 # Primary Color
 - Green color: #25AE87
+
+## Swift-lint ordering properties
+```
+Type aliases / enums
+Static properties
+Stored properties
+Computed properties
+Initializers
+Lifecycle methods
+Functions
+```

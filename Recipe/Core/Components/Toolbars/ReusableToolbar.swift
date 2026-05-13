@@ -25,17 +25,22 @@ struct ReusableToolbar: ViewModifier {
                     }
                 }
 
-                //ToolbarItem(placement: .principal) {
+                // ToolbarItem(placement: .principal) {
                 ToolbarItem(placement: .topBarLeading) {
                     Text(title)
                         .font(.custom("ProductSans-Regular", size: 17))
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
-                
+
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Dismiss") {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder),
+                            to: nil,
+                            from: nil,
+                            for: nil
+                        )
                     }
                 }
             }
@@ -43,18 +48,22 @@ struct ReusableToolbar: ViewModifier {
 }
 
 extension View {
-    func reusableToolbar(title: String, backIcon: String = "arrow.left", dismissIcon: String = "xmark", onTapBack: @escaping () -> Void) -> some View {
+    func reusableToolbar(
+        title: String,
+        backIcon: String = "arrow.left",
+        dismissIcon: String = "xmark",
+        onTapBack: @escaping () -> Void
+    ) -> some View {
         self.modifier(ReusableToolbar(title: title, backIcon: backIcon, dismissIcon: dismissIcon, onTapBack: onTapBack))
     }
 }
 
-
 #Preview {
     NavigationView {
-        VStack{ }
-        .reusableToolbar(
-            title: "Title",
-            onTapBack: {}
-        )
+        VStack {}
+            .reusableToolbar(
+                title: "Title",
+                onTapBack: {}
+            )
     }
 }

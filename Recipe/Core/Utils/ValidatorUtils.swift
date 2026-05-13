@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ValidatorUtils{
+class ValidatorUtils {
     static let shared = ValidatorUtils()
     func validateEmail(email: String) -> String {
         // Check if the email is empty
@@ -24,10 +24,10 @@ class ValidatorUtils{
         // No error
         return ""
     }
-    
+
     func validatePassword(password: String) -> [String] {
         var errors: [String] = []
-        
+
         if password.count < 8 {
             errors.append("Password must be at least 8 characters long.")
         }
@@ -40,36 +40,36 @@ class ValidatorUtils{
         if !password.contains(where: { "!@#$%^&*".contains($0) }) {
             errors.append("Password must contain at least one special character.")
         }
-        
+
         return errors
     }
 
     func validateFullName(name: String) -> String {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         if trimmedName.isEmpty {
             return "Name is required."
         }
-        
+
         // Split the name by spaces
         let nameParts = trimmedName.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
-        
+
         // Check if there are at least two parts (first and last name)
         if nameParts.count < 2 {
             return "Please enter both first and last name."
         }
-        
+
         // Check each part contains only alphabetic characters (allowing hyphens and apostrophes)
         let nameRegex = "^[A-Za-z'-]+$"
-        for part in nameParts {
-            if !NSPredicate(format: "SELF MATCHES %@", nameRegex).evaluate(with: part) {
-                return "Name can only contain letters, hyphens, and apostrophes."
-            }
+        for part in nameParts
+        where !NSPredicate(format: "SELF MATCHES %@", nameRegex).evaluate(with: part) {
+            return "Name can only contain letters, hyphens, and apostrophes."
         }
-        
+
         // All validations passed
         return ""
     }
 
+    deinit {}
 
 }
