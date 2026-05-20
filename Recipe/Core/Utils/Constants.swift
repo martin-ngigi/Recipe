@@ -58,7 +58,7 @@ enum Constants {
 
     static var BASE_URL: String {
         if EnvironmentLevel.isDebug {
-            return IOS_TEST_URL
+            return PROD_URL
         }
         else {
             return PROD_URL

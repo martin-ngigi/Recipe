@@ -121,20 +121,7 @@ struct HomeView: View {
                 }
             }
             .task {
-                await homeViewModel.fetchHomeData(
-                    onSuccess: { _ in
-
-                    },
-                    onFailure: { error in
-                        homeViewModel.updateIsShowInbuiltAlert(value: true)
-                        homeViewModel.updateInbuiltAlert(
-                            value: InbuiltAlert(
-                                title: "Something went wrong!",
-                                message: error
-                            )
-                        )
-                    }
-                )
+                await fetchHomeData()
             }
         }
         .alert(isPresented: $homeViewModel.isShowInbuiltAlert) {
@@ -199,6 +186,23 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
         }
 
+    }
+    
+    func fetchHomeData() async {
+        await homeViewModel.fetchHomeData(
+            onSuccess: { _ in
+
+            },
+            onFailure: { error in
+                homeViewModel.updateIsShowInbuiltAlert(value: true)
+                homeViewModel.updateInbuiltAlert(
+                    value: InbuiltAlert(
+                        title: "Something went wrong!",
+                        message: error
+                    )
+                )
+            }
+        )
     }
 }
 

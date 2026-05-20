@@ -46,6 +46,8 @@ class NetworkUtils {
                     // Handle network lost if needed
                     // NetworkMonitor.shared.isConnected = false
                 }
+                
+                os.Logger().debug("DEBUG: URL: \n\(url)")
 
                 if errorMessage.contains("the request timed out"), attemptsRetried < 2 {
                     attemptsRetried += 1
