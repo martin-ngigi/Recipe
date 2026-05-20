@@ -46,7 +46,7 @@ struct NavBariOS26AndBelow: View {
                     }
                 }
                 .tag(TabItemEntity.profile)
-                
+
                 SettingsScreen()
                     .tag(TabItemEntity.settings)
 
@@ -66,7 +66,7 @@ struct NavBariOS26AndBelow: View {
             removeKeyboardObservers()
         }
     }
-    
+
     @MainActor
     private func setupKeyboardObservers() {
         dashboardViewModel.keyboardWillShowObserver = NotificationCenter.default.addObserver(

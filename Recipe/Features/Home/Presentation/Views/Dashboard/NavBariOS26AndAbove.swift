@@ -12,7 +12,7 @@ struct NavBariOS26AndAbove: View {
 
     var body: some View {
         TabView(selection: $tabRouter.selectedTab) {
-            
+
             HomeView()
                 .tag(TabItemEntity.home)
                 .tabItem {
@@ -25,7 +25,6 @@ struct NavBariOS26AndAbove: View {
                     Label(TabItemEntity.favourites.title, systemImage: TabItemEntity.favourites.icon)
                 }
 
-           
             Group {
                 if LocalState.isLogedIn {
                     ProfileView(
@@ -54,7 +53,7 @@ struct NavBariOS26AndAbove: View {
             .tabItem {
                 Label(TabItemEntity.profile.title, systemImage: TabItemEntity.profile.icon)
             }
-            
+
             SettingsScreen()
                 .tag(TabItemEntity.settings)
                 .tabItem {

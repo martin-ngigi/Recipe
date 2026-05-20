@@ -187,7 +187,7 @@ struct HomeView: View {
         }
 
     }
-    
+
     func fetchHomeData() async {
         await homeViewModel.fetchHomeData(
             onSuccess: { _ in

@@ -13,7 +13,7 @@ struct DashboardView: View {
     @EnvironmentObject var tabRouter: TabRouter
 
     var body: some View {
-        Group{
+        Group {
             if #available(iOS 26.0, *) {
                 NavBariOS26AndAbove()
             }

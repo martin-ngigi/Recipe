@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomOverlayNavigation: View {
     @EnvironmentObject var tabRouter: TabRouter
-    
+
     var body: some View {
         HStack(spacing: 0) {
             ForEach(TabItemEntity.allCases, id: \.self) { item in
@@ -27,7 +27,7 @@ struct CustomOverlayNavigation: View {
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: 44)
                     .background {
-                        if tabRouter.selectedTab == item{
+                        if tabRouter.selectedTab == item {
                             RoundedRectangle(cornerRadius: 40, style: .continuous)
                                 .fill(.gray.opacity(0.3))
                         }

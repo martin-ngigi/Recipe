@@ -12,9 +12,9 @@ struct MyCustomTab: View {
     let title: String
     let isSelected: Bool
     let bgColor: Color
-    
+
     var body: some View {
-        VStack{
+        VStack {
             Image(systemName: image)
                 .font(.system(size: 17, weight: isSelected ? .semibold : .regular))
                 .foregroundStyle(isSelected ? bgColor : Color.primary)
@@ -79,7 +79,7 @@ struct MyCustomTab: View {
                                     startPoint: .top,
                                     endPoint: .bottom
                                 )
-                              )
+                            )
                             : AnyShapeStyle(Color.primary.opacity(0.45))
                     )
                     .symbolEffect(.bounce, value: isSelected)
