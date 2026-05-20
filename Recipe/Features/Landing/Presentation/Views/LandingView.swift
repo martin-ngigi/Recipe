@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LandingView: View {
-    @StateObject var settingsViewModel = SettingsViewModel()
     @EnvironmentObject var router: Router
 
     var body: some View {

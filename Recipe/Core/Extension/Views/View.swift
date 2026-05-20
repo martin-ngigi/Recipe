@@ -86,4 +86,23 @@ extension View {
         self.modifier(ToastModifier(toast: toast))
     }
 
+    func cardBackground(
+        cornerRadius: CGFloat = 18,
+        background: Color = Color(UIColor.secondarySystemBackground),
+        shadowColor: Color = Color.black.opacity(0.06),
+        shadowRadius: CGFloat = 20,
+        shadowX: CGFloat = 0,
+        shadowY: CGFloat = 10
+    ) -> some View {
+        modifier(
+            CardBackground(
+                cornerRadius: cornerRadius,
+                background: background,
+                shadowColor: shadowColor,
+                shadowRadius: shadowRadius,
+                shadowX: shadowX,
+                shadowY: shadowY
+            )
+        )
+    }
 }

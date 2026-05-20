@@ -11,30 +11,35 @@ struct TrendingRecipesHome: View {
     var columns: [GridItem]
     var recipes: [RecipeModel]
     var isLoading: Bool = false
+    var isEmpty: Bool {
+        return recipes.isEmpty && isLoading == false
+    }
     var onTapRecipe: (RecipeModel) -> Void
     var onTapSeeAll: () -> Void
 
     var body: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 2) {
             HStack {
                 Text("Trending Recipes")
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
+                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
-                Button {
-                    onTapSeeAll()
-                } label: {
-                    HStack {
-                        Text("See All")
-                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                            .underline(true, color: Color.theme.primaryColor)
+                if !isEmpty {
+                    Button {
+                        onTapSeeAll()
+                    } label: {
+                        HStack {
+                            Text("See All")
+                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                                .underline(true, color: Color.theme.primaryColor)
 
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color.theme.grayColor1)
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(Color.theme.grayColor1)
+                        }
+                        .foregroundColor(Color.theme.primaryColor)
                     }
-                    .foregroundColor(Color.theme.primaryColor)
                 }
 
             }
@@ -61,6 +66,8 @@ struct TrendingRecipesHome: View {
                         }
                     }
                 }
+                .padding(4)
+                .cardBackground()
             }
         }
     }

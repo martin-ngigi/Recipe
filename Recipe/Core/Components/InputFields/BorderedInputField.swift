@@ -49,8 +49,8 @@ struct BorderedInputField: View {
             .cornerRadius(7)
             .keyboardType(keyboardType)
             .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .stroke(Color.gray, lineWidth: 0.3)
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(UIColor.secondarySystemBackground), lineWidth: 0.3)
             )  // Border
 
             if !error.isEmpty {

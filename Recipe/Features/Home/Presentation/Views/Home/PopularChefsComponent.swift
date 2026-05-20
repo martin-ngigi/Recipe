@@ -13,34 +13,40 @@ struct PopularChefsComponent: View {
     var isLoading: Bool = false
     var onTapChef: (UserModel) -> Void
     var onTapSeeAll: () -> Void
+    var isEmpty: Bool {
+        return chefs.isEmpty && isLoading == false
+    }
 
     var body: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 2) {
             HStack {
                 Text("Popular Chefs")
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
+                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
-                Button {
-                    onTapSeeAll()
-                } label: {
-                    HStack {
-                        Text("See All (\(chefs.count))")
-                            .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                            .underline(true, color: Color.theme.primaryColor)
+                if !isEmpty {
+                    Button {
+                        onTapSeeAll()
+                    } label: {
+                        HStack {
+                            Text("See All (\(chefs.count))")
+                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                                .underline(true, color: Color.theme.primaryColor)
 
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color.theme.grayColor1)
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(Color.theme.grayColor1)
+                        }
+                        .foregroundColor(Color.theme.primaryColor)
+
                     }
-                    .foregroundColor(Color.theme.primaryColor)
-
                 }
+
             }
 
             VStack {
-                if chefs.isEmpty && isLoading == false {
+                if isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
                         imageSize: 80,
@@ -61,6 +67,8 @@ struct PopularChefsComponent: View {
                             }
                         )
                     }
+                    .padding(4)
+                    .cardBackground()
                 }
 
             }

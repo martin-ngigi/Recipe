@@ -104,20 +104,7 @@ struct HomeView: View {
             }
             .refreshable {
                 Task {
-                    await homeViewModel.fetchHomeData(
-                        onSuccess: { _ in
-
-                        },
-                        onFailure: { error in
-                            homeViewModel.updateIsShowInbuiltAlert(value: true)
-                            homeViewModel.updateInbuiltAlert(
-                                value: InbuiltAlert(
-                                    title: "Something went wrong!",
-                                    message: error
-                                )
-                            )
-                        }
-                    )
+                    await fetchHomeData()
                 }
             }
             .task {

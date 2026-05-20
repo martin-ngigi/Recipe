@@ -16,9 +16,9 @@ struct JustForYouSliderView: View {
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 2) {
             Text("Just For You")
-                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 22))
+                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if recipes.isEmpty && isLoading == false {
@@ -72,7 +72,7 @@ struct JustForYouSliderView: View {
                 }
                 .frame(height: 150)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 .onReceive(timer) { _ in
                     withAnimation {
                         if !recipes.isEmpty {
