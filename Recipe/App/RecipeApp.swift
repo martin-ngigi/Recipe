@@ -26,6 +26,9 @@ struct RecipeApp: App {
                 .environmentObject(tabRouter)
                 .onAppear {
                     themesViewModel.setAppTheme()
+                    MyFirebaseAnalytics.shared.logEvent(title: "app_launch", contentType: "launch")
+                    MyFirebaseAnalytics.shared.setUserID(DeviceInfo().deviceId)
+
                 }
                 .modelContainer(for: [RecipeSwiftData.self])
                 .modelContainer(for: [IngredientSwiftData.self])

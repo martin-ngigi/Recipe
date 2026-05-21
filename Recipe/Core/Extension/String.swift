@@ -80,4 +80,9 @@ extension String {
         guard let data = self.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
     }
+    
+    func removeEmojis() -> String {
+        return String(self.filter { !$0.isEmoji })
+    }
+     
 }
