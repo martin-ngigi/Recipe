@@ -15,7 +15,7 @@ struct LoginView: View {
     @Environment(\.showError) private var showError
     @EnvironmentObject var router: Router
     @StateObject var loginViewModel = LoginViewModel()
-    
+
     let content = "LoginView"
 
     var body: some View {
@@ -93,11 +93,17 @@ struct LoginView: View {
                         Task {
                             await loginViewModel.emailAndPasswordLogin(
                                 onSuccess: {
-                                    MyFirebaseAnalytics.shared.logEvent(title: "email_login_success", contentType: content)
+                                    MyFirebaseAnalytics.shared.logEvent(
+                                        title: "email_login_success",
+                                        contentType: content
+                                    )
                                     onLoginSuccess()
                                 },
                                 onFailure: { error in
-                                    MyFirebaseAnalytics.shared.logEvent(title: "email_login_failed", contentType: content)
+                                    MyFirebaseAnalytics.shared.logEvent(
+                                        title: "email_login_failed",
+                                        contentType: content
+                                    )
                                     loginViewModel.updateIsShowAlertDialog(value: true)
                                     loginViewModel.updateDialogEntity(
                                         value: DialogEntity(
@@ -138,11 +144,17 @@ struct LoginView: View {
                                     confirmButtonText: "",
                                     dismissButtonText: "Okay",
                                     onConfirm: {
-                                        MyFirebaseAnalytics.shared.logEvent(title: "confirm_apple_dialog", contentType: content)
+                                        MyFirebaseAnalytics.shared.logEvent(
+                                            title: "confirm_apple_dialog",
+                                            contentType: content
+                                        )
                                         loginViewModel.updateIsShowAlertDialog(value: false)
                                     },
                                     onDismiss: {
-                                        MyFirebaseAnalytics.shared.logEvent(title: "dismiss_apple_dialog", contentType: content)
+                                        MyFirebaseAnalytics.shared.logEvent(
+                                            title: "dismiss_apple_dialog",
+                                            contentType: content
+                                        )
                                         loginViewModel.updateIsShowAlertDialog(value: false)
                                     }
                                 )
@@ -157,7 +169,10 @@ struct LoginView: View {
                                 await loginViewModel.googleAuthentication(
                                     onSuccess: { _ in
                                         Task {
-                                            MyFirebaseAnalytics.shared.logEvent(title: "google_auth_success", contentType: content)
+                                            MyFirebaseAnalytics.shared.logEvent(
+                                                title: "google_auth_success",
+                                                contentType: content
+                                            )
                                             loginViewModel.updateToast(
                                                 value: Toast(
                                                     style: .success,
@@ -170,7 +185,10 @@ struct LoginView: View {
                                     },
                                     onFailure: { error in
                                         MyFirebaseAnalytics.shared.logError(message: error, screen: content)
-                                        MyFirebaseAnalytics.shared.logEvent(title: "google_auth_failed", contentType: content)
+                                        MyFirebaseAnalytics.shared.logEvent(
+                                            title: "google_auth_failed",
+                                            contentType: content
+                                        )
 
                                         loginViewModel.updateIsShowAlertDialog(value: true)
                                         loginViewModel.updateDialogEntity(
@@ -182,11 +200,17 @@ struct LoginView: View {
                                                 confirmButtonText: "",
                                                 dismissButtonText: "Okay",
                                                 onConfirm: {
-                                                    MyFirebaseAnalytics.shared.logEvent(title: "confirm_google_dialog", contentType: content)
+                                                    MyFirebaseAnalytics.shared.logEvent(
+                                                        title: "confirm_google_dialog",
+                                                        contentType: content
+                                                    )
                                                     loginViewModel.updateIsShowAlertDialog(value: false)
                                                 },
                                                 onDismiss: {
-                                                    MyFirebaseAnalytics.shared.logEvent(title: "dismiss_google_dialog", contentType: content)
+                                                    MyFirebaseAnalytics.shared.logEvent(
+                                                        title: "dismiss_google_dialog",
+                                                        contentType: content
+                                                    )
                                                     loginViewModel.updateIsShowAlertDialog(value: false)
                                                 }
                                             )
@@ -209,11 +233,17 @@ struct LoginView: View {
                                     confirmButtonText: "",
                                     dismissButtonText: "Okay",
                                     onConfirm: {
-                                        MyFirebaseAnalytics.shared.logEvent(title: "confirm_facebook_dialog", contentType: content)
+                                        MyFirebaseAnalytics.shared.logEvent(
+                                            title: "confirm_facebook_dialog",
+                                            contentType: content
+                                        )
                                         loginViewModel.updateIsShowAlertDialog(value: false)
                                     },
                                     onDismiss: {
-                                        MyFirebaseAnalytics.shared.logEvent(title: "dismiss_facebook_dialog", contentType: content)
+                                        MyFirebaseAnalytics.shared.logEvent(
+                                            title: "dismiss_facebook_dialog",
+                                            contentType: content
+                                        )
                                         loginViewModel.updateIsShowAlertDialog(value: false)
                                     }
                                 )
@@ -249,7 +279,10 @@ struct LoginView: View {
                             await loginViewModel.resetPassword(
                                 email: loginViewModel.resetEmail,
                                 onSuccess: {
-                                    MyFirebaseAnalytics.shared.logEvent(title: "reset_password_success", contentType: content)
+                                    MyFirebaseAnalytics.shared.logEvent(
+                                        title: "reset_password_success",
+                                        contentType: content
+                                    )
                                     loginViewModel.updateToast(
                                         value: Toast(style: .success, message: "Reset password link sent to your email")
                                     )
