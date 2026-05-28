@@ -178,3 +178,23 @@ Initializers
 Lifecycle methods
 Functions
 ```
+
+## Pinning SSL certficate
+- [Documentation](https://developer.apple.com/news/?id=g9ejcf8y) Apple official documenation.
+- Generate SHA 256 KEY
+```
+openssl s_client \
+  -connect recipe.safiribytes.com:443 \
+  -servername recipe.safiribytes.com \
+  -showcerts 2>/dev/null </dev/null > chain.pem
+
+
+awk '/-----BEGIN CERTIFICATE-----/{i++} i==2' chain.pem > intermediate.pem
+
+openssl x509 -in intermediate.pem -pubkey -noout \
+  | openssl pkey -pubin -outform DER \
+  | openssl dgst -sha256 -binary \
+  | base64
+  
+```
+- Add it to Info.Plist in the SPKI-SHA256-BASE64 section
