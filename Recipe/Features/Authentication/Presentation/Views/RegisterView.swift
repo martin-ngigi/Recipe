@@ -10,6 +10,7 @@ import SwiftUI
 struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
+    @FocusState var focusedInputField: RegisterInputFields?
     @StateObject var registerViewModel = RegisterViewModel()
     @StateObject var loginViewModel = LoginViewModel()
 
@@ -40,6 +41,7 @@ struct RegisterView: View {
                             registerViewModel.updateName(value: text)
                         }
                     )
+                    .focused($focusedInputField, equals: .name)
 
                     BorderedInputField(
                         text: $registerViewModel.email,
@@ -51,12 +53,14 @@ struct RegisterView: View {
                             registerViewModel.updateEmail(value: text)
                         }
                     )
+                    .focused($focusedInputField, equals: .email)
 
                     BorderedPasswordField(
                         password: $registerViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
                         error: registerViewModel.registerErrors["password"] ?? "",
+                        isSecure: loginViewModel.isSecure,
                         onToggleAction: {
                             registerViewModel.isSecure.toggle()
                         },
@@ -64,6 +68,7 @@ struct RegisterView: View {
                             registerViewModel.updatePassword(value: text)
                         }
                     )
+                    .focused($focusedInputField, equals: .password)
 
                     Button {
                         router.pop()

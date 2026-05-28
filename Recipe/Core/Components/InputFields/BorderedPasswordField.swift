@@ -12,6 +12,8 @@ struct BorderedPasswordField: View {
     var placeholder: String = "MyP@ss10"
     var description: String = ""
     var error: String
+    @FocusState var isFocused: Bool
+    var focusedColor = Color.theme.primaryColor
     var isSecure: Bool = true
     var onToggleAction: () -> Void
     var onTextChange: (String) -> Void
@@ -26,10 +28,12 @@ struct BorderedPasswordField: View {
             HStack {
                 if isSecure {
                     SecureField(placeholder, text: $password)
+                        .focused($isFocused)
 
                 }
                 else {
                     TextField(placeholder, text: $password)
+                        .focused($isFocused)
 
                 }
 
@@ -43,10 +47,18 @@ struct BorderedPasswordField: View {
             }
             .textFieldStyle(TappableTextFieldStyle())  // This will help increase tap area of textfield
             .background(Color.gray.opacity(0.3))
-            .cornerRadius(7)
+            .cornerRadius(12)
             .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .stroke(Color.gray, lineWidth: 0.3)
+                Group {
+                    if isFocused {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
+                    }
+                    else {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
+                    }
+                }
             )
             .onChange(of: password) { newValue in
                 onTextChange(newValue)

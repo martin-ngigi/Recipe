@@ -13,6 +13,8 @@ struct BorderedInputField: View {
     var placeholder: String = "Enter text..."
     var description: String = ""
     var error: String
+    @FocusState var isFocused: Bool
+    var focusedColor = Color.theme.primaryColor
     var keyboardType: UIKeyboardType = .default
     var hasClearButton: Bool = false
     var onTextChange: (String) -> Void
@@ -46,12 +48,22 @@ struct BorderedInputField: View {
 
             }
             .background(Color.gray.opacity(0.3))
-            .cornerRadius(7)
+            .cornerRadius(12)
             .keyboardType(keyboardType)
+            .focused($isFocused)
+            .cornerRadius(12)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color(UIColor.secondarySystemBackground), lineWidth: 0.3)
-            )  // Border
+                Group {
+                    if isFocused {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
+                    }
+                    else {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
+                    }
+                }
+            )
 
             if !error.isEmpty {
                 Text(error)

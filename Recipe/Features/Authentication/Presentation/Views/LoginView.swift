@@ -11,6 +11,7 @@ import os
 struct LoginView: View {
     var onLoginSuccess: () -> Void
     var onLoginFailure: (String) -> Void
+    @FocusState var focusedInputField: LoginInputFields?
     @Environment(\.dismiss) var dismiss
     @Environment(\.showError) private var showError
     @EnvironmentObject var router: Router
@@ -45,6 +46,7 @@ struct LoginView: View {
                             loginViewModel.updateEmail(value: text)
                         }
                     )
+                    .focused($focusedInputField, equals: .email)
 
                     VStack(alignment: .trailing, spacing: 0) {
                         BorderedPasswordField(
@@ -52,6 +54,7 @@ struct LoginView: View {
                             placeholder: "MyP@ss10",
                             description: "Password",
                             error: loginViewModel.loginErrors["password"] ?? "",
+                            isSecure: loginViewModel.isSecure,
                             onToggleAction: {
                                 loginViewModel.isSecure.toggle()
                             },
@@ -59,6 +62,7 @@ struct LoginView: View {
                                 loginViewModel.updatePassword(value: text)
                             }
                         )
+                        .focused($focusedInputField, equals: .password)
 
                         Button {
                             loginViewModel.updateIsShowSheet(value: true)

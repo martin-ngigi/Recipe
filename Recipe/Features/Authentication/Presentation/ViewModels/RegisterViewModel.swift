@@ -14,6 +14,12 @@ import Foundation
 import GoogleSignIn
 import os
 
+enum RegisterInputFields {
+    case name
+    case email
+    case password
+}
+
 @MainActor
 class RegisterViewModel: ObservableObject {
     @Published var dialogEntity = DialogEntity()
@@ -25,6 +31,7 @@ class RegisterViewModel: ObservableObject {
     @Published var isSecure: Bool = true
     @Published var isRegisterEnabled: Bool = false
     @Published var registerErrors = [String: String]()
+    @Published var focusedInputField: RegisterInputFields?
 
     let firebaseAuthUseCase = FirebaseAuthUseCase(
         createFirebaseUserRepository: FirebaseAuthRepository.shared,

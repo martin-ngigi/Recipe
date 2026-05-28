@@ -18,6 +18,11 @@ enum LoginSheets {
     case RESET_PASSWORD
 }
 
+enum LoginInputFields {
+    case email
+    case password
+}
+
 @MainActor
 class LoginViewModel: ObservableObject {
     @Published var dialogEntity = DialogEntity()
