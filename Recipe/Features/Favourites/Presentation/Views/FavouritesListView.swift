@@ -90,6 +90,8 @@ struct FavouritesListView: View {
                         }
                     }
                     .onDelete(perform: delete(indexSet:))
+                    .listRowSeparator(.hidden)
+                    .listRowSpacing(-4)
                 }
 
             }

@@ -30,8 +30,8 @@ struct CustomImageView: View {
                 ProgressView()
             }
         }
-        .frame(maxWidth: maxWidth)
-        .frame(height: height)
+        .frame(maxWidth: maxWidth, maxHeight: height)
+        .clipped()
     }
 }
 
