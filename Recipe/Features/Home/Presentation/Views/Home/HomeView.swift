@@ -136,22 +136,7 @@ struct HomeView: View {
                 title: Text(homeViewModel.inbuiltAlert?.title ?? ""),
                 message: Text(homeViewModel.inbuiltAlert?.message ?? ""),
                 primaryButton: .destructive(Text("Retry")) {
-                    Task {
-                        await homeViewModel.fetchHomeData(
-                            onSuccess: { _ in
-
-                            },
-                            onFailure: { error in
-                                homeViewModel.updateIsShowInbuiltAlert(value: true)
-                                homeViewModel.updateInbuiltAlert(
-                                    value: InbuiltAlert(
-                                        title: "Something went wrong!",
-                                        message: error
-                                    )
-                                )
-                            }
-                        )
-                    }
+                    Task { await fetchHomeData() }
                 },
                 secondaryButton: .cancel()
             )
