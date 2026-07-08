@@ -33,13 +33,15 @@ struct TrendingRecipesHome: View {
                         HStack {
                             Text("See All")
                                 .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                                .underline(true, color: Color.theme.primaryColor)
+                                .foregroundStyle(Color.theme.primaryColor)
 
                             Image(systemName: "chevron.right")
                                 .foregroundColor(Color.theme.grayColor1)
                         }
                         .foregroundColor(Color.theme.primaryColor)
+                        .frame(minHeight: 44)
                     }
+                    .accessibilityLabel("See all trending recipes")
                 }
 
             }

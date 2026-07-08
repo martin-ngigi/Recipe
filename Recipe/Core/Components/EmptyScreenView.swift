@@ -69,10 +69,7 @@ struct EmptyScreenView: View {
                         .padding(.horizontal, 20)
                 }
 
-                if let actionTitle,
-                    let action
-                {
-
+                if let actionTitle, let action {
                     Button(action: action) {
                         Text(actionTitle)
                             .fontWeight(.semibold)
@@ -89,6 +86,7 @@ struct EmptyScreenView: View {
                             .clipShape(Capsule())
                             .shadow(color: .blue.opacity(0.25), radius: 10, y: 6)
                     }
+                    .frame(minHeight: 44)
                     .padding(.top, 8)
                 }
             }

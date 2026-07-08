@@ -18,37 +18,6 @@ struct HomeView: View {
             ScrollView(showsIndicators: false) {
                 VStack {
 
-                    /*
-                    HStack {
-                        Text("Discover Best \nRecipes")
-                            .font(.custom(FontConstants.POPPINS_BOLD, size: 24))
-                            .lineSpacing(0)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Spacer()
-
-                        Button {
-                            tabRouter.selectedTab = .profile
-                        } label: {
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(Color.theme.grayColor1)
-                        }
-                    }
-
-                    // Search Bar
-                    BorderedInputField(
-                        text: $homeViewModel.searchField,
-                        placeholder: "Search recipes...",
-                        error: "",
-                        onTextChange: { _ in
-
-                        }
-                    )
-                    */
-
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,
@@ -116,9 +85,10 @@ struct HomeView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 35, height: 35)
+                            .frame(width: 44, height: 44)
                             .foregroundColor(Color.theme.grayColor1)
                     }
+                    .accessibilityLabel("Profile")
                 }
                 
             }
@@ -135,7 +105,7 @@ struct HomeView: View {
             Alert(
                 title: Text(homeViewModel.inbuiltAlert?.title ?? ""),
                 message: Text(homeViewModel.inbuiltAlert?.message ?? ""),
-                primaryButton: .destructive(Text("Retry")) {
+                primaryButton: .default(Text("Retry")) {
                     Task { await fetchHomeData() }
                 },
                 secondaryButton: .cancel()

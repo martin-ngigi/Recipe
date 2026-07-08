@@ -13,12 +13,13 @@ struct JustForYouSliderView: View {
     var currentIndex: Int = 0
     var onTap: (RecipeModel) -> Void
     var onUpdateCurrentIndex: (Int) -> Void
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(spacing: 2) {
             Text("Just For You")
-                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
+                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16, relativeTo: .subheadline))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if recipes.isEmpty && isLoading == false {
@@ -74,6 +75,7 @@ struct JustForYouSliderView: View {
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .onReceive(timer) { _ in
+                    guard !reduceMotion else { return }
                     withAnimation {
                         if !recipes.isEmpty {
                             onUpdateCurrentIndex((currentIndex + 1) % recipes.count)

@@ -33,7 +33,7 @@ struct PopularChefsComponent: View {
                         HStack {
                             Text("See All (\(chefs.count))")
                                 .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                                .underline(true, color: Color.theme.primaryColor)
+                                .foregroundStyle( Color.theme.primaryColor)
 
                             Image(systemName: "chevron.right")
                                 .foregroundColor(Color.theme.grayColor1)
