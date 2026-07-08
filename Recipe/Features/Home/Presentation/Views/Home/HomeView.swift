@@ -14,11 +14,11 @@ struct HomeView: View {
     @EnvironmentObject var tabRouter: TabRouter
 
     var body: some View {
-        VStack {
+        NavigationView {
             ScrollView(showsIndicators: false) {
-
                 VStack {
 
+                    /*
                     HStack {
                         Text("Discover Best \nRecipes")
                             .font(.custom(FontConstants.POPPINS_BOLD, size: 24))
@@ -47,6 +47,7 @@ struct HomeView: View {
 
                         }
                     )
+                    */
 
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
@@ -88,7 +89,13 @@ struct HomeView: View {
 
                 }
             }
+            .navigationTitle("Discover Best Recipes")
             .padding(.horizontal)
+            .searchable(
+                text: $homeViewModel.searchField,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search recipes..."
+            )
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -101,6 +108,19 @@ struct HomeView: View {
                         )
                     }
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        tabRouter.selectedTab = .profile
+                    } label: {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                            .foregroundColor(Color.theme.grayColor1)
+                    }
+                }
+                
             }
             .refreshable {
                 Task {
@@ -138,7 +158,6 @@ struct HomeView: View {
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
         .hideBottomNavigationBar(false)
-
         .overlay {
             HomeSearchOverlay(
                 searchField: $homeViewModel.searchField,

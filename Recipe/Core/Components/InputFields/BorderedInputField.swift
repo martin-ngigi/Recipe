@@ -47,7 +47,7 @@ struct BorderedInputField: View {
                 }
 
             }
-            .background(Color.gray.opacity(0.3))
+            .background(Color.gray.opacity(0.15))
             .cornerRadius(12)
             .keyboardType(keyboardType)
             .focused($isFocused)

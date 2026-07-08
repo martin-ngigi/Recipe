@@ -37,7 +37,7 @@ enum Constants {
     }
 
     static let isDashboardBottomNavigationVisible = "isDashboardBottomNavigationVisible"
-    static let timeoutInterval: Double = 45
+    static let timeoutInterval: Double = 15
     static var accessToken: String = ""
     static var openId: String = ""
     static let deviceId: String = ""

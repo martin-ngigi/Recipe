@@ -21,6 +21,36 @@
 	<array>
 		<string>whatsapp</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsUsageDescription</key>
+		<dict/>
+		<key>NSAllowsLocalNetworking</key>
+		<false/>
+		<key>NSExceptionAllowsInsecureHTTPLoads</key>
+		<false/>
+		<key>NSPinnedDomains</key>
+		<dict>
+			<key>recipe.safiribytes.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSPinnedCAIdentities</key>
+				<array>
+					<dict>
+						<key>SPKI-SHA256-BASE64</key>
+						<string>47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.ttf</string>
@@ -30,35 +60,5 @@
 		<string>Poppins-SemiBold.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 	</array>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <false/>
-        <key>NSAllowsArbitraryLoadsForMedia</key>
-        <false/>
-        <key>NSAllowsArbitraryLoadsInWebContent</key>
-        <false/>
-        <key>NSAllowsArbitraryLoadsUsageDescription</key>
-        <dict/>
-        <key>NSAllowsLocalNetworking</key>
-        <false/>
-        <key>NSExceptionAllowsInsecureHTTPLoads</key>
-        <false/>
-        <key>NSPinnedDomains</key>
-        <dict>
-            <key>recipe.safiribytes.com</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSPinnedCAIdentities</key>
-                <array>
-                    <dict>
-                        <key>SPKI-SHA256-BASE64</key>
-                        <string>AlSQhgtJirc8ahLyekmtX+Iw+v46yPYRLJt9Cq1GlB0=</string>
-                    </dict>
-                </array>
-            </dict>
-        </dict>
-    </dict>
 </dict>
 </plist>
