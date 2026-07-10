@@ -31,7 +31,7 @@ struct BorderedInputField: View {
                     .onChange(of: text) { newValue in
                         onTextChange(newValue)
                     }
-                    .textFieldStyle(TappableTextFieldStyle())  // This will help increase tap area of textfield
+                    .textFieldStyle(TappableTextFieldStyle())  // increase tap area
 
                 if !text.isEmpty && hasClearButton {
                     Button {
@@ -40,7 +40,7 @@ struct BorderedInputField: View {
                         Image(systemName: "xmark.circle.fill")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 44, height: 44)
                             .padding(.trailing)
                             .foregroundColor(.red)
                     }

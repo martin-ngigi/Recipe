@@ -45,8 +45,10 @@ struct BorderedPasswordField: View {
                         .padding(.trailing)
                 }
             }
-            .textFieldStyle(TappableTextFieldStyle())  // This will help increase tap area of textfield
-            .background(Color.gray.opacity(0.3))
+            .textFieldStyle(TappableTextFieldStyle())  // Increase tap area
+            .background(Color.gray.opacity(0.15))
+            .cornerRadius(12)
+            .focused($isFocused)
             .cornerRadius(12)
             .overlay(
                 Group {

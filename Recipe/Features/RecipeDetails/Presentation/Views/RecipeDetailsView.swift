@@ -25,64 +25,6 @@ struct RecipeDetailsView: View {
                             maxWidth: .infinity,
                             height: 240
                         )
-                        .overlay(alignment: .topLeading) {
-                            Button {
-                                router.pop()
-                            } label: {
-                                Image(systemName: "chevron.left")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .frame(width: 36, height: 36)
-                                    .background(Color.theme.primaryColor)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 4)
-                            }
-                            .padding([.leading], 20)
-                            .padding(.top, 60)
-                        }
-                        .overlay(alignment: .topTrailing) {
-                            Menu {
-
-                                Menu {
-                                    Button("WhatsApp") {
-                                        openWhatsApp()
-                                    }
-
-                                    Button("SMS") {
-                                        openSMS()
-                                    }
-
-                                    Button("Phone") {
-                                        openPhoneDailer()
-                                    }
-
-                                    Button("Email") {
-                                        recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
-                                    }
-
-                                } label: {
-                                    Label("Contact Chef", systemImage: "phone.arrow.up.right")
-                                }
-
-                                // Share action
-                                Button {
-                                    Task { await shareRecipeAsPDF() }
-                                } label: {
-                                    Label("Share", systemImage: "square.and.arrow.up")
-                                }
-
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .frame(width: 36, height: 36)
-                                    .background(Color.theme.primaryColor)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 4)
-                            }
-                            .padding([.trailing], 20)
-                            .padding(.top, 60)
-                        }
 
                         HStack(spacing: 12) {
                             Button {
@@ -109,11 +51,15 @@ struct RecipeDetailsView: View {
                                     .clipShape(Circle())
 
                                     VStack(alignment: .leading, spacing: 4) {
+                                        
                                         Text(recipe.chef?.name ?? "")
                                             .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                             .lineSpacing(3.0)
                                             .foregroundColor(Color.theme.blackAndWhite)
                                             .fontWeight(.semibold)
+                                        
+                                        Text(recipe.chef?.email ?? "")
+                                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                                     }
                                 }
                             }
@@ -297,6 +243,53 @@ struct RecipeDetailsView: View {
                     .cornerRadius(24)
                     .offset(y: -24)
                     .padding(.bottom, -24)
+                }
+            }
+        }
+        .toolbar{
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .frame(width: 44, height: 44)
+                        .scaledToFill()
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Menu {
+                        Button("WhatsApp") {
+                            openWhatsApp()
+                        }
+
+                        Button("SMS") {
+                            openSMS()
+                        }
+
+                        Button("Phone") {
+                            openPhoneDailer()
+                        }
+
+                        Button("Email") {
+                            recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                        }
+
+                    } label: {
+                        Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                    }
+
+                    Button {
+                        Task { await shareRecipeAsPDF() }
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .frame(width: 44, height: 44)
+                        .scaledToFill()
                 }
             }
         }
