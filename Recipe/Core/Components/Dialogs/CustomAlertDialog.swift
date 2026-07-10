@@ -19,38 +19,35 @@ struct CustomAlertDialog: View {
 
     var body: some View {
         ZStack {
-            
+
             if isPresented {
-                // Background overlay
                 Color.black.opacity(0.8)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         // isPresented = false // Dismiss when tapping outside
                     }
-                
-                // Alert dialog
+
                 VStack(spacing: 20) {
-                    
+
                     Text(title)
                         .font(.system(size: 20, weight: .medium, design: .rounded))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.theme.primaryColor)
-                    
+
                     if !imageName.isEmpty {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 80, height: 80)
                     }
-                    
-                    
+
                     Text(text)
                         .font(.system(size: 17, weight: .light, design: .rounded))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.theme.blackAndWhite)
-                    
+
                     HStack {
-                        
+
                         if !dismissButtonText.isEmpty {
                             CustomButton(
                                 buttonName: dismissButtonText,
@@ -60,7 +57,7 @@ struct CustomAlertDialog: View {
                                 onDismiss()
                             }
                         }
-                        
+
                         if !confirmButtonText.isEmpty {
                             CustomButton(buttonName: confirmButtonText) {
                                 onConfirmation()
@@ -73,16 +70,15 @@ struct CustomAlertDialog: View {
                 .cornerRadius(11)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
                 .overlay(
-                       RoundedRectangle(cornerRadius: 11)
+                    RoundedRectangle(cornerRadius: 11)
                         .stroke(Color.theme.primaryColor, lineWidth: 1)
-                   )
+                )
                 .padding()
                 .shadow(radius: 10)
             }
         }
     }
 }
-
 
 #Preview {
     CustomAlertDialog(
@@ -93,10 +89,10 @@ struct CustomAlertDialog: View {
         dismissButtonText: "Okay",
         imageName: "",
         onDismiss: {
-            
+
         },
         onConfirmation: {
-            
+
         }
     )
 }

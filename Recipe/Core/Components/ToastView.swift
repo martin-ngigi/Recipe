@@ -13,19 +13,19 @@ struct ToastView: View {
     var message: String
     var width = CGFloat.infinity
     var onCancelTapped: () -> Void
-    
+
     var body: some View {
-        HStack( alignment: .center, spacing: 12){
+        HStack(alignment: .center, spacing: 12) {
             Image(systemName: style.iconFileName)
                 .foregroundStyle(style.themeColor)
-            
+
             Text(message)
                 .font(.caption)
                 .foregroundStyle(.black)
 
             Spacer(minLength: 10)
-            
-            Button{
+
+            Button {
                 onCancelTapped()
             } label: {
                 Image(systemName: "xmark")

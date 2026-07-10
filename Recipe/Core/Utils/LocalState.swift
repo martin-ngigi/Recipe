@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Keys: String{
+enum Keys: String {
     case isFirstTimeUsingApp
     case fontPrefix
     case theme
@@ -16,28 +16,9 @@ enum Keys: String{
     case isLogedIn
 }
 
-public class LocalState {
+enum LocalState {
     @AppStorage(Keys.isFirstTimeUsingApp.rawValue) static var isFirstLaunch: Bool = true
     @AppStorage(Keys.fontPrefix.rawValue) static var selectedFontPrefix: String = "Poppins"
     @AppStorage(Keys.isDarkModeOn.rawValue) static var isDarkModeOn: String?
     @AppStorage(Keys.isLogedIn.rawValue) static var isLogedIn: Bool = false
-    
-    //@AppStorage(Keys.theme.rawValue) static var theme: AppTheme = AppTheme.system
-    
-    /*
-    static var colorScheme: ColorScheme?{
-        switch theme{
-            case .system:
-            print("DEBUG: theme is \(theme)")
-                return nil
-            case .dark:
-            print("DEBUG: theme is \(theme)")
-                return .dark
-            case .light:
-            print("DEBUG: theme is \(theme)")
-                return .light
-        }
-    }
-    */
-
 }

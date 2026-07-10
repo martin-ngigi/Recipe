@@ -8,20 +8,18 @@
 import SwiftUI
 
 struct SearchOverlayView: View {
+    @Binding var recipePage: Int
+    @Binding var chefPage: Int
     var recipes: [RecipeModel]
     var chefs: [UserModel]
     var onTapRecipe: (RecipeModel) -> Void
     var onTapChef: (UserModel) -> Void
-    
-    @State private var recipePage = 0
-    @State private var chefPage = 0
-    
+
     private let itemsPerPage = 2
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            
-            // MARK: - Recipes Section
+
             Section("Recipes") {
                 VStack(alignment: .leading) {
                     if recipes.isEmpty {
@@ -40,7 +38,7 @@ struct SearchOverlayView: View {
                             )
                         }
                     }
-                    
+
                     paginationControls(
                         currentPage: $recipePage,
                         totalItems: recipes.count,
@@ -48,8 +46,7 @@ struct SearchOverlayView: View {
                     )
                 }
             }
-            
-            // MARK: - Chefs Section
+
             Section("Chefs") {
                 VStack(alignment: .leading) {
                     if chefs.isEmpty {
@@ -69,7 +66,7 @@ struct SearchOverlayView: View {
                         }
 
                     }
-                                        
+
                     paginationControls(
                         currentPage: $chefPage,
                         totalItems: chefs.count,
@@ -77,24 +74,22 @@ struct SearchOverlayView: View {
                     )
                 }
             }
-            
+
             Spacer()
         }
         .padding()
     }
-    
-    // MARK: - Helper for Pagination
+
     private func paginatedItems<T>(for items: [T], page: Int) -> [T] {
         let start = page * itemsPerPage
         let end = min(start + itemsPerPage, items.count)
         return Array(items[start..<end])
     }
-    
-    // MARK: - Pagination Controls
+
     @ViewBuilder
     private func paginationControls(currentPage: Binding<Int>, totalItems: Int, label: String) -> some View {
         let totalPages = max(1, Int(ceil(Double(totalItems) / Double(itemsPerPage))))
-        
+
         if totalPages > 1 {
             HStack(spacing: 8) {
                 Button("Prev") {
@@ -103,7 +98,7 @@ struct SearchOverlayView: View {
                     }
                 }
                 .disabled(currentPage.wrappedValue == 0)
-                
+
                 ForEach(0..<totalPages, id: \.self) { page in
                     Button("\(page + 1)") {
                         currentPage.wrappedValue = page
@@ -113,7 +108,7 @@ struct SearchOverlayView: View {
                     .background(currentPage.wrappedValue == page ? Color.blue.opacity(0.2) : Color.clear)
                     .cornerRadius(6)
                 }
-                
+
                 Button("Next") {
                     if currentPage.wrappedValue < totalPages - 1 {
                         currentPage.wrappedValue += 1
@@ -126,81 +121,41 @@ struct SearchOverlayView: View {
     }
 }
 
-
 #Preview {
     SearchOverlayView(
+        recipePage: .constant(0),
+        chefPage: .constant(0),
         recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
         chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
-        onTapRecipe: { recipe in
-            
+        onTapRecipe: { _ in
+
         },
-        onTapChef: { chef in
-            
+        onTapChef: { _ in
+
         }
     )
 }
-
 
 #Preview {
     SearchOverlayView(
-        recipes:  HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
+        recipePage: .constant(0),
+        chefPage: .constant(0),
+        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
         chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
-        onTapRecipe: { recipe in
-            
+        onTapRecipe: { _ in
+
         },
-        onTapChef: { chef in
-            
+        onTapChef: { _ in
+
         }
     )
 }
 
-
-struct SearchRecipeRow: View {
-    
-    var recipe: RecipeModel
-    var onTap: (RecipeModel) -> Void
-
-    var body: some View {
-        Button{
-            onTap(recipe)
-        } label: {
-            HStack( spacing: 8) {
-                CustomImageView(
-                    url: recipe.image,
-                    maxWidth: 80,
-                    height: 80
-                )
-                .clipped()
-                .cornerRadius(12)
-                .foregroundColor(Color.theme.blackAndWhite)
-
-                VStack{
-                    Text(recipe.name)
-                        .font(.headline)
-                        .foregroundColor(Color.theme.blackAndWhite)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .lineLimit(1)
-                    
-                    Text(recipe.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                        .lineLimit(3)
-                }
-            }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.07), radius: 4, x: 0, y: 2)
-        }
-    }
-}
-
-
-#Preview{
+#Preview {
     SearchRecipeRow(
         recipe: RecipeModel.dummyList[0],
-        onTap: { recipe in
-            
+        onTap: { _ in
+
         }
     )
 }

@@ -80,7 +80,7 @@
     "Delete Account:" : {
 
     },
-    "Discover Best \nRecipes" : {
+    "Discover Best Recipes" : {
 
     },
     "Dismiss" : {
@@ -95,13 +95,16 @@
     "Email:" : {
 
     },
+    "Failed to fetch user..." : {
+
+    },
     "FAQs" : {
 
     },
     "Feedback and ratings" : {
 
     },
-    "First things first %@" : {
+    "First things first" : {
 
     },
     "Follow" : {
@@ -182,6 +185,9 @@
     "Privacy policy" : {
 
     },
+    "Profile" : {
+
+    },
     "Rate Me" : {
 
     },
@@ -192,6 +198,7 @@
 
     },
     "RecipeApp is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home" : {
+      "extractionState" : "stale",
       "localizations" : {
         "sw-KE" : {
           "stringUnit" : {
@@ -216,10 +223,16 @@
     "Search favourite..." : {
 
     },
+    "Search recipes..." : {
+
+    },
     "See All" : {
 
     },
     "See All (%lld)" : {
+
+    },
+    "See all trending recipes" : {
 
     },
     "Settings" : {
@@ -232,9 +245,6 @@
 
     },
     "Theme" : {
-
-    },
-    "Throw Error" : {
 
     },
     "Trending Recipes" : {

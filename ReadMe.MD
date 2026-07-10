@@ -1,5 +1,26 @@
 # Recipe App
 
+## Install
+```
+brew install swift-format
+brew install swiftlint
+```
+
+## Format and lint
+- Format
+```
+swift-format format --recursive --in-place .
+```
+- Lint fix
+```
+swiftlint --fix
+```
+- Lint
+```
+swiftlint --strict
+```
+
+
 A beautifully designed mobile app to explore delicious recipes, discover top chefs, and manage your favorite dishes. This app supports both Dark and Light modes for an elegant user experience.
 
 ---
@@ -146,3 +167,34 @@ screens/
 
 # Primary Color
 - Green color: #25AE87
+
+## Swift-lint ordering properties
+```
+Type aliases / enums
+Static properties
+Stored properties
+Computed properties
+Initializers
+Lifecycle methods
+Functions
+```
+
+## Pinning SSL certficate
+- [Documentation](https://developer.apple.com/news/?id=g9ejcf8y) Apple official documenation.
+- Generate SHA 256 KEY
+```
+openssl s_client \
+  -connect recipe.safiribytes.com:443 \
+  -servername recipe.safiribytes.com \
+  -showcerts 2>/dev/null </dev/null > chain.pem
+
+
+awk '/-----BEGIN CERTIFICATE-----/{i++} i==2' chain.pem > intermediate.pem
+
+openssl x509 -in intermediate.pem -pubkey -noout \
+  | openssl pkey -pubin -outform DER \
+  | openssl dgst -sha256 -binary \
+  | base64
+  
+```
+- Add it to Info.Plist in the SPKI-SHA256-BASE64 section

@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B90AAD12D81CD8B001A07C1 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */; };
-		5B90AAD22D81CD8B001A07C1 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */; };
-		5B90AAD32D81CD8B001A07C1 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */; };
-		5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */; };
-		5B90AAD52D81CD8B001A07C1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */; };
-		5B90AAD62D81CD8B001A07C1 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */; };
 		86ABED892E28C24200B7EDC2 /* ReadMe.MD in Resources */ = {isa = PBXBuildFile; fileRef = 86ABED882E28C24200B7EDC2 /* ReadMe.MD */; };
 		86E0D69F2E229D52005E7E81 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D69E2E229D52005E7E81 /* FirebaseAI */; };
 		86E0D6A12E229D52005E7E81 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6A02E229D52005E7E81 /* FirebaseAnalytics */; };
@@ -22,6 +16,8 @@
 		86E0D6BB2E22D32D005E7E81 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6BA2E22D32D005E7E81 /* GoogleSignIn */; };
 		86E0D6BD2E22D32D005E7E81 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6BC2E22D32D005E7E81 /* GoogleSignInSwift */; };
 		86E0D78D2E22D986005E7E81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */; };
+		B1ECA5562F879DE8006338A1 /* .swift-format in Resources */ = {isa = PBXBuildFile; fileRef = B1ECA5552F879DE8006338A1 /* .swift-format */; };
+		B1ECA5582F879E0D006338A1 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B1ECA5572F879E0D006338A1 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +41,10 @@
 		5B90AA942D81C00E001A07C1 /* Recipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B90AAA42D81C010001A07C1 /* RecipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B90AAAE2D81C010001A07C1 /* RecipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
-		5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
-		5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
-		5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
-		5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		86ABED882E28C24200B7EDC2 /* ReadMe.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.MD; sourceTree = "<group>"; };
 		86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B1ECA5552F879DE8006338A1 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
+		B1ECA5572F879E0D006338A1 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -87,6 +79,11 @@
 		86ABED652E28C09E00B7EDC2 /* screenshots */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = screenshots;
+			sourceTree = "<group>";
+		};
+		B1ECA5542F879DBC006338A1 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -126,15 +123,12 @@
 		5B90AA8B2D81C00E001A07C1 = {
 			isa = PBXGroup;
 			children = (
+				B1ECA5572F879E0D006338A1 /* .swiftlint.yml */,
+				B1ECA5552F879DE8006338A1 /* .swift-format */,
+				B1ECA5542F879DBC006338A1 /* Fonts */,
 				86ABED882E28C24200B7EDC2 /* ReadMe.MD */,
 				86ABED652E28C09E00B7EDC2 /* screenshots */,
 				86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */,
-				5B90AACB2D81CD8B001A07C1 /* Poppins-Bold.ttf */,
-				5B90AACC2D81CD8B001A07C1 /* Poppins-Light.ttf */,
-				5B90AACD2D81CD8B001A07C1 /* Poppins-Medium.ttf */,
-				5B90AACE2D81CD8B001A07C1 /* Poppins-Regular.ttf */,
-				5B90AACF2D81CD8B001A07C1 /* Poppins-SemiBold.ttf */,
-				5B90AAD02D81CD8B001A07C1 /* Poppins-Thin.ttf */,
 				5B90AA962D81C00E001A07C1 /* Recipe */,
 				5B90AAA72D81C010001A07C1 /* RecipeTests */,
 				5B90AAB12D81C010001A07C1 /* RecipeUITests */,
@@ -178,6 +172,7 @@
 			fileSystemSynchronizedGroups = (
 				5B90AA962D81C00E001A07C1 /* Recipe */,
 				86ABED652E28C09E00B7EDC2 /* screenshots */,
+				B1ECA5542F879DBC006338A1 /* Fonts */,
 			);
 			name = Recipe;
 			packageProductDependencies = (
@@ -293,14 +288,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B90AAD12D81CD8B001A07C1 /* Poppins-Thin.ttf in Resources */,
 				86ABED892E28C24200B7EDC2 /* ReadMe.MD in Resources */,
-				5B90AAD22D81CD8B001A07C1 /* Poppins-Bold.ttf in Resources */,
-				5B90AAD32D81CD8B001A07C1 /* Poppins-Medium.ttf in Resources */,
-				5B90AAD42D81CD8B001A07C1 /* Poppins-SemiBold.ttf in Resources */,
 				86E0D78D2E22D986005E7E81 /* GoogleService-Info.plist in Resources */,
-				5B90AAD52D81CD8B001A07C1 /* Poppins-Light.ttf in Resources */,
-				5B90AAD62D81CD8B001A07C1 /* Poppins-Regular.ttf in Resources */,
+				B1ECA5562F879DE8006338A1 /* .swift-format in Resources */,
+				B1ECA5582F879E0D006338A1 /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

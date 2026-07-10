@@ -8,12 +8,12 @@
 import Foundation
 import SwiftUI
 
-enum TabItemEntity: Int, CaseIterable{
+enum TabItemEntity: Int, CaseIterable {
     case home = 0
     case favourites
     case profile
     case settings
-    
+
     var title: String {
         switch self {
         case .home:
@@ -26,20 +26,20 @@ enum TabItemEntity: Int, CaseIterable{
             return "Settings"
         }
     }
-    
+
     var icon: String {
         switch self {
         case .home:
-            return "house.fill" //home
+            return "house.fill"  // home
         case .favourites:
-            return "heart.fill" //favourite
+            return "heart.fill"  // favourite
         case .profile:
-            return "person.fill" //account
+            return "person.fill"  // account
         case .settings:
-            return "gearshape.fill" //settings
+            return "gearshape.fill"  // settings
         }
     }
-    
+
     var color: Color {
         switch self {
         case .home:

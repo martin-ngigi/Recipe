@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol SearchAllRepositoryProtocol{
+protocol SearchAllRepositoryProtocol {
     func searchAll(searchTerm: String) async -> Result<SearchResponseModel, APIError>
 }

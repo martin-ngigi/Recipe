@@ -8,7 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalRepositoryProtocol, GetLocalUserRepositoryProtocol, DeleteLocalUserRepositoryProtocol{
+struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalRepositoryProtocol,
+    GetLocalUserRepositoryProtocol, DeleteLocalUserRepositoryProtocol
+{
 
     static let shared = AuthRepository()
     let authRemoteDataSource = AuthRemoteDataSource()
@@ -16,7 +18,7 @@ struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalReposi
 
     func authenticateUser(user: UserModel) async -> Result<UserResponseModel, APIError> {
         let results = await authRemoteDataSource.authenticateUser(user: user)
-        
+
         switch results {
         case .success(let response):
             return .success(response)
@@ -24,20 +26,20 @@ struct AuthRepository: AuthenticateUserRepositoryProtocol, SaveUserToLocalReposi
             return .failure(error)
         }
     }
-    
+
     func saveUserToLocal(user: UserModel) {
         let userSwiftData = UserSwiftData(model: user)
         authLocalDataSource.saveUser(user: userSwiftData)
     }
-    
+
     func getLocalUser() -> UserModel? {
         guard let swiftUserData = authLocalDataSource.fetchUser() else { return nil }
         return UserModel(swiftData: swiftUserData)
     }
-    
+
     func deleteLocalUser() {
         guard let swiftUserData = authLocalDataSource.fetchUser() else { return }
         authLocalDataSource.deleteUser(user: swiftUserData)
     }
-    
+
 }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SwiftUI
 
 struct BorderedInputField: View {
@@ -14,6 +13,8 @@ struct BorderedInputField: View {
     var placeholder: String = "Enter text..."
     var description: String = ""
     var error: String
+    @FocusState var isFocused: Bool
+    var focusedColor = Color.theme.primaryColor
     var keyboardType: UIKeyboardType = .default
     var hasClearButton: Bool = false
     var onTextChange: (String) -> Void
@@ -24,14 +25,14 @@ struct BorderedInputField: View {
                 Text(description)
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
             }
-            
-            HStack{
+
+            HStack {
                 TextField(placeholder, text: $text)
-                    .onChange(of: text){ newValue in
+                    .onChange(of: text) { newValue in
                         onTextChange(newValue)
                     }
-                    .textFieldStyle(TappableTextFieldStyle()) // This will help increase tap area of textfield
-                   
+                    .textFieldStyle(TappableTextFieldStyle())  // increase tap area
+
                 if !text.isEmpty && hasClearButton {
                     Button {
                         text = ""
@@ -39,21 +40,31 @@ struct BorderedInputField: View {
                         Image(systemName: "xmark.circle.fill")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 44, height: 44)
                             .padding(.trailing)
                             .foregroundColor(.red)
                     }
                 }
-             
+
             }
-            .background(Color.gray.opacity(0.3))
-            .cornerRadius(7)
+            .background(Color.gray.opacity(0.15))
+            .cornerRadius(12)
             .keyboardType(keyboardType)
+            .focused($isFocused)
+            .cornerRadius(12)
             .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .stroke(Color.gray, lineWidth: 0.3)
-            ) // Border
-            
+                Group {
+                    if isFocused {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
+                    }
+                    else {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
+                    }
+                }
+            )
+
             if !error.isEmpty {
                 Text(error)
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
@@ -63,24 +74,12 @@ struct BorderedInputField: View {
     }
 }
 
-struct TappableTextFieldStyle: TextFieldStyle { // https://stackoverflow.com/questions/56795712/swiftui-textfield-touchable-area
-    @FocusState private var textFieldFocused: Bool
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding()
-            .focused($textFieldFocused)
-            .onTapGesture {
-                textFieldFocused = true
-            }
-    }
-}
-
 #Preview {
     BorderedInputField(
         text: .constant(""),
         error: "",
-        onTextChange: { text in
-            
+        onTextChange: { _ in
+
         }
     )
     .padding(.horizontal)

@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct RateRepository: CreateUpdateRateRepositoryProtocol{
-    var datasource = RatingDataSource()
+struct RateRepository: CreateUpdateRateRepositoryProtocol {
     static let shared = RateRepository()
-    
-    func createUpdateRate(createRateRequestModel: CreateRateRequestModel) async -> Result<CreateRateResponseModel, APIError> {
+    var datasource = RatingDataSource()
+
+    func createUpdateRate(
+        createRateRequestModel: CreateRateRequestModel
+    ) async -> Result<CreateRateResponseModel, APIError> {
         return await datasource.createUpdateRate(createRateRequestModel: createRateRequestModel)
     }
 }

@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import os
 
 @MainActor
 class HomeViewModel: ObservableObject {
-    @Published var fetchHomeDataState: FetchState = FetchState.good
-    @Published var searchState: FetchState = FetchState.good
+    @Published var fetchHomeDataState = FetchState.good
+    @Published var searchState = FetchState.good
     var homeUseCases = HomeUseCases(
         fetchHomeDataRepository: HomeRepository.shared,
         searchAllRepository: HomeRepository.shared
@@ -24,41 +25,45 @@ class HomeViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var searchRecipes: [RecipeModel] = []
     @Published var searchChefs: [UserModel] = []
-    
+
+    @Published var recipePage: Int = 0
+    @Published var chefPage: Int = 0
+    @Published var currentIndex: Int = 0
+    @Published var searchField = ""
+
     func fetchHomeData(
         onSuccess: (HomeResponseModel) -> Void,
         onFailure: (String) -> Void
-    ) async{
+    ) async {
         fetchHomeDataState = .isLoading
         let results = await homeUseCases.executeFetchHomeData()
         switch results {
         case .success(let response):
             fetchHomeDataState = .good
             justForYouList = response.data.justForYou
-            print("DEBUG: fetchHomeData \(response.data)")
             trendingRecipesList = response.data.trendingRecipes
             popularChefsList = response.data.popularChefs
             onSuccess(response)
         case .failure(let error):
-            print("DEBUG: fetchHomeData error \(error.description)")
+            os.Logger().debug("DEBUG: fetchHomeData error \(error.description)")
             fetchHomeDataState = .error(error.description)
             onFailure(error.description)
         }
     }
-    
-    func updateIsShowInbuiltAlert(value: Bool){
+
+    func updateIsShowInbuiltAlert(value: Bool) {
         isShowInbuiltAlert = value
     }
-    
-    func updateInbuiltAlert(value: InbuiltAlert){
+
+    func updateInbuiltAlert(value: InbuiltAlert) {
         inbuiltAlert = value
     }
-    
+
     func searchAll(
         searchText: String,
         onSuccess: (SearchResponseModel) -> Void,
         onFailure: (String) -> Void
-    ) async{
+    ) async {
         searchState = .isLoading
         let results = await homeUseCases.executeSearchAll(searchTerm: searchText)
         switch results {
@@ -70,4 +75,6 @@ class HomeViewModel: ObservableObject {
             onFailure(error.description)
         }
     }
+
+    deinit {}
 }

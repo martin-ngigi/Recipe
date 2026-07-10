@@ -12,7 +12,7 @@ struct RecipeCard: View {
     var onTap: (RecipeModel) -> Void
 
     var body: some View {
-        Button{
+        Button {
             onTap(recipe)
         } label: {
             VStack(alignment: .leading, spacing: 8) {
@@ -29,7 +29,7 @@ struct RecipeCard: View {
                     .font(.headline)
                     .foregroundColor(Color.theme.blackAndWhite)
                     .lineLimit(1)
-                
+
                 Text(recipe.description)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -43,12 +43,11 @@ struct RecipeCard: View {
     }
 }
 
-
 #Preview {
     RecipeCard(
         recipe: RecipeModel.dummyList[0],
-        onTap: { recipe in
-            
+        onTap: { _ in
+
         }
     )
 }

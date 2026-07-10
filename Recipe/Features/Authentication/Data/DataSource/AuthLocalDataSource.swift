@@ -7,20 +7,27 @@
 
 import Foundation
 import SwiftData
+import os
 
-final class AuthLocalDataSource{
-    private let modelContainer: ModelContainer
-    private let modelContext: ModelContext
-    
+final class AuthLocalDataSource {
+
     @MainActor
     static let shared = AuthLocalDataSource()
 
+    private let modelContainer: ModelContainer
+    private let modelContext: ModelContext
+
     @MainActor
     private init() {
-        self.modelContainer = try! ModelContainer(for: UserSwiftData.self)
-        self.modelContext = modelContainer.mainContext
+        do {
+            self.modelContainer = try ModelContainer(for: UserSwiftData.self)
+            self.modelContext = modelContainer.mainContext
+        }
+        catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
     }
-    
+
     func saveUser(user: UserSwiftData) {
         modelContext.insert(user)
         save()
@@ -28,27 +35,31 @@ final class AuthLocalDataSource{
 
     func fetchUser() -> UserSwiftData? {
         do {
-           let users = try modelContext.fetch(FetchDescriptor<UserSwiftData>())
+            let users = try modelContext.fetch(FetchDescriptor<UserSwiftData>())
             return users.first
-        } catch {
+        }
+        catch {
             fatalError("Failed to fetch : \(error.localizedDescription)")
         }
     }
 
     func deleteUser(user: UserSwiftData) {
-        let user =  fetchUser()
+        let user = fetchUser()
         if let userToDelete = user, user?.openID == userToDelete.openID {
-            print("DEBUG: user \(userToDelete.email) deleted successfully")
+            os.Logger().debug("DEBUG: user \(userToDelete.email) deleted successfully")
             modelContext.delete(userToDelete)
         }
         save()
     }
-    
+
     func save() {
         do {
             try modelContext.save()
-        } catch {
+        }
+        catch {
             fatalError("Failed to save \(error.localizedDescription)")
         }
     }
+
+    deinit {}
 }

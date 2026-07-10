@@ -7,11 +7,12 @@
 
 import Foundation
 import SwiftUI
+import os
 
 extension View {
     func hideBottomNavigationBar(_ hidden: Bool) -> some View {
         self.onAppear {
-            print("DEBUG: hideBottomNavigationBar hidden \(hidden)")
+            os.Logger().debug("DEBUG: hideBottomNavigationBar hidden \(hidden)")
             if let tabBar = findTabBarController()?.tabBar {
                 tabBar.isHidden = hidden
                 tabBar.isUserInteractionEnabled = !hidden
@@ -19,7 +20,8 @@ extension View {
                     tabBar.frame = .zero
                     if hidden {
                         tabBar.frame.origin.y = UIScreen.main.bounds.height + 100
-                    } else {
+                    }
+                    else {
                         tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBar.frame.height
                     }
                 }
@@ -39,21 +41,23 @@ extension View {
                     tabBar.frame.size.height = tabBarHeight
                     tabBar.isHidden = false
                 }
-                print("DEBUG: hideBottomNavBar onDisappear  hidden \(false)")
+                os.Logger().debug("DEBUG: hideBottomNavBar onDisappear  hidden \(false)")
             }
             */
         }
-        
+
     }
-    
+
     func findTabBarController() -> UITabBarController? {
-       guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-             let rootViewController = windowScene.windows.first?.rootViewController else {
-           return nil
-       }
-       return rootViewController as? UITabBarController ?? rootViewController.children.compactMap { $0 as? UITabBarController }.first
-   }
-    
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let rootViewController = windowScene.windows.first?.rootViewController
+        {
+            return rootViewController as? UITabBarController
+                ?? rootViewController.children.compactMap { $0 as? UITabBarController }.first
+        }
+        return nil
+    }
+
     func fullScreenProgressOverlay(isShowing: Bool, text: String = "Loading...") -> some View {
         self.overlay(
             Group {
@@ -77,9 +81,28 @@ extension View {
             alignment: .center
         )
     }
-    
+
     func toastView(toast: Binding<Toast?>) -> some View {
         self.modifier(ToastModifier(toast: toast))
     }
-    
+
+    func cardBackground(
+        cornerRadius: CGFloat = 18,
+        background: Color = Color(UIColor.secondarySystemBackground),
+        shadowColor: Color = Color.black.opacity(0.06),
+        shadowRadius: CGFloat = 20,
+        shadowX: CGFloat = 0,
+        shadowY: CGFloat = 10
+    ) -> some View {
+        modifier(
+            CardBackground(
+                cornerRadius: cornerRadius,
+                background: background,
+                shadowColor: shadowColor,
+                shadowRadius: shadowRadius,
+                shadowX: shadowX,
+                shadowY: shadowY
+            )
+        )
+    }
 }

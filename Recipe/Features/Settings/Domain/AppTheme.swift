@@ -9,6 +9,6 @@ import Foundation
 
 enum AppTheme: String, CaseIterable, Identifiable {
     case system, light, dark
-    
-    var id: String{ rawValue}
+
+    var id: String { rawValue }
 }

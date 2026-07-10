@@ -5,9 +5,9 @@
 //  Created by Hummingbird on 12/07/2025.
 //
 
-import Foundation
 import FirebaseAuth
+import Foundation
 
-protocol LogoutFirebaseRepositoryProtocol{
+protocol LogoutFirebaseRepositoryProtocol {
     func logout() -> Result<Bool, FirebaseAuthError>
 }

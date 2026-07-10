@@ -8,5 +8,7 @@
 import Foundation
 
 protocol CreateUpdateRateRepositoryProtocol {
-    func createUpdateRate(createRateRequestModel: CreateRateRequestModel) async -> Result<CreateRateResponseModel, APIError>
+    func createUpdateRate(
+        createRateRequestModel: CreateRateRequestModel
+    ) async -> Result<CreateRateResponseModel, APIError>
 }

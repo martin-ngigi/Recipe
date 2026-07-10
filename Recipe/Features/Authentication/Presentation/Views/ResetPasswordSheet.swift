@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ResetPasswordSheet: View {
-    @State var email: String
+    @Binding var email: String
     var resetEmailErrors: [String: String]
     @Binding var toast: Toast?
     var isEmailValid: Bool
@@ -23,7 +23,7 @@ struct ResetPasswordSheet: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top)
-            
+
             Text("Please enter your email address to receive password reset instructions.")
                 .font(.subheadline)
                 .foregroundColor(.gray)
@@ -64,22 +64,21 @@ struct ResetPasswordSheet: View {
     }
 }
 
-
 #Preview {
     ResetPasswordSheet(
-        email: "",
+        email: .constant(""),
         resetEmailErrors: [:],
         toast: .constant(Toast(style: .success, message: "Sample toast")),
         isEmailValid: false,
         isLoading: false,
-        onEmailChange: { newEmail in
-            
+        onEmailChange: { _ in
+
         },
         onDismiss: {
-            
+
         },
         onSubmit: {
-            
+
         }
     )
 }

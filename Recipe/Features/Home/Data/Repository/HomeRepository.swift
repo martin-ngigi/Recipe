@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct HomeRepository: FetchHomeDataRepositoryProtocol, SearchAllRepositoryProtocol{
-    
-    var datasource = HomeRemoteDataSource()
+struct HomeRepository: FetchHomeDataRepositoryProtocol, SearchAllRepositoryProtocol {
     static let shared = HomeRepository()
-    
+
+    var datasource = HomeRemoteDataSource()
+
     func fetchHomeData() async -> Result<HomeResponseModel, APIError> {
         return await datasource.fetchHomeData()
     }
-    
+
     func searchAll(searchTerm: String) async -> Result<SearchResponseModel, APIError> {
         return await datasource.searchAll(searchTerm: searchTerm)
     }

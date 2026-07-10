@@ -12,8 +12,8 @@ struct RootView: View {
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            Group{
-                if LocalState.isFirstLaunch{
+            Group {
+                if LocalState.isFirstLaunch {
                     LandingView()
                 }
                 else {

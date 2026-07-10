@@ -15,9 +15,9 @@ struct ColorTheme {
     let greenAppColor = Color("GreenAppColor")
     let primaryColor = Color("GreenAppColor")
     let grayColor1 = Color("GrayColor1")
+    let redColor = Color("RedAppColor")
 }
 
-
 extension Color {
-    static var theme = ColorTheme()    
+    static var theme = ColorTheme()
 }

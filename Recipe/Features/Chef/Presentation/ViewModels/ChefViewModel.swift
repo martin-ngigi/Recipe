@@ -13,8 +13,21 @@ class ChefViewModel: ObservableObject {
     var chefUsesCases = ChefUseCases(chefRepository: ChefRepository.shared)
     @Published var isShowRating = false
     @Published var isShowChefImageOverlay = false
+    @Published var isShowAllRecipeItems = false
     @Published var isShowAlertDialog = false
     @Published var dialogEntity = DialogEntity()
+    @Published var chef: UserModel?
+    @Published var user: UserModel?
+    @Published var rating: Int = 0
+    @Published var comment: String = ""
+
+    func updateChef(chef: UserModel?) {
+        self.chef = chef
+    }
+
+    func updateUser(user: UserModel?) {
+        self.user = user
+    }
 
     func fetchChefByID(
         chefId: String,
@@ -22,7 +35,7 @@ class ChefViewModel: ObservableObject {
         onFailure: (String) -> Void
     ) async {
         fetchChefByIDState = .isLoading
-        
+
         let results = await chefUsesCases.executeFetchChefById(chefId: chefId)
         switch results {
         case .success(let response):
@@ -33,16 +46,18 @@ class ChefViewModel: ObservableObject {
             onFailure(error.localizedDescription)
         }
     }
-    
+
     func updateIsShowAlertDialog(value: Bool) {
         isShowAlertDialog = value
     }
-    
+
     func updateDialogEntity(value: DialogEntity) {
         dialogEntity = value
     }
-    
+
     func updateIsShowChefImageOverlay(value: Bool) {
         isShowChefImageOverlay = value
     }
+
+    deinit {}
 }

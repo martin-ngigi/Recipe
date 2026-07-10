@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct ChefResponseModel: Codable, Hashable{
-    let message: String
-    let statusCode: Int
-    let data: UserModel
-    
+struct ChefResponseModel: Codable, Hashable {
+
     enum CodingKeys: String, CodingKey {
         case message
         case statusCode = "status_code"
         case data
     }
+
+    let message: String
+    let statusCode: Int
+    let data: UserModel
 }

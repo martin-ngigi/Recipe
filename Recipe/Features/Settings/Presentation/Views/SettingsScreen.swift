@@ -8,28 +8,27 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    //@AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
+    // @AppStorage(Keys.theme.rawValue) private var theme: AppTheme = .system
     @StateObject var themesViewModel = ThemesViewModel()
     @StateObject var settingsViewModel = SettingsViewModel()
-    
+
     var body: some View {
-        VStack{
-            VStack{
-                
+        VStack {
+            VStack {
+
                 Image("settings_icon")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                
+
                 Text("Customize your settings")
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
             }
             .padding(.top)
-            
-           
+
             List {
-                Section ("App Settings"){
-                    
+                Section("App Settings") {
+
                     /*
                     Picker("Theme", selection: $theme) {
                         Text("System").tag(AppTheme.system)
@@ -38,11 +37,11 @@ struct SettingsScreen: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     */
-                    
-                    VStack(alignment: .leading, spacing: 0){
+
+                    VStack(alignment: .leading, spacing: 0) {
                         Text("Theme")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                        
+
                         Picker("Theme", selection: $themesViewModel.currentTheme) {
                             ForEach(ThemeEntity.allCases) { theme in
                                 Text(theme.themName)
@@ -54,13 +53,13 @@ struct SettingsScreen: View {
                             themesViewModel.changeTheme(to: newValue)
                         }
                     }
-                    
-                    HStack{
+
+                    HStack {
                         Text("Notifications turned \(settingsViewModel.isNotificationsEnabled ? "On" : "Off")")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                        
+
                         Spacer()
-                        
+
                         CustomSwitch(
                             isOn: $settingsViewModel.isNotificationsEnabled,
                             onTap: { isOn in
@@ -74,13 +73,13 @@ struct SettingsScreen: View {
                             }
                         )
                     }
-                    
-                    HStack{
+
+                    HStack {
                         Text("Font")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
-                        
-                        Button{
+
+                        Button {
                             settingsViewModel.updateToast(
                                 value: Toast(
                                     style: .success,
@@ -88,50 +87,48 @@ struct SettingsScreen: View {
                                 )
                             )
                         } label: {
-                            HStack{
+                            HStack {
                                 Text("\(LocalState.selectedFontPrefix)")
                                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                                     .foregroundColor(Color.theme.blackAndWhite)
-                                
+
                                 Image(systemName: "chevron.right")
                             }
                         }
-                       
+
                     }
-                    
-                   
+
                 }
-                
-                Section ("App Details"){
-                    
-                    HStack{
+
+                Section("App Details") {
+
+                    HStack {
                         Text("App Version")
-                        
+
                         Spacer()
-                        
+
                         Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0") ")
                     }
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                    
-                    
-                    HStack{
+
+                    HStack {
                         Text("Privacy policy")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
-                        
-                        Button{
-                            
+
+                        Button {
+
                         } label: {
                             Image(systemName: "chevron.right")
                         }
                     }
-                    
-                    HStack{
+
+                    HStack {
                         Text("FAQs")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
-                        
-                        Button{
+
+                        Button {
                             settingsViewModel.updateToast(
                                 value: Toast(
                                     style: .success,
@@ -142,13 +139,13 @@ struct SettingsScreen: View {
                             Image(systemName: "chevron.right")
                         }
                     }
-                    
-                    HStack{
+
+                    HStack {
                         Text("Feedback and ratings")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
                         Spacer()
-                        
-                        Button{
+
+                        Button {
                             settingsViewModel.updateToast(
                                 value: Toast(
                                     style: .success,
@@ -159,15 +156,14 @@ struct SettingsScreen: View {
                             Image(systemName: "star")
                         }
                     }
-                    
-                   
+
                 }
 
             }
         }
         .navigationTitle("Settings")
         .toastView(toast: $settingsViewModel.toast)
-        //.hideBottomNavigationBar(false)
+        // .hideBottomNavigationBar(false)
     }
 }
 

@@ -15,10 +15,42 @@
 			</array>
 		</dict>
 	</array>
+	<key>Configuration</key>
+	<string>${CONFIGURATION}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>whatsapp</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<false/>
+		<key>NSAllowsArbitraryLoadsUsageDescription</key>
+		<dict/>
+		<key>NSAllowsLocalNetworking</key>
+		<false/>
+		<key>NSExceptionAllowsInsecureHTTPLoads</key>
+		<false/>
+		<key>NSPinnedDomains</key>
+		<dict>
+			<key>recipe.safiribytes.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSPinnedCAIdentities</key>
+				<array>
+					<dict>
+						<key>SPKI-SHA256-BASE64</key>
+						<string>LoMHBotttiDko50Gi13uXW71eIy7LAttI+rYT8wXF4w=</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.ttf</string>

@@ -10,27 +10,28 @@ import SwiftUI
 struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
+    @FocusState var focusedInputField: RegisterInputFields?
     @StateObject var registerViewModel = RegisterViewModel()
     @StateObject var loginViewModel = LoginViewModel()
 
     var body: some View {
-        ScrollView(showsIndicators: false){
-            VStack(spacing: 10){
-                VStack(spacing: 0){
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 10) {
+                VStack(spacing: 0) {
                     Text("Glad that you are ready to join us!")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                    
+
                     Text("Let's sign you up")
                         .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
                 }
-                
+
                 Image("login_illustration")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
-                
-                VStack(spacing: 10){
-                    
+
+                VStack(spacing: 10) {
+
                     BorderedInputField(
                         text: $registerViewModel.name,
                         placeholder: "John Doe",
@@ -40,7 +41,8 @@ struct RegisterView: View {
                             registerViewModel.updateName(value: text)
                         }
                     )
-                    
+                    .focused($focusedInputField, equals: .name)
+
                     BorderedInputField(
                         text: $registerViewModel.email,
                         placeholder: "myemail@gmail.com",
@@ -51,28 +53,33 @@ struct RegisterView: View {
                             registerViewModel.updateEmail(value: text)
                         }
                     )
-                    
+                    .focused($focusedInputField, equals: .email)
+
                     BorderedPasswordField(
                         password: $registerViewModel.password,
                         placeholder: "MyP@ss10",
                         description: "Password",
                         error: registerViewModel.registerErrors["password"] ?? "",
+                        isSecure: loginViewModel.isSecure,
+                        onToggleAction: {
+                            registerViewModel.isSecure.toggle()
+                        },
                         onTextChange: { text in
                             registerViewModel.updatePassword(value: text)
                         }
                     )
-                    
-                    
-                    Button{
+                    .focused($focusedInputField, equals: .password)
+
+                    Button {
                         router.pop()
                     } label: {
                         Text("Already have account? \(Text("Login").foregroundColor(Color.blue))")
                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                             .underline()
                     }
-                    
+
                 }
-                
+
                 CustomButton(
                     buttonName: "Register",
                     borderColor: Color.clear,
@@ -85,7 +92,9 @@ struct RegisterView: View {
                                     registerViewModel.updateDialogEntity(
                                         value: DialogEntity(
                                             title: "Registration Successful!",
-                                            message: "Welcome to the community!\nPlease check your email for verification link and proceed to login.",
+                                            message:
+                                                "Welcome to the community!\nPlease check"
+                                                + "your email for verification link and proceed to login.",
                                             icon: "",
                                             confirmButtonText: "Proceed",
                                             dismissButtonText: "",
@@ -122,10 +131,10 @@ struct RegisterView: View {
                     }
                 )
                 .padding(.top, 20)
-                
+
                 Text("Or Sign in with")
                     .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                
+
                 HStack {
                     SocialAuthItemView(
                         image: "apple_icon",
@@ -148,18 +157,21 @@ struct RegisterView: View {
                             )
                         }
                     )
-                    
+
                     SocialAuthItemView(
                         image: "google",
                         onTap: {
-                            Task{
+                            Task {
                                 await loginViewModel.googleAuthentication(
-                                    onSuccess: { authDataResult in
-                                        Task{
+                                    onSuccess: { _ in
+                                        Task {
                                             loginViewModel.updateToast(
-                                                value: Toast(style: .success, message: "Google authentication successfull!")
+                                                value: Toast(
+                                                    style: .success,
+                                                    message: "Google authentication successfull!"
+                                                )
                                             )
-                                            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1.0 sec
+                                            await loginViewModel.sleep(nanoseconds: 1_000_000_000)  // 1.0 sec
                                             LocalState.isLogedIn = true
                                             dismiss()
                                         }
@@ -187,7 +199,7 @@ struct RegisterView: View {
                             }
                         }
                     )
-                    
+
                     SocialAuthItemView(
                         image: "facebook",
                         onTap: {
@@ -212,7 +224,7 @@ struct RegisterView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 50)
-                
+
             }
             .padding()
         }
@@ -222,7 +234,9 @@ struct RegisterView: View {
                 dismiss()
             }
         )
-        .fullScreenProgressOverlay(isShowing: registerViewModel.registeState == .isLoading || loginViewModel.loginState == .isLoading)
+        .fullScreenProgressOverlay(
+            isShowing: registerViewModel.registeState == .isLoading || loginViewModel.loginState == .isLoading
+        )
         .toastView(toast: $loginViewModel.toast)
         .overlay {
             CustomAlertDialog(

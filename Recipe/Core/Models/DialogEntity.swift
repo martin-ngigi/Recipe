@@ -18,7 +18,7 @@ struct DialogEntity {
     let dismissButtonText: String
     var onConfirm: (() -> Void)?
     var onDismiss: (() -> Void)?
-    
+
     init(
         title: String = "",
         titleColor: Color = Color.theme.primaryColor,
@@ -41,4 +41,3 @@ struct DialogEntity {
         self.onDismiss = onDismiss
     }
 }
-

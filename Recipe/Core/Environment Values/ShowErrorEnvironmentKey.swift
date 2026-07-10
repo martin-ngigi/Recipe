@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ShowErrorAction {
-    typealias Action = (Error, String) -> ()
+    typealias Action = (Error, String) -> Void
     var action: Action
     func callAsFunction(_ error: Error, _ guidance: String) {
         action(error, guidance)
@@ -17,12 +17,12 @@ struct ShowErrorAction {
 }
 
 struct ShowErrorEnvironmentKey: EnvironmentKey {
-    static var defaultValue: ShowErrorAction = ShowErrorAction{ _, _ in}
+    static var defaultValue = ShowErrorAction { _, _ in }
 }
 
 extension EnvironmentValues {
     var showError: (ShowErrorAction) {
-        get { self[ShowErrorEnvironmentKey.self]  }
+        get { self[ShowErrorEnvironmentKey.self] }
         set { self[ShowErrorEnvironmentKey.self] = newValue }
     }
 }
