@@ -26,16 +26,14 @@ struct BorderedPasswordField: View {
             }
 
             HStack {
-                
+
                 if isSecure {
                     SecureField(placeholder, text: $password)
                         .focused($isFocused)
-
                 }
                 else {
                     TextField(placeholder, text: $password)
                         .focused($isFocused)
-
                 }
 
                 Button {
