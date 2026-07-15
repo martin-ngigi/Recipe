@@ -77,7 +77,7 @@ struct HomeView: View {
                         )
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         tabRouter.selectedTab = .profile
@@ -90,7 +90,7 @@ struct HomeView: View {
                     }
                     .accessibilityLabel("Profile")
                 }
-                
+
             }
             .refreshable {
                 Task {

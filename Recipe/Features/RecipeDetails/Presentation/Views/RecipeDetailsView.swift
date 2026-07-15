@@ -51,13 +51,13 @@ struct RecipeDetailsView: View {
                                     .clipShape(Circle())
 
                                     VStack(alignment: .leading, spacing: 4) {
-                                        
+
                                         Text(recipe.chef?.name ?? "")
                                             .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
                                             .lineSpacing(3.0)
                                             .foregroundColor(Color.theme.blackAndWhite)
                                             .fontWeight(.semibold)
-                                        
+
                                         Text(recipe.chef?.email ?? "")
                                             .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
                                     }
@@ -246,7 +246,7 @@ struct RecipeDetailsView: View {
                 }
             }
         }
-        .toolbar{
+        .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     router.pop()
@@ -256,7 +256,7 @@ struct RecipeDetailsView: View {
                         .scaledToFill()
                 }
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Menu {
