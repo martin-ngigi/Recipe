@@ -10,7 +10,7 @@ import SwiftUI
 struct FavouritesListView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @EnvironmentObject var router: Router
-    @Environment(\.modelContext) private var context
+    //@Environment(\.modelContext) private var context
 
     var body: some View {
         NavigationView {
