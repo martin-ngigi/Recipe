@@ -1,19 +1,17 @@
 //
-//  RecipeApp.swift
-//  Recipe
+//  ChefApp.swift
+//  Chef
 //
-//  Created by Martin on 12/03/2025.
+//  Created by RAFIKI on 26/07/2026.
 //
 
 import SwiftUI
 
 @main
-struct RecipeApp: App {
-    
+struct ChefApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
-
 }
