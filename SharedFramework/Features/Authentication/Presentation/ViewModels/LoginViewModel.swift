@@ -1,0 +1,330 @@
+//
+//  LoginViewModel.swift
+//  Recipe
+//
+//  Created by Hummingbird on 12/07/2025.
+//
+
+import AuthenticationServices
+// For apple auth
+import CryptoKit
+import Firebase
+import FirebaseAuth
+import Foundation
+import GoogleSignIn
+import os
+import Combine
+
+enum LoginSheets {
+    case RESET_PASSWORD
+}
+
+@MainActor
+class LoginViewModel: ObservableObject {
+    @Published var dialogEntity = DialogEntity()
+    @Published var isShowAlertDialog = false
+    @Published var loginState = FetchState.good
+    @Published var resetPasswordState = FetchState.good
+    @Published var email: String = ""
+    @Published var resetEmail: String = ""
+    @Published var password: String = ""
+    @Published var isLoginEnabled: Bool = false
+    @Published var isSecure: Bool = true
+    @Published var isResetEmailButtonEnabled: Bool = false
+    @Published var loginErrors = [String: String]()
+    @Published var resetEmailErrors = [String: String]()
+    @Published var toast: Toast?
+    @Published var sheetToShow: LoginSheets = .RESET_PASSWORD
+    @Published var isShowSheet: Bool = false
+
+    let firebaseAuthUseCase = FirebaseAuthUseCase(
+        createFirebaseUserRepository: FirebaseAuthRepository.shared,
+        loginFirebaseRepository: FirebaseAuthRepository.shared,
+        googleFirebaseAuthRepository: FirebaseAuthRepository.shared,
+        resetPasswordFirebaseRepository: FirebaseAuthRepository.shared,
+        logoutFirebaseRepository: FirebaseAuthRepository.shared,
+        deleteFirebaseAccountRepository: FirebaseAuthRepository.shared
+    )
+
+    let authUseCases = AuthUseCases(
+        authenticateUserRepository: AuthRepository.shared,
+        getLocalUserRepository: AuthRepository.shared,
+        saveUserToLocalRepository: AuthRepository.shared,
+        deleteLocalUserRepository: AuthRepository.shared
+    )
+
+    func updateDialogEntity(value: DialogEntity) {
+        dialogEntity = value
+    }
+
+    func updateLoginSheets(value: LoginSheets) {
+        sheetToShow = value
+    }
+
+    func updateIsShowSheet(value: Bool) {
+        isShowSheet = value
+    }
+
+    func updateLoginState(value: FetchState) {
+        loginState = value
+    }
+
+    func updateIsShowAlertDialog(value: Bool) {
+        isShowAlertDialog = value
+    }
+
+    func updateEmail(value: String) {
+        email = value
+        let error = ValidatorUtils.shared.validateEmail(email: email)
+        updateSendLoginErrors(key: "email", value: error)
+
+    }
+
+    func updateResetEmail(value: String) {
+        resetEmail = value
+        let error = ValidatorUtils.shared.validateEmail(email: resetEmail)
+        updateResetEmailErrors(key: "resetEmail", value: error)
+    }
+
+    func updateToast(value: Toast?) {
+        toast = value
+    }
+
+    func updatePassword(value: String) {
+        password = value
+        let errors = ValidatorUtils.shared.validatePassword(password: password)
+        updateSendLoginErrors(key: "password", value: errors.first ?? "")
+    }
+
+    func updateSendLoginErrors(key: String, value: String) {
+        loginErrors[key] = value
+        validateIfLoginIsEnabled()
+    }
+
+    func updateResetEmailErrors(key: String, value: String) {
+        resetEmailErrors[key] = value
+        validateIfResetButtonIsEnabled()
+    }
+
+    func validateIfLoginIsEnabled() {
+        var isFormValid = true
+
+        if !loginErrors.values.allSatisfy({ $0.isEmpty }) || email.isEmpty || password.isEmpty {
+            isFormValid = false
+        }
+
+        isLoginEnabled = isFormValid
+    }
+
+    func validateIfResetButtonIsEnabled() {
+        var isFormValid = true
+
+        if !resetEmailErrors.values.allSatisfy({ $0.isEmpty }) || resetEmail.isEmpty {
+            isFormValid = false
+        }
+
+        isResetEmailButtonEnabled = isFormValid
+    }
+
+    func emailAndPasswordLogin(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+
+        loginState = .isLoading
+
+        var result: Result<AuthDataResult, FirebaseAuthError>
+        result = await firebaseAuthUseCase.executeLoginFirebaseUser(email: email, password: password)
+
+        switch result {
+        case .success(let authDataResult):
+            os.Logger().debug("DEBUG: Login success. User OpenId: \(authDataResult.user.uid)")
+
+            // Email not verified
+            if !authDataResult.user.isEmailVerified {
+                let errorMessage =
+                    "You need to verify your email. Check email verification link that was sent to \(authDataResult.user.email ?? "" ). If missing, check in Spam."
+                loginState = .error(errorMessage)
+                os.Logger().debug("DEBUG: \(errorMessage)")
+                onFailure(errorMessage)
+                return
+            }
+
+            loginState = .good
+
+            await authenticateUser(
+                authDataResult: authDataResult,
+                type: "Email",
+                onSuccess: {
+                    onSuccess()
+                },
+                onFailure: { error in
+                    onFailure(error)
+                }
+            )
+        case .failure(let error):
+            loginState = .error(error.description)
+            onFailure(error.description)
+        }
+
+    }
+
+    func sleep(nanoseconds: UInt64) async {
+        try? await Task.sleep(nanoseconds: nanoseconds)
+    }
+
+    func googleAuthentication(
+        onSuccess: (AuthDataResult) -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        loginState = .isLoading
+
+        var result: Result<AuthDataResult, FirebaseAuthError>
+        result = await firebaseAuthUseCase.executeGoogleAuth()
+        switch result {
+        case .success(let authDataResult):
+            os.Logger().debug("DEBUG: Goolge Login success. User OpenId: \(authDataResult.user.uid)")
+            loginState = .good
+
+            await authenticateUser(
+                authDataResult: authDataResult,
+                type: "Google",
+                onSuccess: {
+                    onSuccess(authDataResult)
+                },
+                onFailure: { error in
+                    onFailure(error)
+                }
+            )
+        case .failure(let error):
+            loginState = .error(error.description)
+            onFailure(error.description)
+        }
+    }
+
+    func authenticateUser(
+        authDataResult: AuthDataResult,
+        type: String,
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+
+        let randomString = Utils.shared.randomString(length: 8)
+
+        let name = authDataResult.user.displayName ?? "No_Name_\(randomString)"
+        let email = authDataResult.user.email ?? "no_email_\(randomString)@safiribytes.com"
+        let openId = authDataResult.user.uid
+        let role = "Customer"
+        var avatar: String {
+            switch role {
+            case "Customer":
+                return "/images/profile/default.png"
+            case "Chef":
+                return "/images/profile/chef_avatar.png"
+            default:
+                return "/images/profile/default.png"
+            }
+        }
+
+        let user = UserModel(
+            userID: "",
+            name: name,
+            email: email,
+            openID: openId,
+            authType: type,
+            avatar: avatar,
+            role: role
+        )
+
+        let result = await authUseCases.executeAuthenticateUser(user: user)
+
+        switch result {
+        case .success(let response):
+            loginState = .good
+
+            guard let userModel = response.user else {
+                loginState = .error("Something went wrong while authenticating you. Please try again later.")
+                return
+            }
+
+            saveUserToLocalStorage(user: userModel)
+            Constants.accessToken = userModel.accessToken ?? "No accessToken"
+            Constants.openId = userModel.openID
+            onSuccess()
+        case .failure(let error):
+            loginState = .error(error.description)
+            onFailure(error.description)
+        }
+
+    }
+
+    func saveUserToLocalStorage(user: UserModel) {
+        authUseCases.excuteSaveUserToLocal(user: user)
+    }
+
+    func fetchUserFromLocalStorage() -> UserModel? {
+        return authUseCases.executeGetLocalUser()
+    }
+
+    func logOut(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) {
+        let results = firebaseAuthUseCase.executeLogout()
+        switch results {
+        case .success(let hasLoggedOut):
+            if hasLoggedOut {
+                deleteLocalUserData()
+                onSuccess()
+            }
+            else {
+                onFailure("Logout Failed")
+            }
+        case .failure(let error):
+            onFailure(error.description)
+        }
+    }
+
+    func deleteAccount(
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        let results = await firebaseAuthUseCase.executeDeletAccount()
+        switch results {
+        case .success(let hasDeletedAccount):
+            if hasDeletedAccount {
+                onSuccess()
+                deleteLocalUserData()
+            }
+            else {
+                onFailure("Account Deletion Failed")
+            }
+        case .failure(let error):
+            onFailure(error.description)
+        }
+    }
+
+    func deleteLocalUserData() {
+        authUseCases.deleteLocalUser()
+    }
+
+    func resetPassword(
+        email: String,
+        onSuccess: () -> Void,
+        onFailure: (String) -> Void
+    ) async {
+        resetPasswordState = .isLoading
+        let results = await firebaseAuthUseCase.executeResetPassword(email: email)
+
+        switch results {
+        case .success(let response):
+            resetPasswordState = .good
+            onSuccess()
+        case .failure(let error):
+            resetPasswordState = .error(error.description)
+            onFailure(error.description)
+        }
+    }
+
+    deinit {}
+}
