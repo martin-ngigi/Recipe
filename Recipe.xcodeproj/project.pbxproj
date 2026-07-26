@@ -212,6 +212,7 @@
 				Core/Models/ToastStyle.swift,
 				Core/Modifiers/Toast/ToastModifier.swift,
 				Core/Modifiers/Toast/ToastViewModel.swift,
+				Core/Notifications/NotificationManager.swift,
 				Core/Routing/Route.swift,
 				Core/Routing/Router.swift,
 				Core/Routing/TabRouter.swift,
@@ -362,6 +363,7 @@
 				Core/Models/ToastStyle.swift,
 				Core/Modifiers/Toast/ToastModifier.swift,
 				Core/Modifiers/Toast/ToastViewModel.swift,
+				Core/Notifications/NotificationManager.swift,
 				Core/Routing/Route.swift,
 				Core/Routing/Router.swift,
 				Core/Routing/TabRouter.swift,
@@ -533,6 +535,20 @@
 			);
 			target = B161B49030161F75006F8BB7 /* SharedFramework */;
 		};
+		B1667FE4301642EE00CC3E64 /* Exceptions for "Chef" folder in "Chef" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B161B48030161F5A006F8BB7 /* Chef */;
+		};
+		B1668475301643B400CC3E64 /* Exceptions for "User" folder in "User" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B161B47130161F4A006F8BB7 /* User */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -562,6 +578,7 @@
 		B161B47330161F4A006F8BB7 /* User */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				B1668475301643B400CC3E64 /* Exceptions for "User" folder in "User" target */,
 				B161B6E1301627B2006F8BB7 /* Exceptions for "User" folder in "SharedFramework" target */,
 			);
 			path = User;
@@ -569,6 +586,9 @@
 		};
 		B161B48230161F5A006F8BB7 /* Chef */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B1667FE4301642EE00CC3E64 /* Exceptions for "Chef" folder in "Chef" target */,
+			);
 			path = Chef;
 			sourceTree = "<group>";
 		};
@@ -1448,6 +1468,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = User/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1494,6 +1515,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = User/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1537,6 +1559,7 @@
 				DEVELOPMENT_TEAM = JJ5G6DQS7M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chef/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1575,6 +1598,7 @@
 				DEVELOPMENT_TEAM = JJ5G6DQS7M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chef/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
