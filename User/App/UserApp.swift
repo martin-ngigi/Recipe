@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 26/07/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  UserApp.swift
 //  User
@@ -25,6 +31,7 @@ struct UserApp: App {
                 .environmentObject(tabRouter)
                 .onAppear {
                     themesViewModel.setAppTheme()
+                    NotificationManager.shared.requestNotificationPermission()
                     MyFirebaseAnalytics.shared.logEvent(title: "app_launch", contentType: "launch")
                     MyFirebaseAnalytics.shared.setUserID(DeviceInfo().deviceId)
 
