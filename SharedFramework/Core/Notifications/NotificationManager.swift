@@ -16,6 +16,8 @@ import UserNotifications
 import Combine
 import os
 
+
+/// Add permission declaration in Info >  NSUserNotificationsUsageDescription
 final class NotificationManager: NSObject, ObservableObject{
     static let shared = NotificationManager()
     
