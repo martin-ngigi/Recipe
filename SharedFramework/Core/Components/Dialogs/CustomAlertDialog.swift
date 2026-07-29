@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 29/07/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomAlertDialog.swift
 //  Recipe
@@ -30,7 +36,7 @@ struct CustomAlertDialog: View {
                 VStack(spacing: 20) {
 
                     Text(title)
-                        .font(.system(size: 20, weight: .medium, design: .rounded))
+                        .font(.appTitle3)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.theme.primaryColor)
 
@@ -42,7 +48,7 @@ struct CustomAlertDialog: View {
                     }
 
                     Text(text)
-                        .font(.system(size: 17, weight: .light, design: .rounded))
+                        .font(.appBody)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.theme.blackAndWhite)
 

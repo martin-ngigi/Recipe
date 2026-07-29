@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 29/07/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ReusableToolbar.swift
 //  Recipe
@@ -28,7 +34,7 @@ struct ReusableToolbar: ViewModifier {
                 // ToolbarItem(placement: .principal) {
                 ToolbarItem(placement: .topBarLeading) {
                     Text(title)
-                        .font(.custom("ProductSans-Regular", size: 17))
+                        .font(.appBody)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
 
