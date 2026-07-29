@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 29/07/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  BorderedInputField.swift
 //  Recipe
@@ -23,7 +29,7 @@ struct BorderedInputField: View {
         VStack(alignment: .leading, spacing: 5) {
             if !description.isEmpty {
                 Text(description)
-                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                    .font(.appFootnote)
             }
 
             HStack {
@@ -67,7 +73,7 @@ struct BorderedInputField: View {
 
             if !error.isEmpty {
                 Text(error)
-                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                    .font(.appFootnote)
                     .foregroundColor(Color.red)
             }
         }

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 29/07/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomButton.swift
 //  Recipe
@@ -39,7 +45,7 @@ struct CustomButton: View {
                 }
                 else {
                     Text(buttonName)
-                        .font(.custom("ProductSans-Regular", size: 15))
+                        .font(.appSubheadline)
                         .foregroundColor(buttonNameColor)
                 }
 
