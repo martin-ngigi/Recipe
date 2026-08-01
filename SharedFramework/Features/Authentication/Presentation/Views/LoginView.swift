@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 01/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  LoginView.swift
 //  Recipe
@@ -24,10 +30,10 @@ struct LoginView: View {
             VStack(spacing: 10) {
                 VStack(spacing: 0) {
                     Text("First things first")
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                        .font(.appFootnote)
 
                     Text("Let's log you in")
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
+                        .font(.appLargeTitle)
                 }
 
                 Image("login_illustration")
@@ -71,7 +77,7 @@ struct LoginView: View {
 
                         } label: {
                             Text("Reset Password?")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                                .font(.appFootnote)
                                 .underline()
                                 .foregroundColor(Color.theme.primaryColor)
                         }
@@ -82,7 +88,7 @@ struct LoginView: View {
                         router.push(.register)
                     } label: {
                         Text("Dont have account? \(Text("Create").foregroundColor(Color.theme.primaryColor))")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            .font(.appFootnote)
                             .underline()
                     }
                     .foregroundColor(Color.theme.blackAndWhite)
@@ -133,7 +139,7 @@ struct LoginView: View {
                 .padding(.top, 20)
 
                 Text("Or Login with")
-                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                    .font(.appFootnote)
 
                 HStack {
                     SocialAuthItemView(
