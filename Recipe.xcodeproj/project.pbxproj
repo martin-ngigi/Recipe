@@ -15,7 +15,6 @@
 		86E0D6A72E229D52005E7E81 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6A62E229D52005E7E81 /* FirebaseMessaging */; };
 		86E0D6BB2E22D32D005E7E81 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6BA2E22D32D005E7E81 /* GoogleSignIn */; };
 		86E0D6BD2E22D32D005E7E81 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 86E0D6BC2E22D32D005E7E81 /* GoogleSignInSwift */; };
-		86E0D78D2E22D986005E7E81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */; };
 		B161B49930161F75006F8BB7 /* SharedFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B161B49130161F75006F8BB7 /* SharedFramework.framework */; };
 		B161B49A30161F75006F8BB7 /* SharedFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B161B49130161F75006F8BB7 /* SharedFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B161B66A301626EA006F8BB7 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = B161B669301626EA006F8BB7 /* FirebaseAI */; };
@@ -145,7 +144,6 @@
 		5B90AAA42D81C010001A07C1 /* RecipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B90AAAE2D81C010001A07C1 /* RecipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86ABED882E28C24200B7EDC2 /* ReadMe.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.MD; sourceTree = "<group>"; };
-		86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B161B47230161F4A006F8BB7 /* User.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = User.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B161B48130161F5A006F8BB7 /* Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B161B49130161F75006F8BB7 /* SharedFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -762,7 +760,6 @@
 				B1ECA5542F879DBC006338A1 /* Fonts */,
 				86ABED882E28C24200B7EDC2 /* ReadMe.MD */,
 				86ABED652E28C09E00B7EDC2 /* screenshots */,
-				86E0D78C2E22D986005E7E81 /* GoogleService-Info.plist */,
 				5B90AA962D81C00E001A07C1 /* Recipe */,
 				5B90AAA72D81C010001A07C1 /* RecipeTests */,
 				5B90AAB12D81C010001A07C1 /* RecipeUITests */,
@@ -1100,7 +1097,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				86ABED892E28C24200B7EDC2 /* ReadMe.MD in Resources */,
-				86E0D78D2E22D986005E7E81 /* GoogleService-Info.plist in Resources */,
 				B1ECA5562F879DE8006338A1 /* .swift-format in Resources */,
 				B1ECA5582F879E0D006338A1 /* .swiftlint.yml in Resources */,
 			);

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 01/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ImageOverlay.swift
 //  Recipe
@@ -26,7 +32,7 @@ struct ImageOverlay: View {
             VStack(spacing: 20) {
                 if let title = title {
                     Text(title)
-                        .font(.title2)
+                        .font(.appTitle2)
                         .fontWeight(.semibold)
                         .padding(.top, 20)
                 }
@@ -39,6 +45,7 @@ struct ImageOverlay: View {
 
                 if let description = description {
                     Text(description)
+                        .font(.appBody)
                         .foregroundColor(.secondary)
                         .lineLimit(3)
                 }

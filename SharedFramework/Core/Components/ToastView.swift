@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 01/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ToastView.swift
 //  Recipe
@@ -20,7 +26,7 @@ struct ToastView: View {
                 .foregroundStyle(style.themeColor)
 
             Text(message)
-                .font(.caption)
+                .font(.appCaption)
                 .foregroundStyle(.black)
 
             Spacer(minLength: 10)

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 01/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RegisterView.swift
 //  Recipe
@@ -19,10 +25,10 @@ struct RegisterView: View {
             VStack(spacing: 10) {
                 VStack(spacing: 0) {
                     Text("Glad that you are ready to join us!")
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                        .font(.appBody)
 
                     Text("Let's sign you up")
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 25))
+                        .font(.appLargeTitle)
                 }
 
                 Image("login_illustration")
@@ -74,7 +80,7 @@ struct RegisterView: View {
                         router.pop()
                     } label: {
                         Text("Already have account? \(Text("Login").foregroundColor(Color.blue))")
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
+                            .font(.appFootnote)
                             .underline()
                     }
 
@@ -93,7 +99,8 @@ struct RegisterView: View {
                                         value: DialogEntity(
                                             title: "Registration Successful!",
                                             message:
-                                                "Welcome to the community!\nPlease check"
+                                                "Welcome to the community!
+Please check"
                                                 + "your email for verification link and proceed to login.",
                                             icon: "",
                                             confirmButtonText: "Proceed",
