@@ -28,7 +28,7 @@ struct BorderedPasswordField: View {
         VStack(alignment: .leading, spacing: 5) {
             if !description.isEmpty {
                 Text(description)
-                    .font(.appBody)
+                    .font(.appFootnote)
             }
 
             HStack {

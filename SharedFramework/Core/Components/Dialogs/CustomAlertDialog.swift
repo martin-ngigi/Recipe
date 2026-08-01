@@ -72,15 +72,10 @@ struct CustomAlertDialog: View {
                     }
                 }
                 .padding()
-                .background(Color.theme.whiteAndBlack)
-                .cornerRadius(11)
+                .glassCard()
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 11)
-                        .stroke(Color.theme.primaryColor, lineWidth: 1)
-                )
                 .padding()
-                .shadow(radius: 10)
+                .shadow(color: .black.opacity(0.35), radius: 20, y: 10)
             }
         }
     }

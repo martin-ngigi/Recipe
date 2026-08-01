@@ -99,8 +99,7 @@ struct RegisterView: View {
                                         value: DialogEntity(
                                             title: "Registration Successful!",
                                             message:
-                                                "Welcome to the community!
-Please check"
+                                                "Welcome to the community! Please check"
                                                 + "your email for verification link and proceed to login.",
                                             icon: "",
                                             confirmButtonText: "Proceed",
