@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 12/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  SettingsScreen.swift
 //  Recipe
@@ -13,20 +19,24 @@ struct SettingsScreen: View {
     @StateObject var settingsViewModel = SettingsViewModel()
 
     var body: some View {
-        VStack {
-            VStack {
-
-                Image("settings_icon")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-
-                Text("Customize your settings")
-                    .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-            }
-            .padding(.top)
-
+        VStack{
             List {
+                VStack {
+
+                    Image("settings_icon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+
+                    Text("Customize your settings")
+                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .padding(.top)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                
                 Section("App Settings") {
 
                     /*
