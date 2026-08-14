@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 14/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  DashboardView.swift
 //  Recipe
@@ -13,14 +19,14 @@ struct DashboardView: View {
     @EnvironmentObject var tabRouter: TabRouter
 
     var body: some View {
-        Group {
+        //Group {
             if #available(iOS 26.0, *) {
                 NavBariOS26AndAbove()
             }
             else {
                 NavBariOS26AndBelow(dashboardViewModel: dashboardViewModel)
             }
-        }
+        //}
     }
 }
 

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 14/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  TabItemEntity.swift
 //  Recipe
@@ -13,6 +19,7 @@ enum TabItemEntity: Int, CaseIterable {
     case favourites
     case profile
     case settings
+    case search
 
     var title: String {
         switch self {
@@ -23,6 +30,8 @@ enum TabItemEntity: Int, CaseIterable {
         case .profile:
             return "Profile"
         case .settings:
+            return "Settings"
+        case .search:
             return "Settings"
         }
     }
@@ -36,7 +45,9 @@ enum TabItemEntity: Int, CaseIterable {
         case .profile:
             return "person.fill"  // account
         case .settings:
-            return "gearshape.fill"  // settings
+            return "gearshape.fill"  // settings //
+        case .search:
+            return "magnifyingglass"
         }
     }
 
@@ -49,6 +60,8 @@ enum TabItemEntity: Int, CaseIterable {
         case .profile:
             return Color.blue
         case .settings:
+            return Color.cyan
+        case .search:
             return Color.cyan
         }
     }
