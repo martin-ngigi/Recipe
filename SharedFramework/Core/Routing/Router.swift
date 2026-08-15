@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 01/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  Router.swift
 //  Recipe
@@ -136,6 +142,7 @@ func viewForRoute(_ route: Route, router: Router) -> some View {
     case .dashboard:
         DashboardView()
             .navigationBarBackButtonHidden()  // MARK: Temporal fix
+            .swipeBackDisabled()
 
     case .login,
         .register:

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 12/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  FavouritesListView.swift
 //  Recipe
@@ -13,7 +19,7 @@ struct FavouritesListView: View {
 
     var body: some View {
         NavigationView {
-            List {
+            ScrollView(showsIndicators: false) {
                 if favouriteRecipesViewModel.favouriteRecipes.isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
@@ -25,76 +31,99 @@ struct FavouritesListView: View {
                     )
                 }
                 else {
-                    ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self) { recipe in
-                        FavouriteItemView(
-                            recipe: recipe,
-                            onTapEntireItem: { recipe in
-                                router.push(.recipedetails(recipe: recipe))
-                            },
-                            onTapAddOrRemove: { favourite in
-                                initDelete(favourite: favourite)
-                            }
-                        )
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                // Delete action
-                                if let index = favouriteRecipesViewModel.favouriteRecipes.firstIndex(of: recipe) {
-                                    delete(indexSet: IndexSet(integer: index))
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        ForEach(favouriteRecipesViewModel.favouriteRecipes, id: \.self) { recipe in
+                            
+                            Section {
+                                Group{
+                                    if #available(iOS 17.0, *) {
+                                        FavouriteItemView(
+                                            recipe: recipe,
+                                            onTapEntireItem: { recipe in
+                                                router.push(.recipedetails(recipe: recipe))
+                                            },
+                                            onTapAddOrRemove: { favourite in
+                                                initDelete(favourite: favourite)
+                                            }
+                                        )
+                                    }
+                                    else {
+                                        FavouriteItemView(
+                                            recipe: recipe,
+                                            onTapEntireItem: { recipe in
+                                                router.push(.recipedetails(recipe: recipe))
+                                            },
+                                            onTapAddOrRemove: { favourite in
+                                                initDelete(favourite: favourite)
+                                            }
+                                        )
+                                    }
                                 }
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
+                                .contextMenu {
+                                    Button(role: .destructive) {
+                                        // Delete action
+                                        if let index = favouriteRecipesViewModel.favouriteRecipes.firstIndex(of: recipe) {
+                                            delete(indexSet: IndexSet(integer: index))
+                                        }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
 
-                            Button {
-                                // Share action
-                                Task {
-                                    favouriteRecipesViewModel.updateShareState(value: .isLoading)
-                                    await ShareRecipeUtil.shared.shareRecipeAsPDF(
-                                        recipe: recipe,
-                                        onSuccess: {
-                                            favouriteRecipesViewModel.updateShareState(value: .good)
-                                            favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                        },
-                                        onError: { error in
-                                            favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                            favouriteRecipesViewModel.updateDialogEntity(
-                                                value: DialogEntity(
-                                                    title: "Sharing Recipe Failed",
-                                                    message: error,
-                                                    icon: "",
-                                                    confirmButtonText: "",
-                                                    dismissButtonText: "Okay",
-                                                    onConfirm: {
-                                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                                    },
-                                                    onDismiss: {
-                                                        favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
-                                                    }
-                                                )
+                                    Button {
+                                        // Share action
+                                        Task {
+                                            favouriteRecipesViewModel.updateShareState(value: .isLoading)
+                                            await ShareRecipeUtil.shared.shareRecipeAsPDF(
+                                                recipe: recipe,
+                                                onSuccess: {
+                                                    favouriteRecipesViewModel.updateShareState(value: .good)
+                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                },
+                                                onError: { error in
+                                                    favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                    favouriteRecipesViewModel.updateDialogEntity(
+                                                        value: DialogEntity(
+                                                            title: "Sharing Recipe Failed",
+                                                            message: error,
+                                                            icon: "",
+                                                            confirmButtonText: "",
+                                                            dismissButtonText: "Okay",
+                                                            onConfirm: {
+                                                                favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                            },
+                                                            onDismiss: {
+                                                                favouriteRecipesViewModel.updateIsShowAlertDialog(value: false)
+                                                            }
+                                                        )
+                                                    )
+                                                }
                                             )
                                         }
-                                    )
-                                }
-                            } label: {
-                                Label("Share", systemImage: "square.and.arrow.up")
-                            }
+                                    } label: {
+                                        Label("Share", systemImage: "square.and.arrow.up")
+                                    }
 
-                            // Add other relevant options here
-                            /*
-                            Button {
-                            } label: {
-                                Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                                    // Add other relevant options here
+                                    /*
+                                    Button {
+                                    } label: {
+                                        Label("Contact Chef", systemImage: "phone.arrow.up.right")
+                                    }
+                                    */
+                                }
+
+                            } header: {
+                                FavouriteHeader(title: recipe.name)
                             }
-                            */
                         }
+                        .onDelete(perform: delete(indexSet:))
+                        .listRowSeparator(.hidden)
+                        .listRowSpacing(-4)
                     }
-                    .onDelete(perform: delete(indexSet:))
-                    .listRowSeparator(.hidden)
-                    .listRowSpacing(-4)
                 }
 
             }
-            .listStyle(.plain)
+            .padding()
             .searchable(text: $favouriteRecipesViewModel.searchField, prompt: "Search favourite...")
             .navigationTitle(favouriteRecipesViewModel.favouritesListViewTitle)
             .task {
