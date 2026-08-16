@@ -36,7 +36,6 @@ struct HomeView: View {
                         }
                     )
 
-                    // Trending Recipes
                     TrendingRecipesHome(
                         columns: columns,
                         recipes: homeViewModel.trendingRecipesList,
@@ -64,7 +63,7 @@ struct HomeView: View {
 
                 }
             }
-            .navigationTitle("Discover Best Recipes")
+            .navigationTitle("Recipe Picks")
             .padding(.horizontal)
             .searchable(
                 text: $homeViewModel.searchField,

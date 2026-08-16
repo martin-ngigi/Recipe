@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  JustForYouSliderView.swift
 //  Recipe
@@ -20,7 +26,7 @@ struct JustForYouSliderView: View {
     var body: some View {
         VStack(spacing: 2) {
             Text("Just For You")
-                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16, relativeTo: .subheadline))
+                .font(.appHeadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if recipes.isEmpty && isLoading == false {
@@ -45,26 +51,40 @@ struct JustForYouSliderView: View {
                                 CustomImageView(
                                     url: recipes[index].image,
                                     maxWidth: .infinity,
-                                    height: 150
+                                    height: 200
                                 )
                                 .foregroundColor(Color.theme.blackAndWhite)
                                 .clipped()
-                                .cornerRadius(10)
+                                .cornerRadius(24)
                                 .contentShape(Rectangle())
-                                .overlay {
-                                    ZStack {
-                                        Color.black.opacity(0.4)
-                                            .cornerRadius(10)
+                                .overlay(alignment: .bottom) {
+                                    VStack(spacing: 0){
+                                        Text("\(recipes[index].name)")
+                                            .font(.title3)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(Color.theme.whiteColor)
 
-                                        VStack {
-                                            Spacer()
-                                            Text("\(recipes[index].name) by \(recipes[index].chef?.name ?? "")")
-                                                .font(.custom(FontConstants.POPPINS_LIGHT, size: 18))
-                                                .foregroundColor(Color.theme.whiteColor)
-                                                .padding(.bottom, 8)
-                                                .padding(.horizontal)
-                                        }
+                                        Text("\(recipes[index].chef?.name ?? "")")
+                                            .font(.appFootnote)
+                                            .foregroundColor(Color.theme.whiteColor)
+
                                     }
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.bottom, 32)
+                                    .padding(.horizontal)
+                                    .background(
+                                        LinearGradient(
+                                            colors: [
+                                                Color.black.opacity(0.05),
+                                                Color.black.opacity(0.075),
+                                                Color.black.opacity(0.1),
+                                                Color.black.opacity(0.15),
+                                                Color.black.opacity(0.2)
+                                            ],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                    )
                                 }
                             }
 
@@ -72,9 +92,9 @@ struct JustForYouSliderView: View {
                         .tag(index)
                     }
                 }
-                .frame(height: 150)
+                .frame(height: 200)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(RoundedRectangle(cornerRadius: 24))
                 .onReceive(timer) { _ in
                     guard !reduceMotion else { return }
                     withAnimation {
