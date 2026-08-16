@@ -14,6 +14,7 @@
 import SwiftUI
 
 struct RegisterView: View {
+    let isBackButtonHidden: Bool
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var router: Router
     @FocusState var focusedInputField: RegisterInputFields?
@@ -268,7 +269,7 @@ struct RegisterView: View {
 }
 
 #Preview {
-    RegisterView()
+    RegisterView(isBackButtonHidden: true)
         .environmentObject(Router())
 
 }

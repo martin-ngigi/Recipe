@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeItemView.swift
 //  Recipe
@@ -23,8 +29,6 @@ struct RecipeItemView: View {
 
                 HStack {
                     Image(systemName: "star.fill")
-                        .resizable()
-                        .frame(width: 14, height: 14)
                         .foregroundColor(Color.theme.primaryColor)
 
                     Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")

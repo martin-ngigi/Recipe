@@ -44,11 +44,6 @@ struct BorderedInputField: View {
                         text = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 44, height: 44)
-                            .padding(.trailing)
-                            .foregroundColor(.red)
                     }
                 }
 

@@ -12,10 +12,11 @@
 //
 
 import Foundation
-
+/*
 final class SwipeBackLock {
     static let shared = SwipeBackLock()
     private init() {}
 
     var isEnabled: Bool = true
 }
+*/

@@ -14,6 +14,7 @@
 import Foundation
 import UIKit
 
+/*
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -25,3 +26,4 @@ extension UINavigationController: UIGestureRecognizerDelegate {
         return SwipeBackLock.shared.isEnabled
     }
 }
+*/

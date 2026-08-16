@@ -14,6 +14,7 @@
 import Foundation
 import SwiftUI
 
+/*
 struct SwipeBackDisabled: ViewModifier {
     let disabled: Bool
 
@@ -29,3 +30,4 @@ struct SwipeBackDisabled: ViewModifier {
             }
     }
 }
+*/

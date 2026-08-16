@@ -85,7 +85,7 @@ struct LoginView: View {
 
                     Button {
                         MyFirebaseAnalytics.shared.logEvent(title: "navigete_to_register", contentType: content)
-                        router.push(.register)
+                        router.push(.register(isBackButtonHidden: false))
                     } label: {
                         Text("Dont have account? \(Text("Create").foregroundColor(Color.theme.primaryColor))")
                             .font(.appFootnote)

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeDetailsView.swift
 //  Recipe
@@ -247,16 +253,6 @@ struct RecipeDetailsView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    router.pop()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .frame(width: 44, height: 44)
-                        .scaledToFill()
-                }
-            }
-
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Menu {
@@ -288,8 +284,6 @@ struct RecipeDetailsView: View {
 
                 } label: {
                     Image(systemName: "ellipsis")
-                        .frame(width: 44, height: 44)
-                        .scaledToFill()
                 }
             }
         }

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  HomeView.swift
 //  Recipe
@@ -85,7 +91,7 @@ struct HomeView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 44, height: 44)
+                            .frame(width: 36, height: 36)
                             .foregroundColor(Color.theme.grayColor1)
                     }
                     .accessibilityLabel("Profile")

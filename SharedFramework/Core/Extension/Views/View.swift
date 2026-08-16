@@ -139,8 +139,10 @@ extension View {
         }
     }
     
+    /*
     func swipeBackDisabled(disabled: Bool = true) -> some View {
         modifier(SwipeBackDisabled(disabled: disabled))
     }
+    */
 
 }
