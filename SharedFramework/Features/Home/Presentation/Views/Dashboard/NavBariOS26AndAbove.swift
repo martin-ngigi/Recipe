@@ -87,6 +87,10 @@ struct NavBariOS26AndAbove: View {
             }
            
         }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tabViewBottomAccessory{
+            ChefQuoteView()
+        }
         .tabViewStyle(.sidebarAdaptable)
         .searchable(text: $search)
         .tint(Color.theme.primaryColor)
