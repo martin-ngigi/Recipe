@@ -116,22 +116,35 @@ extension View {
     func glassCard() -> some View {
         if #available(iOS 26.0, *) {
             self
-                .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                .glassEffect(
+                    .regular.tint(Color.theme.whiteAndBlack.opacity(0.5)),
+                    in: ConcentricRectangle(
+                        corners: .concentric(minimum: 24),
+                        isUniform: true
+                    )
+                )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .stroke(
-                            LinearGradient(
-                                colors: [.white.opacity(0.6), .white.opacity(0.05)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 0.75
-                        )
+                    ConcentricRectangle(
+                        corners: .concentric(minimum: 24),
+                        isUniform: true
+                    )
+                    .stroke(
+                        LinearGradient(
+                            colors: [.white.opacity(0.6), .white.opacity(0.05)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 0.75
+                    )
                 )
         }
         else {
             self
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24))
+                .background(
+                    Color.theme.whiteAndBlack.opacity(0.5),
+                    in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+                )
+                .background(.thickMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .overlay(
                     RoundedRectangle(cornerRadius: 24)
                         .stroke(Color.theme.blackAndWhite.opacity(0.25), lineWidth: 0.5)
