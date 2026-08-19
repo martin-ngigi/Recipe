@@ -255,26 +255,34 @@ struct RecipeDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
+                    
+                    
                     Menu {
-                        Button("WhatsApp") {
-                            openWhatsApp()
+                        Section{
+                            Button("WhatsApp", systemImage: "phone.arrow.up.right") {
+                                openWhatsApp()
+                            }
+                            
+                            Button("SMS", systemImage: "ellipsis.message") {
+                                openSMS()
+                            }
                         }
+                        
+                        Section{
+                            Button("Phone", systemImage: "phone") {
+                                openPhoneDailer()
+                            }
 
-                        Button("SMS") {
-                            openSMS()
-                        }
-
-                        Button("Phone") {
-                            openPhoneDailer()
-                        }
-
-                        Button("Email") {
-                            recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                            Button("Email", systemImage: "envelope") {
+                                recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                            }
                         }
 
                     } label: {
                         Label("Contact Chef", systemImage: "phone.arrow.up.right")
                     }
+                    
+                    Divider()
 
                     Button {
                         Task { await shareRecipeAsPDF() }
