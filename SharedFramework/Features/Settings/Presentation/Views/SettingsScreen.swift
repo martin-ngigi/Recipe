@@ -58,6 +58,7 @@ struct SettingsScreen: View {
                                     .tag(theme)
                             }
                         }
+                        .controlSize(.large)
                         .pickerStyle(SegmentedPickerStyle())
                         .onChange(of: themesViewModel.currentTheme) { newValue in
                             themesViewModel.changeTheme(to: newValue)
