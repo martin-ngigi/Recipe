@@ -12,15 +12,37 @@
 //
 
 import SwiftUI
+import os
 
 struct NotificationsListView: View {
+    
+    @StateObject var notificationsViewModel = NotificationsViewModel()
+    
     var body: some View {
         List{
-            ContentUnavailableView(
-                "No Notifications Yet.",
-                systemImage: "bubble.left.and.bubble.right",
-                description: Text("New notifications will appear here.")
+            
+            CustomTabsView(
+                tabs: $notificationsViewModel.states.tabs,
+                selectedTab: $notificationsViewModel.states.selectedTab,
+                onTap: { selectedTab, index in
+                    os.Logger().debug("Selected tab: \(selectedTab.title) at index \(index)")
+                },
+                labelProvider: { $0.title }
             )
+            
+            TabView(selection: $notificationsViewModel.states.selectedTab) {
+                ContentUnavailableView(
+                    "No Notifications Yet.",
+                    systemImage: "bubble.left.and.bubble.right",
+                    description:
+                        Text("New notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.caption).foregroundStyle(.tertiary))")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                )
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .frame(minHeight: UIScreen.main.bounds.height)
+            
         }
         .searchable(
             text: .constant("")
