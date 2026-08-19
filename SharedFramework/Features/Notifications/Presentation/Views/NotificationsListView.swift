@@ -14,6 +14,7 @@
 import SwiftUI
 import os
 
+
 struct NotificationsListView: View {
     
     @StateObject var notificationsViewModel = NotificationsViewModel()
@@ -42,14 +43,47 @@ struct NotificationsListView: View {
             
             Section{
                 TabView(selection: $notificationsViewModel.states.selectedTab) {
+                    
                     ContentUnavailableView(
                         "No Notifications Yet.",
                         systemImage: "bubble.left.and.bubble.right",
                         description:
-                            Text("New notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
+                            Text("All notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
                             .font(.body)
                             .foregroundStyle(.secondary)
                     )
+                    .tag(NotificationsTabs.all)
+                    
+                    ContentUnavailableView(
+                        "No Notifications Yet.",
+                        systemImage: "bubble.left.and.bubble.right",
+                        description:
+                            Text("Inbox notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                    )
+                    .tag(NotificationsTabs.inbox)
+                    
+                    ContentUnavailableView(
+                        "No Notifications Yet.",
+                        systemImage: "bubble.left.and.bubble.right",
+                        description:
+                            Text("Promotions notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                    )
+                    .tag(NotificationsTabs.promotions)
+                    
+                    ContentUnavailableView(
+                        "No Notifications Yet.",
+                        systemImage: "bubble.left.and.bubble.right",
+                        description:
+                            Text("Starred notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                    )
+                    .tag(NotificationsTabs.starred)
+                    
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .frame(minHeight: UIScreen.main.bounds.height * 0.5)

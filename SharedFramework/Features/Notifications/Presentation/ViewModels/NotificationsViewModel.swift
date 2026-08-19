@@ -16,9 +16,41 @@ import Combine
 
 enum NotificationsTabs: Int, CaseIterable {
     case all = 0
+    case inbox
+    case promotions
+    case starred
+
+    var title: String {
+        switch self {
+        case .all:
+            return "All"
+        case .inbox:
+            return "Inbox"
+        case .promotions:
+            return "Promotions"
+        case .starred:
+            return "Starred"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .all:
+            return "bell"
+        case .inbox:
+            return "tray"
+        case .promotions:
+            return "tag"
+        case .starred:
+            return "star.fill"
+        }
+    }
+}
+
+enum NotificationsFilter: Int, CaseIterable {
+    case all = 0
     case unread
     case read
-    case starred
 
     var title: String {
         switch self {
@@ -28,8 +60,7 @@ enum NotificationsTabs: Int, CaseIterable {
             return "Unread"
         case .read:
             return "Read"
-        case .starred:
-            return "Starred"
+
         }
     }
 
@@ -41,8 +72,6 @@ enum NotificationsTabs: Int, CaseIterable {
             return "bell.badge.fill"
         case .read:
             return "bell.badge"
-        case .starred:
-            return "star.fill"
         }
     }
 }
@@ -54,4 +83,8 @@ struct NotificationsStates{
 
 class NotificationsViewModel: ObservableObject{
     @Published var states = NotificationsStates()
+    
+    func updateSelectedTab(value: NotificationsTabs) {
+        states.selectedTab = value
+    }
 }
