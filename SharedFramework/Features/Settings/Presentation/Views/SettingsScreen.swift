@@ -110,6 +110,19 @@ struct SettingsScreen: View {
 
                 }
 
+                
+                Section("Text Size") {
+                    Slider(value: $settingsViewModel.textSize, in: 1...10, step: 2){
+                        
+                    } minimumValueLabel: {
+                        Text("A")
+                            .font(.footnote)
+                    } maximumValueLabel: {
+                        Text("A")
+                            .font(.title3)
+                    }
+                }
+                
                 Section("App Details") {
 
                     HStack {
