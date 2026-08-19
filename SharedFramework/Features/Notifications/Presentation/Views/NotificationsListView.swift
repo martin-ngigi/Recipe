@@ -21,27 +21,39 @@ struct NotificationsListView: View {
     var body: some View {
         List{
             
-            CustomTabsView(
-                tabs: $notificationsViewModel.states.tabs,
-                selectedTab: $notificationsViewModel.states.selectedTab,
-                onTap: { selectedTab, index in
-                    os.Logger().debug("Selected tab: \(selectedTab.title) at index \(index)")
-                },
-                labelProvider: { $0.title }
-            )
-            
-            TabView(selection: $notificationsViewModel.states.selectedTab) {
-                ContentUnavailableView(
-                    "No Notifications Yet.",
-                    systemImage: "bubble.left.and.bubble.right",
-                    description:
-                        Text("New notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.caption).foregroundStyle(.tertiary))")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+            Section{
+                CustomTabsView(
+                    tabs: $notificationsViewModel.states.tabs,
+                    selectedTab: $notificationsViewModel.states.selectedTab,
+                    onTap: { selectedTab, index in
+                        os.Logger().debug("Selected tab: \(selectedTab.title) at index \(index)")
+                    },
+                    iconProvider: { tab in
+                        let isSelected = notificationsViewModel.states.selectedTab == tab
+                        let icon  = isSelected ? tab.icon : ""
+                        return icon
+                    },
+                    labelProvider: { $0.title }
                 )
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(minHeight: UIScreen.main.bounds.height)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .ignoresSafeArea(edges: .horizontal)
+            
+            Section{
+                TabView(selection: $notificationsViewModel.states.selectedTab) {
+                    ContentUnavailableView(
+                        "No Notifications Yet.",
+                        systemImage: "bubble.left.and.bubble.right",
+                        description:
+                            Text("New notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                    )
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .frame(minHeight: UIScreen.main.bounds.height * 0.5)
+            }
             
         }
         .searchable(

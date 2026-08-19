@@ -20,17 +20,27 @@ struct CustomTabsView<T: Hashable>: View {
     @Binding var tabs: [T]
     @Binding var selectedTab: T
     var onTap: (T, Int) -> Void
+    var iconProvider: (T) -> String
     var labelProvider: (T) -> String
 
     var body: some View {
 
         Picker(selection: $selectedTab, label: Text("")) {
             ForEach(tabs, id: \.self) { tab in
-                Text(labelProvider(tab)).tag(tab)
-                    .foregroundColor(Color.theme.blackAndWhite)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                HStack{
+//                    let icon = iconProvider(tab)
+//                    if !icon.isEmpty{
+//                        Image(systemName: icon)
+//                    }
+                    
+                    Text(labelProvider(tab))
+                }
+                .tag(tab)
+                
             }
         }
+        //.controlSize(.regular) // size of the picker
         .labelsHidden()
         .pickerStyle(SegmentedPickerStyle())
         .onChange(of: selectedTab) { _, newValue in
