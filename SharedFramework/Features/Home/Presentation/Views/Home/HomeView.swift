@@ -64,12 +64,14 @@ struct HomeView: View {
                 }
             }
             .navigationTitle("Recipe Picks")
+            .navigationSubtitle("Discover best recipes")
             .padding(.horizontal)
             .searchable(
                 text: $homeViewModel.searchField,
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search recipes..."
             )
+            .scrollEdgeEffectStyle(.soft, for: .top)
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -91,7 +93,7 @@ struct HomeView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 44, height: 44)
-                            .foregroundColor(Color.theme.blackAndWhite)
+                            .foregroundColor(Color.gray)
 
                     }
                     .accessibilityLabel("Profile")
@@ -106,7 +108,7 @@ struct HomeView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 36, height: 36)
-                            .foregroundColor(Color.theme.blackAndWhite)
+                            .foregroundColor(Color.gray)
                     }
                     .accessibilityLabel("Notifications")
                     .badge(2)

@@ -25,9 +25,11 @@ struct NotificationsListView: View {
         .searchable(
             text: .constant("")
         )
+        .searchToolbarBehavior(.minimize)
         .navigationTitle("Inbox")
         .navigationBarTitleDisplayMode(.large)
         .navigationSubtitle("Updated just now")
+        .scrollEdgeEffectStyle(.soft, for: .top)
         .toolbar{
             
             ToolbarItem(placement: .bottomBar) {
@@ -38,8 +40,6 @@ struct NotificationsListView: View {
 
             DefaultToolbarItem(kind: .search, placement: .bottomBar)
             
-            ToolbarSpacer(.flexible, placement: .bottomBar)
-
             ToolbarItem(placement: .bottomBar) {
                 Button{
                     
