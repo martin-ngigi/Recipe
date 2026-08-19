@@ -37,7 +37,11 @@ class Router: ObservableObject{
 
 class Router: ObservableObject {
     // Published property to be used with SwiftUI's NavigationStack
-    @Published var path = NavigationPath()
+    @Published var path = NavigationPath() {
+        didSet {
+            syncRoutesIfNeeded()
+        }
+    }
 
     // Internal mirror stack to allow easier route manipulation and tracking
     private var routeStack: [Route] = []
@@ -127,6 +131,14 @@ class Router: ObservableObject {
         path = NavigationPath()
         routeStack.removeAll()
     }
+    
+    /// Keeps `routes` truthful when `path` shrinks from outside
+    /// (interactive swipe-back, system back button, etc).
+    private func syncRoutesIfNeeded() {
+        if path.count < routeStack.count {
+            routeStack.removeLast(routeStack.count - path.count)
+        }
+    }
 
     deinit {}
 }
@@ -164,6 +176,9 @@ func viewForRoute(_ route: Route, router: Router) -> some View {
 
     case .popularChefs(let list):
         AllChefsView(list: list)
+        
+    case .notifications:
+        NotificationsListView()
     }
 }
 

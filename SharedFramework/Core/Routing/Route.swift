@@ -29,4 +29,5 @@ enum Route: Hashable {
     case chefdetails(chef: UserModel)
     case trendingRecipes(list: [RecipeModel])
     case popularChefs(list: [UserModel])
+    case notifications
 }

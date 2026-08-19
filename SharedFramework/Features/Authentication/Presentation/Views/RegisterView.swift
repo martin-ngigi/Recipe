@@ -235,7 +235,7 @@ struct RegisterView: View {
             }
             .padding()
         }
-        .reusableToolbar(
+        .customToolbar(
             title: "",
             onTapBack: {
                 dismiss()

@@ -82,18 +82,34 @@ struct HomeView: View {
                         )
                     }
                 }
-
-                ToolbarItem(placement: .topBarTrailing) {
+                
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         tabRouter.selectedTab = .profile
                     } label: {
                         Image(systemName: "person.crop.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 36, height: 36)
-                            .foregroundColor(Color.theme.grayColor1)
+                            .frame(width: 44, height: 44)
+                            .foregroundColor(Color.theme.blackAndWhite)
+
                     }
                     .accessibilityLabel("Profile")
+                }
+                .sharedBackgroundVisibility(.hidden)
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        router.push(.notifications)
+                    } label: {
+                       Image(systemName: "bell.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(Color.theme.blackAndWhite)
+                    }
+                    .accessibilityLabel("Notifications")
+                    .badge(2)
                 }
 
             }

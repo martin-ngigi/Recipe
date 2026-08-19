@@ -321,7 +321,7 @@ struct LoginView: View {
             }
         }
         .fullScreenProgressOverlay(isShowing: loginViewModel.loginState == .isLoading)
-        .reusableToolbar(
+        .customToolbar(
             title: "",
             onTapBack: {
                 MyFirebaseAnalytics.shared.logEvent(title: "login_ontap_back", contentType: content)

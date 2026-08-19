@@ -5,7 +5,7 @@
 */
 
 //
-//  ReusableToolbar.swift
+//  CustomToolbar.swift
 //  Recipe
 //
 //  Created by Martin on 04/04/2025.
@@ -13,7 +13,7 @@
 
 import SwiftUI
 
-struct ReusableToolbar: ViewModifier {
+struct CustomToolbar: ViewModifier {
     let title: String
     let dismissIcon: String
     let onTapBack: () -> Void
@@ -45,13 +45,13 @@ struct ReusableToolbar: ViewModifier {
 }
 
 extension View {
-    func reusableToolbar(
+    func customToolbar(
         title: String,
         dismissIcon: String = "xmark",
         onTapBack: @escaping () -> Void
     ) -> some View {
         self.modifier(
-            ReusableToolbar(
+            CustomToolbar(
                 title: title,
                 dismissIcon: dismissIcon,
                 onTapBack: onTapBack
@@ -63,7 +63,7 @@ extension View {
 #Preview {
     NavigationView {
         VStack {}
-            .reusableToolbar(
+            .customToolbar(
                 title: "Title",
                 onTapBack: {}
             )
