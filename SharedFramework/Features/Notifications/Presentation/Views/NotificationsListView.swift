@@ -16,106 +16,78 @@ import os
 
 
 struct NotificationsListView: View {
-    
-    @StateObject var notificationsViewModel = NotificationsViewModel()
-    
+
+    @StateObject private var notificationsViewModel =
+        NotificationsViewModel()
+
+    @State private var selectedNotification: NotificationModel?
+    @State private var showNotification = false
+
     var body: some View {
-        List{
-            
-            Section{
-                CustomTabsView(
-                    tabs: $notificationsViewModel.states.tabs,
-                    selectedTab: $notificationsViewModel.states.selectedTab,
-                    onTap: { selectedTab, index in
-                        os.Logger().debug("Selected tab: \(selectedTab.title) at index \(index)")
-                    },
-                    iconProvider: { tab in
-                        let isSelected = notificationsViewModel.states.selectedTab == tab
-                        let icon  = isSelected ? tab.icon : ""
-                        return icon
-                    },
-                    labelProvider: { $0.title }
-                )
-            }
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
-            .ignoresSafeArea(edges: .horizontal)
-            
-            Section{
-                TabView(selection: $notificationsViewModel.states.selectedTab) {
-                    
-                    ContentUnavailableView(
-                        "No Notifications Yet.",
-                        systemImage: "bubble.left.and.bubble.right",
-                        description:
-                            Text("All notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                    )
-                    .tag(NotificationsTabs.all)
-                    
-                    ContentUnavailableView(
-                        "No Notifications Yet.",
-                        systemImage: "bubble.left.and.bubble.right",
-                        description:
-                            Text("Inbox notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                    )
-                    .tag(NotificationsTabs.inbox)
-                    
-                    ContentUnavailableView(
-                        "No Notifications Yet.",
-                        systemImage: "bubble.left.and.bubble.right",
-                        description:
-                            Text("Promotions notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                    )
-                    .tag(NotificationsTabs.promotions)
-                    
-                    ContentUnavailableView(
-                        "No Notifications Yet.",
-                        systemImage: "bubble.left.and.bubble.right",
-                        description:
-                            Text("Starred notifications will appear here. \n\(Text("\(notificationsViewModel.states.selectedTab.title) is empty").font(.footnote).foregroundStyle(.tertiary))")
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                    )
-                    .tag(NotificationsTabs.starred)
-                    
+
+        VStack {
+
+            CustomTabsView(
+                tabs: $notificationsViewModel.states.tabs,
+                selectedTab:
+                    $notificationsViewModel.states.selectedTab,
+                onTap: { selectedTab, index in
+                    notificationsViewModel.updateSelectedTab(value: selectedTab)
+                    os.Logger().debug("Selected tab: \(selectedTab.title) at index \(index)")
+                },
+                iconProvider: { tab in
+                    let isSelected = notificationsViewModel.states.selectedTab == tab
+                    return isSelected ? tab.icon : ""
+                },
+                labelProvider: {
+                    $0.title
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .frame(minHeight: UIScreen.main.bounds.height * 0.5)
+            )
+
+            TabView(selection: $notificationsViewModel.states.selectedTab) {
+                ForEach(NotificationsTabs.allCases,id: \.self) { tab in
+                    ScrollView(showsIndicators: false) {
+                        GroupedNotificationsView(
+                            groups: notificationsViewModel.sortedNotificationGroups,
+                            tab: tab,
+                            onNotificationTap: { notification in
+                                selectedNotification = notification
+                                showNotification = true
+                            }
+                        )
+                    }
+                    .tag(tab)
+                }
             }
-            
+            .tabViewStyle( PageTabViewStyle(indexDisplayMode: .never))
+            .frame( minHeight:UIScreen.main.bounds.height * 0.7)
         }
         .searchable(
-            text: .constant("")
+            text: $notificationsViewModel.notificationsSearchText,
+            prompt: "Search notifications"
         )
-        .searchToolbarBehavior(.minimize)
-        .navigationTitle("Inbox")
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("Notifications")
         .navigationBarTitleDisplayMode(.large)
-        .navigationSubtitle("Updated just now")
         .scrollEdgeEffectStyle(.soft, for: .top)
-        .toolbar{
-            
+        .toolbar {
+
             ToolbarItem(placement: .bottomBar) {
                 FilterPicker()
             }
-            
-            ToolbarSpacer(.flexible, placement: .bottomBar)
+
+            ToolbarSpacer( .flexible, placement: .bottomBar)
 
             DefaultToolbarItem(kind: .search, placement: .bottomBar)
-            
+
             ToolbarItem(placement: .bottomBar) {
-                Button{
-                    
+
+                Button {
+
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
             }
-            
         }
     }
 }

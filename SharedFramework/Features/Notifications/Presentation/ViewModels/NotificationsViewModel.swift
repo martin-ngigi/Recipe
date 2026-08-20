@@ -81,10 +81,145 @@ struct NotificationsStates{
     var selectedTab = NotificationsTabs.all
 }
 
-class NotificationsViewModel: ObservableObject{
+final class NotificationsViewModel: ObservableObject {
+
     @Published var states = NotificationsStates()
-    
+
+    @Published var notificationsSearchText = ""
+
+    @Published var selectedFilter: NotificationsFilter = .all
+
+    private(set) var notifications: [NotificationModel] =
+        NotificationModel.dummyNotifications
+
+    var selectedTab: NotificationsTabs {
+        states.selectedTab
+    }
+
+    var filteredNotifications: [NotificationModel] {
+
+        var result = notifications
+
+        // Main tab
+        switch states.selectedTab {
+
+        case .all:
+            break
+
+        case .inbox:
+            result = result.filter {
+                $0.category == .inbox
+            }
+
+        case .promotions:
+            result = result.filter {
+                $0.category == .promotions
+            }
+
+        case .starred:
+            result = result.filter {
+                $0.isStarred
+            }
+        }
+
+        // Read/unread filter
+        switch selectedFilter {
+
+        case .all:
+            break
+
+        case .unread:
+            result = result.filter {
+                !$0.isRead
+            }
+
+        case .read:
+            result = result.filter {
+                $0.isRead
+            }
+        }
+
+        // Search
+        let searchText = notificationsSearchText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !searchText.isEmpty else {
+            return result
+        }
+
+        return result.filter { notification in
+
+            notification.title?.localizedCaseInsensitiveContains(searchText) ?? false
+            ||
+            notification.message?.localizedCaseInsensitiveContains(searchText) ?? false
+        }
+    }
+
+    // MARK: - Grouping
+
+    var groupedAlertsAndNotificationsList:
+        [String: [NotificationModel]] {
+
+        Dictionary(
+            grouping: filteredNotifications
+        ) { notification in
+
+            notification.date?
+                .formattedNotificationDate()
+                ?? "Unknown Date"
+        }
+    }
+
+    // MARK: - Sorted Groups
+
+    var sortedNotificationGroups:
+        [(date: String, notifications: [NotificationModel])] {
+
+        groupedAlertsAndNotificationsList
+            .compactMap { key, notifications in
+
+                guard let date = key.toDate() else {
+                    return nil
+                }
+
+                return (
+                    date: key,
+                    notifications: notifications.sorted {
+                        guard
+                            let lhsDate = $0.date?.toDate(),
+                            let rhsDate = $1.date?.toDate()
+                        else {
+                            return false
+                        }
+
+                        return lhsDate > rhsDate
+                    }
+                )
+            }
+            .sorted { lhs, rhs in
+
+                guard
+                    let lhsDate = lhs.date.toDate(),
+                    let rhsDate = rhs.date.toDate()
+                else {
+                    return false
+                }
+
+                return lhsDate > rhsDate
+            }
+    }
+
+    // MARK: - Actions
+
     func updateSelectedTab(value: NotificationsTabs) {
         states.selectedTab = value
+    }
+
+    func updateSelectedFilter(value: NotificationsFilter) {
+        selectedFilter = value
+    }
+
+    func updateSearchText(_ value: String) {
+        notificationsSearchText = value
     }
 }
