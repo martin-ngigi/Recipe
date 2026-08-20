@@ -29,7 +29,7 @@ struct BorderedInputField: View {
         VStack(alignment: .leading, spacing: 5) {
             if !description.isEmpty {
                 Text(description)
-                    .font(.appFootnote)
+                    .font(.appBody)
             }
 
             HStack {
@@ -49,18 +49,18 @@ struct BorderedInputField: View {
 
             }
             .background(Color.gray.opacity(0.15))
-            .cornerRadius(12)
+            .cornerRadius(24)
             .keyboardType(keyboardType)
             .focused($isFocused)
-            .cornerRadius(12)
+            .cornerRadius(24)
             .overlay(
                 Group {
                     if isFocused {
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 24)
                             .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
                     }
                     else {
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 24)
                             .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
                     }
                 }
