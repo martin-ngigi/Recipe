@@ -187,7 +187,6 @@ struct SettingsScreen: View {
         }
         .navigationTitle("Settings")
         .toastView(toast: $settingsViewModel.toast)
-        // .hideBottomNavigationBar(false)
     }
 }
 

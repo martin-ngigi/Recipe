@@ -16,53 +16,6 @@ import SwiftUI
 import os
 
 extension View {
-    func hideBottomNavigationBar(_ hidden: Bool) -> some View {
-        self.onAppear {
-            os.Logger().debug("DEBUG: hideBottomNavigationBar hidden \(hidden)")
-            if let tabBar = findTabBarController()?.tabBar {
-                tabBar.isHidden = hidden
-                tabBar.isUserInteractionEnabled = !hidden
-                if hidden {
-                    tabBar.frame = .zero
-                    if hidden {
-                        tabBar.frame.origin.y = UIScreen.main.bounds.height + 100
-                    }
-                    else {
-                        tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBar.frame.height
-                    }
-                }
-                // We want to hide bottom navigation of the dashboard.
-                Utils.shared.postDashboardNotifications(isDashboardBottomNavigationVisible: !hidden)
-            }
-        }
-        .onDisappear {
-            /*
-            if let tabBar = findTabBarController()?.tabBar {
-                tabBar.isHidden = false
-                tabBar.isUserInteractionEnabled = true
-                // Restore tab bar height safely
-                if let window = UIApplication.shared.windows.first{
-                    let safeAreaBottom = window.safeAreaInsets.bottom
-                    let tabBarHeight: CGFloat = 49 + safeAreaBottom
-                    tabBar.frame.size.height = tabBarHeight
-                    tabBar.isHidden = false
-                }
-                os.Logger().debug("DEBUG: hideBottomNavBar onDisappear  hidden \(false)")
-            }
-            */
-        }
-
-    }
-
-    func findTabBarController() -> UITabBarController? {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let rootViewController = windowScene.windows.first?.rootViewController
-        {
-            return rootViewController as? UITabBarController
-                ?? rootViewController.children.compactMap { $0 as? UITabBarController }.first
-        }
-        return nil
-    }
 
     func fullScreenProgressOverlay(isShowing: Bool, text: String = "Loading...") -> some View {
         self.overlay(
@@ -119,14 +72,12 @@ extension View {
                 .glassEffect(
                     .regular.tint(Color.theme.whiteAndBlack.opacity(0.5)),
                     in: ConcentricRectangle(
-                        corners: .concentric(minimum: 24),
-                        isUniform: true
+                        corners: .concentric(minimum: 24)
                     )
                 )
                 .overlay(
                     ConcentricRectangle(
-                        corners: .concentric(minimum: 24),
-                        isUniform: true
+                        corners: .concentric(minimum: 24)
                     )
                     .stroke(
                         LinearGradient(
@@ -152,10 +103,9 @@ extension View {
         }
     }
     
-    /*
-    func swipeBackDisabled(disabled: Bool = true) -> some View {
-        modifier(SwipeBackDisabled(disabled: disabled))
+    @ViewBuilder
+    func glassButtonStyle(isFilled: Bool) -> some View {
+        modifier(ConditionalGlassStyle(isFilled: isFilled))
     }
-    */
 
 }

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 20/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  AllChefsView.swift
 //  Recipe
@@ -42,7 +48,6 @@ struct AllChefsView: View {
             }
             .listStyle(.plain)
             .navigationTitle("All Chefs")
-            // .hideBottomNavigationBar(false)
         }
     }
 }

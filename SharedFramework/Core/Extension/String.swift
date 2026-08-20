@@ -20,8 +20,8 @@ extension String {
         let modifiedString = " " + self
 
         // Regex pattern to match number + fullstop + optional whitespace, e.g. "1. ", "2. "
-        let pattern = "\d+\.\s*"
-
+        let pattern = #"\d+\.\s*"#
+        
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             let matches = regex.matches(

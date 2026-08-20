@@ -345,7 +345,6 @@ struct RecipeDetailsView: View {
             }
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
-        /* .hideBottomNavigationBar(true) */
     }
 
     func shareRecipeAsPDF() async {

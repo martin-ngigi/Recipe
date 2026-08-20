@@ -129,8 +129,6 @@ struct FavouritesListView: View {
             .task {
                 await favouriteRecipesViewModel.fetchFavouriteRecipes()
             }
-
-            // .hideBottomNavigationBar(false)
         }
         .fullScreenProgressOverlay(isShowing: favouriteRecipesViewModel.shareState == .isLoading)
         .overlay {

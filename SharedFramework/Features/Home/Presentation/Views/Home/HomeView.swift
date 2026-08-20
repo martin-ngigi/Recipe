@@ -22,6 +22,11 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
+                
+                Label("Desert", systemImage: "sun.max.fill")
+                    .padding()
+                    .glassEffect(.regular.interactive())
+                
                 VStack {
 
                     JustForYouSliderView(
@@ -135,7 +140,6 @@ struct HomeView: View {
             )
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
-        .hideBottomNavigationBar(false)
         .overlay {
             HomeSearchOverlay(
                 searchField: $homeViewModel.searchField,
