@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 20/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  String.swift
 //  Recipe
@@ -14,8 +20,8 @@ extension String {
         let modifiedString = " " + self
 
         // Regex pattern to match number + fullstop + optional whitespace, e.g. "1. ", "2. "
-        let pattern = "\\d+\\.\\s*"
-
+        let pattern = #"\d+\.\s*"#
+        
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             let matches = regex.matches(
@@ -85,4 +91,68 @@ extension String {
         return String(self.filter { !$0.isEmoji })
     }
 
+    
+    func toDate() -> Date? {
+        guard !isEmpty else {
+            return nil
+        }
+
+        let formats = [
+            "dd MMM yyyy hh:mm a",
+            "dd MMM hh:mm a",
+            "dd MMM yyyy"
+        ]
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = .current
+
+        for format in formats {
+            formatter.dateFormat = format
+
+            guard let date = formatter.date(from: self) else {
+                continue
+            }
+
+            // Input doesn't contain a year.
+            if format == "dd MMM hh:mm a" {
+                var components = Calendar.current.dateComponents(
+                    [.month, .day, .hour, .minute],
+                    from: date
+                )
+
+                components.year = Calendar.current.component(
+                    .year,
+                    from: Date()
+                )
+
+                return Calendar.current.date(from: components)
+            }
+
+            return date
+        }
+
+        return nil
+    }
+
+    func formatted(as format: String) -> String? {
+        guard let date = toDate() else {
+            return nil
+        }
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = .current
+        formatter.dateFormat = format
+
+        return formatter.string(from: date)
+    }
+
+    func extractTime() -> String? {
+        formatted(as: "hh:mm a")
+    }
+
+    func formattedNotificationDate() -> String? {
+        formatted(as: "dd MMM yyyy")
+    }
 }

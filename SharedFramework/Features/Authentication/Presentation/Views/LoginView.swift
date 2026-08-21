@@ -31,6 +31,7 @@ struct LoginView: View {
                 VStack(spacing: 0) {
                     Text("First things first")
                         .font(.appFootnote)
+                        .foregroundStyle(.secondary)
 
                     Text("Let's log you in")
                         .font(.appLargeTitle)
@@ -54,7 +55,7 @@ struct LoginView: View {
                     )
                     .focused($focusedInputField, equals: .email)
 
-                    VStack(alignment: .trailing, spacing: 0) {
+                    VStack(alignment: .trailing, spacing: 4) {
                         BorderedPasswordField(
                             password: $loginViewModel.password,
                             placeholder: "MyP@ss10",
@@ -77,19 +78,17 @@ struct LoginView: View {
 
                         } label: {
                             Text("Reset Password?")
-                                .font(.appFootnote)
-                                .underline()
+                                .font(.appBody)
                                 .foregroundColor(Color.theme.primaryColor)
                         }
                     }
 
                     Button {
                         MyFirebaseAnalytics.shared.logEvent(title: "navigete_to_register", contentType: content)
-                        router.push(.register)
+                        router.push(.register(isBackButtonHidden: false))
                     } label: {
                         Text("Dont have account? \(Text("Create").foregroundColor(Color.theme.primaryColor))")
-                            .font(.appFootnote)
-                            .underline()
+                            .font(.appBody)
                     }
                     .foregroundColor(Color.theme.blackAndWhite)
 
@@ -140,6 +139,7 @@ struct LoginView: View {
 
                 Text("Or Login with")
                     .font(.appFootnote)
+                    .foregroundStyle(.secondary)
 
                 HStack {
                     SocialAuthItemView(
@@ -321,7 +321,7 @@ struct LoginView: View {
             }
         }
         .fullScreenProgressOverlay(isShowing: loginViewModel.loginState == .isLoading)
-        .reusableToolbar(
+        .customToolbar(
             title: "",
             onTapBack: {
                 MyFirebaseAnalytics.shared.logEvent(title: "login_ontap_back", contentType: content)

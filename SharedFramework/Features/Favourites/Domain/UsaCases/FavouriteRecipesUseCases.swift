@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  FavouriteRecipesUseCases.swift
 //  Recipe
@@ -13,6 +19,18 @@ struct FavouriteRecipesUseCases {
     let fetchLocalRecipesRepository: FetchLocalRecipesRepositoryProtocol
     let deleteLocalRecipeRepository: DeleteLocalRecipeRepositoryProtocol
     let deleteAllLocalFavouritesRepository: DeleteAllLocalFavouritesRepositoryProtocol
+    
+    init(
+        addRecipeToLocalRepository: AddRecipeToLocalRepositoryProtocol,
+        fetchLocalRecipesRepository: FetchLocalRecipesRepositoryProtocol,
+        deleteLocalRecipeRepository: DeleteLocalRecipeRepositoryProtocol,
+        deleteAllLocalFavouritesRepository: DeleteAllLocalFavouritesRepositoryProtocol
+    ) {
+        self.addRecipeToLocalRepository = addRecipeToLocalRepository
+        self.fetchLocalRecipesRepository = fetchLocalRecipesRepository
+        self.deleteLocalRecipeRepository = deleteLocalRecipeRepository
+        self.deleteAllLocalFavouritesRepository = deleteAllLocalFavouritesRepository
+    }
 
     func executeAddRecipe(recipe: RecipeModel) {
         return addRecipeToLocalRepository.addRecipe(recipe: recipe)

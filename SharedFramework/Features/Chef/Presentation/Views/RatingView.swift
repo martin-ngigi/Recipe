@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RatingView.swift
 //  Recipe
@@ -31,8 +37,6 @@ struct RatingView: View {
                 HStack {
                     ForEach(1...5, id: \.self) { index in
                         Image(systemName: index <= rating ? "star.fill" : "star")
-                            .resizable()
-                            .frame(width: 32, height: 32)
                             .foregroundColor(.yellow)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 19/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  SettingsViewModel.swift
 //  Recipe
@@ -12,6 +18,7 @@ import Combine
 class SettingsViewModel: ObservableObject {
     @Published var toast: Toast?
     @Published var isNotificationsEnabled = false
+    @Published var textSize = 5.0
 
     func updateToast(value: Toast?) {
         toast = value

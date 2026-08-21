@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  HomeView.swift
 //  Recipe
@@ -16,6 +22,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
+
                 VStack {
 
                     JustForYouSliderView(
@@ -30,7 +37,6 @@ struct HomeView: View {
                         }
                     )
 
-                    // Trending Recipes
                     TrendingRecipesHome(
                         columns: columns,
                         recipes: homeViewModel.trendingRecipesList,
@@ -58,13 +64,15 @@ struct HomeView: View {
 
                 }
             }
-            .navigationTitle("Discover Best Recipes")
+            .navigationTitle("Recipe Picks")
+            .navigationSubtitle("Discover best recipes")
             .padding(.horizontal)
             .searchable(
                 text: $homeViewModel.searchField,
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search recipes..."
             )
+            .scrollEdgeEffectStyle(.soft, for: .top)
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -77,8 +85,8 @@ struct HomeView: View {
                         )
                     }
                 }
-
-                ToolbarItem(placement: .topBarTrailing) {
+                
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         tabRouter.selectedTab = .profile
                     } label: {
@@ -86,9 +94,25 @@ struct HomeView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 44, height: 44)
-                            .foregroundColor(Color.theme.grayColor1)
+                            .foregroundColor(Color.gray)
+
                     }
                     .accessibilityLabel("Profile")
+                }
+                .sharedBackgroundVisibility(.hidden)
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        router.push(.notifications)
+                    } label: {
+                       Image(systemName: "bell.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(Color.gray)
+                    }
+                    .accessibilityLabel("Notifications")
+                    .badge(2)
                 }
 
             }
@@ -112,7 +136,6 @@ struct HomeView: View {
             )
         }
         .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
-        .hideBottomNavigationBar(false)
         .overlay {
             HomeSearchOverlay(
                 searchField: $homeViewModel.searchField,

@@ -162,8 +162,13 @@
 		B161B49F30161F8F006F8BB7 /* Exceptions for "SharedFramework" folder in "Recipe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Components/Buttons/Glass/ConditionalGlassStyle.swift,
 				Core/Utils/Localizable.xcstrings,
 				Features/Authentication/Data/DataSource/AuthRemoteDataSource.swift,
+				Features/Notifications/Presentation/Views/FilterPicker.swift,
+				Features/Notifications/Presentation/Views/NotificationDetailView.swift,
+				Features/Notifications/Presentation/Views/NotificationHeaderView.swift,
+				Features/Notifications/Presentation/Views/NotificationsListView.swift,
 			);
 			target = 5B90AA932D81C00E001A07C1 /* Recipe */;
 		};
@@ -181,6 +186,7 @@
 				Core/Color/ColorTheme.swift,
 				Core/Components/Alerts/CustomInbuiltAlert.swift,
 				Core/Components/Buttons/CustomButton.swift,
+				Core/Components/Buttons/Glass/ConditionalGlassStyle.swift,
 				Core/Components/Buttons/Glass/GlassButtonStyle.swift,
 				Core/Components/CardBackground.swift,
 				Core/Components/CustomImageView.swift,
@@ -190,13 +196,14 @@
 				Core/Components/InputFields/BorderedPasswordField.swift,
 				Core/Components/InputFields/TappableTextFieldStyle.swift,
 				Core/Components/ShareSheetView.swift,
+				Core/Components/Tabs/CustomTabsView.swift,
 				Core/Components/ToastView.swift,
-				Core/Components/Toolbars/ReusableToolbar.swift,
+				Core/Components/Toolbars/CustomToolbar.swift,
 				"Core/Environment Values/ShowErrorEnvironmentKey.swift",
 				Core/Extension/Character.swift,
 				Core/Extension/Notification/Notification.swift,
 				Core/Extension/String.swift,
-				Core/Extension/Views/View.swift,
+				Core/Extension/View.swift,
 				Core/Fonts/AppFonts.swift,
 				Core/Fonts/AppFontsStyle.swift,
 				Core/Fonts/FontConstants.swift,
@@ -216,9 +223,6 @@
 				Core/Notifications/NotificationManager.swift,
 				Core/Routing/Route.swift,
 				Core/Routing/Router.swift,
-				Core/Routing/SwipeAction/SwipeBackDisabled.swift,
-				Core/Routing/SwipeAction/SwipeBackLock.swift,
-				Core/Routing/SwipeAction/UINavigationController.swift,
 				Core/Routing/TabRouter.swift,
 				Core/Switches/CustomSwitch.swift,
 				Core/Utils/AnyEncodable.swift,
@@ -279,6 +283,7 @@
 				Features/Favourites/Presentation/Views/FavouriteHeader.swift,
 				Features/Favourites/Presentation/Views/FavouriteItemView.swift,
 				Features/Favourites/Presentation/Views/FavouritesListView.swift,
+				Features/Favourites/Presentation/Views/FavouritesShimmerView.swift,
 				Features/Home/Data/DataSource/HomeRemoteDataSource.swift,
 				Features/Home/Data/Models/AllRatingModel.swift,
 				Features/Home/Data/Models/HomeData.swift,
@@ -296,6 +301,7 @@
 				Features/Home/Domain/UseCases/HomeUseCases.swift,
 				Features/Home/Presentation/ViewModels/DashboardViewModel.swift,
 				Features/Home/Presentation/ViewModels/HomeViewModel.swift,
+				Features/Home/Presentation/Views/Dashboard/ChefQuoteView.swift,
 				Features/Home/Presentation/Views/Dashboard/CustomOverlayNavigation.swift,
 				Features/Home/Presentation/Views/Dashboard/DashboardView.swift,
 				Features/Home/Presentation/Views/Dashboard/MyCustomTab.swift,
@@ -311,6 +317,15 @@
 				Features/Home/Presentation/Views/Home/SearchRecipeRow.swift,
 				Features/Home/Presentation/Views/Home/TrendingRecipesHome.swift,
 				Features/Landing/Presentation/Views/LandingView.swift,
+				Features/Notifications/Data/Models/NotificationCategory.swift,
+				Features/Notifications/Data/Models/NotificationModel.swift,
+				Features/Notifications/Presentation/NotificationRowView.swift,
+				Features/Notifications/Presentation/ViewModels/NotificationsViewModel.swift,
+				Features/Notifications/Presentation/Views/FilterPicker.swift,
+				Features/Notifications/Presentation/Views/Groupings/GroupedNotificationsView.swift,
+				Features/Notifications/Presentation/Views/NotificationDetailView.swift,
+				Features/Notifications/Presentation/Views/NotificationHeaderView.swift,
+				Features/Notifications/Presentation/Views/NotificationsListView.swift,
 				Features/Profile/Presentation/ViewModels/ProfileViewModel.swift,
 				Features/Profile/Presentation/Views/ProfileView.swift,
 				Features/Rating/Data/DataSource/RatingDataSource.swift,
@@ -339,6 +354,7 @@
 				Core/Color/ColorTheme.swift,
 				Core/Components/Alerts/CustomInbuiltAlert.swift,
 				Core/Components/Buttons/CustomButton.swift,
+				Core/Components/Buttons/Glass/ConditionalGlassStyle.swift,
 				Core/Components/Buttons/Glass/GlassButtonStyle.swift,
 				Core/Components/CardBackground.swift,
 				Core/Components/CustomImageView.swift,
@@ -348,13 +364,14 @@
 				Core/Components/InputFields/BorderedPasswordField.swift,
 				Core/Components/InputFields/TappableTextFieldStyle.swift,
 				Core/Components/ShareSheetView.swift,
+				Core/Components/Tabs/CustomTabsView.swift,
 				Core/Components/ToastView.swift,
-				Core/Components/Toolbars/ReusableToolbar.swift,
+				Core/Components/Toolbars/CustomToolbar.swift,
 				"Core/Environment Values/ShowErrorEnvironmentKey.swift",
 				Core/Extension/Character.swift,
 				Core/Extension/Notification/Notification.swift,
 				Core/Extension/String.swift,
-				Core/Extension/Views/View.swift,
+				Core/Extension/View.swift,
 				Core/Fonts/AppFonts.swift,
 				Core/Fonts/AppFontsStyle.swift,
 				Core/Fonts/FontConstants.swift,
@@ -374,9 +391,6 @@
 				Core/Notifications/NotificationManager.swift,
 				Core/Routing/Route.swift,
 				Core/Routing/Router.swift,
-				Core/Routing/SwipeAction/SwipeBackDisabled.swift,
-				Core/Routing/SwipeAction/SwipeBackLock.swift,
-				Core/Routing/SwipeAction/UINavigationController.swift,
 				Core/Routing/TabRouter.swift,
 				Core/Switches/CustomSwitch.swift,
 				Core/Utils/AnyEncodable.swift,
@@ -437,6 +451,7 @@
 				Features/Favourites/Presentation/Views/FavouriteHeader.swift,
 				Features/Favourites/Presentation/Views/FavouriteItemView.swift,
 				Features/Favourites/Presentation/Views/FavouritesListView.swift,
+				Features/Favourites/Presentation/Views/FavouritesShimmerView.swift,
 				Features/Home/Data/DataSource/HomeRemoteDataSource.swift,
 				Features/Home/Data/Models/AllRatingModel.swift,
 				Features/Home/Data/Models/HomeData.swift,
@@ -454,6 +469,7 @@
 				Features/Home/Domain/UseCases/HomeUseCases.swift,
 				Features/Home/Presentation/ViewModels/DashboardViewModel.swift,
 				Features/Home/Presentation/ViewModels/HomeViewModel.swift,
+				Features/Home/Presentation/Views/Dashboard/ChefQuoteView.swift,
 				Features/Home/Presentation/Views/Dashboard/CustomOverlayNavigation.swift,
 				Features/Home/Presentation/Views/Dashboard/DashboardView.swift,
 				Features/Home/Presentation/Views/Dashboard/MyCustomTab.swift,
@@ -469,6 +485,15 @@
 				Features/Home/Presentation/Views/Home/SearchRecipeRow.swift,
 				Features/Home/Presentation/Views/Home/TrendingRecipesHome.swift,
 				Features/Landing/Presentation/Views/LandingView.swift,
+				Features/Notifications/Data/Models/NotificationCategory.swift,
+				Features/Notifications/Data/Models/NotificationModel.swift,
+				Features/Notifications/Presentation/NotificationRowView.swift,
+				Features/Notifications/Presentation/ViewModels/NotificationsViewModel.swift,
+				Features/Notifications/Presentation/Views/FilterPicker.swift,
+				Features/Notifications/Presentation/Views/Groupings/GroupedNotificationsView.swift,
+				Features/Notifications/Presentation/Views/NotificationDetailView.swift,
+				Features/Notifications/Presentation/Views/NotificationHeaderView.swift,
+				Features/Notifications/Presentation/Views/NotificationsListView.swift,
 				Features/Profile/Presentation/ViewModels/ProfileViewModel.swift,
 				Features/Profile/Presentation/Views/ProfileView.swift,
 				Features/Rating/Data/DataSource/RatingDataSource.swift,
@@ -1352,7 +1377,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1383,7 +1408,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1404,7 +1429,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.safiribytes.RecipeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1422,7 +1447,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.safiribytes.RecipeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1439,6 +1464,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.safiribytes.RecipeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1455,6 +1481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.safiribytes.RecipeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1489,7 +1516,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
@@ -1536,7 +1563,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
@@ -1575,7 +1602,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1614,7 +1641,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1651,7 +1678,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1694,7 +1721,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

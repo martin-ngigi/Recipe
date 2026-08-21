@@ -77,7 +77,8 @@ struct NavBariOS26AndAbove: View {
                 Tab(
                     TabItemEntity.search.title,
                     systemImage: "magnifyingglass",
-                    value: TabItemEntity.search
+                    value: TabItemEntity.search,
+                    role: .search
                 ) {
                     NavigationStack{
                         Text("Search coming soon..")
@@ -86,6 +87,10 @@ struct NavBariOS26AndAbove: View {
                 }
             }
            
+        }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .tabViewBottomAccessory{
+            ChefQuoteView()
         }
         .tabViewStyle(.sidebarAdaptable)
         .searchable(text: $search)

@@ -27,18 +27,17 @@ struct CustomAlertDialog: View {
         ZStack {
 
             if isPresented {
-                Color.black.opacity(0.8)
+                Color.black.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         // isPresented = false // Dismiss when tapping outside
                     }
 
-                VStack(spacing: 20) {
+                VStack(spacing: 8) {
 
                     Text(title)
                         .font(.appTitle3)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(Color.theme.primaryColor)
 
                     if !imageName.isEmpty {
                         Image(imageName)
@@ -48,7 +47,7 @@ struct CustomAlertDialog: View {
                     }
 
                     Text(text)
-                        .font(.appBody)
+                        .font(.appFootnote)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.theme.blackAndWhite)
 
@@ -57,6 +56,7 @@ struct CustomAlertDialog: View {
                         if !dismissButtonText.isEmpty {
                             CustomButton(
                                 buttonName: dismissButtonText,
+                                height: 28,
                                 backgroundColor: Color.clear,
                                 buttonNameColor: Color.theme.primaryColor
                             ) {
@@ -65,7 +65,10 @@ struct CustomAlertDialog: View {
                         }
 
                         if !confirmButtonText.isEmpty {
-                            CustomButton(buttonName: confirmButtonText) {
+                            CustomButton(
+                                buttonName: confirmButtonText,
+                                height: 28
+                            ) {
                                 onConfirmation()
                             }
                         }
@@ -75,7 +78,6 @@ struct CustomAlertDialog: View {
                 .glassCard()
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
                 .padding()
-                .shadow(color: .black.opacity(0.35), radius: 20, y: 10)
             }
         }
     }

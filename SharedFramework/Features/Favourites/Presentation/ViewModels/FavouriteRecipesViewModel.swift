@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  FavouriteRecipesViewModel.swift
 //  Recipe
@@ -24,6 +30,13 @@ class FavouriteRecipesViewModel: ObservableObject {
     @Published var isShowAlertDialog = false
     @Published var shareState = FetchState.good
     @Published var toast: Toast?
+    @Published var isLoading = false
+    
+    func updateIsLoading(value: Bool) async{
+        isLoading = true
+        try? await Task.sleep(nanoseconds: 3_000_000_000)
+        isLoading = false
+    }
 
     func addRecipeToFavourite(recipe: RecipeModel) async {
         favouriteRecipesUseCases.executeAddRecipe(recipe: recipe)
@@ -31,8 +44,15 @@ class FavouriteRecipesViewModel: ObservableObject {
     }
 
     func fetchFavouriteRecipes() async {
+        
+        isLoading = true
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        
         favouriteRecipes = favouriteRecipesUseCases.executeFetchRecipes()
         favouritesListViewTitle = favouriteRecipes.isEmpty ? "Favourites" : "\(favouriteRecipes.count) Favourites"
+        
+        isLoading = false
+
     }
 
     func deleteFavouriteRecipe(recipe: RecipeModel) async {

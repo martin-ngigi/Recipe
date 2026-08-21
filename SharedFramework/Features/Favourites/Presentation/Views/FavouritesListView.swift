@@ -20,7 +20,10 @@ struct FavouritesListView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                if favouriteRecipesViewModel.favouriteRecipes.isEmpty {
+                if favouriteRecipesViewModel.isLoading{
+                    FavouritesShimmerView(isLoading: favouriteRecipesViewModel.isLoading)
+                }
+                else if favouriteRecipesViewModel.favouriteRecipes.isEmpty{
                     EmptyScreenView(
                         imageName: "tray",
                         title: "No Favourites Found",
@@ -117,19 +120,15 @@ struct FavouritesListView: View {
                             }
                         }
                         .onDelete(perform: delete(indexSet:))
-                        .listRowSeparator(.hidden)
-                        .listRowSpacing(-4)
                     }
+                    .padding()
                 }
-
             }
-            .padding()
             .searchable(text: $favouriteRecipesViewModel.searchField, prompt: "Search favourite...")
             .navigationTitle(favouriteRecipesViewModel.favouritesListViewTitle)
             .task {
                 await favouriteRecipesViewModel.fetchFavouriteRecipes()
             }
-            // .hideBottomNavigationBar(false)
         }
         .fullScreenProgressOverlay(isShowing: favouriteRecipesViewModel.shareState == .isLoading)
         .overlay {

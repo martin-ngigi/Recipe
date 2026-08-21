@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeDetailsView.swift
 //  Recipe
@@ -247,38 +253,36 @@ struct RecipeDetailsView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    router.pop()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .frame(width: 44, height: 44)
-                        .scaledToFill()
-                }
-            }
-
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
+                    
+                    
                     Menu {
-                        Button("WhatsApp") {
-                            openWhatsApp()
+                        Section{
+                            Button("WhatsApp", systemImage: "phone.arrow.up.right") {
+                                openWhatsApp()
+                            }
+                            
+                            Button("SMS", systemImage: "ellipsis.message") {
+                                openSMS()
+                            }
                         }
+                        
+                        Section{
+                            Button("Phone", systemImage: "phone") {
+                                openPhoneDailer()
+                            }
 
-                        Button("SMS") {
-                            openSMS()
-                        }
-
-                        Button("Phone") {
-                            openPhoneDailer()
-                        }
-
-                        Button("Email") {
-                            recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                            Button("Email", systemImage: "envelope") {
+                                recipeDetailsViewModels.updateIsShowOpenShareSheet(value: true)
+                            }
                         }
 
                     } label: {
                         Label("Contact Chef", systemImage: "phone.arrow.up.right")
                     }
+                    
+                    Divider()
 
                     Button {
                         Task { await shareRecipeAsPDF() }
@@ -288,8 +292,6 @@ struct RecipeDetailsView: View {
 
                 } label: {
                     Image(systemName: "ellipsis")
-                        .frame(width: 44, height: 44)
-                        .scaledToFill()
                 }
             }
         }
@@ -343,7 +345,6 @@ struct RecipeDetailsView: View {
             }
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
-        /* .hideBottomNavigationBar(true) */
     }
 
     func shareRecipeAsPDF() async {

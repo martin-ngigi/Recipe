@@ -58,6 +58,7 @@ struct SettingsScreen: View {
                                     .tag(theme)
                             }
                         }
+                        .controlSize(.large)
                         .pickerStyle(SegmentedPickerStyle())
                         .onChange(of: themesViewModel.currentTheme) { newValue in
                             themesViewModel.changeTheme(to: newValue)
@@ -110,6 +111,19 @@ struct SettingsScreen: View {
 
                 }
 
+                
+                Section("Text Size") {
+                    Slider(value: $settingsViewModel.textSize, in: 1...10, step: 2){
+                        
+                    } minimumValueLabel: {
+                        Text("A")
+                            .font(.footnote)
+                    } maximumValueLabel: {
+                        Text("A")
+                            .font(.title3)
+                    }
+                }
+                
                 Section("App Details") {
 
                     HStack {
@@ -173,7 +187,6 @@ struct SettingsScreen: View {
         }
         .navigationTitle("Settings")
         .toastView(toast: $settingsViewModel.toast)
-        // .hideBottomNavigationBar(false)
     }
 }
 

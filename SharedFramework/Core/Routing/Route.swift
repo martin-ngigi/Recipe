@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 16/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  Route.swift
 //  Recipe
@@ -11,7 +17,7 @@ enum Route: Hashable {
     case landing
 
     case login
-    case register
+    case register(isBackButtonHidden: Bool)
 
     case dashboard
     case home
@@ -23,4 +29,5 @@ enum Route: Hashable {
     case chefdetails(chef: UserModel)
     case trendingRecipes(list: [RecipeModel])
     case popularChefs(list: [UserModel])
+    case notifications
 }

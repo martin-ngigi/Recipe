@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 20/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ProfileView.swift
 //  Recipe
@@ -170,7 +176,6 @@ struct ProfileView: View {
                 }
             )
         }
-        // .hideBottomNavigationBar(false)
     }
 }
 

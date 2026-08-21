@@ -16,63 +16,92 @@ import SwiftUI
 struct CustomButton: View {
     var buttonName: String
     var width: Double = .infinity
-    var height: Double = 35
+    var height: Double = 44
+
     var leadingIcon: String = ""
-    var leadingimage: String = ""
-    var icon: String = ""
-    var image: String = ""
+    var leadingImage: String = ""
+    var trailingIcon: String = ""
+    var trailingImage: String = ""
+
     var foregroundStyle = Color.theme.blackAndWhite
     var backgroundColor = Color.theme.primaryColor
     var borderColor = Color.theme.primaryColor
-    var buttonNameColor = Color.theme.blackAndWhite
+    var buttonNameColor = Color.theme.whiteColor
+
     var isDisabled: Bool = false
     var isLoading: Bool = false
+    var isFilled = true
+    var shouldShimmer = false
+    var buttonBorderShape: SwiftUI.ButtonBorderShape = .capsule
     var onTap: () -> Void
 
+
+    var tintColor: Color {
+        if isDisabled || isLoading{
+            return Color.gray
+        }
+        return backgroundColor
+    }
+
+    var localButtonColor: Color {
+        return isDisabled ? Color.theme.whiteColor : buttonNameColor
+    }
+
     var body: some View {
-        Button(action: onTap) {
-            HStack {
-                if !leadingIcon.isEmpty {
+        Button {
+            if !isDisabled {
+                onTap()
+            }
+        } label: {
+            HStack(spacing: 8) {
+                if !leadingImage.isEmpty && !isLoading {
+                    Image(leadingImage)
+                }
+                else if !leadingIcon.isEmpty && !isLoading {
                     Image(systemName: leadingIcon)
                 }
-
-                if !leadingimage.isEmpty {
-                    Image(leadingimage)
-                }
-
+                
                 if isLoading {
                     ProgressView()
                 }
-                else {
+
+                if !buttonName.isEmpty {
                     Text(buttonName)
-                        .font(.appSubheadline)
-                        .foregroundColor(buttonNameColor)
+                        .font(.body)
+                        .foregroundColor(localButtonColor)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.9)
                 }
-
-                if !icon.isEmpty {
-                    Image(systemName: icon)
+                
+                if !trailingIcon.isEmpty {
+                    Image(systemName: trailingIcon)
                 }
-
-                if !image.isEmpty {
-                    Image(image)
+                if !trailingImage.isEmpty {
+                    Image(trailingImage)
                 }
-
             }
             .foregroundColor(foregroundStyle)
-            .frame(maxWidth: width, maxHeight: height)
+            .padding(.horizontal, 16)
+            .frame(maxWidth: width == .infinity ? .infinity : CGFloat(width))
             .frame(height: height)
         }
-        .background(isDisabled ? Color.gray : backgroundColor)
-        .disabled(isDisabled)
-        .cornerRadius(8)
-        .overlay(
-            RoundedRectangle(cornerRadius: 7)
-                .stroke(borderColor, lineWidth: 1)
-        )
-
+        .animation(.easeInOut(duration: 0.15), value: isDisabled)
+        .glassButtonStyle(isFilled: isFilled)
+        .buttonBorderShape(buttonBorderShape)
+        .tint(tintColor)
     }
+    
 }
 
 #Preview {
-    CustomButton(buttonName: "Tap Me", onTap: {})
+    CustomButton(
+        buttonName: "Login",
+        isDisabled: true,
+        isFilled: true,
+        onTap: {
+
+        }
+    )
+    .padding()
 }

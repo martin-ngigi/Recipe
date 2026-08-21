@@ -5,7 +5,7 @@
 */
 
 //
-//  ReusableToolbar.swift
+//  CustomToolbar.swift
 //  Recipe
 //
 //  Created by Martin on 04/04/2025.
@@ -13,24 +13,15 @@
 
 import SwiftUI
 
-struct ReusableToolbar: ViewModifier {
+struct CustomToolbar: ViewModifier {
     let title: String
-    let backIcon: String
     let dismissIcon: String
     let onTapBack: () -> Void
 
     func body(content: Content) -> some View {
         content
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: onTapBack) {
-                        Image(systemName: backIcon)
-                            .foregroundColor(Color.theme.blackAndWhite)
-                            .padding(.trailing, 20)
-                            .padding(.vertical, 20)
-                    }
-                }
-
+               
                 // ToolbarItem(placement: .principal) {
                 ToolbarItem(placement: .topBarLeading) {
                     Text(title)
@@ -54,20 +45,25 @@ struct ReusableToolbar: ViewModifier {
 }
 
 extension View {
-    func reusableToolbar(
+    func customToolbar(
         title: String,
-        backIcon: String = "arrow.left",
         dismissIcon: String = "xmark",
         onTapBack: @escaping () -> Void
     ) -> some View {
-        self.modifier(ReusableToolbar(title: title, backIcon: backIcon, dismissIcon: dismissIcon, onTapBack: onTapBack))
+        self.modifier(
+            CustomToolbar(
+                title: title,
+                dismissIcon: dismissIcon,
+                onTapBack: onTapBack
+            )
+        )
     }
 }
 
 #Preview {
     NavigationView {
         VStack {}
-            .reusableToolbar(
+            .customToolbar(
                 title: "Title",
                 onTapBack: {}
             )

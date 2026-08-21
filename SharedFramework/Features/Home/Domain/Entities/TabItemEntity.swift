@@ -14,7 +14,7 @@
 import Foundation
 import SwiftUI
 
-enum TabItemEntity: Int, CaseIterable {
+enum TabItemEntity: Int, CaseIterable, Hashable {
     case home = 0
     case favourites
     case profile
