@@ -60,7 +60,7 @@ struct GroupedNotificationsView: View {
                     }
                 }
             }
-            .padding(16)
+            .padding(.vertical, 16)
         }
     }
 }

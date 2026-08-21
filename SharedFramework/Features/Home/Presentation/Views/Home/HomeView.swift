@@ -22,11 +22,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                
-                Label("Desert", systemImage: "sun.max.fill")
-                    .padding()
-                    .glassEffect(.regular.interactive())
-                
+
                 VStack {
 
                     JustForYouSliderView(
