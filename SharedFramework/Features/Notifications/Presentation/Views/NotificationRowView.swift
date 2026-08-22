@@ -85,6 +85,7 @@ struct NotificationRowView: View {
                 }
                 
             }
+            .padding(.bottom, 8) // same as divider's padding
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

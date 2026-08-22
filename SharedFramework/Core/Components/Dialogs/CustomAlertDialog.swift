@@ -13,15 +13,22 @@
 
 import SwiftUI
 
-struct CustomAlertDialog: View {
+
+struct CustomAlertDialog<Content: View>: View {
     @Binding var isPresented: Bool
+
     var title: String
     var text: String
     var confirmButtonText: String = ""
     var dismissButtonText: String
     var imageName: String
+
+    @ViewBuilder var content: () -> Content
+
     var onDismiss: () -> Void
     var onConfirmation: () -> Void
+
+    @ScaledMetric(relativeTo: .body) private var iconSize: CGFloat = 54
 
     var body: some View {
         ZStack {
@@ -30,47 +37,55 @@ struct CustomAlertDialog: View {
                 Color.black.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
-                        // isPresented = false // Dismiss when tapping outside
+                        // isPresented = false
                     }
 
                 VStack(spacing: 8) {
 
                     Text(title)
-                        .font(.appTitle3)
+                        .font(.appHeadline)
                         .multilineTextAlignment(.center)
 
                     if !imageName.isEmpty {
                         Image(imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 80, height: 80)
+                            .frame(width: iconSize, height: iconSize)
                     }
 
+                    
                     Text(text)
-                        .font(.appFootnote)
+                        .font(.appCallout)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(Color.theme.blackAndWhite)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    content()
 
                     HStack {
 
                         if !dismissButtonText.isEmpty {
                             CustomButton(
                                 buttonName: dismissButtonText,
-                                height: 28,
+                                height: 24,
                                 backgroundColor: Color.clear,
-                                buttonNameColor: Color.theme.primaryColor
-                            ) {
-                                onDismiss()
-                            }
+                                borderColor: Color.theme.blackAndWhite,
+                                buttonNameColor: Color.theme.blackAndWhite,
+                                isFilled: false,
+                                onTap: {
+                                    onDismiss()
+                                }
+                            )
                         }
 
                         if !confirmButtonText.isEmpty {
                             CustomButton(
                                 buttonName: confirmButtonText,
-                                height: 28
-                            ) {
-                                onConfirmation()
-                            }
+                                height: 24,
+                                onTap: {
+                                    onConfirmation()
+                                }
+                            )
                         }
                     }
                 }
@@ -78,24 +93,77 @@ struct CustomAlertDialog: View {
                 .glassCard()
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
                 .padding()
+                .shadow(color: .black.opacity(0.2), radius: 20, y: 10)
             }
         }
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isPresented)
+    }
+}
+
+extension CustomAlertDialog where Content == EmptyView {
+    init(
+        isPresented: Binding<Bool>,
+        title: String,
+        text: String,
+        confirmButtonText: String,
+        dismissButtonText: String,
+        imageName: String,
+        onDismiss: @escaping () -> Void,
+        onConfirmation: @escaping () -> Void
+    ) {
+        self._isPresented = isPresented
+        self.title = title
+        self.text = text
+        self.confirmButtonText = confirmButtonText
+        self.dismissButtonText = dismissButtonText
+        self.imageName = imageName
+        self.content = { EmptyView() }
+        self.onDismiss = onDismiss
+        self.onConfirmation = onConfirmation
+    }
+}
+
+extension CustomAlertDialog where Content == AnyView {
+    init(
+        isPresented: Binding<Bool>,
+        entity: DialogEntity
+    ) {
+        self._isPresented = isPresented
+        self.title = entity.title
+        self.text = entity.message
+        self.confirmButtonText = entity.confirmButtonText
+        self.dismissButtonText = entity.dismissButtonText
+        self.imageName = entity.icon
+        self.content = { entity.content?() ?? AnyView(EmptyView()) }
+        self.onDismiss = { entity.onDismiss?() }
+        self.onConfirmation = { entity.onConfirm?() }
     }
 }
 
 #Preview {
-    CustomAlertDialog(
-        isPresented: .constant(true),
-        title: "Oops",
-        text: "Error occurred",
-        confirmButtonText: "Retry",
-        dismissButtonText: "Okay",
-        imageName: "",
-        onDismiss: {
-
-        },
-        onConfirmation: {
-
+    ScrollView{
+        VStack{
+            Text("View Goes here")
+                .frame(maxWidth: .infinity)
         }
-    )
+    }
+    .overlay{
+        CustomAlertDialog(
+            isPresented: .constant(true),
+            title: "Oops",
+            text: "Error occurred...",
+            confirmButtonText: "Retry",
+            dismissButtonText: "Okay",
+            imageName: "",
+            content: {
+                Text("Additional content")
+            },
+            onDismiss: {
+
+            },
+            onConfirmation: {
+
+            }
+        )
+    }
 }
