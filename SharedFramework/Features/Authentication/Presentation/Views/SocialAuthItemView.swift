@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 22/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  SocialAuthItemView.swift
 //  Recipe
@@ -18,15 +24,12 @@ struct SocialAuthItemView: View {
             Image(image)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 30, height: 30)
-                .padding(10)  // Add padding for better spacing
-                .background(Color.gray.opacity(0.2))  // Light gray background
-                .clipShape(RoundedRectangle(cornerRadius: 6))  // Ensures the background follows the shape
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.gray, lineWidth: 1)  // Gray border
-                )
+                .frame(width: 40, height: 40)
+                .padding(16)
         }
+        .buttonBorderShape(.roundedRectangle)
+        //.glassEffect(.regular.interactive(), in: .rect(cornerRadius: 24))
+        .glassEffect(.regular.interactive())
 
     }
 }

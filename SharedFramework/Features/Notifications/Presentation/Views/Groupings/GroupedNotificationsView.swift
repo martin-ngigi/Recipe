@@ -66,7 +66,7 @@ struct GroupedNotificationsView: View {
                                     preview: {
                                         NotificationPreview(notification: notification)
                                             .padding()
-                                            .frame(width: UIScreen.main.bounds.width * 0.7, height: 300)
+                                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 300)
                                             .background(.background)
                                     }
                                 )
