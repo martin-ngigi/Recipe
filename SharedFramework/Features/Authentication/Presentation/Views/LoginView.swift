@@ -329,6 +329,26 @@ struct LoginView: View {
             }
         )
         .toastView(toast: $loginViewModel.toast)
+        .customInbuiltAlertDialog(
+            title: loginViewModel.dialogEntity.title,
+            message: loginViewModel.dialogEntity.message,
+            isPresented: $loginViewModel.isShowAlertDialog,
+            onDismiss: {
+                MyFirebaseAnalytics.shared.logEvent(title: "login_dismiss_dialog", contentType: content)
+
+                if let onDismiss = loginViewModel.dialogEntity.onDismiss {
+                    onDismiss()
+                }
+            },
+            onConfirmation: {
+                MyFirebaseAnalytics.shared.logEvent(title: "login_confirm_dialog", contentType: content)
+
+                if let onConfirm = loginViewModel.dialogEntity.onConfirm {
+                    onConfirm()
+                }
+            }
+        )
+        /*
         .overlay {
             CustomAlertDialog(
                 isPresented: $loginViewModel.isShowAlertDialog,
@@ -353,6 +373,7 @@ struct LoginView: View {
                 }
             )
         }
+        */
 
     }
 }

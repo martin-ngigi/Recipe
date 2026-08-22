@@ -44,6 +44,32 @@ struct GroupedNotificationsView: View {
                                         onNotificationTap(notification)
                                     }
                                 )
+                                .contextMenu(
+                                    menuItems: {
+                                        VStack{
+                                            
+                                            HStack{
+                                                Button("", systemImage: "star"){
+                                                    
+                                                }
+                                                
+                                                Button("",systemImage: "arrowshape.turn.up.right"){
+
+                                                }
+                                            }
+                                            
+                                            Button("Mark as read",systemImage: "eye.fill"){
+
+                                            }
+                                        }
+                                    },
+                                    preview: {
+                                        NotificationPreview(notification: notification)
+                                            .padding()
+                                            .frame(width: UIScreen.main.bounds.width * 0.7, height: 300)
+                                            .background(.background)
+                                    }
+                                )
                                 
                                 if index < group.notifications.count - 1 {
                                     Divider()
@@ -53,7 +79,7 @@ struct GroupedNotificationsView: View {
                         }
                         .padding(8)
                         .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
 
                     } header: {
                         NotificationHeaderView( date: group.date )
