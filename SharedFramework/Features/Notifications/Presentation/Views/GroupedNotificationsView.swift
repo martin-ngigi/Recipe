@@ -40,10 +40,14 @@ struct GroupedNotificationsView: View {
                                     date: notification.date?.extractTime() ?? "",
                                     isRead: notification.isRead,
                                     isStarred: notification.isStarred,
+                                    hasDivider: index < group.notifications.count - 1,
                                     onTap: {
                                         onNotificationTap(notification)
                                     }
                                 )
+                                .scrollTransition { effect, phase in
+                                    effect.scaleEffect(1 - abs(phase.value) * 0.2)
+                                }
                                 .contextMenu(
                                     menuItems: {
                                         VStack{
@@ -70,14 +74,36 @@ struct GroupedNotificationsView: View {
                                             .background(.background)
                                     }
                                 )
-                                
-                                if index < group.notifications.count - 1 {
-                                    Divider()
-                                        .padding(.leading, 72)
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        
+                                    } label: {
+                                        if notification.isRead {
+                                            Label("Read", systemImage: "envelope.open")
+                                        }
+                                        else {
+                                            Label("Unread", systemImage: "envelope.badge")
+                                        }
+                                    }
                                 }
+                                .swipeActions(edge: .trailing) {
+                                    
+                                    Button(role: .destructive) {
+                                    
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    
+                                    Button {
+                                        
+                                    } label: {
+                                        Label("Flag", systemImage: "flag")
+                                    }
+                                }
+
                             }
                         }
-                        .padding(8)
+                        .padding(16)
                         .background(Color(.secondarySystemGroupedBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 24))
 
