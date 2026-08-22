@@ -143,7 +143,7 @@ struct LoginView: View {
 
                 HStack {
                     SocialAuthItemView(
-                        image: "apple_icon",
+                        image: "apple",
                         onTap: {
                             loginViewModel.updateIsShowAlertDialog(value: true)
                             loginViewModel.updateDialogEntity(
