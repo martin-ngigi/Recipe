@@ -13,39 +13,17 @@
 
 import SwiftUI
 
+
 struct HomeView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var tabRouter: TabRouter
-    
-    @State private var showAlert = false
-    @State private var userInput = ""
 
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-
                 VStack {
-                    
-                    Text("Email Item Preview")
-                        .padding()
-                        .contextMenu {
-                            Button("Reply") { /* Action */ }
-                            Button("Forward") { /* Action */ }
-                            Button("Delete", role: .destructive) { /* Action */ }
-                        } preview: {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Subject: Important Update")
-                                    .font(.headline)
-                                Text("Here is a quick preview of the email contents before opening it fully...")
-                                    .font(.body)
-                            }
-                            .padding()
-                            .frame(width: 280, height: 200)
-                            .background(.background)
-                        }
-
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,

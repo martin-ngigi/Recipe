@@ -51,7 +51,7 @@ struct JustForYouSliderView: View {
                                 CustomImageView(
                                     url: recipes[index].image,
                                     maxWidth: .infinity,
-                                    height: 200
+                                    height: 240
                                 )
                                 .foregroundColor(Color.theme.blackAndWhite)
                                 .clipped()
@@ -70,7 +70,7 @@ struct JustForYouSliderView: View {
 
                                     }
                                     .frame(maxWidth: .infinity)
-                                    .padding(.bottom, 32)
+                                    .padding(.bottom, 32)//72
                                     .padding(.horizontal)
                                     .background(
                                         LinearGradient(

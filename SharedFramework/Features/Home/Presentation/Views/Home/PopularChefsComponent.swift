@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 24/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  PopularChefsComponent.swift
 //  Recipe
@@ -31,12 +37,14 @@ struct PopularChefsComponent: View {
                         onTapSeeAll()
                     } label: {
                         HStack {
-                            Text("See All (\(chefs.count))")
-                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                            Text("See All")
+                                .font(.appFootnote)
                                 .foregroundStyle(Color.theme.primaryColor)
 
                             Image(systemName: "chevron.right")
-                                .foregroundColor(Color.theme.grayColor1)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 8, height: 8)
                         }
                         .foregroundColor(Color.theme.primaryColor)
 

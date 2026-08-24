@@ -40,11 +40,11 @@ struct NotificationPreview: View {
 
                     VStack(alignment: .leading, spacing: 5) {
                         Text(notification.title ?? "")
-                            .font(.custom("ProductSans-Medium", size: 18, relativeTo: .headline))
+                            .font(.appHeadline)
                             .foregroundStyle(Color.theme.blackAndWhite)
 
                         Text(notification.date ?? "")
-                            .font(.custom("ProductSans-Medium", size: 13, relativeTo: .caption))
+                            .font(.appCaption)
                             .foregroundStyle(Color.secondary)
                     }
 
@@ -53,11 +53,11 @@ struct NotificationPreview: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Message")
-                        .font(.custom("ProductSans-Medium", size: 16, relativeTo: .headline))
+                        .font(.appHeadline)
                         .foregroundStyle(Color.theme.blackAndWhite)
 
                     Text(notification.message ?? "")
-                        .font(.custom("ProductSans-Light", size: 16, relativeTo: .body))
+                        .font(.appBody)
                         .foregroundStyle(Color.theme.blackAndWhite)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)

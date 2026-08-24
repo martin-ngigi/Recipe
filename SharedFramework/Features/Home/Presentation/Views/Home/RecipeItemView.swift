@@ -17,46 +17,39 @@ struct RecipeItemView: View {
     let recipe: RecipeModel
 
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .leading, spacing: 4) {
 
+            CustomImageView(
+                url: recipe.image,
+                maxWidth: 180,
+                height: 140
+            )
+            .foregroundColor(Color.theme.blackAndWhite)
+            .clipped()
+            .cornerRadius(24)
+            .contentShape(Rectangle())
+            
             VStack(alignment: .leading, spacing: 2) {
-                Spacer()
-
                 Text(recipe.name)
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
-                    .foregroundColor(Color.theme.whiteColor)
+                    .font(.appFootnote)
+                    .foregroundStyle(Color.theme.blackAndWhite)
+
 
                 HStack {
                     Image(systemName: "star.fill")
-                        .foregroundColor(Color.theme.primaryColor)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(Color.secondary)
 
                     Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
-                        .font(.custom(FontConstants.POPPINS_MEDIUM, size: 12))
-                        .foregroundStyle(Color.theme.primaryColor)
+                        .font(.appCaption2)
+                        .foregroundColor(Color.secondary)
 
                     Spacer()
                 }
             }
-            .padding([.leading, .trailing, .bottom], 13)
-            .frame(height: 50)
-            .background(.ultraThinMaterial.opacity(0.9))
-            // .cornerRadius(8)
-            // .padding(.bottom, 20)
         }
-        .frame(width: 170, height: 150)
-        .background(
-
-            CustomImageView(
-                url: recipe.image,
-                maxWidth: .infinity,
-                height: .infinity
-            )
-            .edgesIgnoringSafeArea(.all)
-
-        )
-        .cornerRadius(20)
-        .foregroundColor(Color.theme.blackAndWhite)
     }
 }
 
