@@ -57,7 +57,7 @@ struct NotificationPreview: View {
                         .foregroundStyle(Color.theme.blackAndWhite)
 
                     Text(notification.message ?? "")
-                        .font(.appBody)
+                        .font(.appFootnote)
                         .foregroundStyle(Color.theme.blackAndWhite)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)
