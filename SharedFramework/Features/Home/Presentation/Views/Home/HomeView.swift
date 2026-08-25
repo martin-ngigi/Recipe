@@ -19,6 +19,7 @@ struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var tabRouter: TabRouter
+    @Namespace private var namespace
 
     var body: some View {
         NavigationView {
@@ -35,19 +36,71 @@ struct HomeView: View {
                             homeViewModel.currentIndex = currentIndex
                         }
                     )
-
-                    TrendingRecipesHome(
-                        columns: columns,
-                        recipes: homeViewModel.trendingRecipesList,
-                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                        onTapRecipe: { recipeModel in
-                            router.push(.recipedetails(recipe: recipeModel))
-                        },
-                        onTapSeeAll: {
-                            router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
+                    
+                    VStack(spacing: 2) {
+                        
+                        var noRecipes: Bool {
+                            return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
                         }
-                    )
-                    .padding(.top, 10)
+                        
+                        HStack {
+                            
+                            Text("Trending Recipes")
+                                .font(.appSubheadline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                            Spacer()
+
+                            if !noRecipes {
+                                Button {
+                                    router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
+                                } label: {
+                                    HStack {
+                                        Text("See All")
+                                            .font(.appFootnote)
+                                            .foregroundStyle(Color.theme.primaryColor)
+
+                                        Image(systemName: "chevron.right")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 8, height: 8)
+                                            .foregroundColor(Color.secondary)
+                                    }
+                                    .foregroundColor(Color.theme.primaryColor)
+                                    .frame(minHeight: 44)
+                                }
+                                .accessibilityLabel("See all trending recipes")
+                            }
+
+                        }
+
+                        if noRecipes {
+                            EmptyScreenView(
+                                imageName: "tray",
+                                imageSize: 80,
+                                title: "Trending",
+                                titleSize: 18,
+                                description: """
+                                    No trending recipes found.
+                                    """,
+                                descriptionSize: 12
+                            )
+                        }
+                        else {
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
+                                    NavigationLink {
+                                        RecipeDetailsView(recipe: recipe)
+                                            .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
+                                    } label: {
+                                        RecipeItemView(recipe: recipe)
+                                            .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(.top, 8)
 
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,

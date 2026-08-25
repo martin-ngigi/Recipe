@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 25/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  HomeViewModel.swift
 //  Recipe
@@ -36,6 +42,13 @@ class HomeViewModel: ObservableObject {
         onSuccess: (HomeResponseModel) -> Void,
         onFailure: (String) -> Void
     ) async {
+        
+        let isListEmpty = justForYouList.isEmpty || trendingRecipesList.isEmpty || popularChefsList.isEmpty
+        
+        if !isListEmpty{
+            return
+        }
+        
         fetchHomeDataState = .isLoading
         let results = await homeUseCases.executeFetchHomeData()
         switch results {
