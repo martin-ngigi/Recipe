@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 26/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ChefDetailsView.swift
 //  Recipe
@@ -6,6 +12,7 @@
 //
 
 import SwiftUI
+
 
 struct ChefDetailsView: View {
     @StateObject var chefViewModel = ChefViewModel()
@@ -96,10 +103,32 @@ struct ChefDetailsView: View {
                 }
 
                 Divider()
-
-                // MARK: - Recipes Section
+                
+                // MARK: - Most Liked Recipes Section
+                if let  mostLikedRecipes = chefViewModel.chef?.recipesList {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Most Liked Recipes")
+                            .font(.title3.bold())
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 8){
+                                ForEach(mostLikedRecipes, id: \.recipeId){ recipe in
+                                    MostLikedRecipesCard(recipe: recipe)
+                                        .scrollTransition(.interactive, axis: .horizontal){ content, phase in
+                                            content
+                                                .scaleEffect(1.0 - 0.12 * abs(phase.value))
+                                        }
+                                }
+                            }
+                            .scrollTargetLayout()
+                        }
+                        .scrollTargetBehavior(.viewAligned)
+                    }
+                }
+                
+                // MARK: - All Recipes Section
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Recipes")
+                    Text("All Recipes")
                         .font(.title3.bold())
 
                     if let recipesList = chefViewModel.chef?.recipesList {
