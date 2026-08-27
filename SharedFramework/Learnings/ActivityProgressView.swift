@@ -32,7 +32,8 @@ struct ActivityProgressView: View {
                 .frame(width: barWidth * completionValue, height: barHeight)
                 .opacity(completionValue > 0 ? 1.0 : 0.0)
         }
-        .animation(.bouncy(extraBounce: 0.2), value: completionValue)
+        //.animation(.bouncy(extraBounce: 0.2), value: completionValue)
+        .animation(.spring(bounce: 0.6), value: completionValue)
 
     }
 }
