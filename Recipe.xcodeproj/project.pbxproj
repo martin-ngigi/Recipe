@@ -350,6 +350,7 @@
 				Features/Themes/Presentation/ViewModels/ThemesViewModel.swift,
 				Features/TrendingRecipes/Presentation/Views/TrendingRecipesView.swift,
 				Learnings/ActivityProgressView.swift,
+				Learnings/BouncingBallView.swift,
 			);
 			target = B161B47130161F4A006F8BB7 /* User */;
 		};
@@ -523,6 +524,7 @@
 				Features/Themes/Presentation/ViewModels/ThemesViewModel.swift,
 				Features/TrendingRecipes/Presentation/Views/TrendingRecipesView.swift,
 				Learnings/ActivityProgressView.swift,
+				Learnings/BouncingBallView.swift,
 			);
 			target = B161B48030161F5A006F8BB7 /* Chef */;
 		};
