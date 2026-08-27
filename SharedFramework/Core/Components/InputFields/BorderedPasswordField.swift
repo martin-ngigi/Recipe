@@ -46,6 +46,7 @@ struct BorderedPasswordField: View {
                     onToggleAction()
                 } label: {
                     Image(systemName: isSecure ? "eye.slash" : "eye")
+                        .contentTransition(.symbolEffect)
                         .foregroundColor(.gray)
                         .padding(.trailing)
                 }
