@@ -15,8 +15,6 @@ import SwiftUI
 
 struct CustomButton: View {
     var buttonName: String
-    var width: Double = .infinity
-    var height: Double = 44
 
     var leadingIcon: String = ""
     var leadingImage: String = ""
@@ -31,7 +29,8 @@ struct CustomButton: View {
     var isDisabled: Bool = false
     var isLoading: Bool = false
     var isFilled = true
-    var shouldShimmer = false
+    var controlSize = ControlSize.large
+    var buttonSizing = ButtonSizing.flexible
     var buttonBorderShape: SwiftUI.ButtonBorderShape = .capsule
     var onTap: () -> Void
 
@@ -59,10 +58,12 @@ struct CustomButton: View {
                 }
                 else if !leadingIcon.isEmpty && !isLoading {
                     Image(systemName: leadingIcon)
+                        .imageScale(.large)
                 }
                 
                 if isLoading {
                     ProgressView()
+                        .tint(.primary)
                 }
 
                 if !buttonName.isEmpty {
@@ -70,25 +71,24 @@ struct CustomButton: View {
                         .font(.body)
                         .foregroundColor(localButtonColor)
                         .fontWeight(.semibold)
-                        .lineLimit(1)
                         .minimumScaleFactor(0.9)
                 }
                 
                 if !trailingIcon.isEmpty {
                     Image(systemName: trailingIcon)
+                        .imageScale(.large)
                 }
                 if !trailingImage.isEmpty {
                     Image(trailingImage)
                 }
             }
             .foregroundColor(foregroundStyle)
-            .padding(.horizontal, 16)
-            .frame(maxWidth: width == .infinity ? .infinity : CGFloat(width))
-            .frame(height: height)
         }
         .animation(.easeInOut(duration: 0.15), value: isDisabled)
         .glassButtonStyle(isFilled: isFilled)
         .buttonBorderShape(buttonBorderShape)
+        .buttonSizing(buttonSizing)
+        .controlSize(controlSize)
         .tint(tintColor)
     }
     
@@ -96,7 +96,7 @@ struct CustomButton: View {
 
 #Preview {
     CustomButton(
-        buttonName: "Login",
+        buttonName: "Login With Email",
         isDisabled: true,
         isFilled: true,
         onTap: {

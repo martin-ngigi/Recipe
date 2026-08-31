@@ -24,7 +24,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                VStack {
+                VStack(spacing: 32) {
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,
@@ -37,7 +37,8 @@ struct HomeView: View {
                         }
                     )
                     
-                    VStack(spacing: 2) {
+                   
+                    VStack(spacing: 16){
                         
                         var noRecipes: Bool {
                             return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
@@ -46,7 +47,7 @@ struct HomeView: View {
                         HStack {
                             
                             Text("Trending Recipes")
-                                .font(.appSubheadline)
+                                .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
                             Spacer()
@@ -55,25 +56,21 @@ struct HomeView: View {
                                 Button {
                                     router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
                                 } label: {
-                                    HStack {
+                                    HStack(spacing: 4) {
                                         Text("See All")
-                                            .font(.appFootnote)
-                                            .foregroundStyle(Color.theme.primaryColor)
+                                            .font(.footnote)
 
                                         Image(systemName: "chevron.right")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 8, height: 8)
-                                            .foregroundColor(Color.secondary)
+                                            .imageScale(.small)
+
                                     }
-                                    .foregroundColor(Color.theme.primaryColor)
-                                    .frame(minHeight: 44)
+                                    .foregroundStyle(.primary)
                                 }
                                 .accessibilityLabel("See all trending recipes")
                             }
 
                         }
-
+                        
                         if noRecipes {
                             EmptyScreenView(
                                 imageName: "tray",
@@ -87,7 +84,7 @@ struct HomeView: View {
                             )
                         }
                         else {
-                            LazyVGrid(columns: columns, spacing: 16) {
+                            LazyVGrid(columns: columns) {
                                 ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
                                     NavigationLink {
                                         RecipeDetailsView(recipe: recipe)
@@ -100,7 +97,6 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .padding(.top, 8)
 
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
@@ -112,7 +108,6 @@ struct HomeView: View {
                             router.push(.popularChefs(list: homeViewModel.popularChefsList))
                         }
                     )
-                    .padding(.top, 10)
 
                 }
             }

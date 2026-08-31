@@ -31,28 +31,25 @@ struct RecipeItemView: View {
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(recipe.name)
-                    .font(.appFootnote)
-                    .foregroundStyle(Color.theme.blackAndWhite)
+                    .font(.footnote)
 
-
-                HStack {
+                HStack(spacing: 2) {
                     Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 8, height: 8)
-                        .foregroundColor(Color.secondary)
+                        .imageScale(.small)
 
                     Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
-                        .font(.appCaption2)
-                        .foregroundColor(Color.secondary)
+                        .font(.footnote)
 
                     Spacer()
                 }
+                .foregroundColor(Color.secondary)
+
             }
         }
     }
 }
 
-// #Preview {
-//    RecipeItemView()
-// }
+ #Preview {
+     RecipeItemView(recipe: RecipeModel.dummyList[0])
+         .padding()
+ }

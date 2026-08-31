@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 31/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  LandingView.swift
 //  Recipe
@@ -11,34 +17,36 @@ struct LandingView: View {
     @EnvironmentObject var router: Router
 
     var body: some View {
-        VStack(spacing: 80) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 32) {
 
-            Spacer()
-            Spacer()
+                VStack(spacing: 10) {
+                    Text("Cook Like a Chef")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
 
-            VStack(spacing: 10) {
-                Text("Cook Like a Chef")
-                    .font(.custom("Poppins-Bold", size: 34))
-
-                Text(
-                    "RecipeApp is a user-friendly recipe app designed for those who "
-                        + "are new to cooking and want to try new recipes at home"
-                )
-                .font(.custom("Poppins-Light", size: 14))
-                .multilineTextAlignment(.center)
-            }
-            .foregroundColor(Color.theme.blackAndWhite)
-
-            CustomButton(
-                buttonName: "Get Started",
-                onTap: {
-                    LocalState.isFirstLaunch = false
-                    router.replace(with: .dashboard)
+                    Text(
+                        "RecipeApp is a user-friendly recipe app designed for those who "
+                            + "are new to cooking and want to try new recipes at home."
+                    )
+                    .font(.callout)
+                    .multilineTextAlignment(.center)
                 }
-            )
-            .padding(.bottom, 10)
+                .foregroundColor(.primary)
 
+                CustomButton(
+                    buttonName: "Get Started",
+                    onTap: {
+                        LocalState.isFirstLaunch = false
+                        router.replace(with: .dashboard)
+                    }
+                )
+                .padding(.bottom, 8)
+
+            }
         }
+        .defaultScrollAnchor(.bottom)
         .padding()
         .background(
             ZStack {
@@ -65,9 +73,4 @@ struct LandingView: View {
 
 #Preview {
     LandingView()
-}
-
-#Preview {
-    LandingView()
-        .environment(\.locale, Locale(identifier: "sw"))
 }

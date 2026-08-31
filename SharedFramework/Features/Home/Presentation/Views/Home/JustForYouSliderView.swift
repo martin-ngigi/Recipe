@@ -24,9 +24,9 @@ struct JustForYouSliderView: View {
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 8) {
             Text("Just For You")
-                .font(.appHeadline)
+                .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if recipes.isEmpty && isLoading == false {
@@ -62,11 +62,11 @@ struct JustForYouSliderView: View {
                                         Text("\(recipes[index].name)")
                                             .font(.title3)
                                             .fontWeight(.semibold)
-                                            .foregroundColor(Color.theme.whiteColor)
+                                            .foregroundColor(.white)
 
                                         Text("\(recipes[index].chef?.name ?? "")")
-                                            .font(.appFootnote)
-                                            .foregroundColor(Color.theme.whiteColor)
+                                            .font(.footnote)
+                                            .foregroundColor(.white)
 
                                     }
                                     .frame(maxWidth: .infinity)

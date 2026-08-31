@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 31/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  NetworkUtils.swift
 //  Recipe
@@ -18,47 +24,60 @@ class NetworkUtils {
         postData: Any? = nil,
         isSecureRequest: Bool = true
     ) async -> (Data?, URLResponse?) {
-
-        var attemptsRetried = 0
-
-        while true {
+        
+        let maxAttempts = 3
+        var attempts = 0
+        
+        while attempts < maxAttempts {
+            attempts += 1
+            
             do {
                 var request = URLRequest(url: url)
                 request.httpMethod = httpMethod.getMethod
                 request.cachePolicy = .reloadIgnoringLocalCacheData
                 request.timeoutInterval = Constants.timeoutInterval
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+                
                 constructHeaders(request: &request, isSecureRequest: isSecureRequest)
                 try constructBody(request: &request, postData: postData)
-
+                
                 let (data, response) = try await URLSession.shared.data(for: request)
-
+                
                 logRequestAndResponse(url: url, request: request, data: data)
-
+                
                 return (data, response)
-
             }
             catch {
                 let errorMessage = error.localizedDescription.lowercased()
-
+                
+                os.Logger().debug("DEBUG: API ERROR: \(error.localizedDescription)")
+                os.Logger().debug("DEBUG: Attempt: \(attempts)/\(maxAttempts)")
+                
+                // Network connection was lost.
                 if errorMessage.contains("network connection was lost") {
-                    // Handle network lost if needed
-                    // NetworkMonitor.shared.isConnected = false
+                    os.Logger().debug("DEBUG: Network connection was lost.")
+                    return (nil, nil)
                 }
-
-                os.Logger().debug("DEBUG: URL: \n\(url)")
-
-                if errorMessage.contains("the request timed out"), attemptsRetried < 2 {
-                    attemptsRetried += 1
-                    os.Logger().debug("DEBUG: Retrying request due to timeout, attempt \(attemptsRetried)")
-                    continue  // retry the request
+                
+                // Request timed out.
+                if errorMessage.contains("the request timed out") {
+                    if attempts < maxAttempts {
+                        os.Logger().debug("DEBUG: Request timed out. Retrying... \(attempts)/\(maxAttempts)")
+                        continue
+                    }
+                    
+                    // Third timeout.
+                    os.Logger().debug("DEBUG: Request timed out after \(maxAttempts) attempts.")
+                    return (nil, nil)
                 }
-
-                os.Logger().debug("DEBUG: API ERROR occurred. Error is \(error.localizedDescription)")
+                
+                // Any other error should not be retried.
                 return (nil, nil)
             }
         }
+        
+        // Safety fallback. Normally unreachable.
+        return (nil, nil)
     }
 
     private func constructHeaders(request: inout URLRequest, isSecureRequest: Bool) {
@@ -92,16 +111,21 @@ class NetworkUtils {
         let prettyHeaders =
             request.allHTTPHeaderFields?
             .map { "\($0.key): \($0.value)" }
-            .joined(separator: "\n") ?? "No Headers"
+            .joined(separator: "
+") ?? "No Headers"
         let method = request.httpMethod ?? "UNKNOWN"
         let requestPrettyBody = Utils.shared.formatPrettyJSON(data: request.httpBody)
         let responsePrettyBody = Utils.shared.formatPrettyJSON(data: data)
 
         os.Logger().debug("DEBUG: \(separator)")
-        os.Logger().debug("DEBUG: \(method) URL: \n\(url)")
-        os.Logger().debug("DEBUG: HEADERS: \n\(prettyHeaders)")
-        os.Logger().debug("DEBUG: REQUEST: \n\(requestPrettyBody)")
-        os.Logger().debug("DEBUG: RESPONSE: \n\(responsePrettyBody)")
+        os.Logger().debug("DEBUG: \(method) URL: 
+\(url)")
+        os.Logger().debug("DEBUG: HEADERS: 
+\(prettyHeaders)")
+        os.Logger().debug("DEBUG: REQUEST: 
+\(requestPrettyBody)")
+        os.Logger().debug("DEBUG: RESPONSE: 
+\(responsePrettyBody)")
         os.Logger().debug("DEBUG: \(separator)")
     }
 
