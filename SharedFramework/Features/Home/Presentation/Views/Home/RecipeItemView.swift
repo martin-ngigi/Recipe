@@ -31,9 +31,10 @@ struct RecipeItemView: View {
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(recipe.name)
-                    .font(.footnote)
+                    .font(.callout)
+                    .foregroundColor(Color.theme.primaryColor)
 
-                HStack(spacing: 2) {
+                HStack(alignment: .firstTextBaseline, spacing: 2) {
                     Image(systemName: "star.fill")
                         .imageScale(.small)
 

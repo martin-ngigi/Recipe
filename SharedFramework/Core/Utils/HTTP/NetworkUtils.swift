@@ -111,22 +111,17 @@ class NetworkUtils {
         let prettyHeaders =
             request.allHTTPHeaderFields?
             .map { "\($0.key): \($0.value)" }
-            .joined(separator: "
-") ?? "No Headers"
+            .joined(separator: "\n") ?? "No Headers"
         let method = request.httpMethod ?? "UNKNOWN"
         let requestPrettyBody = Utils.shared.formatPrettyJSON(data: request.httpBody)
         let responsePrettyBody = Utils.shared.formatPrettyJSON(data: data)
 
         os.Logger().debug("DEBUG: \(separator)")
-        os.Logger().debug("DEBUG: \(method) URL: 
-\(url)")
-        os.Logger().debug("DEBUG: HEADERS: 
-\(prettyHeaders)")
-        os.Logger().debug("DEBUG: REQUEST: 
-\(requestPrettyBody)")
-        os.Logger().debug("DEBUG: RESPONSE: 
-\(responsePrettyBody)")
-        os.Logger().debug("DEBUG: \(separator)")
+        os.Logger().debug("DEBUG: \(method) URL: \(url)")
+        os.Logger().debug("DEBUG: HEADERS: \n \(prettyHeaders)")
+        os.Logger().debug("DEBUG: REQUEST: \n \(requestPrettyBody)")
+        os.Logger().debug("DEBUG: RESPONSE:  \n\(responsePrettyBody)")
+        os.Logger().debug("DEBUG: \n \(separator)")
     }
 
     deinit {}

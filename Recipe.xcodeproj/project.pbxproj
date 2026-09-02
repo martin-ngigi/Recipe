@@ -350,6 +350,7 @@
 				Features/Themes/Presentation/ViewModels/ThemesViewModel.swift,
 				Features/TrendingRecipes/Presentation/Views/TrendingRecipesView.swift,
 				Learnings/ActivityProgressView.swift,
+				Learnings/AnimationView.swift,
 				Learnings/BadgeTransition.swift,
 				Learnings/BouncingBallView.swift,
 			);
@@ -525,6 +526,7 @@
 				Features/Themes/Presentation/ViewModels/ThemesViewModel.swift,
 				Features/TrendingRecipes/Presentation/Views/TrendingRecipesView.swift,
 				Learnings/ActivityProgressView.swift,
+				Learnings/AnimationView.swift,
 				Learnings/BadgeTransition.swift,
 				Learnings/BouncingBallView.swift,
 			);

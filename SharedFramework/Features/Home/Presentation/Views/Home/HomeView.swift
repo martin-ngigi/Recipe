@@ -38,7 +38,7 @@ struct HomeView: View {
                     )
                     
                    
-                    VStack(spacing: 16){
+                    VStack(spacing: 8){
                         
                         var noRecipes: Bool {
                             return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading

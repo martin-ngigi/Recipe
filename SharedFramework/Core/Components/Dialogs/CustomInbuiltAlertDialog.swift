@@ -27,7 +27,40 @@ struct CustomInbuiltAlertDialog: ViewModifier {
     var onDismiss: () -> Void
     var onConfirmation: () -> Void
     
-    @ScaledMetric(relativeTo: .body) private var iconSize: CGFloat = 54
+    
+    init(
+        isPresented: Binding<Bool>,
+        entity: DialogEntity
+    ) {
+        self._isPresented = isPresented
+        self.title = entity.title
+        self.text = entity.message
+        self.confirmButtonText = entity.confirmButtonText
+        self.dismissButtonText = entity.dismissButtonText
+        self.imageName = entity.icon
+        self.onDismiss = { entity.onDismiss?() }
+        self.onConfirmation = { entity.onConfirm?() }
+    }
+    
+    init(
+        isPresented: Binding<Bool>,
+        title: String,
+        text: String,
+        confirmButtonText: String,
+        dismissButtonText: String,
+        imageName: String,
+        onDismiss: @escaping () -> Void,
+        onConfirmation: @escaping () -> Void
+    ) {
+        self._isPresented = isPresented
+        self.title = title
+        self.text = text
+        self.confirmButtonText = confirmButtonText
+        self.dismissButtonText = dismissButtonText
+        self.imageName = imageName
+        self.onDismiss = onDismiss
+        self.onConfirmation = onConfirmation
+    }
     
     func body(content: Content) -> some View {
         content
@@ -43,6 +76,7 @@ struct CustomInbuiltAlertDialog: ViewModifier {
                     Button(dismissButtonText, role: .confirm) {
                         onConfirmation()
                     }
+                    .keyboardShortcut(.defaultAction) // Makes it have primary color
                 }
                 
             } message: {
@@ -75,4 +109,37 @@ extension View {
             )
         )
     }
+    
+    func inbuiltAlertDialog(
+        isPresented: Binding<Bool>,
+        entity: DialogEntity
+    ) -> some View {
+        modifier(
+            CustomInbuiltAlertDialog(
+                isPresented: isPresented,
+                entity: entity
+            )
+        )
+    }
+}
+
+#Preview{
+    VStack{
+        Text("View here")
+        
+        Spacer()
+    }
+    .inbuiltAlertDialog(
+        isPresented: .constant(true),
+        entity: DialogEntity(
+            title: "Title here?",
+            message: "This is where your message will be displayed.",
+            confirmButtonText: "Proceed",
+            dismissButtonText: "Cancel",
+            onConfirm: {
+            },
+            onDismiss: {
+            }
+        )
+    )
 }
