@@ -353,6 +353,9 @@
 				Learnings/AnimationView.swift,
 				Learnings/BadgeTransition.swift,
 				Learnings/BouncingBallView.swift,
+				Learnings/ReactionView.swift,
+				Learnings/ScaleAnimationView.swift,
+				Learnings/WarningAnimation.swift,
 			);
 			target = B161B47130161F4A006F8BB7 /* User */;
 		};
@@ -529,6 +532,9 @@
 				Learnings/AnimationView.swift,
 				Learnings/BadgeTransition.swift,
 				Learnings/BouncingBallView.swift,
+				Learnings/ReactionView.swift,
+				Learnings/ScaleAnimationView.swift,
+				Learnings/WarningAnimation.swift,
 			);
 			target = B161B48030161F5A006F8BB7 /* Chef */;
 		};

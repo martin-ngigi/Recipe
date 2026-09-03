@@ -26,8 +26,13 @@ struct AnimationView: View {
             .scaleEffect(isSelected ? 1.5 : 1.0)
             .onTapGesture {
                 withAnimation {
-                    isSelected.toggle()
+                    isSelected = true
                 }
+                
+                withAnimation(.easeIn(duration: 0.2).delay(0.55)) {
+                    isSelected = false
+                }
+                
             }
     }
 }
