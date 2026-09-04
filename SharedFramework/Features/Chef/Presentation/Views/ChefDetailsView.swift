@@ -22,6 +22,7 @@ struct ChefDetailsView: View {
     var user: UserModel?
     @EnvironmentObject var tabRouter: TabRouter
     @EnvironmentObject var router: Router
+    private let horizontalMargins = 16.0
 
     var body: some View {
         ScrollView {
@@ -101,20 +102,23 @@ struct ChefDetailsView: View {
 
                     Spacer()
                 }
+                .padding(.horizontal, horizontalMargins)
 
                 Divider()
+                    .padding(.horizontal, horizontalMargins)
                 
                 // MARK: - Most Liked Recipes Section
-                if let  mostLikedRecipes = chefViewModel.chef?.recipesList {
-                    VStack(alignment: .leading, spacing: 12) {
+                if let mostLikedRecipes = chefViewModel.chef?.recipesList {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text("Most Liked Recipes")
                             .font(.title3.bold())
-                        
+                            .padding(.horizontal, horizontalMargins)
+
                         ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack(spacing: 8){
-                                ForEach(mostLikedRecipes, id: \.recipeId){ recipe in
+                            LazyHStack(spacing: 8) {
+                                ForEach(mostLikedRecipes, id: \.recipeId) { recipe in
                                     MostLikedRecipesCard(recipe: recipe)
-                                        .scrollTransition(.interactive, axis: .horizontal){ content, phase in
+                                        .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                             content
                                                 .scaleEffect(1.0 - 0.12 * abs(phase.value))
                                         }
@@ -122,6 +126,7 @@ struct ChefDetailsView: View {
                             }
                             .scrollTargetLayout()
                         }
+                        .contentMargins(.horizontal, horizontalMargins, for: .scrollContent)
                         .scrollTargetBehavior(.viewAligned)
                     }
                 }
@@ -176,8 +181,10 @@ struct ChefDetailsView: View {
 
                     }
                 }
+                .padding(.horizontal, horizontalMargins)
 
                 Divider()
+                    .padding(.horizontal, horizontalMargins)
 
                 // MARK: - Ratings Section
                 VStack(alignment: .leading, spacing: 12) {
@@ -204,6 +211,7 @@ struct ChefDetailsView: View {
                     }
 
                 }
+                .padding(.horizontal, horizontalMargins)
             }
             .task {
                 await chefViewModel.fetchChefByID(
@@ -217,7 +225,6 @@ struct ChefDetailsView: View {
                 )
 
             }
-            .padding()
         }
         .onAppear {
             let user = loginViewModel.fetchUserFromLocalStorage()
