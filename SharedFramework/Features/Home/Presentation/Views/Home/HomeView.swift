@@ -16,15 +16,22 @@ import SwiftUI
 
 struct HomeView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
+//    let columnss = [GridItem(.adaptive(minimum: 72, maximum: 100), spacing: 12, alignment: .top)]
+//    let columns2 = [GridItem(.adaptive(minimum: 72, maximum: 100), spacing: 12, alignment: .top)]
+//    let columns3 = [ GridItem(.adaptive(minimum: 72), spacing: 8, alignment: .top)]
+    let columns4 = Array( repeating: GridItem(.flexible(), spacing: 16, alignment: .top), count: 2)
+
     @StateObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
     @EnvironmentObject var tabRouter: TabRouter
     @Namespace private var namespace
+    let horizontalMargins = 16.0
 
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
+                    
                     JustForYouSliderView(
                         recipes: homeViewModel.justForYouList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,
@@ -36,9 +43,9 @@ struct HomeView: View {
                             homeViewModel.currentIndex = currentIndex
                         }
                     )
-                    
+                    .padding(.horizontal, horizontalMargins)
                    
-                    VStack(spacing: 8){
+                    VStack(alignment: .leading, spacing: 16){
                         
                         var noRecipes: Bool {
                             return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
@@ -48,7 +55,6 @@ struct HomeView: View {
                             
                             Text("Trending Recipes")
                                 .font(.headline)
-                                .frame(maxWidth: .infinity, alignment: .leading)
 
                             Spacer()
 
@@ -70,6 +76,7 @@ struct HomeView: View {
                             }
 
                         }
+                        .padding(.horizontal, horizontalMargins)
                         
                         if noRecipes {
                             EmptyScreenView(
@@ -82,19 +89,23 @@ struct HomeView: View {
                                     """,
                                 descriptionSize: 12
                             )
+                            .padding(.horizontal, horizontalMargins)
                         }
                         else {
-                            LazyVGrid(columns: columns) {
-                                ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
-                                    NavigationLink {
-                                        RecipeDetailsView(recipe: recipe)
-                                            .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
-                                    } label: {
-                                        RecipeItemView(recipe: recipe)
-                                            .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                            ScrollView(.horizontal){
+                                LazyVGrid(columns: columns4, spacing: 16) {
+                                    ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
+                                        NavigationLink {
+                                            RecipeDetailsView(recipe: recipe)
+                                                .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
+                                        } label: {
+                                            RecipeItemView(recipe: recipe)
+                                                .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                                        }
                                     }
                                 }
                             }
+                            .contentMargins(.horizontal, horizontalMargins)
                         }
                     }
 
@@ -108,16 +119,16 @@ struct HomeView: View {
                             router.push(.popularChefs(list: homeViewModel.popularChefsList))
                         }
                     )
+                    .padding(.horizontal, horizontalMargins)
 
                 }
             }
             .navigationTitle("Recipe Picks")
             .navigationSubtitle("Discover best recipes")
-            .padding(.horizontal)
             .searchable(
                 text: $homeViewModel.searchField,
                 placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search recipes..."
+                prompt: "Search recipes"
             )
             .scrollEdgeEffectStyle(.soft, for: .top)
             .toolbar {

@@ -24,7 +24,7 @@ struct JustForYouSliderView: View {
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 16) {
             Text("Just For You")
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)

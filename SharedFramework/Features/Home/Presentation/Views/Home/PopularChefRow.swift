@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 06/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  PopularChefRow.swift
 //  Recipe
@@ -15,7 +21,7 @@ struct PopularChefRow: View {
         Button {
             onTap(chef)
         } label: {
-            HStack {
+            HStack (spacing: 8){
 
                 var avatar: String {
                     if chef.avatar.starts(with: "http") {
@@ -28,40 +34,54 @@ struct PopularChefRow: View {
 
                 CustomImageView(
                     url: avatar,
-                    maxWidth: 60,
-                    height: 60
+                    maxWidth: 100,
+                    height: 100
                 )
-                .clipShape(.rect(cornerRadius: 10))
+                .clipShape(.rect(cornerRadius: 24))
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 4) {
+                    
                     Text(chef.name)
                         .font(.headline)
-
-                    Text("⭐️ \(chef.rate?.ratingFormatted ?? "0.0")")
-                        .font(.body)
-                        .foregroundColor(.orange)
+                    
+                    let recipesList = chef.recipesList?.compactMap{$0.name}.joined(separator: ", ") ??  ""
+                    
+                    Text("\(recipesList)")
+                        .lineLimit(3)
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.secondary)
+                    
+                    Text("\(Image(systemName: "star.fill")) \(chef.rate?.ratingFormatted ?? "0.0")")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                    
+                    /*
+                    Image(systemName: "chevron.forward")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.gray)
+                        .padding(.trailing, 8)
+                    */
                 }
+                .padding(8)
                 .foregroundStyle(Color.theme.blackAndWhite)
-
+                
                 Spacer()
             }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         }
 
     }
 }
 
 #Preview {
-    if let chef = UserModel.dummyChefResoinse?.data {
+    if let chef = HomeResponseModel.sampleData?.data.popularChefs[0] {
         PopularChefRow(
             chef: chef,
             onTap: { _ in
 
             }
         )
+        .padding()
     }
 
 }

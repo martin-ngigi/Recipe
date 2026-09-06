@@ -17,36 +17,37 @@ struct RecipeItemView: View {
     let recipe: RecipeModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
 
             CustomImageView(
                 url: recipe.image,
-                maxWidth: 180,
+                maxWidth: 200,
                 height: 140
             )
             .foregroundColor(Color.theme.blackAndWhite)
-            .clipped()
-            .cornerRadius(24)
-            .contentShape(Rectangle())
             
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(recipe.name)
                     .font(.callout)
-                    .foregroundColor(Color.theme.primaryColor)
+                    .foregroundStyle(Color.theme.blackAndWhite)
 
                 HStack(alignment: .firstTextBaseline, spacing: 2) {
-                    Image(systemName: "star.fill")
-                        .imageScale(.small)
 
-                    Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
+                    Text("\(Image(systemName: "star.fill")) \(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
                         .font(.footnote)
 
-                    Spacer()
                 }
                 .foregroundColor(Color.secondary)
-
             }
+            .padding(8)
+            
         }
+        .frame(minWidth: 200)
+        .background(Color(.secondarySystemBackground)) 
+        .clipped()
+        .cornerRadius(24)
+        //.clipShape(UnevenRoundedRectangle(topLeadingRadius: 24, topTrailingRadius: 24))
+        .contentShape(Rectangle())
     }
 }
 

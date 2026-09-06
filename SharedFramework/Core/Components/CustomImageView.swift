@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 06/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomImageView.swift
 //  Recipe
@@ -17,11 +23,9 @@ struct CustomImageView: View {
             switch phase {
             case .failure:
                 Image(systemName: "photo")
-                    // .font(.largeTitle)
                     .resizable()
-                    .scaledToFill()
-                    .foregroundColor(Color.theme.blackAndWhite)
-
+                    .scaledToFit()
+                    .foregroundColor(Color.gray)
             case .success(let image):
                 image
                     .resizable()
@@ -36,5 +40,5 @@ struct CustomImageView: View {
 }
 
 #Preview {
-    CustomImageView(url: "https://hws.dev/paul3.jpg")
+    CustomImageView(url: "https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Party-food-recipes-fcfb3af.jpg?resize=1366,1503")
 }

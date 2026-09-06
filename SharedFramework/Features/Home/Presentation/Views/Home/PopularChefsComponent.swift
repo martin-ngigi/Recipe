@@ -24,11 +24,10 @@ struct PopularChefsComponent: View {
     }
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(alignment: .leading, spacing: 16){
             HStack {
                 Text("Popular Chefs")
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
 
                 Spacer()
 
@@ -36,24 +35,21 @@ struct PopularChefsComponent: View {
                     Button {
                         onTapSeeAll()
                     } label: {
-                        HStack {
+                        HStack(spacing: 4) {
                             Text("See All")
-                                .font(.appFootnote)
-                                .foregroundStyle(Color.theme.primaryColor)
+                                .font(.footnote)
 
                             Image(systemName: "chevron.right")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 8, height: 8)
-                        }
-                        .foregroundColor(Color.theme.primaryColor)
+                                .imageScale(.small)
 
+                        }
+                        .foregroundStyle(.primary)
                     }
                 }
 
             }
 
-            VStack {
+            VStack(alignment: .leading, spacing: 16){
                 if isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
@@ -74,9 +70,8 @@ struct PopularChefsComponent: View {
                                 onTapChef(chef)
                             }
                         )
+                        .glassEffectCustomRectangular()
                     }
-                    .padding(4)
-                    .cardBackground()
                 }
 
             }

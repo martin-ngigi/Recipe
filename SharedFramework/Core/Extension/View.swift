@@ -132,5 +132,29 @@ extension View {
                 )
         }
     }
+    
+    @ViewBuilder
+    func glassEffectCustom() -> some View {
+        if #available(iOS 26.0, *) {
+            self
+                .glassEffect(.regular.interactive())
+        }
+        else {
+            self
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(.gray.opacity(0.2), lineWidth: 0.5)
+                }
+                .shadow(
+                    color: .black.opacity(0.1),
+                    radius: 8,
+                    x: 0,
+                    y: 4
+                )
+        }
+    }
+    
 
 }
