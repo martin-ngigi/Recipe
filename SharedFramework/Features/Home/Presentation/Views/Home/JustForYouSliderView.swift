@@ -70,16 +70,18 @@ struct JustForYouSliderView: View {
 
                                     }
                                     .frame(maxWidth: .infinity)
-                                    .padding(.bottom, 32)//72
+                                    .padding(.bottom, 48)
                                     .padding(.horizontal)
                                     .background(
                                         LinearGradient(
                                             colors: [
-                                                Color.black.opacity(0.05),
-                                                Color.black.opacity(0.075),
                                                 Color.black.opacity(0.1),
-                                                Color.black.opacity(0.15),
-                                                Color.black.opacity(0.2)
+                                                Color.black.opacity(0.25),
+                                                Color.black.opacity(0.5),
+                                                Color.black.opacity(0.75),
+                                                Color.black.opacity(0.75),
+                                                Color.black.opacity(1),
+                                                Color.black.opacity(1)
                                             ],
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -92,7 +94,7 @@ struct JustForYouSliderView: View {
                         .tag(index)
                     }
                 }
-                .frame(height: 200)
+                .frame(height: 240)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                 .clipShape(RoundedRectangle(cornerRadius: 24))
                 .onReceive(timer) { _ in
