@@ -107,5 +107,30 @@ extension View {
     func glassButtonStyle(isFilled: Bool) -> some View {
         modifier(ConditionalGlassStyle(isFilled: isFilled))
     }
+    
+    @ViewBuilder
+    func glassEffectCustomRectangular(cornerRadius: CGFloat = 24.0) -> some View {
+        if #available(iOS 26.0, *) {
+            self
+                .glassEffect(
+                    .regular.interactive(),
+                    in: RoundedRectangle(cornerRadius: cornerRadius)
+                )
+        } else {
+            self
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                .overlay {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(.gray.opacity(0.2), lineWidth: 0.5)
+                }
+                .shadow(
+                    color: .black.opacity(0.1),
+                    radius: 8,
+                    x: 0,
+                    y: 4
+                )
+        }
+    }
 
 }

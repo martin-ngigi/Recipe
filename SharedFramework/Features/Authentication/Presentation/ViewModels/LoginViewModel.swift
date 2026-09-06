@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 06/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  LoginViewModel.swift
 //  Recipe
@@ -24,6 +30,11 @@ enum LoginInputFields {
     case password
 }
 
+struct LoginStates{
+    var popNotificationData: PopNotificationData? = nil
+    var isPopNotificationPresented: Bool = false
+}
+
 @MainActor
 class LoginViewModel: ObservableObject {
     @Published var dialogEntity = DialogEntity()
@@ -38,9 +49,9 @@ class LoginViewModel: ObservableObject {
     @Published var isResetEmailButtonEnabled: Bool = false
     @Published var loginErrors = [String: String]()
     @Published var resetEmailErrors = [String: String]()
-    @Published var toast: Toast?
     @Published var sheetToShow: LoginSheets = .RESET_PASSWORD
     @Published var isShowSheet: Bool = false
+    @Published var states = LoginStates()
 
     let firebaseAuthUseCase = FirebaseAuthUseCase(
         createFirebaseUserRepository: FirebaseAuthRepository.shared,
@@ -91,8 +102,17 @@ class LoginViewModel: ObservableObject {
         updateResetEmailErrors(key: "resetEmail", value: error)
     }
 
-    func updateToast(value: Toast?) {
-        toast = value
+    func updatePopNotificationData(value: PopNotificationData) {
+        states.popNotificationData = value
+    }
+    
+    func updatePopNotificationData(data: PopNotificationData, isPresented: Bool ) {
+        states.popNotificationData = data
+        states.isPopNotificationPresented = isPresented
+    }
+   
+    func updateIsPopNotificationPresented(value: Bool) {
+        states.isPopNotificationPresented = value
     }
 
     func updatePassword(value: String) {

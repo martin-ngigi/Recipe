@@ -172,11 +172,14 @@ struct RegisterView: View {
                                 await loginViewModel.googleAuthentication(
                                     onSuccess: { _ in
                                         Task {
-                                            loginViewModel.updateToast(
-                                                value: Toast(
-                                                    style: .success,
-                                                    message: "Google authentication successfull!"
-                                                )
+                                            
+                                            loginViewModel.updatePopNotificationData(
+                                                data: PopNotificationData(
+                                                    title: "Registration Success",
+                                                    message: "You have been authentication successfully using Google.",
+                                                    type: .success
+                                                ),
+                                                isPresented: true
                                             )
                                             await loginViewModel.sleep(nanoseconds: 1_000_000_000)  // 1.0 sec
                                             LocalState.isLogedIn = true
@@ -244,7 +247,12 @@ struct RegisterView: View {
         .fullScreenProgressOverlay(
             isShowing: registerViewModel.registeState == .isLoading || loginViewModel.loginState == .isLoading
         )
-        .toastView(toast: $loginViewModel.toast)
+        .overlay {
+            CustomPushNotificationView(
+                data: loginViewModel.states.popNotificationData,
+                isPresented: $loginViewModel.states.isPopNotificationPresented
+            )
+        }
         .overlay {
             CustomAlertDialog(
                 isPresented: $registerViewModel.isShowAlertDialog,

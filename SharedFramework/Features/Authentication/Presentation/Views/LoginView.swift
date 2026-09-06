@@ -183,11 +183,14 @@ struct LoginView: View {
                                                 title: "google_auth_success",
                                                 contentType: content
                                             )
-                                            loginViewModel.updateToast(
-                                                value: Toast(
-                                                    style: .success,
-                                                    message: "Google authentication successfull!"
-                                                )
+                                            
+                                            loginViewModel.updatePopNotificationData(
+                                                data: PopNotificationData(
+                                                    title: "Login Success",
+                                                    message: "You have been authentication successfully using Google.",
+                                                    type: .success
+                                                ),
+                                                isPresented: true
                                             )
                                             await loginViewModel.sleep(nanoseconds: 1_000_000_000)
                                             onLoginSuccess()
@@ -267,13 +270,20 @@ struct LoginView: View {
             }
             .padding()
         }
+        .overlay {
+            CustomPushNotificationView(
+                data: loginViewModel.states.popNotificationData,
+                isPresented: $loginViewModel.states.isPopNotificationPresented
+            )
+        }
         .sheet(isPresented: $loginViewModel.isShowSheet) {
             switch loginViewModel.sheetToShow {
             case .RESET_PASSWORD:
                 ResetPasswordSheet(
                     email: $loginViewModel.resetEmail,
                     resetEmailErrors: loginViewModel.resetEmailErrors,
-                    toast: $loginViewModel.toast,
+                    popNotificationData: loginViewModel.states.popNotificationData,
+                    isPopNotificationPresented: $loginViewModel.states.isPopNotificationPresented,
                     isEmailValid: loginViewModel.isResetEmailButtonEnabled,
                     isLoading: loginViewModel.resetPasswordState == .isLoading,
                     onEmailChange: { newEmail in
@@ -293,16 +303,27 @@ struct LoginView: View {
                                         title: "reset_password_success",
                                         contentType: content
                                     )
-                                    loginViewModel.updateToast(
-                                        value: Toast(style: .success, message: "Reset password link sent to your email")
+                                    
+                                    loginViewModel.updatePopNotificationData(
+                                        data: PopNotificationData(
+                                            title: "Reset link sent successfully.",
+                                            message: "Please check your email.",
+                                            type: .success
+                                        ),
+                                        isPresented: true
                                     )
                                     loginViewModel.updateIsShowSheet(value: false)
                                 },
                                 onFailure: { error in
                                     MyFirebaseAnalytics.shared.logError(message: error, screen: content)
 
-                                    loginViewModel.updateToast(
-                                        value: Toast(style: .error, message: error)
+                                    loginViewModel.updatePopNotificationData(
+                                        data: PopNotificationData(
+                                            title: "Failed to send link",
+                                            message: error,
+                                            type: .error
+                                        ),
+                                        isPresented: true
                                     )
                                 }
                             )
@@ -328,7 +349,6 @@ struct LoginView: View {
                 dismiss()
             }
         )
-        .toastView(toast: $loginViewModel.toast)
         .customInbuiltAlertDialog(
             title: loginViewModel.dialogEntity.title,
             message: loginViewModel.dialogEntity.message,
