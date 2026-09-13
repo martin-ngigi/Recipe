@@ -61,7 +61,6 @@ struct HomeView: View {
                         homeViewModel.currentIndex = currentIndex
                     }
                 )
-                .padding(.horizontal, horizontalMargins)
                
                 VStack(alignment: .leading, spacing: 16){
                     
@@ -266,8 +265,10 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
-        .environmentObject(Router())
-        .environmentObject(TabRouter())
+    NavigationStack{
+        HomeView()
+            .environmentObject(Router())
+            .environmentObject(TabRouter())
+    }
 
 }

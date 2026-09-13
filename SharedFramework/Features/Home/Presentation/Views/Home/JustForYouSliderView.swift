@@ -29,6 +29,7 @@ struct JustForYouSliderView: View {
             Text("Just For You")
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, Guidelines.horizontalPadding)
 
             if recipes.isEmpty && isLoading == false {
                 EmptyScreenView(
@@ -58,7 +59,6 @@ struct JustForYouSliderView: View {
                                         )
                                         .frame(minWidth: 360)
                                         .frame(height: 240)
-                                        .border(.red)
                                     }
                                     .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                         content
@@ -68,7 +68,7 @@ struct JustForYouSliderView: View {
                             }
                             .scrollTargetLayout()
                         }
-                        .contentMargins(.horizontal, 16, for: .scrollContent)
+                        .contentMargins(.horizontal, Guidelines.horizontalPadding, for: .scrollContent)
                         .scrollTargetBehavior(.viewAligned)
                     }
                     else{
@@ -121,7 +121,6 @@ struct JustForYouSliderItem: View {
         )
         .foregroundColor(Color.theme.blackAndWhite)
         .clipped()
-        .cornerRadius(Guidelines.cornerRadius)
         .contentShape(Rectangle())
         .overlay(alignment: .bottom) {
             VStack(spacing: 0){
@@ -154,6 +153,8 @@ struct JustForYouSliderItem: View {
                 )
             )
         }
+        .clipShape(.rect(corners: .concentric()))
+        .containerShape(.rect(cornerRadius: Guidelines.cornerRadius))
     }
 }
 
