@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  AllRatingModel.swift
 //  Recipe
@@ -51,6 +57,10 @@ struct AllRatingModel: Codable, Hashable {
 
     let rateID, rateeID, raterID: String
     let rating: Double
+    
+    //@StringOrDouble
+    //var ratingDynamic: String?
+    
     let comment: String
     let rater: UserModel
 

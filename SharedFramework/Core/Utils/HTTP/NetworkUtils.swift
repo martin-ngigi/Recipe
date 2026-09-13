@@ -22,10 +22,11 @@ class NetworkUtils {
         url: URL,
         httpMethod: HttpMethod,
         postData: Any? = nil,
+        isRetryRequest: Bool = false,
         isSecureRequest: Bool = true
     ) async -> (Data?, URLResponse?) {
         
-        let maxAttempts = 3
+        let maxAttempts = isRetryRequest ? 3 : 1
         var attempts = 0
         
         while attempts < maxAttempts {
