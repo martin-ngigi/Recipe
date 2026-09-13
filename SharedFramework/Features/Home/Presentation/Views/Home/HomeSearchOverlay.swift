@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  HomeSearchOverlay.swift
 //  Recipe
@@ -66,10 +72,10 @@ struct HomeSearchOverlay: View {
                         }
                     }
                     .background(Color.theme.whiteAndBlack.opacity(0.9))
-                    .cornerRadius(11)
+                    .cornerRadius(Guidelines.cornerRadius)
                     .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 11)
+                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                             .stroke(Color.theme.primaryColor, lineWidth: 1)
                     )
                     .padding()

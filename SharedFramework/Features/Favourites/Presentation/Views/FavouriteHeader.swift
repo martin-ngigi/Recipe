@@ -28,7 +28,7 @@ struct FavouriteHeader: View {
             Spacer()
         }
         .background(Color(.systemGroupedBackground).opacity(0.9))
-        .cornerRadius(4)
+        .cornerRadius(Guidelines.cornerRadius)
     }
 }
 

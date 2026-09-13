@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ShareRecipeUtil.swift
 //  Recipe
@@ -228,7 +234,7 @@ struct ShareRecipeUtil {
         )
 
         let imageRect = CGRect(x: margin, y: yOffset, width: maxWidth, height: imageHeight)
-        let path = UIBezierPath(roundedRect: imageRect, cornerRadius: 16)
+        let path = UIBezierPath(roundedRect: imageRect, cornerRadius: Guidelines.cornerRadius)
         path.addClip()
         image.draw(in: imageRect)
         yOffset += imageHeight + 20

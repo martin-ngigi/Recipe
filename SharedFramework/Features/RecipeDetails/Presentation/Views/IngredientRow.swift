@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  IngredientRow.swift
 //  Recipe
@@ -22,7 +28,7 @@ struct IngredientRow: View {
                     maxWidth: 60,
                     height: 60
                 )
-                .clipShape(.rect(cornerRadius: 10))
+                .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
 
                 VStack(alignment: .leading) {
                     Text(ingredient.name)
@@ -39,7 +45,7 @@ struct IngredientRow: View {
             }
             .padding()
             .background(Color(.systemGray6))
-            .cornerRadius(12)
+            .cornerRadius(Guidelines.cornerRadius)
         }
     }
 }

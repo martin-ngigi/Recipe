@@ -206,7 +206,7 @@ struct ChefDetailsView: View {
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
-                        .cornerRadius(12)
+                        .cornerRadius(Guidelines.cornerRadius)
                         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
                     }
 

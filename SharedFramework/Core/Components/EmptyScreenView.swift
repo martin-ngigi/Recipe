@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  EmptyScreenView.swift
 //  Recipe
@@ -94,7 +100,7 @@ struct EmptyScreenView: View {
             .padding(.horizontal, 24)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                RoundedRectangle(cornerRadius: 18)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                     .fill(Color(UIColor.secondarySystemBackground))
                     .shadow(
                         color: Color.black.opacity(0.06),

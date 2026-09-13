@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CardBackground.swift
 //  Recipe
@@ -8,7 +14,7 @@
 import SwiftUI
 
 struct CardBackground: ViewModifier {
-    var cornerRadius: CGFloat = 18
+    var cornerRadius: CGFloat = Guidelines.cornerRadius
     var background = Color(UIColor.secondarySystemBackground)
     var shadowColor = Color.black.opacity(0.06)
     var shadowRadius: CGFloat = 20

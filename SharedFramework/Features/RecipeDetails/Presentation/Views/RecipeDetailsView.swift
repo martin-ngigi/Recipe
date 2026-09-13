@@ -101,7 +101,7 @@ struct RecipeDetailsView: View {
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
                                 .background(.ultraThinMaterial)
-                                .cornerRadius(20)
+                                .cornerRadius(Guidelines.cornerRadius)
                             }
                             .foregroundColor(.white)
                         }
@@ -246,7 +246,7 @@ struct RecipeDetailsView: View {
                     }
                     .padding()
                     .background(Color.theme.whiteAndBlack)
-                    .cornerRadius(24)
+                    .cornerRadius(Guidelines.cornerRadius)
                     .offset(y: -24)
                     .padding(.bottom, -24)
                 }

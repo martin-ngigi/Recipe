@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeCard.swift
 //  Recipe
@@ -22,7 +28,7 @@ struct RecipeCard: View {
                     height: 200
                 )
                 .clipped()
-                .cornerRadius(12)
+                .cornerRadius(Guidelines.cornerRadius)
                 .foregroundColor(Color.theme.blackAndWhite)
 
                 Text(recipe.name)
@@ -37,7 +43,7 @@ struct RecipeCard: View {
             }
             .padding()
             .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
+            .cornerRadius(Guidelines.cornerRadius)
             .shadow(color: .black.opacity(0.07), radius: 4, x: 0, y: 2)
         }
     }

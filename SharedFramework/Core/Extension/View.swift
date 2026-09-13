@@ -33,7 +33,7 @@ extension View {
                             }
                             .padding()
                             .background(Color(white: 0.2, opacity: 0.7))
-                            .cornerRadius(12)
+                            .cornerRadius(Guidelines.cornerRadius)
                         )
                 }
             },
@@ -46,7 +46,7 @@ extension View {
     }
 
     func cardBackground(
-        cornerRadius: CGFloat = 18,
+        cornerRadius: CGFloat = Guidelines.cornerRadius,
         background: Color = Color(UIColor.secondarySystemBackground),
         shadowColor: Color = Color.black.opacity(0.06),
         shadowRadius: CGFloat = 20,
@@ -93,11 +93,11 @@ extension View {
             self
                 .background(
                     Color.theme.whiteAndBlack.opacity(0.5),
-                    in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    in: RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                 )
                 .background(.thickMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 24)
+                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                         .stroke(Color.theme.blackAndWhite.opacity(0.25), lineWidth: 0.5)
                 )
         }
@@ -109,7 +109,7 @@ extension View {
     }
     
     @ViewBuilder
-    func glassEffectCustomRectangular(cornerRadius: CGFloat = 24.0) -> some View {
+    func glassEffectCustomRectangular(cornerRadius: CGFloat = Guidelines.cornerRadius) -> some View {
         if #available(iOS 26.0, *) {
             self
                 .glassEffect(
@@ -142,9 +142,9 @@ extension View {
         else {
             self
                 .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
                 .overlay {
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                         .stroke(.gray.opacity(0.2), lineWidth: 0.5)
                 }
                 .shadow(

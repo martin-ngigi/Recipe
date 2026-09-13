@@ -37,7 +37,7 @@ struct PopularChefRow: View {
                     maxWidth: 100,
                     height: 100
                 )
-                .clipShape(.rect(cornerRadius: 24))
+                .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
 
                 VStack(alignment: .leading, spacing: 4) {
                     

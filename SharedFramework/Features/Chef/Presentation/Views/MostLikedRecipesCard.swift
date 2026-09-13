@@ -25,7 +25,7 @@ struct MostLikedRecipesCard: View {
                 height: 200
             )
             .clipped()
-            .cornerRadius(24)
+            .cornerRadius(Guidelines.cornerRadius)
             .foregroundColor(Color.theme.blackAndWhite)
 
             VStack(alignment: .leading, spacing: 2){

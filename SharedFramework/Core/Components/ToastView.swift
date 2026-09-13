@@ -41,9 +41,9 @@ struct ToastView: View {
         .padding()
         .frame(minWidth: 0, maxWidth: width)
         .background(.white)
-        .cornerRadius(8)
+        .cornerRadius(Guidelines.cornerRadius)
         .overlay {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                 .stroke(style.themeColor, lineWidth: 2)
         }
         .padding(.horizontal, 16)

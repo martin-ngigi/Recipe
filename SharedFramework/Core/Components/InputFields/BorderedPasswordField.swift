@@ -53,17 +53,17 @@ struct BorderedPasswordField: View {
             }
             .textFieldStyle(TappableTextFieldStyle())  // Increase tap area
             .background(Color.gray.opacity(0.15))
-            .cornerRadius(24)
+            .cornerRadius(Guidelines.cornerRadius)
             .focused($isFocused)
-            .cornerRadius(24)
+            .cornerRadius(Guidelines.cornerRadius)
             .overlay(
                 Group {
                     if isFocused {
-                        RoundedRectangle(cornerRadius: 24)
+                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                             .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
                     }
                     else {
-                        RoundedRectangle(cornerRadius: 24)
+                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                             .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
                     }
                 }

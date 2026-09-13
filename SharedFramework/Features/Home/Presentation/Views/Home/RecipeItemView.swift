@@ -45,7 +45,7 @@ struct RecipeItemView: View {
         .frame(minWidth: 200)
         .background(Color(.secondarySystemBackground)) 
         .clipped()
-        .cornerRadius(24)
+        .cornerRadius(Guidelines.cornerRadius)
         //.clipShape(UnevenRoundedRectangle(topLeadingRadius: 24, topTrailingRadius: 24))
         .contentShape(Rectangle())
     }

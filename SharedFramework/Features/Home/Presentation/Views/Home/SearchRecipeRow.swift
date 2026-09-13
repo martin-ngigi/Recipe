@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  SearchRecipeRow.swift
 //  Recipe
@@ -23,7 +29,7 @@ struct SearchRecipeRow: View {
                     height: 80
                 )
                 .clipped()
-                .cornerRadius(12)
+                .cornerRadius(Guidelines.cornerRadius)
                 .foregroundColor(Color.theme.blackAndWhite)
 
                 VStack {
@@ -41,7 +47,7 @@ struct SearchRecipeRow: View {
             }
             .padding()
             .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
+            .cornerRadius(Guidelines.cornerRadius)
             .shadow(color: .black.opacity(0.07), radius: 4, x: 0, y: 2)
         }
     }

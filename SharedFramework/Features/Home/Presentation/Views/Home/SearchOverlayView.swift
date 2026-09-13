@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  SearchOverlayView.swift
 //  Recipe
@@ -106,7 +112,7 @@ struct SearchOverlayView: View {
                     .font(.caption)
                     .padding(6)
                     .background(currentPage.wrappedValue == page ? Color.blue.opacity(0.2) : Color.clear)
-                    .cornerRadius(6)
+                    .cornerRadius(Guidelines.cornerRadius)
                 }
 
                 Button("Next") {

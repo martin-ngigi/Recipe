@@ -22,6 +22,7 @@ struct JustForYouSliderView: View {
     var onUpdateCurrentIndex: (Int) -> Void
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
         VStack(spacing: 16) {
@@ -42,73 +43,117 @@ struct JustForYouSliderView: View {
                 )
             }
             else {
-                TabView(selection: .constant(currentIndex)) {
-                    ForEach(0..<recipes.count, id: \.self) { index in
-                        ZStack {
-                            Button {
-                                onTap(recipes[index])
-                            } label: {
-                                CustomImageView(
-                                    url: recipes[index].image,
-                                    maxWidth: .infinity,
-                                    height: 240
-                                )
-                                .foregroundColor(Color.theme.blackAndWhite)
-                                .clipped()
-                                .cornerRadius(24)
-                                .contentShape(Rectangle())
-                                .overlay(alignment: .bottom) {
-                                    VStack(spacing: 0){
-                                        Text("\(recipes[index].name)")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-
-                                        Text("\(recipes[index].chef?.name ?? "")")
-                                            .font(.footnote)
-                                            .foregroundColor(.white)
-
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.bottom, 48)
-                                    .padding(.horizontal)
-                                    .background(
-                                        LinearGradient(
-                                            colors: [
-                                                Color.black.opacity(0.1),
-                                                Color.black.opacity(0.25),
-                                                Color.black.opacity(0.5),
-                                                Color.black.opacity(0.75),
-                                                Color.black.opacity(0.75),
-                                                Color.black.opacity(1),
-                                                Color.black.opacity(1)
-                                            ],
-                                            startPoint: .top,
-                                            endPoint: .bottom
+                Group{
+                    if horizontalSizeClass == .regular {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 8) {
+                                ForEach(0..<recipes.count, id: \.self) { index in
+                                    Button {
+                                        onTap(recipes[index])
+                                    } label: {
+                                        JustForYouSliderItem(
+                                            image: recipes[index].image,
+                                            recipeName: recipes[index].name,
+                                            chefName: recipes[index].chef?.name ?? ""
                                         )
-                                    )
+                                        .frame(minWidth: 360)
+                                        .frame(height: 240)
+                                        .border(.red)
+                                    }
+                                    .scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                                        content
+                                            .scaleEffect(1.0 - 0.12 * abs(phase.value))
+                                    }
                                 }
                             }
-
+                            .scrollTargetLayout()
                         }
-                        .tag(index)
+                        .contentMargins(.horizontal, 16, for: .scrollContent)
+                        .scrollTargetBehavior(.viewAligned)
                     }
-                }
-                .frame(height: 240)
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                .clipShape(RoundedRectangle(cornerRadius: 24))
-                .onReceive(timer) { _ in
-                    guard !reduceMotion else { return }
-                    withAnimation {
-                        if !recipes.isEmpty {
-                            onUpdateCurrentIndex((currentIndex + 1) % recipes.count)
+                    else{
+                        TabView(selection: .constant(currentIndex)) {
+                            ForEach(0..<recipes.count, id: \.self) { index in
+                                ZStack {
+                                    Button {
+                                        onTap(recipes[index])
+                                    } label: {
+                                        JustForYouSliderItem(
+                                            image: recipes[index].image,
+                                            recipeName: recipes[index].name,
+                                            chefName: recipes[index].chef?.name ?? ""
+                                        )
+                                    }
+                                }
+                                .tag(index)
+                            }
+                        }
+                        .frame(height: 240)
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+                        .onReceive(timer) { _ in
+                            guard !reduceMotion else { return }
+                            withAnimation {
+                                if !recipes.isEmpty {
+                                    onUpdateCurrentIndex((currentIndex + 1) % recipes.count)
+                                }
+                            }
                         }
                     }
                 }
             }
-
         }
         .padding(.top, 10)
+    }
+}
+
+struct JustForYouSliderItem: View {
+    
+    var image: String
+    var recipeName: String
+    var chefName: String
+    
+    var body: some View{
+        CustomImageView(
+            url: image,
+            maxWidth: .infinity,
+            height: 240
+        )
+        .foregroundColor(Color.theme.blackAndWhite)
+        .clipped()
+        .cornerRadius(Guidelines.cornerRadius)
+        .contentShape(Rectangle())
+        .overlay(alignment: .bottom) {
+            VStack(spacing: 0){
+                Text(recipeName)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+
+                Text(chefName)
+                    .font(.footnote)
+                    .foregroundColor(.white)
+
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, 48)
+            .padding(.horizontal)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.1),
+                        Color.black.opacity(0.25),
+                        Color.black.opacity(0.5),
+                        Color.black.opacity(0.75),
+                        Color.black.opacity(0.75),
+                        Color.black.opacity(1),
+                        Color.black.opacity(1)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+        }
     }
 }
 

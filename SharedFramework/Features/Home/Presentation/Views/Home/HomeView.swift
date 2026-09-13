@@ -15,10 +15,29 @@ import SwiftUI
 
 
 struct HomeView: View {
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
-//    let columnss = [GridItem(.adaptive(minimum: 72, maximum: 100), spacing: 12, alignment: .top)]
-//    let columns2 = [GridItem(.adaptive(minimum: 72, maximum: 100), spacing: 12, alignment: .top)]
-//    let columns3 = [ GridItem(.adaptive(minimum: 72), spacing: 8, alignment: .top)]
+    let columns1 = [GridItem(.flexible()), GridItem(.flexible())]
+    var columns3: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 16), count: 2)
+        
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    var columns2: [GridItem] {
+        if dynamicTypeSize.isAccessibilitySize {
+            return [GridItem(.flexible())]
+        }
+        
+        if horizontalSizeClass == .regular { //iPad
+            return [GridItem(.adaptive(minimum: 160), spacing: 16)]
+        }
+        
+        return [GridItem(.adaptive(minimum: 160), spacing: 16)]
+    }
+    
+
+    var columns: [GridItem] {
+        let minimumWidth: CGFloat = dynamicTypeSize.isAccessibilitySize ? 360 : 160
+        return [GridItem(.adaptive(minimum: minimumWidth), spacing: 16)]
+    }
     let columns4 = Array( repeating: GridItem(.flexible(), spacing: 16, alignment: .top), count: 2)
 
     @StateObject var homeViewModel = HomeViewModel()
@@ -28,160 +47,158 @@ struct HomeView: View {
     let horizontalMargins = 16.0
 
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 32) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 32) {
+                
+                JustForYouSliderView(
+                    recipes: homeViewModel.justForYouList,
+                    isLoading: homeViewModel.fetchHomeDataState == .isLoading,
+                    currentIndex: homeViewModel.currentIndex,
+                    onTap: { recipe in
+                        router.push(.recipedetails(recipe: recipe))
+                    },
+                    onUpdateCurrentIndex: { currentIndex in
+                        homeViewModel.currentIndex = currentIndex
+                    }
+                )
+                .padding(.horizontal, horizontalMargins)
+               
+                VStack(alignment: .leading, spacing: 16){
                     
-                    JustForYouSliderView(
-                        recipes: homeViewModel.justForYouList,
-                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                        currentIndex: homeViewModel.currentIndex,
-                        onTap: { recipe in
-                            router.push(.recipedetails(recipe: recipe))
-                        },
-                        onUpdateCurrentIndex: { currentIndex in
-                            homeViewModel.currentIndex = currentIndex
-                        }
-                    )
-                    .padding(.horizontal, horizontalMargins)
-                   
-                    VStack(alignment: .leading, spacing: 16){
-                        
-                        var noRecipes: Bool {
-                            return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
-                        }
-                        
-                        HStack {
-                            
-                            Text("Trending Recipes")
-                                .font(.headline)
-
-                            Spacer()
-
-                            if !noRecipes {
-                                Button {
-                                    router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
-                                } label: {
-                                    HStack(spacing: 4) {
-                                        Text("See All")
-                                            .font(.footnote)
-
-                                        Image(systemName: "chevron.right")
-                                            .imageScale(.small)
-
-                                    }
-                                    .foregroundStyle(.primary)
-                                }
-                                .accessibilityLabel("See all trending recipes")
-                            }
-
-                        }
-                        .padding(.horizontal, horizontalMargins)
-                        
-                        if noRecipes {
-                            EmptyScreenView(
-                                imageName: "tray",
-                                imageSize: 80,
-                                title: "Trending",
-                                titleSize: 18,
-                                description: """
-                                    No trending recipes found.
-                                    """,
-                                descriptionSize: 12
-                            )
-                            .padding(.horizontal, horizontalMargins)
-                        }
-                        else {
-                            ScrollView(.horizontal){
-                                LazyVGrid(columns: columns4, spacing: 16) {
-                                    ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
-                                        NavigationLink {
-                                            RecipeDetailsView(recipe: recipe)
-                                                .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
-                                        } label: {
-                                            RecipeItemView(recipe: recipe)
-                                                .matchedTransitionSource(id: recipe.recipeId, in: namespace)
-                                        }
-                                    }
-                                }
-                            }
-                            .contentMargins(.horizontal, horizontalMargins)
-                        }
+                    var noRecipes: Bool {
+                        return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
                     }
+                    
+                    HStack {
+                        
+                        Text("Trending Recipes")
+                            .font(.headline)
 
-                    PopularChefsComponent(
-                        chefs: homeViewModel.popularChefsList,
-                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                        onTapChef: { chef in
-                            router.push(.chefdetails(chef: chef))
-                        },
-                        onTapSeeAll: {
-                            router.push(.popularChefs(list: homeViewModel.popularChefsList))
+                        Spacer()
+
+                        if !noRecipes {
+                            Button {
+                                router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Text("See All")
+                                        .font(.footnote)
+
+                                    Image(systemName: "chevron.right")
+                                        .imageScale(.small)
+
+                                }
+                                .foregroundStyle(.primary)
+                            }
+                            .accessibilityLabel("See all trending recipes")
                         }
-                    )
-                    .padding(.horizontal, horizontalMargins)
 
-                }
-            }
-            .navigationTitle("Recipe Picks")
-            .navigationSubtitle("Discover best recipes")
-            .searchable(
-                text: $homeViewModel.searchField,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search recipes"
-            )
-            .scrollEdgeEffectStyle(.soft, for: .top)
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Dismiss") {
-                        UIApplication.shared.sendAction(
-                            #selector(UIResponder.resignFirstResponder),
-                            to: nil,
-                            from: nil,
-                            for: nil
+                    }
+                    .padding(.horizontal, horizontalMargins)
+                    
+                    if noRecipes {
+                        EmptyScreenView(
+                            imageName: "tray",
+                            imageSize: 80,
+                            title: "Trending",
+                            titleSize: 18,
+                            description: """
+                                No trending recipes found.
+                                """,
+                            descriptionSize: 12
                         )
+                        .padding(.horizontal, horizontalMargins)
                     }
-                }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        tabRouter.selectedTab = .profile
-                    } label: {
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 44, height: 44)
-                            .foregroundColor(Color.gray)
-
+                    else {
+                        ScrollView(.horizontal){
+                            LazyVGrid(columns: columns4, spacing: 16) {
+                                ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
+                                    NavigationLink {
+                                        RecipeDetailsView(recipe: recipe)
+                                            .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
+                                    } label: {
+                                        RecipeItemView(recipe: recipe)
+                                            .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                                    }
+                                }
+                            }
+                        }
+                        .contentMargins(.horizontal, horizontalMargins)
                     }
-                    .accessibilityLabel("Profile")
-                }
-                .sharedBackgroundVisibility(.hidden)
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        router.push(.notifications)
-                    } label: {
-                       Image(systemName: "bell.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 36, height: 36)
-                            .foregroundColor(Color.gray)
-                    }
-                    .accessibilityLabel("Notifications")
-                    .badge(2)
                 }
 
+                PopularChefsComponent(
+                    chefs: homeViewModel.popularChefsList,
+                    isLoading: homeViewModel.fetchHomeDataState == .isLoading,
+                    onTapChef: { chef in
+                        router.push(.chefdetails(chef: chef))
+                    },
+                    onTapSeeAll: {
+                        router.push(.popularChefs(list: homeViewModel.popularChefsList))
+                    }
+                )
+                .padding(.horizontal, horizontalMargins)
+
             }
-            .refreshable {
-                Task {
-                    await fetchHomeData()
+        }
+        .navigationTitle("Recipe Picks")
+        .navigationSubtitle("Discover best recipes")
+        .searchable(
+            text: $homeViewModel.searchField,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "Search recipes"
+        )
+        .scrollEdgeEffectStyle(.soft, for: .top)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Dismiss") {
+                    UIApplication.shared.sendAction(
+                        #selector(UIResponder.resignFirstResponder),
+                        to: nil,
+                        from: nil,
+                        for: nil
+                    )
                 }
             }
-            .task {
+            
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    tabRouter.selectedTab = .profile
+                } label: {
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 44, height: 44)
+                        .foregroundColor(Color.gray)
+
+                }
+                .accessibilityLabel("Profile")
+            }
+            .sharedBackgroundVisibility(.hidden)
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    router.push(.notifications)
+                } label: {
+                   Image(systemName: "bell.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 36, height: 36)
+                        .foregroundColor(Color.gray)
+                }
+                .accessibilityLabel("Notifications")
+                .badge(2)
+            }
+
+        }
+        .refreshable {
+            Task {
                 await fetchHomeData()
             }
+        }
+        .task {
+            await fetchHomeData()
         }
         .alert(isPresented: $homeViewModel.isShowInbuiltAlert) {
             Alert(

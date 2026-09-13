@@ -18,7 +18,7 @@ struct WarningAnimation: View {
         Text("Hello, World!")
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
             )
             .phaseAnimator([true, false]) { content, phase in
                 content

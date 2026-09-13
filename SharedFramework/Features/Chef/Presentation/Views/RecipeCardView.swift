@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeCardView.swift
 //  Recipe
@@ -13,7 +19,7 @@ struct RecipeCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             CustomImageView(url: recipe.image, maxWidth: .infinity, height: 180)
-                .cornerRadius(12)
+                .cornerRadius(Guidelines.cornerRadius)
 
             Text(recipe.name)
                 .font(.custom("\(LocalState.selectedFontPrefix)-SemiBold", size: 16))
@@ -26,7 +32,7 @@ struct RecipeCardView: View {
         }
         .padding()
         .background(Color.theme.whiteAndBlack)
-        .cornerRadius(16)
+        .cornerRadius(Guidelines.cornerRadius)
         .shadow(radius: 2)
     }
 }

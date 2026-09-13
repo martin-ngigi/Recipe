@@ -105,7 +105,7 @@ struct GroupedNotificationsView: View {
                         }
                         .padding(16)
                         .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
 
                     } header: {
                         NotificationHeaderView( date: group.date )

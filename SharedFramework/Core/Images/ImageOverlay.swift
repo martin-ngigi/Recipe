@@ -52,11 +52,11 @@ struct ImageOverlay: View {
             }
             .background(Color.theme.whiteAndBlack)
             // .cornerRadius(11)
-            .clipShape(RoundedRectangle(cornerRadius: 11))
+            .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
             .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
             .clipped()
             .overlay(
-                RoundedRectangle(cornerRadius: 11)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                     .stroke(Color.theme.primaryColor, lineWidth: 1)
             )
             .padding()

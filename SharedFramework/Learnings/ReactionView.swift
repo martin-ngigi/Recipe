@@ -339,7 +339,7 @@ struct ReactionItem: View {
             .font(.largeTitle)
             .padding(8)
             .background(.gray.opacity(0.2))
-            .cornerRadius(12)
+            .cornerRadius(Guidelines.cornerRadius)
     }
 }
 
