@@ -89,6 +89,9 @@
     "App Version" : {
 
     },
+    "Are you sure you wish to remove this item from favourites ?" : {
+
+    },
     "Chef Details" : {
 
     },
@@ -281,6 +284,12 @@
       }
     },
     "Recipes" : {
+
+    },
+    "Remove" : {
+
+    },
+    "Remove from favourites" : {
 
     },
     "Reset Password" : {

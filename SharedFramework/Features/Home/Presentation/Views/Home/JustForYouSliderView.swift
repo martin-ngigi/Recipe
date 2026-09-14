@@ -99,6 +99,8 @@ struct JustForYouSliderView: View {
                                 }
                             }
                         }
+                        .contentMargins(.horizontal, Guidelines.horizontalPadding, for: .scrollContent)
+
                     }
                 }
             }
