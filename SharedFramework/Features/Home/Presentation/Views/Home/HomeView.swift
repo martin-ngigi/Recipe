@@ -47,203 +47,209 @@ struct HomeView: View {
     let horizontalMargins = 16.0
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 32) {
-                
-                JustForYouSliderView(
-                    recipes: homeViewModel.justForYouList,
-                    isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                    currentIndex: homeViewModel.currentIndex,
-                    onTap: { recipe in
-                        router.push(.recipedetails(recipe: recipe))
-                    },
-                    onUpdateCurrentIndex: { currentIndex in
-                        homeViewModel.currentIndex = currentIndex
-                    }
-                )
-               
-                VStack(alignment: .leading, spacing: 16){
+        NavigationView{
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
                     
-                    var noRecipes: Bool {
-                        return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
-                    }
-                    
-                    HStack {
-                        
-                        Text("Trending Recipes")
-                            .font(.headline)
-
-                        Spacer()
-
-                        if !noRecipes {
-                            Button {
-                                router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
-                            } label: {
-                                HStack(spacing: 4) {
-                                    Text("See All")
-                                        .font(.footnote)
-
-                                    Image(systemName: "chevron.right")
-                                        .imageScale(.small)
-
-                                }
-                                .foregroundStyle(.primary)
-                            }
-                            .accessibilityLabel("See all trending recipes")
+                    JustForYouSliderView(
+                        recipes: homeViewModel.justForYouList,
+                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
+                        currentIndex: homeViewModel.currentIndex,
+                        onTap: { recipe in
+                            router.push(.recipedetails(recipe: recipe))
+                        },
+                        onUpdateCurrentIndex: { currentIndex in
+                            homeViewModel.currentIndex = currentIndex
                         }
-
-                    }
-                    .padding(.horizontal, horizontalMargins)
+                    )
+                    .padding(.bottom, 32)
                     
-                    if noRecipes {
-                        EmptyScreenView(
-                            imageName: "tray",
-                            imageSize: 80,
-                            title: "Trending",
-                            titleSize: 18,
-                            description: """
-                                No trending recipes found.
-                                """,
-                            descriptionSize: 12
-                        )
+                    VStack(alignment: .leading, spacing: 16){
+                        
+                        var noRecipes: Bool {
+                            return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
+                        }
+                        
+                        HStack {
+                            
+                            Text("Trending Recipes")
+                                .foregroundStyle(Color.theme.primaryTextColor)
+                                .font(.headline)
+                            
+                            Spacer()
+                            
+                            if !noRecipes {
+                                Button {
+                                    router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
+                                } label: {
+                                    HStack(spacing: 4) {
+                                        Text("See All")
+                                            .font(.footnote)
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .imageScale(.small)
+                                        
+                                    }
+                                    .foregroundStyle(.primary)
+                                }
+                                .accessibilityLabel("See all trending recipes")
+                            }
+                            
+                        }
                         .padding(.horizontal, horizontalMargins)
-                    }
-                    else {
-                        ScrollView(.horizontal){
-                            LazyVGrid(columns: columns4, spacing: 16) {
-                                ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
-                                    NavigationLink {
-                                        RecipeDetailsView(recipe: recipe)
-                                            .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
-                                    } label: {
-                                        RecipeItemView(recipe: recipe)
-                                            .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                        
+                        if noRecipes {
+                            EmptyScreenView(
+                                imageName: "tray",
+                                imageSize: 80,
+                                title: "Trending",
+                                titleSize: 18,
+                                description: """
+                                    No trending recipes found.
+                                    """,
+                                descriptionSize: 12
+                            )
+                            .padding(.horizontal, horizontalMargins)
+                        }
+                        else {
+                            ScrollView(.horizontal){
+                                LazyVGrid(columns: columns4, spacing: 16) {
+                                    ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
+                                        NavigationLink {
+                                            RecipeDetailsView(recipe: recipe)
+                                                .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
+                                        } label: {
+                                            RecipeItemView(recipe: recipe)
+                                                .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                                        }
                                     }
                                 }
+                                .padding(.bottom, 32)
                             }
+                            .scrollIndicators(.hidden)
+                            .contentMargins(.horizontal, horizontalMargins)
                         }
-                        .contentMargins(.horizontal, horizontalMargins)
                     }
-                }
 
-                PopularChefsComponent(
-                    chefs: homeViewModel.popularChefsList,
-                    isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                    onTapChef: { chef in
-                        router.push(.chefdetails(chef: chef))
-                    },
-                    onTapSeeAll: {
-                        router.push(.popularChefs(list: homeViewModel.popularChefsList))
-                    }
-                )
-                .padding(.horizontal, horizontalMargins)
-
-            }
-        }
-        .navigationTitle("Recipe Picks")
-        .navigationSubtitle("Discover best recipes")
-        .searchable(
-            text: $homeViewModel.searchField,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Search recipes"
-        )
-        .scrollEdgeEffectStyle(.soft, for: .top)
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Dismiss") {
-                    UIApplication.shared.sendAction(
-                        #selector(UIResponder.resignFirstResponder),
-                        to: nil,
-                        from: nil,
-                        for: nil
+                    PopularChefsComponent(
+                        chefs: homeViewModel.popularChefsList,
+                        isLoading: homeViewModel.fetchHomeDataState == .isLoading,
+                        onTapChef: { chef in
+                            router.push(.chefdetails(chef: chef))
+                        },
+                        onTapSeeAll: {
+                            router.push(.popularChefs(list: homeViewModel.popularChefsList))
+                        }
                     )
+                    .padding(.horizontal, horizontalMargins)
+                    
                 }
             }
-            
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    tabRouter.selectedTab = .profile
-                } label: {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44, height: 44)
-                        .foregroundColor(Color.gray)
-
-                }
-                .accessibilityLabel("Profile")
-            }
-            .sharedBackgroundVisibility(.hidden)
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    router.push(.notifications)
-                } label: {
-                   Image(systemName: "bell.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 36, height: 36)
-                        .foregroundColor(Color.gray)
-                }
-                .accessibilityLabel("Notifications")
-                .badge(2)
-            }
-
-        }
-        .refreshable {
-            Task {
-                await fetchHomeData()
-            }
-        }
-        .task {
-            await fetchHomeData()
-        }
-        .alert(isPresented: $homeViewModel.isShowInbuiltAlert) {
-            Alert(
-                title: Text(homeViewModel.inbuiltAlert?.title ?? ""),
-                message: Text(homeViewModel.inbuiltAlert?.message ?? ""),
-                primaryButton: .default(Text("Retry")) {
-                    Task { await fetchHomeData() }
-                },
-                secondaryButton: .cancel()
+            .background(Color.theme.backgroundColor)
+            .navigationTitle("Recipe Picks")
+            .navigationSubtitle("Discover best recipes")
+            .searchable(
+                text: $homeViewModel.searchField,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search recipes"
             )
-        }
-        .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
-        .overlay {
-            HomeSearchOverlay(
-                searchField: $homeViewModel.searchField,
-                isShowSearchResults: .constant(!homeViewModel.searchField.isEmpty),
-                recipePage: $homeViewModel.recipePage,
-                chefPage: $homeViewModel.chefPage,
-                isLoading: homeViewModel.searchState == .isLoading,
-                onSearchTextChange: { _ in
-                    Task {
-                        await homeViewModel.searchAll(
-                            searchText: homeViewModel.searchField,
-                            onSuccess: { searchResponseModel in
-                                homeViewModel.searchRecipes = searchResponseModel.recipes
-                                homeViewModel.searchChefs = searchResponseModel.chefs
-                            },
-                            onFailure: { _ in
-
-                            }
+            .scrollEdgeEffectStyle(.soft, for: .top)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Dismiss") {
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder),
+                            to: nil,
+                            from: nil,
+                            for: nil
                         )
                     }
-                },
-                recipes: homeViewModel.searchRecipes,
-                chefs: homeViewModel.searchChefs,
-                onTapRecipe: { recipe in
-                    router.push(.recipedetails(recipe: recipe))
-                },
-                onTapChef: { chef in
-                    router.push(.chefdetails(chef: chef))
                 }
-            )
-            .ignoresSafeArea()
-            .frame(maxWidth: .infinity)
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        tabRouter.selectedTab = .profile
+                    } label: {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44, height: 44)
+                            .foregroundColor(Color.gray)
+                        
+                    }
+                    .accessibilityLabel("Profile")
+                }
+                .sharedBackgroundVisibility(.hidden)
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        router.push(.notifications)
+                    } label: {
+                        Image(systemName: "bell.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(Color.gray)
+                    }
+                    .accessibilityLabel("Notifications")
+                    .badge(2)
+                }
+                
+            }
+            .refreshable {
+                Task {
+                    await fetchHomeData()
+                }
+            }
+            .task {
+                await fetchHomeData()
+            }
+            .alert(isPresented: $homeViewModel.isShowInbuiltAlert) {
+                Alert(
+                    title: Text(homeViewModel.inbuiltAlert?.title ?? ""),
+                    message: Text(homeViewModel.inbuiltAlert?.message ?? ""),
+                    primaryButton: .default(Text("Retry")) {
+                        Task { await fetchHomeData() }
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+            .fullScreenProgressOverlay(isShowing: homeViewModel.fetchHomeDataState == .isLoading)
+            .overlay {
+                HomeSearchOverlay(
+                    searchField: $homeViewModel.searchField,
+                    isShowSearchResults: .constant(!homeViewModel.searchField.isEmpty),
+                    recipePage: $homeViewModel.recipePage,
+                    chefPage: $homeViewModel.chefPage,
+                    isLoading: homeViewModel.searchState == .isLoading,
+                    onSearchTextChange: { _ in
+                        Task {
+                            await homeViewModel.searchAll(
+                                searchText: homeViewModel.searchField,
+                                onSuccess: { searchResponseModel in
+                                    homeViewModel.searchRecipes = searchResponseModel.recipes
+                                    homeViewModel.searchChefs = searchResponseModel.chefs
+                                },
+                                onFailure: { _ in
+                                    
+                                }
+                            )
+                        }
+                    },
+                    recipes: homeViewModel.searchRecipes,
+                    chefs: homeViewModel.searchChefs,
+                    onTapRecipe: { recipe in
+                        router.push(.recipedetails(recipe: recipe))
+                    },
+                    onTapChef: { chef in
+                        router.push(.chefdetails(chef: chef))
+                    }
+                )
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity)
+            }
         }
-
     }
 
     func fetchHomeData() async {
@@ -265,10 +271,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    NavigationStack{
-        HomeView()
-            .environmentObject(Router())
-            .environmentObject(TabRouter())
-    }
+    HomeView()
+        .environmentObject(Router())
+        .environmentObject(TabRouter())
 
 }

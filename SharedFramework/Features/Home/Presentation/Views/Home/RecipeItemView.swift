@@ -43,11 +43,9 @@ struct RecipeItemView: View {
             
         }
         .frame(minWidth: 200)
-        .background(Color(.secondarySystemBackground)) 
-        .clipped()
-        .cornerRadius(Guidelines.cornerRadius)
-        //.clipShape(UnevenRoundedRectangle(topLeadingRadius: 24, topTrailingRadius: 24))
-        .contentShape(Rectangle())
+        .background(Color.theme.surfaceAndCardColor)
+        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+        .glassEffectCustomRectangular()
     }
 }
 

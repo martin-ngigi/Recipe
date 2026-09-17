@@ -27,6 +27,7 @@ struct PopularChefsComponent: View {
         VStack(alignment: .leading, spacing: 16){
             HStack {
                 Text("Popular Chefs")
+                    .foregroundStyle(Color.theme.primaryTextColor)
                     .font(.headline)
 
                 Spacer()
@@ -70,6 +71,8 @@ struct PopularChefsComponent: View {
                                 onTapChef(chef)
                             }
                         )
+                        .background(Color.theme.surfaceAndCardColor)
+                        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
                         .glassEffectCustomRectangular()
                     }
                 }

@@ -27,6 +27,7 @@ struct JustForYouSliderView: View {
     var body: some View {
         VStack(spacing: 16) {
             Text("Just For You")
+                .foregroundStyle(Color.theme.primaryTextColor)
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, Guidelines.horizontalPadding)
@@ -99,7 +100,7 @@ struct JustForYouSliderView: View {
                                 }
                             }
                         }
-                        .contentMargins(.horizontal, Guidelines.horizontalPadding, for: .scrollContent)
+                        .padding(.horizontal, Guidelines.horizontalPadding)
 
                     }
                 }
@@ -170,5 +171,4 @@ struct JustForYouSliderItem: View {
 
         }
     )
-    .padding()
 }

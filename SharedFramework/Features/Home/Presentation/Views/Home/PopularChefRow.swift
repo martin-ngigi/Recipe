@@ -42,6 +42,7 @@ struct PopularChefRow: View {
                 VStack(alignment: .leading, spacing: 4) {
                     
                     Text(chef.name)
+                        .foregroundStyle(Color.theme.primaryTextColor)
                         .font(.headline)
                     
                     let recipesList = chef.recipesList?.compactMap{$0.name}.joined(separator: ", ") ??  ""
@@ -50,12 +51,12 @@ struct PopularChefRow: View {
                         .lineLimit(3)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(.secondary)
-                    
+                        .foregroundStyle(Color.theme.secondaryTextColor)
+
                     Text("\(Image(systemName: "star.fill")) \(chef.rate?.ratingFormatted ?? "0.0")")
                         .font(.footnote)
-                        .foregroundColor(.secondary)
-                    
+                        .foregroundStyle(Color.theme.secondaryTextColor)
+
                     /*
                     Image(systemName: "chevron.forward")
                         .font(.footnote.weight(.semibold))

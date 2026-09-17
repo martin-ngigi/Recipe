@@ -48,4 +48,24 @@ struct UserApp: App {
         MyFirebaseAnalytics.shared.logEvent(title: "app_launch", contentType: "launch")
         MyFirebaseAnalytics.shared.setUserID(DeviceInfo().deviceId)
     }
+ 
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor(Color.theme.primaryTextColor)
+        ]
+
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor(Color.theme.primaryTextColor)
+        ]
+
+        appearance.subtitleTextAttributes = [
+            .foregroundColor: UIColor(Color.theme.secondaryTextColor)
+        ]
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
 }
