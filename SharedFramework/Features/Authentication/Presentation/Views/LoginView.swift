@@ -330,6 +330,7 @@ struct LoginView: View {
                         }
                     }
                 )
+                .conditionalPresentationDetents(dents: [.medium, .large])
 
             }
         }

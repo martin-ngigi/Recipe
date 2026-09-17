@@ -29,26 +29,23 @@ struct UserApp: App {
             RootView()
                 .environmentObject(router)
                 .environmentObject(tabRouter)
-                .onAppear {
-                    themesViewModel.setAppTheme()
-                    NotificationManager.shared.requestNotificationPermission()
-                    MyFirebaseAnalytics.shared.logEvent(title: "app_launch", contentType: "launch")
-                    MyFirebaseAnalytics.shared.setUserID(DeviceInfo().deviceId)
-
-                }
                 .modelContainer(for: [RecipeSwiftData.self])
                 .modelContainer(for: [IngredientSwiftData.self])
+                .frame(minWidth: 375.0, minHeight: 375.0)
+                // Keeps the current window's size for use in scrolling header calculations.
+                .onGeometryChange(for: CGSize.self) { geometry in
+                    geometry.size
+                } action: {
+                    ModelData.shared.windowSize = $0
+                }
+                .onAppear{ onAppear() }
         }
     }
-
-    // MARK: HIDE DEFAULT BOTTOM NAV BAR
-    init() {
-        // Let's remove default bottom navigation by making it clear.
-        let appearance = UITabBarAppearance()
-        appearance.configureWithTransparentBackground()  // This makes background clear
-        appearance.backgroundEffect = nil  // This removes any blur effect
-        appearance.backgroundColor = UIColor.clear  // this ensures full transparency
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
+    
+    func onAppear(){
+        themesViewModel.setAppTheme()
+        NotificationManager.shared.requestNotificationPermission()
+        MyFirebaseAnalytics.shared.logEvent(title: "app_launch", contentType: "launch")
+        MyFirebaseAnalytics.shared.setUserID(DeviceInfo().deviceId)
     }
 }

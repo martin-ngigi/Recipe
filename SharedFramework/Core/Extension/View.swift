@@ -156,5 +156,54 @@ extension View {
         }
     }
     
+    @ViewBuilder
+    func conditionalPresentationDetents(
+        minOSVersion: Double = 16.0,
+        fraction: CGFloat? = nil,
+        dents: Set<PresentationDetent>? = nil
+    ) -> some View {
+        let majorVersion = Int(minOSVersion)
+        let minorVersion = Int((minOSVersion * 10).truncatingRemainder(dividingBy: 10))
 
+        if ProcessInfo.processInfo.isOperatingSystemAtLeast(
+            OperatingSystemVersion(majorVersion: majorVersion, minorVersion: minorVersion, patchVersion: 0)
+        ) {
+            if #available(iOS 16.0, *) {
+                if let fractionDent = fraction {
+                    self.presentationDetents([.fraction(fractionDent)])
+                        .presentationDragIndicator(.visible)
+                        //.presentationBackground(.thinMaterial)
+                        .presentationBackgroundInteraction(.enabled)
+                }
+                else if let dentss = dents {
+                    self.presentationDetents(dentss)
+                        .presentationDragIndicator(.visible)
+                        //.presentationBackground(.thinMaterial)
+                        .presentationBackgroundInteraction(.enabled)
+                }
+                else {
+                    self.presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.visible)
+                        //.presentationBackground(.thinMaterial)
+                        .presentationBackgroundInteraction(.enabled)
+                }
+            }
+            else {
+                self
+            }
+        }
+        else {
+            self
+        }
+    }
+
+    /// A function that returns a view after it applies `FlexibleHeaderContentModifier` to it.
+    func flexibleHeaderContent() -> some View {
+        modifier(FlexibleHeaderContentModifier())
+    }
+    
+    func flexibleLandingHeaderContent() -> some View {
+        modifier(FlexibleLandingHeaderContentModifier())
+    }
+    
 }

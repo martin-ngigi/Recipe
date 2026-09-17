@@ -57,11 +57,11 @@ struct BorderedInputField: View {
                 Group {
                     if isFocused {
                         RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
-                            .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
+                            .stroke(error.isEmpty ? focusedColor : Color.theme.errorColor, lineWidth: 1)
                     }
                     else {
                         RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
-                            .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
+                            .stroke(error.isEmpty ? Color.gray : Color.theme.errorColor, lineWidth: 1)
                     }
                 }
             )

@@ -17,13 +17,22 @@ struct LandingView: View {
     @EnvironmentObject var router: Router
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView(.vertical) {
             VStack(spacing: 32) {
 
-                VStack(spacing: 10) {
+                Image("landing")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .clipped()
+                    .backgroundExtensionEffect()
+                    .flexibleLandingHeaderContent()
+
+                VStack(spacing: 8) {
                     Text("Cook Like a Chef")
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .foregroundStyle(Color.theme.primaryTextColor)
                         .multilineTextAlignment(.center)
 
                     Text(
@@ -31,9 +40,10 @@ struct LandingView: View {
                             + "are new to cooking and want to try new recipes at home."
                     )
                     .font(.callout)
+                    .foregroundStyle(Color.theme.secondaryTextColor)
                     .multilineTextAlignment(.center)
                 }
-                .foregroundColor(.primary)
+                .padding(.horizontal, Guidelines.horizontalPadding)
 
                 CustomButton(
                     buttonName: "Get Started",
@@ -42,35 +52,23 @@ struct LandingView: View {
                         router.replace(with: .dashboard)
                     }
                 )
-                .padding(.bottom, 8)
+                .padding(.horizontal, Guidelines.horizontalPadding)
+                .padding(.bottom, 16)
 
             }
         }
-        .defaultScrollAnchor(.bottom)
-        .padding()
-        .background(
-            ZStack {
-                Image("landing")
-                    .ignoresSafeArea()
-
-                LinearGradient(
-                    gradient: Gradient(
-                        colors: [
-                            Color.theme.whiteAndBlack.opacity(0),
-                            Color.theme.whiteAndBlack.opacity(0),
-                            Color.theme.whiteAndBlack.opacity(0.9),
-                            Color.theme.whiteAndBlack
-                        ]
-                    ),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-
-            }
-        )
+        .flexibleHeaderScrollView()
+        .toolbar(removing: .title)
+        .ignoresSafeArea(edges: .top)
     }
 }
 
 #Preview {
     LandingView()
+        .frame(minWidth: 375.0, minHeight: 375.0)
+        .onGeometryChange(for: CGSize.self) { geometry in
+            geometry.size
+        } action: {
+            ModelData.shared.windowSize = $0
+        }
 }

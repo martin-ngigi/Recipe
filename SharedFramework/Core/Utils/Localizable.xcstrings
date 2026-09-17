@@ -50,10 +50,19 @@
     "%lld" : {
 
     },
+    "%lld sales" : {
+
+    },
     "%lld)." : {
 
     },
     "⭐️ %@" : {
+
+    },
+    "12 Months" : {
+
+    },
+    "30 Days" : {
 
     },
     "44 Unread" : {
@@ -89,7 +98,19 @@
     "App Version" : {
 
     },
+    "Are you sure you want to empty the trash?" : {
+
+    },
     "Are you sure you wish to remove this item from favourites ?" : {
+
+    },
+    "Are you sure?" : {
+
+    },
+    "Average on %@s" : {
+
+    },
+    "Cancel" : {
 
     },
     "Chef Details" : {
@@ -111,6 +132,12 @@
 
     },
     "Customize your settings" : {
+
+    },
+    "Day" : {
+
+    },
+    "Day + Location" : {
 
     },
     "Delete" : {
@@ -137,6 +164,9 @@
     "Email:" : {
 
     },
+    "Empty Trash" : {
+
+    },
     "Failed to fetch user..." : {
 
     },
@@ -161,6 +191,9 @@
     "Font" : {
 
     },
+    "Get Started" : {
+
+    },
     "Glad that you are ready to join us!" : {
 
     },
@@ -171,6 +204,9 @@
 
     },
     "Ingredients" : {
+
+    },
+    "Inspector View" : {
 
     },
     "Instructions" : {
@@ -186,6 +222,9 @@
 
     },
     "Let's sign you up" : {
+
+    },
+    "Location" : {
 
     },
     "Login" : {
@@ -227,6 +266,9 @@
     "Notifications turned %@" : {
 
     },
+    "Options" : {
+
+    },
     "Or Login with" : {
 
     },
@@ -245,6 +287,9 @@
     "Please enter your email address to receive password reset instructions." : {
 
     },
+    "Popover View" : {
+
+    },
     "Popular Chefs" : {
 
     },
@@ -255,6 +300,9 @@
 
     },
     "Profile" : {
+
+    },
+    "Range" : {
 
     },
     "Rate Me" : {
@@ -301,6 +349,9 @@
     "Retry" : {
 
     },
+    "Sales" : {
+
+    },
     "Scale Animation" : {
 
     },
@@ -328,13 +379,37 @@
     "See all trending recipes" : {
 
     },
+    "Selected" : {
+
+    },
     "Settings" : {
 
     },
     "Share" : {
 
     },
+    "Sheet View" : {
+
+    },
     "Show" : {
+
+    },
+    "Show Alert" : {
+
+    },
+    "Show Confirmation Dialog" : {
+
+    },
+    "Show Inspector" : {
+
+    },
+    "Show Popover" : {
+
+    },
+    "Show Sheet" : {
+
+    },
+    "Show Transactions" : {
 
     },
     "SMS" : {
@@ -350,6 +425,12 @@
 
     },
     "Theme" : {
+
+    },
+    "This action cannot be undone." : {
+
+    },
+    "Transactions" : {
 
     },
     "Trending Recipes" : {

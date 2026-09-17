@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 17/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ThemesViewModel.swift
 //  Recipe
@@ -12,6 +18,7 @@ import Combine
 
 class ThemesViewModel: ObservableObject {
     @Published var currentTheme: ThemeEntity = .device
+    @Published var windowSize: CGSize = .zero
 
     func changeTheme(to theme: ThemeEntity) {
         LocalState.isDarkModeOn = "\(theme == .dark)"  // "true" or "false"

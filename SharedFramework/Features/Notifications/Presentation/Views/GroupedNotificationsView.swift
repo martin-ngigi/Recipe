@@ -71,7 +71,7 @@ struct GroupedNotificationsView: View {
                                         NotificationPreview(notification: notification)
                                             .padding()
                                             .frame(width: UIScreen.main.bounds.width * 0.9, height: 300)
-                                            .background(.background)
+                                            //.background(.background)
                                     }
                                 )
                                 .swipeActions(edge: .leading) {
