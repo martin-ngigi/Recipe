@@ -45,7 +45,7 @@ struct ChefDetailsView: View {
                     } label: {
                         CustomImageView(
                             url: avatar,
-                            maxWidth: 80,
+                            width: 80,
                             height: 80
                         )
                         .clipShape(Circle())

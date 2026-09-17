@@ -21,7 +21,7 @@ struct MostLikedRecipesCard: View {
         VStack(alignment: .leading){
             CustomImageView(
                 url: recipe.image,
-                maxWidth: 300,
+                width: 300,
                 height: 200
             )
             .clipped()

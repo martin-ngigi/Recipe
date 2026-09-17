@@ -15,7 +15,7 @@ import SwiftUI
 
 struct CustomImageView: View {
     let url: String
-    var maxWidth: CGFloat = .infinity
+    var width: CGFloat? = nil
     var height: CGFloat = 256
 
     var body: some View {
@@ -26,6 +26,7 @@ struct CustomImageView: View {
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(Color.gray)
+                    .padding(.vertical, 16)
             case .success(let image):
                 image
                     .resizable()
@@ -34,7 +35,7 @@ struct CustomImageView: View {
                 ProgressView()
             }
         }
-        .frame(maxWidth: maxWidth, maxHeight: height)
+        .frame(width: width, height: height)
         .clipped()
     }
 }

@@ -18,7 +18,7 @@ struct RecipeCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            CustomImageView(url: recipe.image, maxWidth: .infinity, height: 180)
+            CustomImageView(url: recipe.image, width: .infinity, height: 180)
                 .cornerRadius(Guidelines.cornerRadius)
 
             Text(recipe.name)

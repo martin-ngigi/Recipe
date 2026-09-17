@@ -25,7 +25,7 @@ struct FavouriteItemView: View {
             VStack(alignment: .leading, spacing: 8) {
                 CustomImageView(
                     url: recipe.image,
-                    maxWidth: .infinity,
+                    width: .infinity,
                     height: 200
                 )
                 .clipped()

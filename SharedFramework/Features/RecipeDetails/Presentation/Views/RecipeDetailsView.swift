@@ -30,7 +30,7 @@ struct RecipeDetailsView: View {
 
                         CustomImageView(
                             url: recipe.image,
-                            maxWidth: .infinity,
+                            width: .infinity,
                             height: 240
                         )
 
@@ -52,7 +52,7 @@ struct RecipeDetailsView: View {
 
                                     CustomImageView(
                                         url: avatar,
-                                        maxWidth: 40,
+                                        width: 40,
                                         height: 40
                                     )
                                     .foregroundColor(Color.theme.blackAndWhite)

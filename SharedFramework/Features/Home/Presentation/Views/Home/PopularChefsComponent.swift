@@ -71,7 +71,7 @@ struct PopularChefsComponent: View {
                                 onTapChef(chef)
                             }
                         )
-                        .background(Color.theme.surfaceAndCardColor)
+                        .background(Color(.secondarySystemGroupedBackground))
                         .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
                         .glassEffectCustomRectangular()
                     }

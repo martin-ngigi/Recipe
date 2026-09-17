@@ -39,7 +39,7 @@ struct ImageOverlay: View {
 
                 CustomImageView(
                     url: image,
-                    maxWidth: imageWidth,
+                    width: imageWidth,
                     height: imageHeight
                 )
 

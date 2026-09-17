@@ -119,7 +119,7 @@ struct JustForYouSliderItem: View {
     var body: some View{
         CustomImageView(
             url: image,
-            maxWidth: .infinity,
+            width: .infinity,
             height: 240
         )
         .foregroundColor(Color.theme.blackAndWhite)

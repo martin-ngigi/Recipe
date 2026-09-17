@@ -145,7 +145,7 @@ struct HomeView: View {
                     
                 }
             }
-            .background(Color.theme.backgroundColor)
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Recipe Picks")
             .navigationSubtitle("Discover best recipes")
             .searchable(

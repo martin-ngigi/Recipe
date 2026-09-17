@@ -21,35 +21,35 @@ struct RecipeItemView: View {
 
             CustomImageView(
                 url: recipe.image,
-                maxWidth: 200,
-                height: 140
+                width: 240,
+                height: 160
             )
             .foregroundColor(Color.theme.blackAndWhite)
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(recipe.name)
-                    .font(.callout)
-                    .foregroundStyle(Color.theme.blackAndWhite)
-
-                HStack(alignment: .firstTextBaseline, spacing: 2) {
-
-                    Text("\(Image(systemName: "star.fill")) \(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
-                        .font(.footnote)
-
-                }
-                .foregroundColor(Color.secondary)
+                    .font(.body.bold())
+                    .foregroundStyle(Color.theme.primaryTextColor)
+                
+                Label(recipe.chef?.rate?.ratingFormatted ?? "0.0", systemImage: "star.fill")
+                    .font(.footnote)
+                    .foregroundStyle(Color.theme.secondaryTextColor)
+                    .frame(alignment: .bottom)
             }
-            .padding(8)
+            .lineLimit(1)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 16)
             
         }
-        .frame(minWidth: 200)
-        .background(Color.theme.surfaceAndCardColor)
+        .frame(maxWidth: 240)
+        .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+        .clipped()
         .glassEffectCustomRectangular()
     }
 }
 
  #Preview {
-     RecipeItemView(recipe: RecipeModel.dummyList[0])
+     RecipeItemView(recipe: RecipeModel.dummyList[1])
          .padding()
  }

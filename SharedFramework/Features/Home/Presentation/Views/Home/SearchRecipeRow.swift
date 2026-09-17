@@ -25,7 +25,7 @@ struct SearchRecipeRow: View {
             HStack(spacing: 8) {
                 CustomImageView(
                     url: recipe.image,
-                    maxWidth: 80,
+                    width: 80,
                     height: 80
                 )
                 .clipped()

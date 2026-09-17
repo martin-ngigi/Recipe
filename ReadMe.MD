@@ -240,10 +240,10 @@ All semantic values pass WCAG AA (≥4.5:1) against their respective mode's back
 
 | Role | Light Mode | Dark Mode |
 |---|---|---|
-| Background | `#FFF8F5` (warm off-white) | `#1C1512` (warm near-black) |
-| Surface / Card | `#FFFFFF` | `#28211D` |
+| Background | `#E8E2DA` (warm greige / stone) | `#14100D` (deep warm near-black) |
+| Surface / Card | `#FFFFFF` | `#2E251F` (warm charcoal-brown) |
 
-Warm-tinted neutrals are used instead of pure white/gray/black so backgrounds stay cohesive with the coral primary rather than reading cold or clashing.
+Neutral, desaturated warm tones — no pink/peach or cold-gray undertone — chosen with a visible luminance step between Background and Surface so card boundaries are distinguishable without relying on borders or shadows.
 
 ## Text
 
@@ -258,7 +258,7 @@ Both pairs are high-contrast against their matching background/surface colors. T
 
 - **Coral** (`#C4544A`) → primary buttons, active states, price highlights
 - **Teal** (Light `#256B5C` / Dark `#4FBFA0`) → secondary buttons, filter chips, dietary tags
-- **Warm off-white / near-black** → screen backgrounds
+- **Warm greige / near-black** (Light `#E8E2DA` / Dark `#14100D`) → screen backgrounds
 - **Brown-toned text colors** → body copy, ties everything together instead of flat gray
 
 ## Implementation Notes
@@ -268,3 +268,5 @@ Both pairs are high-contrast against their matching background/surface colors. T
 - All light/dark pairs are matched to their own mode — they are not required to pass contrast against the *opposite* mode's background.
 - Recommended implementation: define each split color as a Color Set in the Xcode asset catalog with **Any Appearance** and **Dark Appearance** variants, then reference via `Color("ColorName")` in SwiftUI rather than hardcoding hex values in code. Primary Coral can be a single flat Color Set with no Dark variant.
 - Always test contrast against actual UI surfaces (cards, buttons, list backgrounds) — not just pure white/black — before shipping.
+- **Common wiring bug:** if a text color renders correctly in light mode but fails contrast in dark mode (e.g. Primary Text showing as `#2B1B16` — the *light-mode* value — against a dark background), the Color Set almost certainly has no Dark Appearance variant configured, or the color was hardcoded in code (`Color(hex:)` / static `UIColor`) instead of referencing the named asset (`Color("PrimaryText")` / `UIColor(named:)`). Verify every text/background Color Set has both "Any" and "Dark" swatches explicitly set before shipping.
+

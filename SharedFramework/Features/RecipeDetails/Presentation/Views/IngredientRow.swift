@@ -25,7 +25,7 @@ struct IngredientRow: View {
             HStack {
                 CustomImageView(
                     url: ingredient.image,
-                    maxWidth: 60,
+                    width: 60,
                     height: 60
                 )
                 .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
