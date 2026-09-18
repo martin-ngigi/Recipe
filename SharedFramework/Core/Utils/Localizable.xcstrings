@@ -1,10 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "— %@" : {
+
+    },
     "...%lld more items" : {
 
     },
     "...show less" : {
+
+    },
+    "“%@”" : {
+
+    },
+    "“%@” — " : {
 
     },
     "(%lld)" : {
@@ -16,20 +28,29 @@
     "%@ " : {
 
     },
-    "%@ ⭐️" : {
-
-    },
-    "%@ by %@" : {
+    "%@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ by %2$@"
+            "value" : "%1$@ %2$@"
           }
         }
       }
     },
+    "%@ ⭐️" : {
+
+    },
+    "%@ notifications will appear here." : {
+
+    },
+    "%@ Rating" : {
+
+    },
     "%lld" : {
+
+    },
+    "%lld sales" : {
 
     },
     "%lld)." : {
@@ -38,13 +59,34 @@
     "⭐️ %@" : {
 
     },
+    "12 Months" : {
+
+    },
+    "30 Days" : {
+
+    },
+    "44 Unread" : {
+
+    },
+    "A" : {
+
+    },
     "Account" : {
+
+    },
+    "All Animations" : {
 
     },
     "All Chefs" : {
 
     },
+    "All Recipes" : {
+
+    },
     "Already have account? %@" : {
+
+    },
+    "Angle Animation" : {
 
     },
     "App Details" : {
@@ -56,6 +98,21 @@
     "App Version" : {
 
     },
+    "Are you sure you want to empty the trash?" : {
+
+    },
+    "Are you sure you wish to remove this item from favourites ?" : {
+
+    },
+    "Are you sure?" : {
+
+    },
+    "Average on %@s" : {
+
+    },
+    "Cancel" : {
+
+    },
     "Chef Details" : {
 
     },
@@ -63,6 +120,9 @@
 
     },
     "Contact Chef" : {
+
+    },
+    "Cook Like a chef" : {
 
     },
     "Cook Like a Chef" : {
@@ -74,16 +134,25 @@
     "Customize your settings" : {
 
     },
+    "Day" : {
+
+    },
+    "Day + Location" : {
+
+    },
     "Delete" : {
 
     },
     "Delete Account:" : {
 
     },
-    "Discover Best Recipes" : {
+    "Discover best recipes" : {
 
     },
     "Dismiss" : {
+
+    },
+    "Done" : {
 
     },
     "Dont have account? %@" : {
@@ -95,6 +164,9 @@
     "Email:" : {
 
     },
+    "Empty Trash" : {
+
+    },
     "Failed to fetch user..." : {
 
     },
@@ -104,7 +176,13 @@
     "Feedback and ratings" : {
 
     },
+    "Filtered by" : {
+
+    },
     "First things first" : {
+
+    },
+    "Flag" : {
 
     },
     "Follow" : {
@@ -113,13 +191,22 @@
     "Font" : {
 
     },
+    "Get Started" : {
+
+    },
     "Glad that you are ready to join us!" : {
 
     },
     "Hello, world!" : {
 
     },
+    "Hello, World!" : {
+
+    },
     "Ingredients" : {
+
+    },
+    "Inspector View" : {
 
     },
     "Instructions" : {
@@ -137,10 +224,22 @@
     "Let's sign you up" : {
 
     },
+    "Location" : {
+
+    },
     "Login" : {
 
     },
     "Logout:" : {
+
+    },
+    "Mark as read" : {
+
+    },
+    "Message" : {
+
+    },
+    "Most Liked Recipes" : {
 
     },
     "Name:" : {
@@ -152,10 +251,22 @@
     "No chefs found. Try searching for something else." : {
 
     },
+    "No Notifications Yet." : {
+
+    },
     "No recipes found. Try searching for something else." : {
 
     },
+    "Notification" : {
+
+    },
+    "Notifications" : {
+
+    },
     "Notifications turned %@" : {
+
+    },
+    "Options" : {
 
     },
     "Or Login with" : {
@@ -176,6 +287,9 @@
     "Please enter your email address to receive password reset instructions." : {
 
     },
+    "Popover View" : {
+
+    },
     "Popular Chefs" : {
 
     },
@@ -188,6 +302,9 @@
     "Profile" : {
 
     },
+    "Range" : {
+
+    },
     "Rate Me" : {
 
     },
@@ -195,6 +312,12 @@
 
     },
     "Ratings & Reviews" : {
+
+    },
+    "Read" : {
+
+    },
+    "Recipe Picks" : {
 
     },
     "RecipeApp is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home" : {
@@ -211,6 +334,12 @@
     "Recipes" : {
 
     },
+    "Remove" : {
+
+    },
+    "Remove from favourites" : {
+
+    },
     "Reset Password" : {
 
     },
@@ -220,7 +349,25 @@
     "Retry" : {
 
     },
+    "Sales" : {
+
+    },
+    "Scale Animation" : {
+
+    },
+    "Search" : {
+
+    },
+    "Search coming soon.." : {
+
+    },
     "Search favourite..." : {
+
+    },
+    "Search notifications" : {
+
+    },
+    "Search recipes" : {
 
     },
     "Search recipes..." : {
@@ -229,10 +376,13 @@
     "See All" : {
 
     },
-    "See All (%lld)" : {
+    "See all popular chefs" : {
 
     },
     "See all trending recipes" : {
+
+    },
+    "Selected" : {
 
     },
     "Settings" : {
@@ -241,13 +391,64 @@
     "Share" : {
 
     },
+    "Sheet View" : {
+
+    },
+    "Show" : {
+
+    },
+    "Show Alert" : {
+
+    },
+    "Show Confirmation Dialog" : {
+
+    },
+    "Show Inspector" : {
+
+    },
+    "Show Popover" : {
+
+    },
+    "Show Sheet" : {
+
+    },
+    "Show Transactions" : {
+
+    },
     "SMS" : {
+
+    },
+    "Starred" : {
+
+    },
+    "Status" : {
+
+    },
+    "Text Size" : {
 
     },
     "Theme" : {
 
     },
+    "This action cannot be undone." : {
+
+    },
+    "Transactions" : {
+
+    },
     "Trending Recipes" : {
+
+    },
+    "Unread" : {
+
+    },
+    "Unread %@" : {
+
+    },
+    "Vertical Stretch Animation" : {
+
+    },
+    "Vertical Translation Animation" : {
 
     },
     "WhatsApp" : {

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomSwitch.swift
 //  Recipe
@@ -13,7 +19,7 @@ struct CustomSwitch: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                 .fill(isOn ? Color.green : Color.gray.opacity(0.5))
                 .frame(width: 50, height: 30)
                 .animation(.easeInOut(duration: 0.2), value: isOn)

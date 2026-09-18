@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 06/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ResetPasswordSheet.swift
 //  Recipe
@@ -10,7 +16,8 @@ import SwiftUI
 struct ResetPasswordSheet: View {
     @Binding var email: String
     var resetEmailErrors: [String: String]
-    @Binding var toast: Toast?
+    var popNotificationData: PopNotificationData?
+    @Binding var isPopNotificationPresented: Bool
     var isEmailValid: Bool
     var isLoading: Bool
     var onEmailChange: (String) -> Void
@@ -60,7 +67,12 @@ struct ResetPasswordSheet: View {
             Spacer()
         }
         .padding()
-        .toastView(toast: $toast)
+        .overlay {
+            CustomPushNotificationView(
+                data: popNotificationData,
+                isPresented: $isPopNotificationPresented
+            )
+        }
     }
 }
 
@@ -68,7 +80,12 @@ struct ResetPasswordSheet: View {
     ResetPasswordSheet(
         email: .constant(""),
         resetEmailErrors: [:],
-        toast: .constant(Toast(style: .success, message: "Sample toast")),
+        popNotificationData: PopNotificationData(
+            title: "Success",
+            message: "You have been authentication successfully using Google.",
+            type: .success
+        ),
+        isPopNotificationPresented: .constant(true),
         isEmailValid: false,
         isLoading: false,
         onEmailChange: { _ in

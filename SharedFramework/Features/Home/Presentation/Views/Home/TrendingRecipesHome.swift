@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 24/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  TrendingRecipesHome.swift
 //  Recipe
@@ -32,11 +38,14 @@ struct TrendingRecipesHome: View {
                     } label: {
                         HStack {
                             Text("See All")
-                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
+                                .font(.appFootnote)
                                 .foregroundStyle(Color.theme.primaryColor)
 
                             Image(systemName: "chevron.right")
-                                .foregroundColor(Color.theme.grayColor1)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 8, height: 8)
+                                .foregroundColor(Color.secondary)
                         }
                         .foregroundColor(Color.theme.primaryColor)
                         .frame(minHeight: 44)
@@ -68,8 +77,6 @@ struct TrendingRecipesHome: View {
                         }
                     }
                 }
-                .padding(4)
-                .cardBackground()
             }
         }
     }

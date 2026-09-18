@@ -46,24 +46,25 @@ struct BorderedPasswordField: View {
                     onToggleAction()
                 } label: {
                     Image(systemName: isSecure ? "eye.slash" : "eye")
+                        .contentTransition(.symbolEffect)
                         .foregroundColor(.gray)
                         .padding(.trailing)
                 }
             }
             .textFieldStyle(TappableTextFieldStyle())  // Increase tap area
             .background(Color.gray.opacity(0.15))
-            .cornerRadius(24)
+            .cornerRadius(Guidelines.cornerRadius)
             .focused($isFocused)
-            .cornerRadius(24)
+            .cornerRadius(Guidelines.cornerRadius)
             .overlay(
                 Group {
                     if isFocused {
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(error.isEmpty ? focusedColor : Color.theme.redColor, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
+                            .stroke(error.isEmpty ? focusedColor : Color.theme.errorColor, lineWidth: 1)
                     }
                     else {
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(error.isEmpty ? Color.gray : Color.theme.redColor, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
+                            .stroke(error.isEmpty ? Color.gray : Color.theme.errorColor, lineWidth: 1)
                     }
                 }
             )

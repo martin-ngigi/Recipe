@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 13/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomOverlayNavigation.swift
 //  Recipe
@@ -28,7 +34,7 @@ struct CustomOverlayNavigation: View {
                     .frame(maxHeight: 44)
                     .background {
                         if tabRouter.selectedTab == item {
-                            RoundedRectangle(cornerRadius: 40, style: .continuous)
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                                 .fill(.gray.opacity(0.3))
                         }
                     }
@@ -40,11 +46,11 @@ struct CustomOverlayNavigation: View {
         .padding(.vertical, 4)
         .frame(maxWidth: .infinity)
         .background {
-            RoundedRectangle(cornerRadius: 40, style: .continuous)
+            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                 .fill(.ultraThinMaterial.opacity(0.9))
         }
         .overlay {
-            RoundedRectangle(cornerRadius: 40, style: .continuous)
+            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                 .strokeBorder(Color.gray.opacity(0.5), lineWidth: 0.3)
         }
         .safeAreaPadding(.bottom)

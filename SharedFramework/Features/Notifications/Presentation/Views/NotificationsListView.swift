@@ -45,6 +45,9 @@ struct NotificationsListView: View {
                     }
                 )
             }
+            .onChange(of: showNotification){ newValue in
+                Logger().debug("\(newValue)")
+            }
             .padding(.horizontal, 16)
         }
         .background(Color(.systemGroupedBackground))

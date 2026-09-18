@@ -17,49 +17,39 @@ struct RecipeItemView: View {
     let recipe: RecipeModel
 
     var body: some View {
-        VStack {
-            Spacer()
-
-            VStack(alignment: .leading, spacing: 2) {
-                Spacer()
-
-                Text(recipe.name)
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
-                    .foregroundColor(Color.theme.whiteColor)
-
-                HStack {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(Color.theme.primaryColor)
-
-                    Text("\(recipe.chef?.rate?.ratingFormatted ?? "0.0")")
-                        .font(.custom(FontConstants.POPPINS_MEDIUM, size: 12))
-                        .foregroundStyle(Color.theme.primaryColor)
-
-                    Spacer()
-                }
-            }
-            .padding([.leading, .trailing, .bottom], 13)
-            .frame(height: 50)
-            .background(.ultraThinMaterial.opacity(0.9))
-            // .cornerRadius(8)
-            // .padding(.bottom, 20)
-        }
-        .frame(width: 170, height: 150)
-        .background(
+        VStack(alignment: .leading, spacing: 0) {
 
             CustomImageView(
                 url: recipe.image,
-                maxWidth: .infinity,
-                height: .infinity
+                width: 240,
+                height: 160
             )
-            .edgesIgnoringSafeArea(.all)
-
-        )
-        .cornerRadius(20)
-        .foregroundColor(Color.theme.blackAndWhite)
+            .foregroundColor(Color.theme.blackAndWhite)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(recipe.name)
+                    .font(.body.bold())
+                    .foregroundStyle(Color.theme.primaryTextColor)
+                
+                Label(recipe.chef?.rate?.ratingFormatted ?? "0.0", systemImage: "star.fill")
+                    .font(.footnote)
+                    .foregroundStyle(Color.theme.secondaryTextColor)
+                    .frame(alignment: .bottom)
+            }
+            .lineLimit(1)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 16)
+            
+        }
+        .frame(maxWidth: 240)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+        .clipped()
+        .glassEffectCustomRectangular()
     }
 }
 
-// #Preview {
-//    RecipeItemView()
-// }
+ #Preview {
+     RecipeItemView(recipe: RecipeModel.dummyList[1])
+         .padding()
+ }

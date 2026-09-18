@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 17/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ColorTheme.swift
 //  Recipe
@@ -13,9 +19,19 @@ struct ColorTheme {
     let whiteAndBlack = Color("WhiteAndBlack")
     let whiteColor = Color("WhiteAppColor")
     let greenAppColor = Color("GreenAppColor")
-    let primaryColor = Color("GreenAppColor")
-    let grayColor1 = Color("GrayColor1")
-    let redColor = Color("RedAppColor")
+    
+    let primaryColor = Color("CoralColor")
+    let secondaryColor = Color("TealGreenColor")
+    
+    let successColor = Color("FreshGreenColor")
+    let warningColor = Color("MustardColor")
+    let errorColor = Color("RedColor")
+    
+    let backgroundColor = Color("BackgroundColor")
+    let surfaceAndCardColor = Color("SurfaceAndCardColor")
+    
+    let primaryTextColor = Color("PrimaryTextColor")
+    let secondaryTextColor = Color("SecondaryTextColor")
 }
 
 extension Color {

@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 26/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  ChefDetailsView.swift
 //  Recipe
@@ -7,6 +13,7 @@
 
 import SwiftUI
 
+
 struct ChefDetailsView: View {
     @StateObject var chefViewModel = ChefViewModel()
     @StateObject var rateViewModel = RateViewModel()
@@ -15,6 +22,7 @@ struct ChefDetailsView: View {
     var user: UserModel?
     @EnvironmentObject var tabRouter: TabRouter
     @EnvironmentObject var router: Router
+    private let horizontalMargins = 16.0
 
     var body: some View {
         ScrollView {
@@ -37,7 +45,7 @@ struct ChefDetailsView: View {
                     } label: {
                         CustomImageView(
                             url: avatar,
-                            maxWidth: 80,
+                            width: 80,
                             height: 80
                         )
                         .clipShape(Circle())
@@ -94,12 +102,38 @@ struct ChefDetailsView: View {
 
                     Spacer()
                 }
+                .padding(.horizontal, horizontalMargins)
 
                 Divider()
+                    .padding(.horizontal, horizontalMargins)
+                
+                // MARK: - Most Liked Recipes Section
+                if let mostLikedRecipes = chefViewModel.chef?.recipesList {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Most Liked Recipes")
+                            .font(.title3.bold())
+                            .padding(.horizontal, horizontalMargins)
 
-                // MARK: - Recipes Section
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 8) {
+                                ForEach(mostLikedRecipes, id: \.recipeId) { recipe in
+                                    MostLikedRecipesCard(recipe: recipe)
+                                        .scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                                            content
+                                                .scaleEffect(1.0 - 0.12 * abs(phase.value))
+                                        }
+                                }
+                            }
+                            .scrollTargetLayout()
+                        }
+                        .contentMargins(.horizontal, horizontalMargins, for: .scrollContent)
+                        .scrollTargetBehavior(.viewAligned)
+                    }
+                }
+                
+                // MARK: - All Recipes Section
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Recipes")
+                    Text("All Recipes")
                         .font(.title3.bold())
 
                     if let recipesList = chefViewModel.chef?.recipesList {
@@ -147,8 +181,10 @@ struct ChefDetailsView: View {
 
                     }
                 }
+                .padding(.horizontal, horizontalMargins)
 
                 Divider()
+                    .padding(.horizontal, horizontalMargins)
 
                 // MARK: - Ratings Section
                 VStack(alignment: .leading, spacing: 12) {
@@ -170,11 +206,12 @@ struct ChefDetailsView: View {
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
-                        .cornerRadius(12)
+                        .cornerRadius(Guidelines.cornerRadius)
                         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
                     }
 
                 }
+                .padding(.horizontal, horizontalMargins)
             }
             .task {
                 await chefViewModel.fetchChefByID(
@@ -188,7 +225,6 @@ struct ChefDetailsView: View {
                 )
 
             }
-            .padding()
         }
         .onAppear {
             let user = loginViewModel.fetchUserFromLocalStorage()

@@ -60,12 +60,12 @@ struct NotificationRowView: View {
 
                         HStack{
                             Text(date)
-                                .font(.custom("ProductSans-Medium", size: 12))
+                                .font(.appCaption2)
                                 .foregroundStyle(isRead ? Color.secondary : Color.theme.primaryColor)
                                                         
                             if isStarred {
                                 Image(systemName: "star.fill")
-                                    .font(.caption)
+                                    .font(.caption2)
                                     .foregroundStyle(Color.theme.primaryColor)
                             }
                         }
@@ -73,7 +73,7 @@ struct NotificationRowView: View {
                     }
 
                     Text(message)
-                        .font(.custom("ProductSans-Light", size: 14, relativeTo: .subheadline))
+                        .font(.appCaption)
                         .foregroundStyle(Color.secondary)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)

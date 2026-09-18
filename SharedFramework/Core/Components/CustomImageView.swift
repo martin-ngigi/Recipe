@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 06/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  CustomImageView.swift
 //  Recipe
@@ -9,7 +15,7 @@ import SwiftUI
 
 struct CustomImageView: View {
     let url: String
-    var maxWidth: CGFloat = .infinity
+    var width: CGFloat? = nil
     var height: CGFloat = 256
 
     var body: some View {
@@ -17,11 +23,10 @@ struct CustomImageView: View {
             switch phase {
             case .failure:
                 Image(systemName: "photo")
-                    // .font(.largeTitle)
                     .resizable()
-                    .scaledToFill()
-                    .foregroundColor(Color.theme.blackAndWhite)
-
+                    .scaledToFit()
+                    .foregroundColor(Color.gray)
+                    .padding(.vertical, 16)
             case .success(let image):
                 image
                     .resizable()
@@ -30,11 +35,11 @@ struct CustomImageView: View {
                 ProgressView()
             }
         }
-        .frame(maxWidth: maxWidth, maxHeight: height)
+        .frame(width: width, height: height)
         .clipped()
     }
 }
 
 #Preview {
-    CustomImageView(url: "https://hws.dev/paul3.jpg")
+    CustomImageView(url: "https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Party-food-recipes-fcfb3af.jpg?resize=1366,1503")
 }

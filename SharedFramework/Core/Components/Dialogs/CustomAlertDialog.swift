@@ -67,7 +67,6 @@ struct CustomAlertDialog<Content: View>: View {
                         if !dismissButtonText.isEmpty {
                             CustomButton(
                                 buttonName: dismissButtonText,
-                                height: 24,
                                 backgroundColor: Color.clear,
                                 borderColor: Color.theme.blackAndWhite,
                                 buttonNameColor: Color.theme.blackAndWhite,
@@ -81,7 +80,6 @@ struct CustomAlertDialog<Content: View>: View {
                         if !confirmButtonText.isEmpty {
                             CustomButton(
                                 buttonName: confirmButtonText,
-                                height: 24,
                                 onTap: {
                                     onConfirmation()
                                 }

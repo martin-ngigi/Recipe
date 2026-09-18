@@ -57,9 +57,9 @@ struct RatingView: View {
                         .frame(height: 100)
                         // .background(Color.gray.opacity(0.3))
                         .background(.red)
-                        .cornerRadius(7)
+                        .cornerRadius(Guidelines.cornerRadius)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 7)
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                                 .stroke(Color.gray, lineWidth: 0.3)
                         )
                 }
@@ -88,10 +88,10 @@ struct RatingView: View {
             }
             .padding()
             .background(Color.theme.whiteAndBlack)
-            .cornerRadius(11)
+            .cornerRadius(Guidelines.cornerRadius)
             .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
             .overlay(
-                RoundedRectangle(cornerRadius: 11)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
                     .stroke(Color.theme.primaryColor, lineWidth: 1)
             )
             .padding()

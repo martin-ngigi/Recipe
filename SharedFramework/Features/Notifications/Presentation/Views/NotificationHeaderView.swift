@@ -24,7 +24,7 @@ struct NotificationHeaderView: View {
                 .foregroundColor(.primary)
                 .padding(4)
                 .background(Color(.systemGroupedBackground))
-                .cornerRadius(4)
+                .cornerRadius(Guidelines.cornerRadius)
             
             Spacer()
             

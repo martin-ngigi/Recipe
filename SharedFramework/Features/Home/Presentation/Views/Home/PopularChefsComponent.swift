@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 24/08/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  PopularChefsComponent.swift
 //  Recipe
@@ -18,34 +24,31 @@ struct PopularChefsComponent: View {
     }
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(alignment: .leading, spacing: 16){
             HStack {
                 Text("Popular Chefs")
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(Color.theme.primaryTextColor)
+                    .font(.title2.bold())
 
                 Spacer()
 
                 if !isEmpty {
-                    Button {
-                        onTapSeeAll()
-                    } label: {
-                        HStack {
-                            Text("See All (\(chefs.count))")
-                                .font(.custom(FontConstants.POPPINS_MEDIUM, size: 14))
-                                .foregroundStyle(Color.theme.primaryColor)
+                    HStack(spacing: 4) {
+                        Text("See All")
+                            .font(.footnote)
 
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color.theme.grayColor1)
-                        }
-                        .foregroundColor(Color.theme.primaryColor)
+                        Image(systemName: "chevron.right")
+                            .imageScale(.small)
 
                     }
+                    .foregroundStyle(Color.theme.primaryColor)
+                    .accessibilityLabel("See all popular chefs")
+                    .tappableArea(onTap: onTapSeeAll)
                 }
 
             }
 
-            VStack {
+            VStack(alignment: .leading, spacing: 16){
                 if isEmpty {
                     EmptyScreenView(
                         imageName: "tray",
@@ -66,9 +69,10 @@ struct PopularChefsComponent: View {
                                 onTapChef(chef)
                             }
                         )
+                        .background(Color(.secondarySystemGroupedBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+                        .glassEffectCustomRectangular()
                     }
-                    .padding(4)
-                    .cardBackground()
                 }
 
             }
