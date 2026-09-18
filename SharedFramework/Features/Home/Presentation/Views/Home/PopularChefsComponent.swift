@@ -28,24 +28,22 @@ struct PopularChefsComponent: View {
             HStack {
                 Text("Popular Chefs")
                     .foregroundStyle(Color.theme.primaryTextColor)
-                    .font(.headline)
+                    .font(.title2.bold())
 
                 Spacer()
 
                 if !isEmpty {
-                    Button {
-                        onTapSeeAll()
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text("See All")
-                                .font(.footnote)
+                    HStack(spacing: 4) {
+                        Text("See All")
+                            .font(.footnote)
 
-                            Image(systemName: "chevron.right")
-                                .imageScale(.small)
+                        Image(systemName: "chevron.right")
+                            .imageScale(.small)
 
-                        }
-                        .foregroundStyle(.primary)
                     }
+                    .foregroundStyle(Color.theme.primaryColor)
+                    .accessibilityLabel("See all popular chefs")
+                    .tappableArea(onTap: onTapSeeAll)
                 }
 
             }

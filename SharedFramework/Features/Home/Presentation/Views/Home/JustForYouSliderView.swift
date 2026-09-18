@@ -28,7 +28,7 @@ struct JustForYouSliderView: View {
         VStack(spacing: 16) {
             Text("Just For You")
                 .foregroundStyle(Color.theme.primaryTextColor)
-                .font(.headline)
+                .font(.title2.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, Guidelines.horizontalPadding)
 
@@ -54,9 +54,8 @@ struct JustForYouSliderView: View {
                                         onTap(recipes[index])
                                     } label: {
                                         JustForYouSliderItem(
-                                            image: recipes[index].image,
-                                            recipeName: recipes[index].name,
-                                            chefName: recipes[index].chef?.name ?? ""
+                                            recipes: recipes,
+                                            recipe: recipes[index],
                                         )
                                         .frame(minWidth: 360)
                                         .frame(height: 240)
@@ -80,9 +79,8 @@ struct JustForYouSliderView: View {
                                         onTap(recipes[index])
                                     } label: {
                                         JustForYouSliderItem(
-                                            image: recipes[index].image,
-                                            recipeName: recipes[index].name,
-                                            chefName: recipes[index].chef?.name ?? ""
+                                            recipes: recipes,
+                                            recipe: recipes[index],
                                         )
                                     }
                                 }
@@ -90,7 +88,12 @@ struct JustForYouSliderView: View {
                             }
                         }
                         .frame(height: 240)
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .overlay(alignment: .bottom) {
+                            DotsView(count: recipes.count, currentIndex: currentIndex)
+                                .padding(.vertical, 8) //8+8+8
+                        }
+                        .glassEffectCustomRectangular()
                         .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
                         .onReceive(timer) { _ in
                             guard !reduceMotion else { return }
@@ -111,14 +114,12 @@ struct JustForYouSliderView: View {
 }
 
 struct JustForYouSliderItem: View {
-    
-    var image: String
-    var recipeName: String
-    var chefName: String
+    var recipes: [RecipeModel]
+    var recipe: RecipeModel
     
     var body: some View{
         CustomImageView(
-            url: image,
+            url: recipe.image,
             width: .infinity,
             height: 240
         )
@@ -126,30 +127,25 @@ struct JustForYouSliderItem: View {
         .clipped()
         .contentShape(Rectangle())
         .overlay(alignment: .bottom) {
-            VStack(spacing: 0){
-                Text(recipeName)
+            VStack(spacing: 2){
+                Text(recipe.name)
                     .font(.title3)
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
-
-                Text(chefName)
+                    .foregroundColor(Color.theme.primaryTextColor)
+                
+                Text(recipe.chef?.name ?? "")
                     .font(.footnote)
-                    .foregroundColor(.white)
-
+                    .foregroundColor(Color.theme.secondaryTextColor)
             }
             .frame(maxWidth: .infinity)
-            .padding(.bottom, 48)
+            .padding(.bottom, 24) // //8+8+8+8
+            .padding(.top, 8)
             .padding(.horizontal)
             .background(
                 LinearGradient(
                     colors: [
-                        Color.black.opacity(0.1),
-                        Color.black.opacity(0.25),
-                        Color.black.opacity(0.5),
-                        Color.black.opacity(0.75),
-                        Color.black.opacity(0.75),
-                        Color.black.opacity(1),
-                        Color.black.opacity(1)
+                        Color(.systemBackground).opacity(0.95),
+                        Color(.systemBackground).opacity(0.95),
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -157,7 +153,39 @@ struct JustForYouSliderItem: View {
             )
         }
         .clipShape(.rect(corners: .concentric()))
-        .containerShape(.rect(cornerRadius: Guidelines.cornerRadius))
+        //.containerShape(.rect(cornerRadius: Guidelines.cornerRadius))
+        .clipShape(
+               .rect(
+                   topLeadingCorner: 0,
+                   topTrailingCorner: 0,
+                   bottomLeadingCorner: .concentric(minimum: 24),
+                   bottomTrailingCorner: .concentric(minimum: 24)
+               )
+           )
+    }
+}
+
+struct DotsView: View {
+
+    let count: Int
+    let currentIndex: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(0..<count, id: \.self) { index in
+                Capsule()
+                    .fill(
+                        index == currentIndex
+                            ? Color.theme.primaryTextColor
+                            : Color.gray.opacity(0.4)
+                    )
+                    .frame(
+                        width: index == currentIndex ? 16 : 8,
+                        height: 8
+                    )
+                    .animation(.easeInOut(duration: 0.25), value: currentIndex)
+            }
+        }
     }
 }
 

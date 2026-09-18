@@ -206,4 +206,16 @@ extension View {
         modifier(FlexibleLandingHeaderContentModifier())
     }
     
+    func tappableArea(
+        _ minSize: CGFloat = Guidelines.minTappableLength,
+        onTap: @escaping () -> Void
+    ) -> some View {
+        self
+            .overlay {
+                Color.clear
+                    .frame(minWidth: minSize, minHeight: minSize)
+                    .contentShape(Rectangle())
+                    .onTapGesture(perform: onTap)
+            }
+    }
 }

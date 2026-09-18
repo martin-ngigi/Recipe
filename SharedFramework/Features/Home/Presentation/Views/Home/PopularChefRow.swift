@@ -21,7 +21,7 @@ struct PopularChefRow: View {
         Button {
             onTap(chef)
         } label: {
-            HStack (spacing: 8){
+            HStack(alignment: .top, spacing: 8){
 
                 var avatar: String {
                     if chef.avatar.starts(with: "http") {
@@ -41,8 +41,11 @@ struct PopularChefRow: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     
+                    Spacer()
+                    
                     Text(chef.name)
                         .foregroundStyle(Color.theme.primaryTextColor)
+                        .multilineTextAlignment(.leading)
                         .font(.headline)
                     
                     let recipesList = chef.recipesList?.compactMap{$0.name}.joined(separator: ", ") ??  ""
@@ -56,13 +59,8 @@ struct PopularChefRow: View {
                     Text("\(Image(systemName: "star.fill")) \(chef.rate?.ratingFormatted ?? "0.0")")
                         .font(.footnote)
                         .foregroundStyle(Color.theme.secondaryTextColor)
-
-                    /*
-                    Image(systemName: "chevron.forward")
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.gray)
-                        .padding(.trailing, 8)
-                    */
+                    
+                    Spacer()
                 }
                 .padding(8)
                 .foregroundStyle(Color.theme.blackAndWhite)

@@ -74,25 +74,26 @@ struct HomeView: View {
                             
                             Text("Trending Recipes")
                                 .foregroundStyle(Color.theme.primaryTextColor)
-                                .font(.headline)
+                                .font(.title2.bold())
                             
                             Spacer()
                             
                             if !noRecipes {
-                                Button {
-                                    router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
-                                } label: {
-                                    HStack(spacing: 4) {
-                                        Text("See All")
-                                            .font(.footnote)
-                                        
-                                        Image(systemName: "chevron.right")
-                                            .imageScale(.small)
-                                        
-                                    }
-                                    .foregroundStyle(.primary)
+                                HStack(spacing: 4) {
+                                    Text("See All")
+                                        .font(.footnote)
+
+                                    Image(systemName: "chevron.right")
+                                        .imageScale(.small)
+
                                 }
                                 .accessibilityLabel("See all trending recipes")
+                                .foregroundStyle(Color.theme.primaryColor)
+                                .tappableArea(
+                                    onTap: {
+                                        router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
+                                    }
+                                )
                             }
                             
                         }
