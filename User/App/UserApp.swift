@@ -26,7 +26,12 @@ struct UserApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            let url = URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDc425L193k7Fvr3k2OBsTJTZL4tFjsGKNOq_4ByyjYmHlhRq50cisgW0&s=10") 
+                ContactDetailView(
+                    name: "Steve Jobs",
+                    email: "steve@apple.com",
+                    imageURL: url!
+                )
                 .environmentObject(router)
                 .environmentObject(tabRouter)
                 .modelContainer(for: [RecipeSwiftData.self])

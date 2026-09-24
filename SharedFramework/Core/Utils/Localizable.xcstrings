@@ -110,6 +110,9 @@
     "Average on %@s" : {
 
     },
+    "Back" : {
+
+    },
     "Cancel" : {
 
     },
@@ -120,6 +123,9 @@
 
     },
     "Contact Chef" : {
+
+    },
+    "Contacts Only" : {
 
     },
     "Cook Like a chef" : {
@@ -156,6 +162,9 @@
 
     },
     "Dont have account? %@" : {
+
+    },
+    "Edit" : {
 
     },
     "Email" : {
@@ -251,10 +260,16 @@
     "No chefs found. Try searching for something else." : {
 
     },
+    "No notes" : {
+
+    },
     "No Notifications Yet." : {
 
     },
     "No recipes found. Try searching for something else." : {
+
+    },
+    "Notes" : {
 
     },
     "Notification" : {
@@ -389,6 +404,12 @@
 
     },
     "Share" : {
+
+    },
+    "Share Contact" : {
+
+    },
+    "Shared Name and Photo" : {
 
     },
     "Sheet View" : {
