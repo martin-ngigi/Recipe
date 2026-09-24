@@ -64,73 +64,13 @@ struct HomeView: View {
                     )
                     .padding(.bottom, 32)
                     
-                    VStack(alignment: .leading, spacing: 16){
-                        
-                        var noRecipes: Bool {
-                            return homeViewModel.trendingRecipesList.isEmpty && homeViewModel.fetchHomeDataState != .isLoading
+                    TrendingRecipesHome(
+                        recipes: homeViewModel.trendingRecipesList,
+                        namespace: namespace,
+                        onTapSeeAll: {
+                            router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
                         }
-                        
-                        HStack {
-                            
-                            Text("Trending Recipes")
-                                .foregroundStyle(Color.theme.primaryTextColor)
-                                .font(.title2.bold())
-                            
-                            Spacer()
-                            
-                            if !noRecipes {
-                                HStack(spacing: 4) {
-                                    Text("See All")
-                                        .font(.footnote)
-
-                                    Image(systemName: "chevron.right")
-                                        .imageScale(.small)
-
-                                }
-                                .accessibilityLabel("See all trending recipes")
-                                .foregroundStyle(Color.theme.primaryColor)
-                                .tappableArea(
-                                    onTap: {
-                                        router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
-                                    }
-                                )
-                            }
-                            
-                        }
-                        .padding(.horizontal, horizontalMargins)
-                        
-                        if noRecipes {
-                            EmptyScreenView(
-                                imageName: "tray",
-                                imageSize: 80,
-                                title: "Trending",
-                                titleSize: 18,
-                                description: """
-                                    No trending recipes found.
-                                    """,
-                                descriptionSize: 12
-                            )
-                            .padding(.horizontal, horizontalMargins)
-                        }
-                        else {
-                            ScrollView(.horizontal){
-                                LazyVGrid(columns: columns4, spacing: 16) {
-                                    ForEach(homeViewModel.trendingRecipesList, id: \.self) { recipe in
-                                        NavigationLink {
-                                            RecipeDetailsView(recipe: recipe)
-                                                .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
-                                        } label: {
-                                            RecipeItemView(recipe: recipe)
-                                                .matchedTransitionSource(id: recipe.recipeId, in: namespace)
-                                        }
-                                    }
-                                }
-                                .padding(.bottom, 32)
-                            }
-                            .scrollIndicators(.hidden)
-                            .contentMargins(.horizontal, horizontalMargins)
-                        }
-                    }
+                    )
 
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,

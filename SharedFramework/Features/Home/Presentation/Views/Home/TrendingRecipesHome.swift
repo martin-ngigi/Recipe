@@ -14,48 +14,67 @@
 import SwiftUI
 
 struct TrendingRecipesHome: View {
-    var columns: [GridItem]
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    var columns2: [GridItem] {
+        if dynamicTypeSize.isAccessibilitySize {
+            return [GridItem(.flexible())]
+        }
+        
+        if horizontalSizeClass == .regular { //iPad
+            return [GridItem(.adaptive(minimum: 160), spacing: 16)]
+        }
+        
+        return [GridItem(.adaptive(minimum: 160), spacing: 16)]
+    }
+    var columns: [GridItem] {
+        let minimumWidth: CGFloat = dynamicTypeSize.isAccessibilitySize ? 360 : 160
+        return [GridItem(.adaptive(minimum: minimumWidth), spacing: 16)]
+    }
+    let columns4 = Array( repeating: GridItem(.flexible(), spacing: 16, alignment: .top), count: 2)
+
     var recipes: [RecipeModel]
     var isLoading: Bool = false
+    var namespace: Namespace.ID
     var isEmpty: Bool {
         return recipes.isEmpty && isLoading == false
     }
-    var onTapRecipe: (RecipeModel) -> Void
     var onTapSeeAll: () -> Void
 
     var body: some View {
-        VStack(spacing: 2) {
+        
+        VStack(alignment: .leading, spacing: 16){
+            
             HStack {
+                
                 Text("Trending Recipes")
-                    .font(.custom(FontConstants.POPPINS_MEDIUM, size: 16))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
+                    .foregroundStyle(Color.theme.primaryTextColor)
+                    .font(.title2.bold())
+                
                 Spacer()
-
+                
                 if !isEmpty {
-                    Button {
-                        onTapSeeAll()
-                    } label: {
-                        HStack {
-                            Text("See All")
-                                .font(.appFootnote)
-                                .foregroundStyle(Color.theme.primaryColor)
+                    HStack(spacing: 4) {
+                        Text("See All")
+                            .font(.footnote)
 
-                            Image(systemName: "chevron.right")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 8, height: 8)
-                                .foregroundColor(Color.secondary)
-                        }
-                        .foregroundColor(Color.theme.primaryColor)
-                        .frame(minHeight: 44)
+                        Image(systemName: "chevron.right")
+                            .imageScale(.small)
+
                     }
                     .accessibilityLabel("See all trending recipes")
+                    .foregroundStyle(Color.theme.primaryColor)
+                    .tappableArea(
+                        onTap: {
+                            onTapSeeAll()
+                        }
+                    )
                 }
-
+                
             }
-
-            if recipes.isEmpty && isLoading == false {
+            .padding(.horizontal, Guidelines.horizontalPadding)
+            
+            if isEmpty {
                 EmptyScreenView(
                     imageName: "tray",
                     imageSize: 80,
@@ -66,17 +85,25 @@ struct TrendingRecipesHome: View {
                         """,
                     descriptionSize: 12
                 )
+                .padding(.horizontal, Guidelines.horizontalPadding)
             }
             else {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(recipes, id: \.self) { recipe in
-                        Button {
-                            onTapRecipe(recipe)
-                        } label: {
-                            RecipeItemView(recipe: recipe)
+                ScrollView(.horizontal){
+                    LazyVGrid(columns: columns4, spacing: 16) {
+                        ForEach(recipes, id: \.self) { recipe in
+                            NavigationLink {
+                                RecipeDetailsView(recipe: recipe)
+                                    .navigationTransition(.zoom(sourceID: recipe.recipeId, in: namespace))
+                            } label: {
+                                RecipeItemView(recipe: recipe)
+                                    .matchedTransitionSource(id: recipe.recipeId, in: namespace)
+                            }
                         }
                     }
+                    .padding(.bottom, 32)
                 }
+                .scrollIndicators(.hidden)
+                .contentMargins(.horizontal, Guidelines.horizontalPadding)
             }
         }
     }
@@ -84,11 +111,8 @@ struct TrendingRecipesHome: View {
 
 #Preview {
     TrendingRecipesHome(
-        columns: [GridItem(.flexible()), GridItem(.flexible())],
-        recipes: RecipeModel.dummyList,
-        onTapRecipe: { _ in
-
-        },
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        namespace: Namespace().wrappedValue,
         onTapSeeAll: {
 
         }
