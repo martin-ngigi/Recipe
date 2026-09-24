@@ -33,6 +33,11 @@ struct RecipeDetailsView: View {
                             width: .infinity,
                             height: 240
                         )
+//                        .aspectRatio(contentMode: .fill)
+//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+//                        .clipped()
+//                        .backgroundExtensionEffect()
+//                        .flexibleLandingHeaderContent()
 
                         HStack(spacing: 12) {
                             Button {
