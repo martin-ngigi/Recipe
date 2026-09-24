@@ -191,7 +191,7 @@ struct DotsView: View {
 
 #Preview {
     JustForYouSliderView(
-        recipes: RecipeModel.dummyList,
+        recipes: HomeResponseModel.mockData?.data.justForYou ?? [],
         onTap: { _ in
 
         },

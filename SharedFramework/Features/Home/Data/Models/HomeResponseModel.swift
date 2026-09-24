@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 24/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  HomeResponseModel.swift
 //  Recipe
@@ -39,8 +45,6 @@ struct HomeResponseModel: Codable {
         case data
     }
 
-    static var sampleData = HomeReponseDummyData.dataModel
-
     let message: String
     let statusCode: Int
     let data: HomeData
@@ -51,4 +55,8 @@ struct HomeResponseModel: Codable {
         self.data = HomeData(swiftData: swiftData.data)
     }
 
+}
+
+extension HomeResponseModel{
+    static var mockData = HomeMockRepository.shared.sampleHomeResponse
 }

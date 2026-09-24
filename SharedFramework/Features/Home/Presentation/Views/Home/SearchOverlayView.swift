@@ -131,8 +131,8 @@ struct SearchOverlayView: View {
     SearchOverlayView(
         recipePage: .constant(0),
         chefPage: .constant(0),
-        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapRecipe: { _ in
 
         },
@@ -146,8 +146,8 @@ struct SearchOverlayView: View {
     SearchOverlayView(
         recipePage: .constant(0),
         chefPage: .constant(0),
-        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapRecipe: { _ in
 
         },

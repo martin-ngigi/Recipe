@@ -73,7 +73,7 @@ struct PopularChefRow: View {
 }
 
 #Preview {
-    if let chef = HomeResponseModel.sampleData?.data.popularChefs[0] {
+    if let chef = HomeResponseModel.mockData?.data.popularChefs[0] {
         PopularChefRow(
             chef: chef,
             onTap: { _ in

@@ -83,7 +83,7 @@ struct PopularChefsComponent: View {
 
 #Preview {
     PopularChefsComponent(
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapChef: { _ in
 
         },
