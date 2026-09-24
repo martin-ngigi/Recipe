@@ -15,58 +15,55 @@ import SwiftUI
 
 struct PopularChefRow: View {
     var chef: UserModel
-    var onTap: (UserModel) -> Void
+    var namespace: Namespace.ID
 
     var body: some View {
-        Button {
-            onTap(chef)
-        } label: {
-            HStack(alignment: .top, spacing: 8){
+        HStack(alignment: .top, spacing: 8){
 
-                var avatar: String {
-                    if chef.avatar.starts(with: "http") {
-                        return chef.avatar
-                    }
-                    else {
-                        return "\(Constants.BASE_URL)\(chef.avatar)"
-                    }
+            var avatar: String {
+                if chef.avatar.starts(with: "http") {
+                    return chef.avatar
                 }
-
-                CustomImageView(
-                    url: avatar,
-                    width: 100,
-                    height: 100
-                )
-                .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
-
-                VStack(alignment: .leading, spacing: 4) {
-                    
-                    Spacer()
-                    
-                    Text(chef.name)
-                        .foregroundStyle(Color.theme.primaryTextColor)
-                        .multilineTextAlignment(.leading)
-                        .font(.headline)
-                    
-                    let recipesList = chef.recipesList?.compactMap{$0.name}.joined(separator: ", ") ??  ""
-                    
-                    Text("\(recipesList)")
-                        .lineLimit(3)
-                        .font(.footnote)
-                        .multilineTextAlignment(.leading)
-                        .foregroundStyle(Color.theme.secondaryTextColor)
-
-                    Text("\(Image(systemName: "star.fill")) \(chef.rate?.ratingFormatted ?? "0.0")")
-                        .font(.footnote)
-                        .foregroundStyle(Color.theme.secondaryTextColor)
-                    
-                    Spacer()
+                else {
+                    return "\(Constants.BASE_URL)\(chef.avatar)"
                 }
-                .padding(8)
-                .foregroundStyle(Color.theme.blackAndWhite)
+            }
+
+            CustomImageView(
+                url: avatar,
+                width: 100,
+                height: 100
+            )
+            .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
+            .matchedTransitionSource(id: chef.openID, in: namespace)
+
+            VStack(alignment: .leading, spacing: 4) {
+                
+                Spacer()
+                
+                Text(chef.name)
+                    .foregroundStyle(Color.theme.primaryTextColor)
+                    .multilineTextAlignment(.leading)
+                    .font(.headline)
+                
+                let recipesList = chef.recipesList?.compactMap{$0.name}.joined(separator: ", ") ??  ""
+                
+                Text("\(recipesList)")
+                    .lineLimit(3)
+                    .font(.footnote)
+                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(Color.theme.secondaryTextColor)
+
+                Text("\(Image(systemName: "star.fill")) \(chef.rate?.ratingFormatted ?? "0.0")")
+                    .font(.footnote)
+                    .foregroundStyle(Color.theme.secondaryTextColor)
                 
                 Spacer()
             }
+            .padding(8)
+            .foregroundStyle(Color.theme.blackAndWhite)
+            
+            Spacer()
         }
 
     }
@@ -76,9 +73,7 @@ struct PopularChefRow: View {
     if let chef = HomeResponseModel.mockData?.data.popularChefs[0] {
         PopularChefRow(
             chef: chef,
-            onTap: { _ in
-
-            }
+            namespace: Namespace().wrappedValue
         )
         .padding()
     }

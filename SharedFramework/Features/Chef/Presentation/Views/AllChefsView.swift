@@ -16,6 +16,7 @@ import SwiftUI
 struct AllChefsView: View {
     var list: [UserModel]
     @EnvironmentObject var router: Router
+    @Namespace var namespace
 
     var body: some View {
         VStack {
@@ -35,13 +36,14 @@ struct AllChefsView: View {
                 else {
                     ForEach(list, id: \.self) { chef in
                         VStack(spacing: 10) {
-                            PopularChefRow(
-                                chef: chef,
-                                onTap: { chef in
-                                    router.push(.chefdetails(chef: chef))
-                                }
-                            )
-
+                            Button{
+                                router.push(.chefdetails(chef: chef))
+                            } label: {
+                                PopularChefRow(
+                                    chef: chef,
+                                    namespace: namespace,
+                                )
+                            }
                         }
                     }
                 }

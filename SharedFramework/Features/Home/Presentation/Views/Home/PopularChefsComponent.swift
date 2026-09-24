@@ -17,7 +17,7 @@ struct PopularChefsComponent: View {
 
     var chefs: [UserModel]
     var isLoading: Bool = false
-    var onTapChef: (UserModel) -> Void
+    var namespace: Namespace.ID
     var onTapSeeAll: () -> Void
     var isEmpty: Bool {
         return chefs.isEmpty && isLoading == false
@@ -63,15 +63,17 @@ struct PopularChefsComponent: View {
                 }
                 else {
                     ForEach(chefs, id: \.self) { chef in
-                        PopularChefRow(
-                            chef: chef,
-                            onTap: { chef in
-                                onTapChef(chef)
-                            }
-                        )
-                        .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
-                        .glassEffectCustomRectangular()
+                        
+                        NavigationLink {
+                            ChefDetailsView(chef: chef)
+                                .navigationTransition(.zoom(sourceID: chef.openID, in: namespace))
+                        } label: {
+                            PopularChefRow(chef: chef, namespace: namespace)
+                                .background(Color(.secondarySystemGroupedBackground))
+                                .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
+                                //.glassEffectCustomRectangular()
+                        }
+                        
                     }
                 }
 
@@ -84,9 +86,7 @@ struct PopularChefsComponent: View {
 #Preview {
     PopularChefsComponent(
         chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
-        onTapChef: { _ in
-
-        },
+        namespace: Namespace().wrappedValue,
         onTapSeeAll: {
 
         }

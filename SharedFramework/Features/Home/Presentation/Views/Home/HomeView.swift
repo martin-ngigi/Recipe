@@ -75,9 +75,7 @@ struct HomeView: View {
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,
-                        onTapChef: { chef in
-                            router.push(.chefdetails(chef: chef))
-                        },
+                        namespace: namespace,
                         onTapSeeAll: {
                             router.push(.popularChefs(list: homeViewModel.popularChefsList))
                         }

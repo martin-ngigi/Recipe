@@ -20,6 +20,7 @@ struct SearchOverlayView: View {
     var chefs: [UserModel]
     var onTapRecipe: (RecipeModel) -> Void
     var onTapChef: (UserModel) -> Void
+    @Namespace var namespace
 
     private let itemsPerPage = 2
 
@@ -63,12 +64,11 @@ struct SearchOverlayView: View {
                     }
                     else {
                         ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
-                            PopularChefRow(
-                                chef: chef,
-                                onTap: { chef in
-                                    onTapChef(chef)
-                                }
-                            )
+                            Button{
+                                onTapChef(chef)
+                            } label: {
+                                PopularChefRow(chef: chef, namespace: namespace)
+                            }
                         }
 
                     }
