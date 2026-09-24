@@ -9,6 +9,9 @@
 //  Recipe
 //
 //  Created by RAFIKI on 24/09/2026.
+//  Rewritten to use .toolbar with native SwiftUI toolbar APIs, HIG-aligned
+//  materials and safe-area handling, and a symmetric scale/opacity treatment
+//  for the hero title as the user scrolls or overscrolls.
 //
 
 import SwiftUI
@@ -22,6 +25,8 @@ struct ContactDetailView: View {
     let email: String
     let imageURL: URL
 
+    // MARK: - Loaded assets (loaded ONCE, reused everywhere — no duplicate fetches)
+
     @State private var heroImage: UIImage?
     @State private var imageLoadFailed = false
     @State private var backgroundColor = Color(white: 0.16)
@@ -29,44 +34,53 @@ struct ContactDetailView: View {
     // MARK: - Scroll state
 
     /// Raw content offset. Allowed to go negative during the top overscroll/bounce,
-    /// which is what powers the pull-to-stretch zoom on the photo.
+    /// which is what powers the pull-to-stretch zoom on the photo and title.
     @State private var scrollOffset: CGFloat = 0
-    @State private var safeAreaTop: CGFloat = 47
 
     // MARK: - Layout constants
 
     /// Height of the photo itself.
     private let imageHeight: CGFloat = 300
-    /// Extra height reserved for name / email / action buttons beneath the photo.
-    private let infoHeight: CGFloat = 190
     /// Scroll distance before the photo locks in place ("sticks").
     private let imageStickDistance: CGFloat = 120
     /// Scroll range over which the large name crossfades into the compact bar title.
     private let titleCollapseStart: CGFloat = 230
     private let titleCollapseEnd: CGFloat = 290
-    private let navigationBarHeight: CGFloat = 44
 
     var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView {
-                scrollContent
-            }
-            .scrollIndicators(.hidden)
-            .coordinateSpace(name: "ContactScroll")
-            .onScrollGeometryChange(
-                for: CGFloat.self,
-                of: { $0.contentOffset.y },
-                action: { _, value in
-                    scrollOffset = value
-                }
-            )
-
-            compactNavigationBar
+        ScrollView {
+            scrollContent
         }
+        .scrollIndicators(.hidden)
+        .coordinateSpace(name: "ContactScroll")
+        .onScrollGeometryChange(
+            for: CGFloat.self,
+            of: { $0.contentOffset.y },
+            action: { _, value in
+                scrollOffset = value
+            }
+        )
         .ignoresSafeArea(edges: .top)
         .preferredColorScheme(.dark)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
+        .toolbarBackground(isCompact ? .visible : .hidden, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .scrollEdgeEffectStyle(.soft, for: .top)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+            ToolbarItem(placement: .principal) {
+                compactTitle
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                editButton
+            }
+        }
+        .animation(.easeOut(duration: 0.2), value: isCompact)
         .task {
-            safeAreaTop = resolvedSafeAreaTop()
             await loadImage()
         }
     }
@@ -114,12 +128,26 @@ private extension ContactDetailView {
     }
 
     /// Opacity of the large hero name/email block — fades out as it nears the nav bar.
+    /// Unchanged from the original: driven purely by how far the user has scrolled up.
     var largeInfoOpacity: CGFloat {
         let progress = (scrollOffset - titleCollapseStart) / (titleCollapseEnd - titleCollapseStart)
         return 1 - min(max(progress, 0), 1)
     }
 
-    /// Opacity of the compact nav bar title — the mirror image of the above.
+    /// Scale of the large hero name/email block. Symmetric with scroll direction:
+    /// scrolling content *up* (collapsing toward the bar) shrinks it down from 1.0,
+    /// pulling *down* past the top (the bounce/overscroll) grows it up above 1.0 —
+    /// mirroring the photo's own stretch. Opacity is untouched by this and still
+    /// comes only from `largeInfoOpacity` above.
+    var largeInfoScale: CGFloat {
+        if pullStretch > 0 {
+            return 1 + min(pullStretch / 220, 0.12)
+        } else {
+            return 1 - (1 - largeInfoOpacity) * 0.18
+        }
+    }
+
+    /// Opacity of the compact nav bar title — the mirror image of `largeInfoOpacity`.
     var compactTitleOpacity: CGFloat {
         let progress = (scrollOffset - titleCollapseStart) / (titleCollapseEnd - titleCollapseStart)
         return min(max(progress, 0), 1)
@@ -201,7 +229,7 @@ private extension ContactDetailView {
         .padding(.bottom, 32)
         .frame(maxWidth: .infinity)
         .opacity(largeInfoOpacity)
-        .scaleEffect(1 - (1 - largeInfoOpacity) * 0.08, anchor: .bottom)
+        .scaleEffect(largeInfoScale, anchor: .bottom)
     }
 
     var actionButtons: some View {
@@ -246,40 +274,16 @@ private extension ContactDetailView {
     }
 }
 
-// MARK: - Compact navigation bar
+// MARK: - Toolbar content
 
 private extension ContactDetailView {
 
-    var compactNavigationBar: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 12) {
-                backButton
-
-                Text(name)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity)
-                    .opacity(compactTitleOpacity)
-
-                editButton
-            }
-            .padding(.horizontal, 16)
-            .frame(height: navigationBarHeight)
-            .padding(.top, safeAreaTop)
-
-            Rectangle()
-                .fill(.white.opacity(0.08))
-                .frame(height: 0.5)
-                .opacity(isCompact ? 1 : 0)
-        }
-        .background {
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .opacity(isCompact ? 1 : 0)
-                .ignoresSafeArea(edges: .top)
-        }
-        .animation(.easeOut(duration: 0.2), value: isCompact)
+    var compactTitle: some View {
+        Text(name)
+            .font(.headline)
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .opacity(compactTitleOpacity)
     }
 
     var backButton: some View {
@@ -287,13 +291,11 @@ private extension ContactDetailView {
             print("Back")
         } label: {
             Image(systemName: "chevron.left")
-                .font(.system(size: 17, weight: .semibold))
+                .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(.white)
-                .frame(width: 36, height: 36)
-                .background { Circle().fill(.ultraThinMaterial) }
-                .overlay { Circle().stroke(.white.opacity(0.16), lineWidth: 0.75) }
+                .frame(width: 32, height: 32)
+                .background { Circle().fill(.white.opacity(0.12)) }
         }
-        .buttonStyle(.plain)
         .accessibilityLabel("Back")
     }
 
@@ -303,8 +305,6 @@ private extension ContactDetailView {
         }
         .font(.system(size: 17, weight: .medium))
         .foregroundStyle(.white)
-        .frame(width: 48, height: 36)
-        .buttonStyle(.plain)
     }
 }
 
@@ -486,15 +486,6 @@ private extension ContactDetailView {
             await MainActor.run { imageLoadFailed = true }
         }
     }
-
-    func resolvedSafeAreaTop() -> CGFloat {
-        UIApplication.shared
-            .connectedScenes
-            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
-            .first?
-            .safeAreaInsets
-            .top ?? 47
-    }
 }
 
 // MARK: - Color helpers
@@ -556,13 +547,15 @@ actor ImageColorExtractor {
 // MARK: - Preview
 
 #Preview {
-    if let url = URL(
-        string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDc425L193k7Fvr3k2OBsTJTZL4tFjsGKNOq_4ByyjYmHlhRq50cisgW0&s=10"
-    ) {
-        ContactDetailView(
-            name: "Steve Jobs",
-            email: "steve@apple.com",
-            imageURL: url
-        )
+    NavigationStack {
+        if let url = URL(
+            string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDc425L193k7Fvr3k2OBsTJTZL4tFjsGKNOq_4ByyjYmHlhRq50cisgW0&s=10"
+        ) {
+            ContactDetailView(
+                name: "Steve Jobs",
+                email: "steve@apple.com",
+                imageURL: url
+            )
+        }
     }
 }

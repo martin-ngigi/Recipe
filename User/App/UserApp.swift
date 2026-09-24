@@ -26,24 +26,26 @@ struct UserApp: App {
 
     var body: some Scene {
         WindowGroup {
-            let url = URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDc425L193k7Fvr3k2OBsTJTZL4tFjsGKNOq_4ByyjYmHlhRq50cisgW0&s=10") 
+            let url = URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDc425L193k7Fvr3k2OBsTJTZL4tFjsGKNOq_4ByyjYmHlhRq50cisgW0&s=10")
+            NavigationStack {
                 ContactDetailView(
                     name: "Steve Jobs",
                     email: "steve@apple.com",
                     imageURL: url!
                 )
-                .environmentObject(router)
-                .environmentObject(tabRouter)
-                .modelContainer(for: [RecipeSwiftData.self])
-                .modelContainer(for: [IngredientSwiftData.self])
-                .frame(minWidth: 375.0, minHeight: 375.0)
-                // Keeps the current window's size for use in scrolling header calculations.
-                .onGeometryChange(for: CGSize.self) { geometry in
-                    geometry.size
-                } action: {
-                    ModelData.shared.windowSize = $0
-                }
-                .onAppear{ onAppear() }
+            }
+            .environmentObject(router)
+            .environmentObject(tabRouter)
+            .modelContainer(for: [RecipeSwiftData.self])
+            .modelContainer(for: [IngredientSwiftData.self])
+            .frame(minWidth: 375.0, minHeight: 375.0)
+            // Keeps the current window's size for use in scrolling header calculations.
+            .onGeometryChange(for: CGSize.self) { geometry in
+                geometry.size
+            } action: {
+                ModelData.shared.windowSize = $0
+            }
+            .onAppear{ onAppear() }
         }
     }
     
