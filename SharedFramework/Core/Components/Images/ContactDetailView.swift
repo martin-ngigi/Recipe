@@ -25,19 +25,13 @@ struct ContactDetailView: View {
     let email: String
     let imageURL: URL
 
-    // MARK: - Loaded assets (loaded ONCE, reused everywhere — no duplicate fetches)
-
     @State private var heroImage: UIImage?
     @State private var imageLoadFailed = false
     @State private var backgroundColor = Color(white: 0.16)
 
-    // MARK: - Scroll state
-
     /// Raw content offset. Allowed to go negative during the top overscroll/bounce,
     /// which is what powers the pull-to-stretch zoom on the photo and title.
     @State private var scrollOffset: CGFloat = 0
-
-    // MARK: - Layout constants
 
     /// Height of the photo itself.
     private let imageHeight: CGFloat = 300
@@ -80,6 +74,10 @@ struct ContactDetailView: View {
             }
         }
         .animation(.easeOut(duration: 0.2), value: isCompact)
+        .background(
+            backgroundColor
+                .ignoresSafeArea()
+        )
         .task {
             await loadImage()
         }
@@ -162,7 +160,7 @@ private extension ContactDetailView {
 
 private extension ContactDetailView {
 
-    var heroPhoto: some View {
+    var heroPhoto1: some View {
         ZStack(alignment: .bottom) {
             photoImage
                 .frame(height: displayedImageHeight)
@@ -180,6 +178,28 @@ private extension ContactDetailView {
             )
 
             Color.black.opacity(coverageScrim)
+        }
+        .frame(height: displayedImageHeight)
+    }
+    
+    var heroPhoto: some View {
+        ZStack(alignment: .bottom) {
+            photoImage
+                .frame(height: displayedImageHeight)
+                .clipped()
+
+            LinearGradient(
+                stops: [
+                    //.init(color: .clear, location: 0.30),
+                    .init(color: backgroundColor.opacity(0.06), location: 0.48),
+                    .init(color: backgroundColor.opacity(0.18), location: 0.62),
+                    .init(color: backgroundColor.opacity(0.42), location: 0.76),
+                    .init(color: backgroundColor.opacity(0.72), location: 0.90),
+                    .init(color: backgroundColor, location: 1.0)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
         }
         .frame(height: displayedImageHeight)
     }
@@ -208,24 +228,28 @@ private extension ContactDetailView {
 private extension ContactDetailView {
 
     var heroInfo: some View {
-        VStack(spacing: 18) {
-            Text(name)
-                .font(.system(size: 40, weight: .bold))
-                .foregroundStyle(.white)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.72)
-                .shadow(color: .black.opacity(0.3), radius: 10, y: 4)
+        VStack(spacing: 32) {
+            
+            VStack(spacing: 8) {
+                Text(name)
+                    .font(.largeTitle.bold())
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.72)
+                    .shadow(color: .black.opacity(0.3), radius: 10, y: 4)
 
-            Text(email)
-                .font(.system(size: 17, weight: .medium))
-                .foregroundStyle(.white.opacity(0.88))
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+                Text(email)
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.88))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+            }
+            
 
             actionButtons
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, Guidelines.horizontalPadding)
         .padding(.bottom, 32)
         .frame(maxWidth: .infinity)
         .opacity(largeInfoOpacity)
@@ -234,6 +258,7 @@ private extension ContactDetailView {
 
     var actionButtons: some View {
         HStack(spacing: 16) {
+            Spacer()
             contactAction(systemImage: "message.fill", accessibilityLabel: "Message") {
                 print("Message")
             }
@@ -246,6 +271,7 @@ private extension ContactDetailView {
             contactAction(systemImage: "envelope.fill", accessibilityLabel: "Email") {
                 print("Email")
             }
+            Spacer()
         }
     }
 
@@ -256,20 +282,12 @@ private extension ContactDetailView {
     ) -> some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(.system(size: 19, weight: .medium))
+                .font(.title)
                 .foregroundStyle(.white)
-                .frame(width: 58, height: 58)
-                .background {
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .overlay { Circle().fill(.white.opacity(0.06)) }
-                }
-                .overlay {
-                    Circle().stroke(.white.opacity(0.18), lineWidth: 0.75)
-                }
-                .shadow(color: .black.opacity(0.15), radius: 8, y: 4)
+                .padding(16)
         }
-        .buttonStyle(.plain)
+        .buttonBorderShape(.capsule)
+        .glassEffect(.regular.interactive(), in: Circle())
         .accessibilityLabel(accessibilityLabel)
     }
 }
@@ -314,18 +332,9 @@ private extension ContactDetailView {
 
     var contentSheet: some View {
         contactContent
-            .padding(.horizontal, 16)
-            .padding(.top, 20)
-            .padding(.bottom, 48)
+            .padding(.horizontal, Guidelines.horizontalPadding)
+            .padding(.vertical, 16)
             .frame(maxWidth: .infinity)
-            .background {
-                UnevenRoundedRectangle(
-                    topLeadingRadius: 28,
-                    topTrailingRadius: 28
-                )
-                .fill(cardColor)
-                .ignoresSafeArea(edges: .bottom)
-            }
     }
 
     var contactContent: some View {
@@ -442,14 +451,14 @@ private extension ContactDetailView {
 
     func contactCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         content()
-            .padding(24)
+            .padding(Guidelines.horizontalPadding)
             .frame(maxWidth: .infinity)
             .background {
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                     .fill(cardColor)
             }
             .overlay {
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
                     .stroke(.white.opacity(0.06), lineWidth: 0.75)
             }
     }
