@@ -25,224 +25,238 @@ struct RecipeDetailsView: View {
     var body: some View {
         ScrollView {
             if let recipe = recipeDetailsViewModels.recipe {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .bottomLeading) {
-
-                        CustomImageView(
-                            url: recipe.image,
-                            width: .infinity,
-                            height: 240
-                        )
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-//                        .clipped()
-//                        .backgroundExtensionEffect()
-//                        .flexibleLandingHeaderContent()
-
-                        HStack(spacing: 12) {
-                            Button {
-                                if let chef = recipe.chef {
-                                    router.push(.chefdetails(chef: chef))
-                                }
-                            } label: {
-                                HStack(spacing: 12) {
-                                    var avatar: String {
-                                        if "\( recipe.chef?.avatar ?? "")".starts(with: "http") {
-                                            return recipe.chef?.avatar ?? ""
-                                        }
-                                        else {
-                                            return "\(Constants.BASE_URL)\( recipe.chef?.avatar ?? "")"
-                                        }
-                                    }
-
-                                    CustomImageView(
-                                        url: avatar,
-                                        width: 40,
-                                        height: 40
-                                    )
-                                    .foregroundColor(Color.theme.blackAndWhite)
-                                    .clipShape(Circle())
-
-                                    VStack(alignment: .leading, spacing: 4) {
-
-                                        Text(recipe.chef?.name ?? "")
-                                            .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
-                                            .lineSpacing(3.0)
-                                            .foregroundColor(Color.theme.blackAndWhite)
-                                            .fontWeight(.semibold)
-
-                                        Text(recipe.chef?.email ?? "")
-                                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                                    }
-                                }
+                VStack(spacing: 8) {
+                    
+                    Spacer(minLength: UIScreen.main.bounds.height * 0.4)
+                    
+                    VStack{
+                        Button {
+                            if let chef = recipe.chef {
+                                router.push(.chefdetails(chef: chef))
                             }
+                        } label: {
+                            HStack(alignment: .center, spacing: 16) {
+                                var avatar: String {
+                                    if "\( recipe.chef?.avatar ?? "")".starts(with: "http") {
+                                        return recipe.chef?.avatar ?? ""
+                                    }
+                                    else {
+                                        return "\(Constants.BASE_URL)\( recipe.chef?.avatar ?? "")"
+                                    }
+                                }
 
-                            Spacer()
-
-                            Button {
-                                recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
-                                recipeDetailsViewModels.updateDialogEntity(
-                                    value: DialogEntity(
-                                        title: "Coming soon.",
-                                        message:
-                                            "Follow your favorite chefs to get notified about"
-                                            + "new recipes and exclusive offers is coming soon.",
-                                        icon: "",
-                                        confirmButtonText: "",
-                                        dismissButtonText: "Okay",
-                                        onConfirm: {
-                                            recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
-                                        },
-                                        onDismiss: {
-                                            recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
-                                        }
-                                    )
+                                CustomImageView(
+                                    url: avatar,
+                                    width: 64,
+                                    height: 64
                                 )
-                            } label: {
-                                HStack {
-                                    Text("Follow")
-                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
+                                .clipShape(Circle())
 
-                                    Image(systemName: "plus")
+                                VStack(alignment: .leading, spacing: 4) {
+
+                                    Text(recipe.chef?.name ?? "")
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                    
+                                    Text("View Profile & Recipes")
+                                        .font(.callout)
                                 }
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 6)
-                                .background(.ultraThinMaterial)
-                                .cornerRadius(Guidelines.cornerRadius)
+                                .foregroundColor(.white)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .imageScale(.small)
+                                    .foregroundColor(.white)
+                                
                             }
-                            .foregroundColor(.white)
                         }
-                        .padding()
-                        .padding(.bottom)
+                        .buttonStyle(.plain)
+                        .padding(Guidelines.horizontalPadding)
                         .background(.ultraThinMaterial)
-                    }
+                        .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
 
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Text(recipe.name)
-                                .font(.custom("\(LocalState.selectedFontPrefix)-SemiBold", size: 17))
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.theme.blackAndWhite)
+                        VStack(alignment: .leading, spacing: 32) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text(recipe.name)
+                                        .font(.title)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white)
 
-                            Spacer()
+                                    Spacer()
 
-                            Button {
-                                Task { await onTapDelete()  }
-                            } label: {
-                                Image(systemName: recipeDetailsViewModels.isInFavourite ? "heart.fill" : "heart")
-                                    .foregroundColor(Color.theme.primaryColor)
-                                    .padding(5)
-                            }
-                            .confirmationDialog("Remove from favourites", isPresented: $isShowDeleteDialog) {
-                                Button("Remove", role: .destructive){
-                                    Task{ await removeFromFavourites() }
+                                    Button {
+                                        Task { await onTapDelete()  }
+                                    } label: {
+                                        Image(systemName: recipeDetailsViewModels.isInFavourite ? "heart.fill" : "heart")
+                                            .foregroundColor(Color.theme.primaryColor)
+                                            .padding(4)
+                                    }
+                                    .confirmationDialog("Remove from favourites", isPresented: $isShowDeleteDialog) {
+                                        Button("Remove", role: .destructive){
+                                            Task{ await removeFromFavourites() }
+                                        }
+                                    } message: {
+                                        Text("Are you sure you wish to remove this item from favourites ?")
+                                    }
+                                    .dialogIcon(Image("trash"))
+                                    .dialogSuppressionToggle(isSuppressed: $isDeleteSuppressed)
+
                                 }
-                            } message: {
-                                Text("Are you sure you wish to remove this item from favourites ?")
+                                
+                                Text(recipe.description)
+                                    .font(.callout)
+                                    .foregroundColor(.white)
                             }
-                            .dialogIcon(Image("trash"))
-                            .dialogSuppressionToggle(isSuppressed: $isDeleteSuppressed)
-
+                            
+                            HStack(spacing: 8) {
+                                statTile(icon: "list.bullet", value: "\(recipe.ingredients.count)", label: "Ingredients")
+                                statTile(icon: "checklist", value: "\(recipe.inststuctionsList.count)", label: "Steps")
+                            }
                         }
+                        .padding(Guidelines.horizontalPadding)
+                        .background(.ultraThinMaterial)
+                        .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack(alignment: .lastTextBaseline ,spacing: 4) {
+                                Text("Ingredients")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
 
-                        Text(recipe.description)
-                            .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                            .foregroundColor(.secondary)
+                                Text("(\(recipe.ingredients.count))")
+                                    .font(.caption)
 
-                        HStack {
-                            Text("Ingredients")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
-                                .foregroundColor(Color.theme.blackAndWhite)
+                                Spacer()
 
-                            Text("(\(recipe.ingredients.count))")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                                .foregroundColor(Color.theme.primaryColor)
-                        }
+                            }
+                            
+                            VStack(spacing: 8) {
+                                if recipe.ingredients.count > 3 {
+                                    VStack(spacing: 8) {
 
-                        VStack(spacing: 12) {
-                            if recipe.ingredients.count > 3 {
-                                VStack(spacing: 2) {
+                                        let recipes = recipe.ingredients.prefix(recipeDetailsViewModels.isShowAllItems ? recipe.ingredients.count : 3 )
+                                        
+                                        ForEach( recipes, id: \.self ) { ingredient in
+                                            IngredientRow(
+                                                ingredient: ingredient,
+                                                onTapIngredient: { ingredient in
+                                                    withAnimation(.spring()) {
+                                                        recipeDetailsViewModels.updateIsIngredientImage(
+                                                            value: ingredient.image
+                                                        )
+                                                        recipeDetailsViewModels.updateIsShowIngredientImageOverlay(
+                                                            value: true
+                                                        )
+                                                    }
+                                                }
+                                            )
+                                        }
 
-                                    ForEach(
-                                        recipe.ingredients.prefix(
-                                            recipeDetailsViewModels.isShowAllItems ? recipe.ingredients.count : 3
-                                        ),
-                                        id: \.self
-                                    ) { ingredient in
+                                        HStack {
+                                            Spacer()
+                                            Text(
+                                                recipeDetailsViewModels.isShowAllItems
+                                                    ? "...show less" : "...\(recipe.ingredients.count - 3) more items"
+                                            )
+                                            .font(.body)
+                                            .foregroundColor(Color.theme.primaryColor)
+                                            .padding(.vertical)
+                                            .onTapGesture {
+                                                recipeDetailsViewModels.isShowAllItems.toggle()
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    ForEach(recipe.ingredients, id: \.self) { ingredient in
                                         IngredientRow(
                                             ingredient: ingredient,
                                             onTapIngredient: { ingredient in
                                                 withAnimation(.spring()) {
-                                                    recipeDetailsViewModels.updateIsIngredientImage(
-                                                        value: ingredient.image
-                                                    )
-                                                    recipeDetailsViewModels.updateIsShowIngredientImageOverlay(
-                                                        value: true
-                                                    )
+                                                    recipeDetailsViewModels.updateIsIngredientImage(value: ingredient.image)
+                                                    recipeDetailsViewModels.updateIsShowIngredientImageOverlay(value: true)
                                                 }
                                             }
                                         )
                                     }
+                                }
+                            }
 
-                                    HStack {
-                                        Spacer()
-                                        Text(
-                                            recipeDetailsViewModels.isShowAllItems
-                                                ? "...show less" : "...\(recipe.ingredients.count - 3) more items"
-                                        )
-                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 17))
-                                        .foregroundColor(Color.theme.primaryColor)
-                                        .padding(.vertical)
-                                        .onTapGesture {
-                                            recipeDetailsViewModels.isShowAllItems.toggle()
-                                        }
+                        }
+                        .foregroundStyle(.white)
+                        .padding(Guidelines.horizontalPadding)
+                        .background(.ultraThinMaterial)
+                        .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack(alignment: .lastTextBaseline ,spacing: 4) {
+                                Text("Instructions")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+
+                                Text("(\(recipe.inststuctionsList.count))")
+                                    .font(.caption)
+
+                                Spacer()
+
+                            }
+                            
+                            VStack(spacing: 8) {
+                                ForEach(Array(recipe.inststuctionsList.enumerated()), id: \.offset) { index, instruction in
+                                    
+                                    HStack(alignment: .top, spacing: 8) {
+                                        Text("\(index + 1)")
+                                            .font(.subheadline.weight(.bold))
+                                            .foregroundStyle(.white)
+                                            .padding(12)
+                                            .background(Color.white.opacity(0.2), in: Circle())
+                                        
+                                        Text(instruction)
+                                            .font(.body)
+                                            .foregroundColor(.white)
+                                            .lineSpacing(4)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.top, 2)
+                                    }
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 12)
+                                    
+                                    if index < recipe.inststuctionsList.count - 1 {
+                                        Divider()
+                                            .background(.white)
+                                            .padding(.leading, 56)
                                     }
                                 }
                             }
-                            else {
-                                ForEach(recipe.ingredients, id: \.self) { ingredient in
-                                    IngredientRow(
-                                        ingredient: ingredient,
-                                        onTapIngredient: { ingredient in
-                                            withAnimation(.spring()) {
-                                                recipeDetailsViewModels.updateIsIngredientImage(value: ingredient.image)
-                                                recipeDetailsViewModels.updateIsShowIngredientImageOverlay(value: true)
-                                            }
-                                        }
-                                    )
-                                }
-                            }
+
                         }
-
-                        VStack {
-                            Text("Instructions")
-                                .font(.custom("\(LocalState.selectedFontPrefix)-Bold", size: 17))
-                                .foregroundColor(Color.theme.blackAndWhite)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-
-                            ForEach(Array(recipe.inststuctionsList.enumerated()), id: \.element) { index, instruction in
-                                HStack(alignment: .top) {
-                                    Text("\(index + 1)).")
-                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                                        .foregroundColor(Color.theme.blackAndWhite)
-                                        .frame(width: 24, alignment: .leading)
-
-                                    Text(instruction)
-                                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                                        .foregroundColor(Color.theme.blackAndWhite)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        }
+                        .foregroundStyle(.white)
+                        .padding(Guidelines.horizontalPadding)
+                        .background(.ultraThinMaterial)
+                        .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
                     }
-                    .padding()
-                    .background(Color.theme.whiteAndBlack)
-                    .cornerRadius(Guidelines.cornerRadius)
-                    .offset(y: -24)
-                    .padding(.bottom, -24)
+                    .padding(Guidelines.horizontalPadding/2)
+                    .background {
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                    .fill(Color.black.opacity(0.5))
+                            )
+                            .blur(radius: 15)
+                    }
                 }
             }
         }
+        .background(
+            CustomImageView(
+                url: recipe.image,
+                width: .infinity,
+                height: .infinity
+            )
+        )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -336,6 +350,45 @@ struct RecipeDetailsView: View {
             }
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
+    }
+    
+    func statTile(icon: String, value: String, label: String) -> some View {
+          VStack(spacing: 4) {
+              
+              Image(systemName: icon)
+                  .font(.title3)
+
+              Text(value)
+                  .font(.system(.title, design: .rounded, weight: .bold))
+              
+              Text(label)
+                  .font(.caption)
+          }
+          .foregroundStyle(.white)
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 16)
+          .background(Color.white.opacity(0.2), in: RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous))
+      }
+    
+    func onTapFollow(){
+        recipeDetailsViewModels.updateIsShowAlertDialog(value: true)
+        recipeDetailsViewModels.updateDialogEntity(
+            value: DialogEntity(
+                title: "Coming soon.",
+                message:
+                    "Follow your favorite chefs to get notified about"
+                    + "new recipes and exclusive offers is coming soon.",
+                icon: "",
+                confirmButtonText: "",
+                dismissButtonText: "Okay",
+                onConfirm: {
+                    recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                },
+                onDismiss: {
+                    recipeDetailsViewModels.updateIsShowAlertDialog(value: false)
+                }
+            )
+        )
     }
 
     func shareRecipeAsPDF() async {
@@ -538,8 +591,10 @@ struct RecipeDetailsView: View {
 
 #Preview {
     if let recipe = RecipeModel.dummyList.first {
-        RecipeDetailsView(recipe: recipe)
-            .environmentObject(Router())
+        NavigationStack{
+            RecipeDetailsView(recipe: recipe)
+                .environmentObject(Router())
+        }
     }
 
 }

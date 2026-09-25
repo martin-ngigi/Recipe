@@ -28,34 +28,32 @@ struct IngredientRow: View {
                     width: 60,
                     height: 60
                 )
-                .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
+                .clipShape(.rect(cornerRadius: Guidelines.cornerRadius/2))
 
                 VStack(alignment: .leading) {
                     Text(ingredient.name)
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Medium", size: 17))
-                        .foregroundColor(.primary)
+                        .font(.headline)
 
                     Text(ingredient.quantity)
-                        .font(.custom("\(LocalState.selectedFontPrefix)-Light", size: 14))
-                        .foregroundColor(.gray)
+                        .font(.caption)
+                        .multilineTextAlignment(.leading)
                 }
+                .foregroundColor(.white)
 
                 Spacer()
-
             }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(Guidelines.cornerRadius)
         }
+        .padding(8)
     }
 }
 
 #Preview {
     IngredientRow(
-        ingredient: RecipeModel.dummyList[0].ingredients[0],
+        ingredient: RecipeModel.dummyList[0].ingredients[2],
         onTapIngredient: { _ in
 
         }
     )
+    .background(Color(.systemGray))
     .padding()
 }

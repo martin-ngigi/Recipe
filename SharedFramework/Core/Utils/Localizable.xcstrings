@@ -53,9 +53,6 @@
     "%lld sales" : {
 
     },
-    "%lld)." : {
-
-    },
     "⭐️ %@" : {
 
     },
@@ -192,9 +189,6 @@
 
     },
     "Flag" : {
-
-    },
-    "Follow" : {
 
     },
     "Font" : {
@@ -470,6 +464,9 @@
 
     },
     "Vertical Translation Animation" : {
+
+    },
+    "View Profile & Recipes" : {
 
     },
     "WhatsApp" : {
