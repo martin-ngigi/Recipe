@@ -14,6 +14,7 @@
 import SwiftUI
 
 struct ImageOverlay: View {
+
     var title: String?
     var image: String
     var imageWidth: Double = .infinity
@@ -21,48 +22,70 @@ struct ImageOverlay: View {
     var description: String?
     var onDismiss: () -> Void
 
+    private let cornerRadius = Guidelines.cornerRadius
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.8)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
                 .onTapGesture {
                     onDismiss()
                 }
 
-            VStack(spacing: 20) {
-                if let title = title {
+            VStack(spacing: 0) {
+                if let title {
                     Text(title)
                         .font(.appTitle2)
                         .fontWeight(.semibold)
+                        .padding(.horizontal)
                         .padding(.top, 20)
+                        .padding(.bottom, 20)
                 }
 
                 CustomImageView(
                     url: image,
-                    width: imageWidth,
+                    width: .infinity,
                     height: imageHeight
                 )
+                .frame(maxWidth: .infinity)
+                .frame(height: imageHeight)
+                .clipped()
+                .mask {
+                    RoundedRectangle(
+                        cornerRadius: cornerRadius,
+                        style: .continuous
+                    )
+                }
 
-                if let description = description {
+                if let description {
                     Text(description)
                         .font(.appBody)
                         .foregroundColor(.secondary)
                         .lineLimit(3)
+                        .padding()
                 }
             }
-            .background(Color.theme.whiteAndBlack)
-            // .cornerRadius(11)
-            .clipShape(RoundedRectangle(cornerRadius: Guidelines.cornerRadius))
             .frame(maxWidth: UIScreen.main.bounds.width * 0.94)
-            .clipped()
-            .overlay(
-                RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
-                    .stroke(Color.theme.primaryColor, lineWidth: 1)
+            .background(Color.theme.whiteAndBlack)
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: cornerRadius,
+                    style: .continuous
+                )
             )
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: cornerRadius,
+                    style: .continuous
+                )
+                .stroke(
+                    Color.theme.primaryColor,
+                    lineWidth: 1
+                )
+            }
+            .shadow(radius: 8)
             .padding()
-            .shadow(radius: 10)
         }
-
     }
 }
 

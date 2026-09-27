@@ -265,6 +265,7 @@ struct RecipeDetailsView: View {
                 width: .infinity,
                 height: .infinity
             )
+            .ignoresSafeArea()
         )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -315,7 +316,8 @@ struct RecipeDetailsView: View {
                 recipe: recipe
             )
         }
-        .edgesIgnoringSafeArea(.top)
+        //.edgesIgnoringSafeArea(.top)
+        .ignoresSafeArea()
         .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $recipeDetailsViewModels.isShowOpenShareSheet) {
             ShareSheetView(
