@@ -22,20 +22,21 @@ struct IngredientRow: View {
         Button {
             onTapIngredient(ingredient)
         } label: {
-            HStack {
+            HStack (alignment: .top, spacing: 16){
                 CustomImageView(
                     url: ingredient.image,
-                    width: 60,
-                    height: 60
+                    width: 64,
+                    height: 64
                 )
                 .clipShape(.rect(cornerRadius: Guidelines.cornerRadius/2))
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(ingredient.name)
+                        .multilineTextAlignment(.leading)
                         .font(.headline)
 
                     Text(ingredient.quantity)
-                        .font(.caption)
+                        .font(.callout)
                         .multilineTextAlignment(.leading)
                 }
                 .foregroundColor(.white)
@@ -43,17 +44,18 @@ struct IngredientRow: View {
                 Spacer()
             }
         }
-        .padding(8)
     }
 }
 
 #Preview {
     IngredientRow(
-        ingredient: RecipeModel.dummyList[0].ingredients[2],
+        ingredient: RecipeModel.dummyList[0].ingredients[3],
         onTapIngredient: { _ in
 
         }
     )
+    .padding(Guidelines.horizontalPadding)
     .background(Color(.systemGray))
+    .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
     .padding()
 }

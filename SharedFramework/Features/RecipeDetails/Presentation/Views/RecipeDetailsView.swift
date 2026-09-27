@@ -30,6 +30,8 @@ struct RecipeDetailsView: View {
                     Spacer(minLength: UIScreen.main.bounds.height * 0.4)
                     
                     VStack{
+                        
+                        // Chef Banner
                         Button {
                             if let chef = recipe.chef {
                                 router.push(.chefdetails(chef: chef))
@@ -55,8 +57,8 @@ struct RecipeDetailsView: View {
                                 VStack(alignment: .leading, spacing: 4) {
 
                                     Text(recipe.chef?.name ?? "")
-                                        .font(.title2)
-                                        .fontWeight(.semibold)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
                                     
                                     Text("View Profile & Recipes")
                                         .font(.callout)
@@ -76,12 +78,13 @@ struct RecipeDetailsView: View {
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
 
+                        // Title and description
                         VStack(alignment: .leading, spacing: 32) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
                                     Text(recipe.name)
-                                        .font(.title)
-                                        .fontWeight(.semibold)
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
 
                                     Spacer()
@@ -100,7 +103,6 @@ struct RecipeDetailsView: View {
                                     } message: {
                                         Text("Are you sure you wish to remove this item from favourites ?")
                                     }
-                                    .dialogIcon(Image("trash"))
                                     .dialogSuppressionToggle(isSuppressed: $isDeleteSuppressed)
 
                                 }
@@ -112,18 +114,19 @@ struct RecipeDetailsView: View {
                             
                             HStack(spacing: 8) {
                                 statTile(icon: "list.bullet", value: "\(recipe.ingredients.count)", label: "Ingredients")
-                                statTile(icon: "checklist", value: "\(recipe.inststuctionsList.count)", label: "Steps")
+                                statTile(icon: "checklist", value: "\(recipe.inststuctionsList.count)", label: "Instructions")
                             }
                         }
                         .padding(Guidelines.horizontalPadding)
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
                         
+                        // Ingredients
                         VStack(alignment: .leading, spacing: 8) {
                             HStack(alignment: .lastTextBaseline ,spacing: 4) {
                                 Text("Ingredients")
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                                    .fontWeight(.bold)
 
                                 Text("(\(recipe.ingredients.count))")
                                     .font(.caption)
@@ -138,7 +141,7 @@ struct RecipeDetailsView: View {
 
                                         let recipes = recipe.ingredients.prefix(recipeDetailsViewModels.isShowAllItems ? recipe.ingredients.count : 3 )
                                         
-                                        ForEach( recipes, id: \.self ) { ingredient in
+                                        ForEach(Array(recipes.enumerated()), id: \.offset) { index, ingredient in
                                             IngredientRow(
                                                 ingredient: ingredient,
                                                 onTapIngredient: { ingredient in
@@ -152,8 +155,15 @@ struct RecipeDetailsView: View {
                                                     }
                                                 }
                                             )
-                                        }
+                                            .padding(.vertical, 8)
 
+                                            if index < recipes.count - 1 {
+                                                Divider()
+                                                    .background(.white)
+                                                    .padding(.leading, 80)
+                                            }
+                                        }
+                                        
                                         HStack {
                                             Spacer()
                                             Text(
@@ -162,7 +172,6 @@ struct RecipeDetailsView: View {
                                             )
                                             .font(.body)
                                             .foregroundColor(Color.theme.primaryColor)
-                                            .padding(.vertical)
                                             .onTapGesture {
                                                 recipeDetailsViewModels.isShowAllItems.toggle()
                                             }
@@ -170,7 +179,8 @@ struct RecipeDetailsView: View {
                                     }
                                 }
                                 else {
-                                    ForEach(recipe.ingredients, id: \.self) { ingredient in
+                                    ForEach(Array(recipe.ingredients.enumerated()), id: \.offset) { index, ingredient in
+
                                         IngredientRow(
                                             ingredient: ingredient,
                                             onTapIngredient: { ingredient in
@@ -206,7 +216,7 @@ struct RecipeDetailsView: View {
                             VStack(spacing: 8) {
                                 ForEach(Array(recipe.inststuctionsList.enumerated()), id: \.offset) { index, instruction in
                                     
-                                    HStack(alignment: .top, spacing: 8) {
+                                    HStack(alignment: .top, spacing: 16) {
                                         Text("\(index + 1)")
                                             .font(.subheadline.weight(.bold))
                                             .foregroundStyle(.white)
@@ -220,13 +230,12 @@ struct RecipeDetailsView: View {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.top, 2)
                                     }
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 12)
+                                    .padding(.vertical, 8)
                                     
                                     if index < recipe.inststuctionsList.count - 1 {
                                         Divider()
                                             .background(.white)
-                                            .padding(.leading, 56)
+                                            .padding(.leading, 48)
                                     }
                                 }
                             }
@@ -350,24 +359,32 @@ struct RecipeDetailsView: View {
             }
         }
         .toastView(toast: $recipeDetailsViewModels.toast)
+        .preferredColorScheme(.dark)
     }
     
     func statTile(icon: String, value: String, label: String) -> some View {
-          VStack(spacing: 4) {
-              
-              Image(systemName: icon)
-                  .font(.title3)
+        HStack(alignment: .lastTextBaseline){
+            
+            Text(value)
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+            
+            VStack(alignment: .leading, spacing: 2) {
+                
+                Image(systemName: icon)
+                    .font(.caption)
 
-              Text(value)
-                  .font(.system(.title, design: .rounded, weight: .bold))
-              
-              Text(label)
-                  .font(.caption)
-          }
-          .foregroundStyle(.white)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 16)
-          .background(Color.white.opacity(0.2), in: RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous))
+                Text(label)
+                    .font(.caption)
+            }
+            
+            Spacer()
+        }
+        
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 32)
+        .padding(.horizontal, 16)
+        .background(Color.white.opacity(0.2), in: RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous))
       }
     
     func onTapFollow(){
