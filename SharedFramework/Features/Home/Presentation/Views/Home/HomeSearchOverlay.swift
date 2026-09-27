@@ -98,8 +98,8 @@ struct HomeSearchOverlay: View {
         onSearchTextChange: { _ in
 
         },
-        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapRecipe: { _ in
 
         },

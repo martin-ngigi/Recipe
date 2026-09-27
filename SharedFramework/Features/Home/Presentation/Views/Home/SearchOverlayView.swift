@@ -20,6 +20,7 @@ struct SearchOverlayView: View {
     var chefs: [UserModel]
     var onTapRecipe: (RecipeModel) -> Void
     var onTapChef: (UserModel) -> Void
+    @Namespace var namespace
 
     private let itemsPerPage = 2
 
@@ -63,12 +64,11 @@ struct SearchOverlayView: View {
                     }
                     else {
                         ForEach(paginatedItems(for: chefs, page: chefPage), id: \.self) { chef in
-                            PopularChefRow(
-                                chef: chef,
-                                onTap: { chef in
-                                    onTapChef(chef)
-                                }
-                            )
+                            Button{
+                                onTapChef(chef)
+                            } label: {
+                                PopularChefRow(chef: chef, namespace: namespace)
+                            }
                         }
 
                     }
@@ -131,8 +131,8 @@ struct SearchOverlayView: View {
     SearchOverlayView(
         recipePage: .constant(0),
         chefPage: .constant(0),
-        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapRecipe: { _ in
 
         },
@@ -146,8 +146,8 @@ struct SearchOverlayView: View {
     SearchOverlayView(
         recipePage: .constant(0),
         chefPage: .constant(0),
-        recipes: HomeResponseModel.sampleData?.data.trendingRecipes ?? [],
-        chefs: HomeResponseModel.sampleData?.data.popularChefs ?? [],
+        recipes: HomeResponseModel.mockData?.data.trendingRecipes ?? [],
+        chefs: HomeResponseModel.mockData?.data.popularChefs ?? [],
         onTapRecipe: { _ in
 
         },

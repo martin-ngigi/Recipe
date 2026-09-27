@@ -32,7 +32,7 @@ struct UserApp: App {
                 .modelContainer(for: [RecipeSwiftData.self])
                 .modelContainer(for: [IngredientSwiftData.self])
                 .frame(minWidth: 375.0, minHeight: 375.0)
-                // Keeps the current window's size for use in scrolling header calculations.
+            // Keeps the current window's size for use in scrolling header calculations.
                 .onGeometryChange(for: CGSize.self) { geometry in
                     geometry.size
                 } action: {
