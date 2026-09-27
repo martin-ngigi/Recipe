@@ -98,7 +98,7 @@
     "Are you sure you want to empty the trash?" : {
 
     },
-    "Are you sure you wish to remove this item from favourites ?" : {
+    "Are you sure you wish to remove %@ from favourites ?" : {
 
     },
     "Are you sure?" : {

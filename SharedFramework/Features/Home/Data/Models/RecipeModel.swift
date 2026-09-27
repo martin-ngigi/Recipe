@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 27/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeModel.swift
 //  Recipe
@@ -7,6 +13,8 @@
 
 import Foundation
 import SwiftData
+import CoreTransferable
+import SwiftUI // Image
 
 @Model
 class RecipeSwiftData {
@@ -68,7 +76,7 @@ class RecipeSwiftData {
     deinit {}
 }
 
-struct RecipeModel: Codable, Hashable {
+struct RecipeModel: Codable, Hashable, Transferable {
 
     enum CodingKeys: String, CodingKey {
         case openId = "open_id"
@@ -114,5 +122,20 @@ struct RecipeModel: Codable, Hashable {
         // self.chef = userModel
         self.chef = nil
         self.isInFavorite = swiftData.isInFavorite
+    }
+    
+    var thumbnailImageName: String {
+        if image.lowercased().hasPrefix("http") { return image }
+        return "\(Constants.BASE_URL)\(image)"
+    }
+
+    static var transferRepresentation: some TransferRepresentation {
+        ProxyRepresentation {
+            Image($0.thumbnailImageName)
+        }
+    }
+    
+    var sharePreview: SharePreview<Never, Image> {
+        SharePreview(name, icon: Image(thumbnailImageName))
     }
 }

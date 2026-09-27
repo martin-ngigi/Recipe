@@ -252,8 +252,8 @@ struct RecipeDetailsView: View {
         .toolbar {
             
             ToolbarSpacer(.flexible)
-            
-            ToolbarItem {
+                        
+            ToolbarItemGroup {
                 Button {
                     Task { await onTapFavourite()  }
                 } label: {
@@ -271,7 +271,14 @@ struct RecipeDetailsView: View {
                         Task{ await removeFromFavourites() }
                     }
                 } message: {
-                    Text("Are you sure you wish to remove this item from favourites ?")
+                    Text("Are you sure you wish to remove \(recipe.name) from favourites ?")
+                }
+                
+                //ShareLink(item: recipe, preview: recipe.sharePreview)
+                Button {
+                    Task { await shareRecipeAsPDF() }
+                } label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
                 }
             }
             
