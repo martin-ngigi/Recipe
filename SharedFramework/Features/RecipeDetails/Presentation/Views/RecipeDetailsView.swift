@@ -20,7 +20,8 @@ struct RecipeDetailsView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @StateObject var recipeDetailsViewModels = RecipeDetailsViewModels()
     @State var isShowDeleteDialog = false
-
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             if let recipe = recipeDetailsViewModels.recipe {
@@ -58,23 +59,35 @@ struct RecipeDetailsView: View {
                                     Text(recipe.chef?.name ?? "")
                                         .font(.title3)
                                         .fontWeight(.bold)
-                                    
+                                        .foregroundColor(.primary)
+
                                     Text("View Profile & Recipes")
                                         .font(.callout)
+                                        .foregroundColor(.secondary)
                                 }
-                                .foregroundColor(.white)
                                 
                                 Spacer()
                                 
                                 Image(systemName: "chevron.right")
                                     .imageScale(.small)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.secondary)
                                 
                             }
                         }
                         .buttonStyle(.plain)
                         .padding(Guidelines.horizontalPadding)
-                        .background(.ultraThinMaterial)
+                        .background {
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                .fill(.thinMaterial)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                        .fill(
+                                            colorScheme == .dark
+                                            ? Color.black.opacity(0.40)
+                                            : Color.white.opacity(0.55)
+                                        )
+                                }
+                        }
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
 
                         // Title and description
@@ -84,14 +97,14 @@ struct RecipeDetailsView: View {
                                     Text(recipe.name)
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.primary)
 
                                     Spacer()
                                 }
                                 
                                 Text(recipe.description)
                                     .font(.callout)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.primary)
                             }
                             
                             HStack(spacing: 8) {
@@ -100,18 +113,31 @@ struct RecipeDetailsView: View {
                             }
                         }
                         .padding(Guidelines.horizontalPadding)
-                        .background(.ultraThinMaterial)
+                        .background {
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                .fill(.thinMaterial)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                        .fill(
+                                            colorScheme == .dark
+                                            ? Color.black.opacity(0.40)
+                                            : Color.white.opacity(0.55)
+                                        )
+                                }
+                        }
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
                         
                         // Ingredients
                         VStack(alignment: .leading, spacing: 8) {
                             HStack(alignment: .lastTextBaseline ,spacing: 4) {
                                 Text("Ingredients")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
 
                                 Text("(\(recipe.ingredients.count))")
-                                    .font(.caption)
+                                    .font(.callout)
+                                    .foregroundColor(.secondary)
 
                                 Spacer()
 
@@ -141,7 +167,7 @@ struct RecipeDetailsView: View {
 
                                             if index < recipes.count - 1 {
                                                 Divider()
-                                                    .background(.white)
+                                                    .foregroundColor(.secondary)
                                                     .padding(.leading, 80)
                                             }
                                         }
@@ -177,9 +203,19 @@ struct RecipeDetailsView: View {
                             }
 
                         }
-                        .foregroundStyle(.white)
                         .padding(Guidelines.horizontalPadding)
-                        .background(.ultraThinMaterial)
+                        .background {
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                .fill(.thinMaterial)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                        .fill(
+                                            colorScheme == .dark
+                                            ? Color.black.opacity(0.40)
+                                            : Color.white.opacity(0.55)
+                                        )
+                                }
+                        }
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
                         
                         VStack(alignment: .leading, spacing: 8) {
@@ -187,9 +223,11 @@ struct RecipeDetailsView: View {
                                 Text("Instructions")
                                     .font(.title2)
                                     .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
 
                                 Text("(\(recipe.inststuctionsList.count))")
-                                    .font(.caption)
+                                    .font(.callout)
+                                    .foregroundColor(.secondary)
 
                                 Spacer()
 
@@ -203,11 +241,11 @@ struct RecipeDetailsView: View {
                                             .font(.subheadline.weight(.bold))
                                             .foregroundStyle(.white)
                                             .padding(12)
-                                            .background(Color.white.opacity(0.2), in: Circle())
+                                            .background(Color.primary.opacity(0.2), in: Circle())
                                         
                                         Text(instruction)
                                             .font(.body)
-                                            .foregroundColor(.white)
+                                            .foregroundColor(.primary)
                                             .lineSpacing(4)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.top, 2)
@@ -216,7 +254,7 @@ struct RecipeDetailsView: View {
                                     
                                     if index < recipe.inststuctionsList.count - 1 {
                                         Divider()
-                                            .background(.white)
+                                            .foregroundColor(.secondary)
                                             .padding(.leading, 48)
                                     }
                                 }
@@ -225,19 +263,21 @@ struct RecipeDetailsView: View {
                         }
                         .foregroundStyle(.white)
                         .padding(Guidelines.horizontalPadding)
-                        .background(.ultraThinMaterial)
+                        .background {
+                            RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                .fill(.thinMaterial)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
+                                        .fill(
+                                            colorScheme == .dark
+                                            ? Color.black.opacity(0.40)
+                                            : Color.white.opacity(0.55)
+                                        )
+                                }
+                        }
                         .clipShape(.rect(cornerRadius: Guidelines.cornerRadius))
                     }
                     .padding(Guidelines.horizontalPadding/2)
-                    .background {
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(.ultraThinMaterial)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous)
-                                    .fill(Color.black.opacity(0.5))
-                            )
-                            .blur(radius: 15)
-                    }
                 }
             }
         }
@@ -380,33 +420,46 @@ struct RecipeDetailsView: View {
                 isPresented: $recipeDetailsViewModels.states.isPopNotificationPresented
             )
         }
-        .preferredColorScheme(.dark)
     }
     
-    func statTile(icon: String, value: String, label: String) -> some View {
-        HStack(alignment: .lastTextBaseline){
-            
+    func statTile( icon: String, value: String, label: String) -> some View {
+
+        HStack(alignment: .bottom, spacing: 16) {
             Text(value)
                 .font(.system(.largeTitle, design: .rounded, weight: .bold))
-            
+                .scaleEffect(52 / UIFont.preferredFont(forTextStyle: .largeTitle).pointSize)
+                .foregroundStyle(.primary)
+
             VStack(alignment: .leading, spacing: 2) {
-                
                 Image(systemName: icon)
-                    .font(.caption)
+                    .font(.callout)
 
                 Text(label)
-                    .font(.caption)
+                    .font(.callout)
             }
-            
-            Spacer()
+            .foregroundStyle(.secondary)
         }
-        
-        .foregroundStyle(.white)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
         .padding(.vertical, 32)
         .padding(.horizontal, 16)
-        .background(Color.white.opacity(0.2), in: RoundedRectangle(cornerRadius: Guidelines.cornerRadius, style: .continuous))
-      }
+        .background {
+            RoundedRectangle(
+                cornerRadius: Guidelines.cornerRadius,
+                style: .continuous
+            )
+            .fill(.regularMaterial)
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: Guidelines.cornerRadius,
+                    style: .continuous
+                )
+                .stroke(
+                    Color.white.opacity(colorScheme == .dark ? 0.12 : 0.45),
+                    lineWidth: 0.5
+                )
+            }
+        }
+    }
     
     func onTapFollow(){
         recipeDetailsViewModels.updateIsShowAlertDialog(value: true)

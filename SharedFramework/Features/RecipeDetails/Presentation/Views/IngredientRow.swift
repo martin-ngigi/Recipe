@@ -39,11 +39,11 @@ struct IngredientRow: View {
                         .font(.callout)
                         .multilineTextAlignment(.leading)
                 }
-                .foregroundColor(.white)
 
                 Spacer()
             }
         }
+        .buttonStyle(.plain)
     }
 }
 
