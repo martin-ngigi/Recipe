@@ -20,10 +20,9 @@ struct RecipeDetailsView: View {
     @StateObject var favouriteRecipesViewModel = FavouriteRecipesViewModel()
     @StateObject var recipeDetailsViewModels = RecipeDetailsViewModels()
     @State var isShowDeleteDialog = false
-    @State var isDeleteSuppressed = false
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             if let recipe = recipeDetailsViewModels.recipe {
                 VStack(spacing: 8) {
                     
@@ -88,23 +87,6 @@ struct RecipeDetailsView: View {
                                         .foregroundColor(.white)
 
                                     Spacer()
-
-                                    Button {
-                                        Task { await onTapDelete()  }
-                                    } label: {
-                                        Image(systemName: recipeDetailsViewModels.isInFavourite ? "heart.fill" : "heart")
-                                            .foregroundColor(Color.theme.primaryColor)
-                                            .padding(4)
-                                    }
-                                    .confirmationDialog("Remove from favourites", isPresented: $isShowDeleteDialog) {
-                                        Button("Remove", role: .destructive){
-                                            Task{ await removeFromFavourites() }
-                                        }
-                                    } message: {
-                                        Text("Are you sure you wish to remove this item from favourites ?")
-                                    }
-                                    .dialogSuppressionToggle(isSuppressed: $isDeleteSuppressed)
-
                                 }
                                 
                                 Text(recipe.description)
@@ -268,9 +250,35 @@ struct RecipeDetailsView: View {
             .ignoresSafeArea()
         )
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            
+            ToolbarSpacer(.flexible)
+            
+            ToolbarItem {
+                Button {
+                    Task { await onTapFavourite()  }
+                } label: {
+                    if favouriteRecipesViewModel.fetchFavouriteState == .isLoading {
+                        ProgressView()
+                    }
+                    else {
+                        let isInFavourite = recipeDetailsViewModels.recipe?.isInFavorite ?? false
+                        Label(isInFavourite  ? "Unfavorite" : "Favorite", systemImage: "heart")
+                            .symbolVariant(isInFavourite  ? .fill : .none)
+                    }
+                }
+                .confirmationDialog("Remove from favourites", isPresented: $isShowDeleteDialog) {
+                    Button("Remove", role: .destructive){
+                        Task{ await removeFromFavourites() }
+                    }
+                } message: {
+                    Text("Are you sure you wish to remove this item from favourites ?")
+                }
+            }
+            
+            ToolbarSpacer(.fixed)
+            
+            ToolbarItem {
                 Menu {
-                    
                     
                     Menu {
                         Section{
@@ -312,11 +320,10 @@ struct RecipeDetailsView: View {
         }
         .task {
             recipeDetailsViewModels.recipe = recipe
-            recipeDetailsViewModels.isInFavourite = await favouriteRecipesViewModel.checkIfIsInFavourites(
+            let _ = await favouriteRecipesViewModel.checkIfIsInFavourites(
                 recipe: recipe
             )
         }
-        //.edgesIgnoringSafeArea(.top)
         .ignoresSafeArea()
         .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $recipeDetailsViewModels.isShowOpenShareSheet) {
@@ -360,7 +367,12 @@ struct RecipeDetailsView: View {
                 }
             }
         }
-        .toastView(toast: $recipeDetailsViewModels.toast)
+        .overlay {
+            CustomPushNotificationView(
+                data: recipeDetailsViewModels.states.popNotificationData,
+                isPresented: $recipeDetailsViewModels.states.isPopNotificationPresented
+            )
+        }
         .preferredColorScheme(.dark)
     }
     
@@ -575,33 +587,36 @@ struct RecipeDetailsView: View {
         }
     }
     
-    func onTapDelete() async {
-        if recipeDetailsViewModels.isInFavourite {
+    func onTapFavourite() async {
+        if recipeDetailsViewModels.recipe?.isInFavorite ?? false {
             isShowDeleteDialog = true
         }
         else {
             recipeDetailsViewModels.recipe?.isInFavorite = true
             await favouriteRecipesViewModel.addRecipeToFavourite(recipe: recipe)
-            recipeDetailsViewModels.updateToast(
-                value: Toast(
-                    style: .success,
-                    message: "\(recipe.name) added to favourites."
-                )
+            recipeDetailsViewModels.updatePopNotificationData(
+                data: PopNotificationData(
+                    title: "Marked as favourite.",
+                    message:  "\(recipe.name) has been added to favourites.",
+                    type: .success
+                ),
+                isPresented: true
             )
+            
             os.Logger().log("DEBUG: Added to favourite")
         }
-        recipeDetailsViewModels.isInFavourite =
-            await favouriteRecipesViewModel.checkIfIsInFavourites(recipe: recipe)
     }
     
     func removeFromFavourites() async {
         await favouriteRecipesViewModel.deleteFavouriteRecipe(recipe: recipe)
         recipeDetailsViewModels.recipe?.isInFavorite = false
-        recipeDetailsViewModels.updateToast(
-            value: Toast(
-                style: .warning,
-                message: "\(recipe.name) removed from favourites."
-            )
+        recipeDetailsViewModels.updatePopNotificationData(
+            data: PopNotificationData(
+                title: "Unmarked as favourite.",
+                message: "\(recipe.name) removed from favourites.",
+                type: .success
+            ),
+            isPresented: true
         )
         os.Logger().log("DEBUG: Removed from favourite")
     }

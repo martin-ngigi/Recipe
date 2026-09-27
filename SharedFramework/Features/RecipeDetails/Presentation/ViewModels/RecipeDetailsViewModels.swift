@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 27/09/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  RecipeDetailsViewModels.swift
 //  Recipe
@@ -7,6 +13,11 @@
 
 import Foundation
 import Combine
+
+struct RecipeDetailsStates{
+    var popNotificationData: PopNotificationData? = nil
+    var isPopNotificationPresented: Bool = false
+}
 
 @MainActor
 class RecipeDetailsViewModels: ObservableObject {
@@ -21,7 +32,7 @@ class RecipeDetailsViewModels: ObservableObject {
 
     @Published var recipe: RecipeModel?
     @Published var isShowAllItems = false
-    @Published var isInFavourite = false
+    @Published var states  = RecipeDetailsStates()
 
     func updateDialogEntity(value: DialogEntity) {
         dialogEntity = value
@@ -37,6 +48,19 @@ class RecipeDetailsViewModels: ObservableObject {
 
     func updateToast(value: Toast?) {
         toast = value
+    }
+    
+    func updatePopNotificationData(value: PopNotificationData) {
+        states.popNotificationData = value
+    }
+    
+    func updatePopNotificationData(data: PopNotificationData, isPresented: Bool ) {
+        states.popNotificationData = data
+        states.isPopNotificationPresented = isPresented
+    }
+   
+    func updateIsPopNotificationPresented(value: Bool) {
+        states.isPopNotificationPresented = value
     }
 
     func updateShareState(value: FetchState) {

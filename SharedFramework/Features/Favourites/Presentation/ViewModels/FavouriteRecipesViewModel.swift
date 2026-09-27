@@ -29,6 +29,7 @@ class FavouriteRecipesViewModel: ObservableObject {
     @Published var dialogEntity = DialogEntity()
     @Published var isShowAlertDialog = false
     @Published var shareState = FetchState.good
+    @Published var fetchFavouriteState = FetchState.good
     @Published var toast: Toast?
     @Published var isLoading = false
     
@@ -44,13 +45,13 @@ class FavouriteRecipesViewModel: ObservableObject {
     }
 
     func fetchFavouriteRecipes() async {
-        
+        fetchFavouriteState = .isLoading
         isLoading = true
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
         
         favouriteRecipes = favouriteRecipesUseCases.executeFetchRecipes()
         favouritesListViewTitle = favouriteRecipes.isEmpty ? "Favourites" : "\(favouriteRecipes.count) Favourites"
         
+        fetchFavouriteState = .good
         isLoading = false
 
     }
