@@ -13,67 +13,97 @@
 
 import SwiftUI
 
+/// Shared layout constants for the favourites screen.
+enum FavouritesLayout {
+    static let spacing: CGFloat = 16
+    static let cornerRadius: CGFloat = 20
+    static let imageHeight: CGFloat = 200
+    /// Adaptive: one column on iPhone, multiple on iPad / landscape.
+    static let columns = [
+        GridItem(.adaptive(minimum: 320, maximum: 520), spacing: spacing, alignment: .top)
+    ]
+}
+
 struct FavouriteItemView: View {
-    var recipe: RecipeModel
-    var onTapEntireItem: (RecipeModel) -> Void
-    var onTapAddOrRemove: (RecipeModel) -> Void
+    let recipe: RecipeModel
+    var onTap: () -> Void
+    var onTapFavourite: () -> Void
 
     var body: some View {
-        Button {
-            onTapEntireItem(recipe)
-        } label: {
-            VStack(alignment: .leading, spacing: 8) {
-                CustomImageView(
-                    url: recipe.image,
-                    width: .infinity,
-                    height: 200
-                )
-                .clipped()
-                .cornerRadius(Guidelines.cornerRadius)
+        ZStack(alignment: .topTrailing) {
+            // The heart is a sibling of the card button, not nested inside it,
+            // so VoiceOver and hit-testing treat them as two separate controls.
+            Button(action: onTap) {
+                card
+            }
+            .buttonStyle(CardButtonStyle())
+            .accessibilityHint("Opens recipe details")
 
-                HStack {
-                    Text(recipe.name)
-                        .font(.headline)
-                        .lineLimit(1)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.6, alignment: .leading)
+            favouriteButton
+        }
+    }
 
-                    Spacer()
+    private var card: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            CustomImageView(
+                url: recipe.image,
+                width: .infinity,
+                height: FavouritesLayout.imageHeight
+            )
+            .frame(maxWidth: .infinity)
+            .frame(height: FavouritesLayout.imageHeight)
+            .clipped()
 
-                    Button {
-                        onTapAddOrRemove(recipe)
-                    } label: {
-                        Image(systemName: recipe.isInFavorite ?? false ? "heart.fill" : "heart")
-                            .foregroundColor(Color.theme.primaryColor)
-                            .padding(5)
-                    }
-                }
-                .foregroundColor(Color.theme.blackAndWhite)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(recipe.name)
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                    .lineLimit(2)
 
                 Text(recipe.description)
                     .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(3)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(Guidelines.cornerRadius)
-            .shadow(color: .black.opacity(0.07), radius: 4, x: 0, y: 2)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
         }
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: FavouritesLayout.cornerRadius, style: .continuous))
+        .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 2)
+        .contentShape(RoundedRectangle(cornerRadius: FavouritesLayout.cornerRadius, style: .continuous))
+    }
+
+    private var favouriteButton: some View {
+        Button(action: onTapFavourite) {
+            Image(systemName: "heart.fill")
+                .font(.body.weight(.semibold))
+                .foregroundStyle(Color.theme.primaryColor)
+                .frame(width: 44, height: 44) // HIG minimum tap target
+                .background(.ultraThinMaterial, in: Circle())
+        }
+        .buttonStyle(.plain)
+        .padding(10)
+        .accessibilityLabel("Remove \(recipe.name) from favourites")
+    }
+}
+
+private struct CardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: configuration.isPressed)
     }
 }
 
 #Preview {
     FavouriteItemView(
         recipe: RecipeModel.dummyList[0],
-        onTapEntireItem: { _ in
-
-        },
-        onTapAddOrRemove: { _ in
-
-        }
+        onTap: {},
+        onTapFavourite: {}
     )
     .padding()
+    .background(Color(.systemGroupedBackground))
     .environmentObject(ThemesViewModel())
-
 }
