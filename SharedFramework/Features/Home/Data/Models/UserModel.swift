@@ -1,3 +1,9 @@
+/*
+* Created by Martin Wainaina on 07/10/2026
+*
+* Feel free to contribute.
+*/
+
 //
 //  UserModel.swift
 //  Recipe
@@ -152,6 +158,11 @@ struct UserModel: Codable, Hashable {
         let firstInitial = components.first?.prefix(1) ?? ""
         let secondInitial = (components.count > 1 ? components[1].prefix(1) : "")
         return "\(firstInitial)\(secondInitial)".uppercased()
+    }
+    
+    var avatarName: String {
+        if avatar.starts(with: "http") { return avatar }
+        return "\(Constants.BASE_URL)\(avatar)"
     }
 
     init(

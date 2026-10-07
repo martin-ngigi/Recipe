@@ -94,8 +94,14 @@ class NetworkUtils {
     private func constructBody(request: inout URLRequest, postData: Any?) throws {
         guard let postData = postData else { return }
 
+        // construct json data — serialize dictionary
         if let dictData = postData as? [String: Any] {
-            // construct json data — serialize dictionary
+            guard JSONSerialization.isValidJSONObject(dictData) else {
+                throw EncodingError.invalidValue(
+                    dictData,
+                    EncodingError.Context(codingPath: [], debugDescription: "postData contains non-JSON-compatible values")
+                )
+            }
             request.httpBody = try JSONSerialization.data(withJSONObject: dictData, options: [])
         }
         else if let codableData = postData as? Encodable {

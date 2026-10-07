@@ -29,14 +29,6 @@ struct ChefDetailsView: View {
             VStack(alignment: .leading, spacing: 20) {
 
                 HStack(spacing: 16) {
-                    var avatar: String {
-                        if "\(chefViewModel.chef?.avatar ?? "")".starts(with: "http") {
-                            return chefViewModel.chef?.avatar ?? ""
-                        }
-                        else {
-                            return "\(Constants.BASE_URL)\(chef.avatar)"
-                        }
-                    }
 
                     Button {
                         withAnimation(.spring()) {
@@ -44,7 +36,7 @@ struct ChefDetailsView: View {
                         }
                     } label: {
                         CustomImageView(
-                            url: avatar,
+                            url: chef.avatarName,
                             width: 80,
                             height: 80
                         )
@@ -303,17 +295,9 @@ struct ChefDetailsView: View {
                     )
                 }
                 else if chefViewModel.isShowChefImageOverlay {
-                    var avatar: String {
-                        if chef.avatar.starts(with: "http") {
-                            return chef.avatar
-                        }
-                        else {
-                            return "\(Constants.BASE_URL)\(chefViewModel.chef?.avatar ?? "")"
-                        }
-                    }
-
+                   
                     ImageOverlay(
-                        image: avatar,
+                        image: chef.avatarName,
                         imageWidth: .infinity,
                         imageHeight: 300,
                         onDismiss: {

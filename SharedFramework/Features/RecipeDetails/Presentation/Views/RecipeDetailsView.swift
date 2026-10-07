@@ -38,17 +38,9 @@ struct RecipeDetailsView: View {
                             }
                         } label: {
                             HStack(alignment: .center, spacing: 16) {
-                                var avatar: String {
-                                    if "\( recipe.chef?.avatar ?? "")".starts(with: "http") {
-                                        return recipe.chef?.avatar ?? ""
-                                    }
-                                    else {
-                                        return "\(Constants.BASE_URL)\( recipe.chef?.avatar ?? "")"
-                                    }
-                                }
-
+                                
                                 CustomImageView(
-                                    url: avatar,
+                                    url: recipe.chef?.avatarName ?? "",
                                     width: 64,
                                     height: 64
                                 )

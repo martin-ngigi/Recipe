@@ -71,7 +71,16 @@ struct HomeView: View {
                             router.push(.trendingRecipes(list: homeViewModel.trendingRecipesList))
                         }
                     )
+                    
+                   
+                    NewRecipesSection(
+                        recipes: homeViewModel.justForYouList,
+                        namespace: namespace,
+                        onTapSeeAll: {
 
+                        }
+                    )
+                    
                     PopularChefsComponent(
                         chefs: homeViewModel.popularChefsList,
                         isLoading: homeViewModel.fetchHomeDataState == .isLoading,

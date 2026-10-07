@@ -20,17 +20,8 @@ struct PopularChefRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8){
 
-            var avatar: String {
-                if chef.avatar.starts(with: "http") {
-                    return chef.avatar
-                }
-                else {
-                    return "\(Constants.BASE_URL)\(chef.avatar)"
-                }
-            }
-
             CustomImageView(
-                url: avatar,
+                url: chef.avatarName,
                 width: 100,
                 height: 100
             )
