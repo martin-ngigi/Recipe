@@ -149,6 +149,9 @@
     "Couldn’t Share Recipe" : {
 
     },
+    "Create one" : {
+
+    },
     "Customize your settings" : {
 
     },
@@ -170,6 +173,9 @@
     "Dismiss" : {
 
     },
+    "Don't have an account?" : {
+
+    },
     "Done" : {
 
     },
@@ -177,6 +183,9 @@
 
     },
     "Email" : {
+
+    },
+    "Email or username" : {
 
     },
     "Email:" : {
@@ -324,6 +333,9 @@
 
     },
     "Or Sign in with" : {
+
+    },
+    "Password" : {
 
     },
     "Personal Details" : {
@@ -518,6 +530,9 @@
 
     },
     "Unread %@" : {
+
+    },
+    "Username or email" : {
 
     },
     "Vertical Stretch Animation" : {

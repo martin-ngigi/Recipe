@@ -13,21 +13,6 @@
 
 import SwiftUI
 
-/// Small Settings-style icon tile used as the leading element of a list row.
-struct FormRowIcon: View {
-    let systemName: String
-    var tint: Color = Color.theme.primaryColor
-
-    var body: some View {
-        Image(systemName: systemName)
-            .font(.system(size: 15, weight: .semibold))
-            .foregroundStyle(.white)
-            .frame(width: 30, height: 30)
-            .background(tint.gradient, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-            .accessibilityHidden(true)
-    }
-}
-
 /// A text field designed to live inside a `List` / `Form` row.
 ///
 /// The List supplies the grouped background, insets and separators, so this view
