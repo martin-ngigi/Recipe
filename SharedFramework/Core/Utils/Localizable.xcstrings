@@ -83,7 +83,7 @@
     "All Recipes" : {
 
     },
-    "Already have account? %@" : {
+    "Already have an account?" : {
 
     },
     "Angle Animation" : {
@@ -152,6 +152,9 @@
     "Create one" : {
 
     },
+    "Create your account" : {
+
+    },
     "Customize your settings" : {
 
     },
@@ -212,6 +215,9 @@
     "Filtered by" : {
 
     },
+    "First and last name" : {
+
+    },
     "Flag" : {
 
     },
@@ -254,22 +260,19 @@
     "Leave a Comment" : {
 
     },
-    "Let's sign you up" : {
-
-    },
     "Loading favourites" : {
 
     },
     "Location" : {
 
     },
+    "Log in" : {
+
+    },
     "Log In" : {
 
     },
     "Log in to pick up where you left off." : {
-
-    },
-    "Login" : {
 
     },
     "Logout:" : {
@@ -332,7 +335,7 @@
     "Or continue with" : {
 
     },
-    "Or Sign in with" : {
+    "Or sign up with" : {
 
     },
     "Password" : {
@@ -395,6 +398,9 @@
       }
     },
     "Recipes" : {
+
+    },
+    "Register" : {
 
     },
     "Remove" : {
@@ -494,6 +500,15 @@
 
     },
     "Show Transactions" : {
+
+    },
+    "Sign up with Apple" : {
+
+    },
+    "Sign up with Facebook" : {
+
+    },
+    "Sign up with Google" : {
 
     },
     "SMS" : {
