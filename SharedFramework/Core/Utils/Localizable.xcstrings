@@ -122,10 +122,22 @@
     "Chefs" : {
 
     },
+    "Clear text" : {
+
+    },
     "Contact Chef" : {
 
     },
     "Contacts Only" : {
+
+    },
+    "Continue with Apple" : {
+
+    },
+    "Continue with Facebook" : {
+
+    },
+    "Continue with Google" : {
 
     },
     "Cook Like a chef" : {
@@ -135,9 +147,6 @@
 
     },
     "Couldn’t Share Recipe" : {
-
-    },
-    "Create" : {
 
     },
     "Customize your settings" : {
@@ -162,9 +171,6 @@
 
     },
     "Done" : {
-
-    },
-    "Dont have account? %@" : {
 
     },
     "Edit" : {
@@ -197,9 +203,6 @@
     "Filtered by" : {
 
     },
-    "First things first" : {
-
-    },
     "Flag" : {
 
     },
@@ -207,6 +210,9 @@
 
     },
     "Font" : {
+
+    },
+    "Forgot password?" : {
 
     },
     "Get Started" : {
@@ -219,6 +225,9 @@
 
     },
     "Hello, World!" : {
+
+    },
+    "Hide password" : {
 
     },
     "Ingredients" : {
@@ -236,9 +245,6 @@
     "Leave a Comment" : {
 
     },
-    "Let's log you in" : {
-
-    },
     "Let's sign you up" : {
 
     },
@@ -246,6 +252,12 @@
 
     },
     "Location" : {
+
+    },
+    "Log In" : {
+
+    },
+    "Log in to pick up where you left off." : {
 
     },
     "Login" : {
@@ -308,7 +320,7 @@
     "Options" : {
 
     },
-    "Or Login with" : {
+    "Or continue with" : {
 
     },
     "Or Sign in with" : {
@@ -391,9 +403,6 @@
     "Reset Password" : {
 
     },
-    "Reset Password?" : {
-
-    },
     "Retry" : {
 
     },
@@ -463,6 +472,9 @@
     "Show Inspector" : {
 
     },
+    "Show password" : {
+
+    },
     "Show Popover" : {
 
     },
@@ -515,6 +527,9 @@
 
     },
     "View Profile & Recipes" : {
+
+    },
+    "Welcome back" : {
 
     },
     "WhatsApp" : {

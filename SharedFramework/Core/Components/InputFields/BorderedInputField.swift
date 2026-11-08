@@ -11,77 +11,120 @@
 //  Created by Martin on 02/04/2025.
 //
 
-import Foundation
 import SwiftUI
 
+/// Small Settings-style icon tile used as the leading element of a list row.
+struct FormRowIcon: View {
+    let systemName: String
+    var tint: Color = Color.theme.primaryColor
+
+    var body: some View {
+        Image(systemName: systemName)
+            .font(.system(size: 15, weight: .semibold))
+            .foregroundStyle(.white)
+            .frame(width: 30, height: 30)
+            .background(tint.gradient, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            .accessibilityHidden(true)
+    }
+}
+
+/// A text field designed to live inside a `List` / `Form` row.
+///
+/// The List supplies the grouped background, insets and separators, so this view
+/// draws no chrome of its own. Focus is owned by the parent through `isFocused`.
+/// Errors appear inline under the field with an icon (never color alone).
 struct BorderedInputField: View {
     @Binding var text: String
     var placeholder: String = "Enter text..."
     var description: String = ""
     var error: String
-    @FocusState var isFocused: Bool
+    var systemImage: String? = nil
+    var isFocused: Bool = false
     var focusedColor = Color.theme.primaryColor
     var keyboardType: UIKeyboardType = .default
-    var hasClearButton: Bool = false
+    var textContentType: UITextContentType? = nil
+    var autocapitalization: TextInputAutocapitalization = .never
+    var submitLabel: SubmitLabel = .next
+    var hasClearButton: Bool = true
+    var onSubmit: () -> Void = {}
     var onTextChange: (String) -> Void
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            if !description.isEmpty {
-                Text(description)
-                    .font(.appBody)
-            }
+    private var hasError: Bool { !error.isEmpty }
 
-            HStack {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 12) {
+                if let systemImage {
+                    FormRowIcon(
+                        systemName: systemImage,
+                        tint: hasError ? Color.theme.errorColor : focusedColor
+                    )
+                }
+
                 TextField(placeholder, text: $text)
-                    .onChange(of: text) { newValue in
+                    .font(.body)
+                    .keyboardType(keyboardType)
+                    .textContentType(textContentType)
+                    .textInputAutocapitalization(autocapitalization)
+                    .autocorrectionDisabled()
+                    .submitLabel(submitLabel)
+                    .onSubmit(onSubmit)
+                    .onChange(of: text) { _, newValue in
                         onTextChange(newValue)
                     }
-                    .textFieldStyle(TappableTextFieldStyle())  // increase tap area
+                    .accessibilityLabel(description.isEmpty ? placeholder : description)
+                    .accessibilityHint(hasError ? error : "")
 
-                if !text.isEmpty && hasClearButton {
+                if hasClearButton && isFocused && !text.isEmpty {
                     Button {
                         text = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.tertiary)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
                     }
+                    .buttonStyle(.borderless)  // keeps the tap off the whole row
+                    .accessibilityLabel("Clear text")
+                    .transition(.opacity)
                 }
-
             }
-            .background(Color.gray.opacity(0.15))
-            .cornerRadius(Guidelines.cornerRadius)
-            .keyboardType(keyboardType)
-            .focused($isFocused)
-            .cornerRadius(Guidelines.cornerRadius)
-            .overlay(
-                Group {
-                    if isFocused {
-                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
-                            .stroke(error.isEmpty ? focusedColor : Color.theme.errorColor, lineWidth: 1)
-                    }
-                    else {
-                        RoundedRectangle(cornerRadius: Guidelines.cornerRadius)
-                            .stroke(error.isEmpty ? Color.gray : Color.theme.errorColor, lineWidth: 1)
-                    }
-                }
-            )
+            .frame(minHeight: 44)
 
-            if !error.isEmpty {
-                Text(error)
-                    .font(.appFootnote)
-                    .foregroundColor(Color.red)
+            if hasError {
+                Label(error, systemImage: "exclamationmark.circle.fill")
+                    .font(.footnote)
+                    .foregroundStyle(Color.theme.errorColor)
+                    .padding(.bottom, 4)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
+        .animation(.easeOut(duration: 0.2), value: hasError)
+        .animation(.easeOut(duration: 0.15), value: isFocused)
     }
 }
 
 #Preview {
-    BorderedInputField(
-        text: .constant(""),
-        error: "",
-        onTextChange: { _ in
+    List {
+        Section("Account") {
+            BorderedInputField(
+                text: .constant(""),
+                placeholder: "Email",
+                description: "Email",
+                error: "",
+                systemImage: "envelope.fill",
+                keyboardType: .emailAddress,
+                onTextChange: { _ in }
+            )
 
+            BorderedInputField(
+                text: .constant("not-an-email"),
+                placeholder: "Email",
+                description: "Email",
+                error: "Enter a valid email address",
+                systemImage: "envelope.fill",
+                onTextChange: { _ in }
+            )
         }
-    )
-    .padding(.horizontal)
+    }
 }
